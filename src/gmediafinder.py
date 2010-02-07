@@ -429,7 +429,6 @@ class GsongFinder(object):
         while play_thread_id == self.play_thread_id:
             try:
                 dur_int = self.player.query_duration(self.time_format, None)[0]
-                print dur_int
                 if dur_int == -1:
                     dur_str = "unknown"
                 else:
