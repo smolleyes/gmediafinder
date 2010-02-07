@@ -32,7 +32,6 @@ class GsongFinder(object):
         self.media_name = ""
         self.media_link = ""
         self.nbresults = 100
-        self.req_start = 1
         self.user_search = ""
         self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
         self.engine_list = {'woonz.com':'','google.com':'','skreemr.com':'','findmp3s.com':''}
@@ -89,19 +88,20 @@ class GsongFinder(object):
         self.progressbar = self.gladeGui.get_widget("progressbar")
         
         ## SIGNALS
-        dic = {"on_main_window_destroy" : gtk.main_quit,
+        dic = {"on_main_window_destroy_event" : self.exit,
         "on_song_radio_toggled" : self.option_changed,
         "on_video_radio_toggled" :  self.option_changed,
         "on_img_radio_toggled" :  self.option_changed,
         "on_search_btn_clicked" : self.get_page_links,
         "on_engine_selector_changed" : self.set_engine,
-        "on_quit_menu_activate" : gtk.main_quit,
+        "on_quit_menu_activate" : self.exit,
         "on_pause_btn_clicked" : self.pause_resume,
         "on_down_btn_clicked" : self.download_file,
         "on_changepage_btn_clicked" : self.get_page_links,
+        "on_search_entry_activate" : self.get_page_links,
         }
         self.gladeGui.signal_autoconnect(dic)
-        self.window.connect('destroy', gtk.main_quit)
+        self.window.connect('destroy', self.exit)
         
         ## finally setup the list
         self.model = gtk.ListStore(str,str)
@@ -165,6 +165,11 @@ class GsongFinder(object):
         self.search_option = widget.name
         
     def get_page_links(self,widget=None):
+        user_search = self.search_entry.get_text()
+        if user_search != self.user_search:
+            self.user_search = user_search
+            self.req_start = 1
+            
         url = self.search()
         link_liste = self.analyse_links(url)
         if link_liste:
@@ -173,7 +178,6 @@ class GsongFinder(object):
                 self.search_songs(link_liste)
         
     def search(self):
-        self.user_search = self.search_entry.get_text()
         self.informations_label.set_text("Searching for %s with %s " % (self.user_search,self.engine))
         if self.user_search:
             ## encode the name
@@ -266,19 +270,22 @@ class GsongFinder(object):
                 nlist = []
                 link_list = []
                 txt = soup.findAll('td')[0].__str__()
-                files_count = re.search('(([0-9]{1,})([^audio & music]))', txt).group()
-                if files_count:
+                try:
+                    files_count = re.search('(([0-9]{1,})([^audio & music]))', txt).group()
                     self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
-                    ## check if there s some results since pagination system sucks...
-                    if re.search(r'(\S*no result found)', soup.__str__()):
-                        self.changepage_btn.hide()
-                        self.req_start = 1
-                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
-                        return
-                    else:
-                        self.informations_label.set_text("Results page %s for %s..." % (self.req_start, self.user_search))
-                        self.req_start += 1 
-                        
+
+                except:
+                    self.informations_label.set_text("no results found for %s..." % (self.user_search))
+            
+                if re.search(r'(\S*no result found)', soup.__str__()):
+                    self.changepage_btn.hide()
+                    self.req_start = 1
+                    self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                    return
+                else:
+                    self.informations_label.set_text("Results page %s for %s..." % (self.req_start, self.user_search))
+                    self.req_start += 1
+                
                 self.model.clear()
                 self.changepage_btn.show()
                 alist = soup.findAll('a',href=True)
@@ -497,6 +504,9 @@ class GsongFinder(object):
         urllib.urlretrieve(url, self.down_dir+"/"+self.media_name,
         lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,url,self.media_name,self.progressbar))
             
+    def exit(self,widget):
+        self.player.set_state(gst.STATE_NULL)
+        gtk.main_quit()
 
 def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
         #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
