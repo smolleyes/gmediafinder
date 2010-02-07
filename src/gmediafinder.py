@@ -226,13 +226,12 @@ class GsongFinder(object):
         except:
             return
         results = handle.read()
-            
         if results:
             gtk.main_iteration()
             ## test the link for audio file on first scan
             if not base and self.engine == "google.com":
                 try:
-                    t = re.search('href="(\S.*)(.mp3|.mp4|.ogg|.aac|.wav)"', results).group(1,2)
+                    t = re.search('href="(\S.*)(.mp3|.mp4|.ogg|.aac|.wav)"', results.lower()).group(1,2)
                 except:
                     return
                 if t:
