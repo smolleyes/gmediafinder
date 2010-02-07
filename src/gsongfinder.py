@@ -34,7 +34,7 @@ class GsongFinder(object):
         self.nbresults = 100
         self.req_start = 1
         self.user_search = ""
-        self.down_dir = os.path.join(os.getenv('HOME'),"gsongfinder-downloads")
+        self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
         self.engine_list = {'woonz.com':'','google.com':'','skreemr.com':'','findmp3s.com':''}
         self.engine = None
         self.search_option = "song_radio"
@@ -49,9 +49,9 @@ class GsongFinder(object):
         ## gui
         self.gladeGui = gtk.glade.XML(constants.glade_file, None ,constants.app_name)
         self.window = self.gladeGui.get_widget("main_window")
-        self.window.set_title("Google file finder")
+        self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
-        self.window.set_default_size(600, 500)
+        self.window.set_default_size(600, 600)
         self.window.set_position("center")
         
         ## informations
