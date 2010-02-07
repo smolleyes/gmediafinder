@@ -326,11 +326,9 @@
                     </child>
                     <child>
                       <widget class="GtkVolumeButton" id="volume_btn">
-                        <property name="label" translatable="yes">Volume</property>
                         <property name="visible">True</property>
                         <property name="can_focus">True</property>
                         <property name="receives_default">True</property>
-                        <property name="relief">none</property>
                         <property name="focus_on_click">False</property>
                         <property name="orientation">vertical</property>
                         <property name="icons">audio-volume-muted

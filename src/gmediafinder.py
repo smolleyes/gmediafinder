@@ -428,9 +428,14 @@ class GsongFinder(object):
 
         while play_thread_id == self.play_thread_id:
             try:
-                time.sleep(0.2)
                 dur_int = self.player.query_duration(self.time_format, None)[0]
-                dur_str = self.convert_ns(dur_int)
+                print dur_int
+                if dur_int == -1:
+                    dur_str = "unknown"
+                else:
+                    dur_str = self.convert_ns(dur_int)
+                self.time_label.set_text("00:00 / 00:00")
+                time.sleep(0.2)
                 gtk.gdk.threads_enter()
                 self.time_label.set_text("00:00 / " + dur_str)
                 gtk.gdk.threads_leave()
@@ -495,36 +500,42 @@ class GsongFinder(object):
             
         return time_str
     
-    
-    
     def download_file(self,widget):
         print "downloading %s" % self.media_link
         return self.geturl(self.media_link)
 
     def geturl(self,url):
         self.progressbar.show()
+        gtk.main_iteration()
         urllib.urlretrieve(url, self.down_dir+"/"+self.media_name,
         lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,url,self.media_name,self.progressbar))
-            
+        self.progressbar.hide()
+        
     def exit(self,widget):
         gtk.main_quit()
 
 def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
         #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
         #XXX Should handle possible filesize=-1.
-        if numblocks != 0:
-            try:
-                percent = min((numblocks*blocksize*100)/filesize, 100)
-            except:
-                percent = 100
-            if percent < 100:
-                time.sleep(0.005)
-                progressbar.set_text("Downloading %-66s%3d%% done" % (name, percent))
-                progressbar.set_fraction(percent/100.0)
-                gtk.main_iteration_do(False)
-            else:
-                progressbar.hide()
-                return
+        if filesize == -1:
+            progressbar.set_text("Downloading %-66s" % name)
+            progressbar.pulse()
+            time.sleep(0.005)
+            gtk.main_iteration()
+        else:
+            if numblocks != 0:
+                try:
+                    percent = min((numblocks*blocksize*100)/filesize, 100)
+                except:
+                    percent = 100
+                if percent < 100:
+                    time.sleep(0.005)
+                    progressbar.set_text("Downloading %-66s%3d%% done" % (name, percent))
+                    progressbar.set_fraction(percent/100.0)
+                    gtk.main_iteration_do(False)
+                else:
+                    progressbar.hide()
+                    return
         return
 
 if __name__ == "__main__":
