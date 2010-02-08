@@ -167,6 +167,7 @@ class GsongFinder(object):
         self.search_option = widget.name
         
     def get_page_links(self,widget=None):
+        self.search_thread_id = None
         user_search = self.search_entry.get_text()
         if user_search != self.user_search:
             self.changepage_btn.hide()
@@ -242,9 +243,9 @@ class GsongFinder(object):
                             url = a.attrMap['href']
                             name = a.string
                             if not name or not url: continue
-                            self.informations_label.set_text("checking links titles : %s " % (name))
+                            self.informations_label.set_text("checking links titles : %s\nTesting one file... " % (name))
                             if re.search(r'\bIndex of\b', str(name)):
-                                self.informations_label.set_text("Index detected on : %s " % (name))
+                                self.informations_label.set_text("Index detected on : %s " % (urllib2.unquote(url)))
                                 verified_links = self.check_google_links(url)
                                 if verified_links:
                                     slist = verified_links.findAll('a', href=True)
@@ -260,15 +261,12 @@ class GsongFinder(object):
                                         link = (url + s.attrMap['href'])
                                         name = urllib2.unquote(os.path.basename(link))
                                         self.add_sound(name, link)
-                                        
                                     gtk.gdk.threads_leave()
                                 else:
                                     continue
                             self.search_thread_id = None
                     except:
                         pass
-        
-                    
             elif self.engine == "woonz.com":
                 ## reset the treeview
                 nlist = []
@@ -364,7 +362,6 @@ class GsongFinder(object):
         except:
             return
         file = ''.join(req)
-        print "testing content type..."
         try:
             req = urllib.urlopen(url + '/' + file)
             req.close()
@@ -373,12 +370,16 @@ class GsongFinder(object):
         link = url + '/' + file
         name = urllib2.unquote(file)
         type = req.headers.get("content-type")
-
+        
         if re.search('audio', type):
+            gtk.gdk.threads_enter()
             print "%s type detected ok, sounds from this website added to the playlist" % type
+            gtk.gdk.threads_leave()
             return subsoup
         else:
+            gtk.gdk.threads_enter()
             print "wrong media type %s, link to another webpage...website rejected" % type
+            gtk.gdk.threads_leave()
             return
     
     def add_sound(self, name, link):
