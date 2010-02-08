@@ -269,86 +269,86 @@ class GsongFinder(object):
                         pass
         
                     
-        elif self.engine == "woonz.com":
-            ## reset the treeview
-            nlist = []
-            link_list = []
-            txt = soup.findAll('td')[0].__str__()
-            try:
-                files_count = re.search('(([0-9]{1,})([^audio & music]))', txt).group()
-            except:
-                self.informations_label.set_text("no results found for %s..." % (self.user_search))
-                self.search_thread_id = None
-                return
-            
-            self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
-            if re.search(r'(\S*no result found)', soup.__str__()):
-                self.changepage_btn.hide()
-                self.req_start = 1
-                self.informations_label.set_text("no more files found for %s..." % (self.user_search))
-                self.search_thread_id = None
-                return
-            else:
-                self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,files_count))
-                self.req_start += 1
-                    
-            self.changepage_btn.show()
-            alist = soup.findAll('a',href=True)
-            #count_req = soup.findAll('td',attrs{'align':'left'})
-            #print count_req
-            for a in alist:
-                name = None
-                link = None
-                #print a.attrs
-                #print dir(a)
-                
-                ## search songg class for name
-                if a.has_key('class'):
-                    if a['class'] == "songg":
-                        name = str(a.next.string).strip()
-                        nlist.append(name)
-                ## row for download is Download...
-                if a.string == "Download":
-                    l = a.attrs[0][1]
-                    link = "http://www.woonz.com/" + l
-                    link_list.append(link)
-            ## add to the treeview if ok
-            i = 0
-            for name in nlist:
-                if name and link_list[i]:
-                    self.add_sound(name, link_list[i])
-                    i += 1
-                
-        elif self.engine == "findmp3s.com":
-            print value
-        elif self.engine == "skreemr.com":
-            ## l = ? and s = pages (10 results by page...)
-            nlist = []
-            link_list = []
-            files_count = soup.findAll('div',attrs={'class':'results'})[0]
-            if files_count:
-                files_count = files_count.findAll('b')[1].string
-                self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
-                if files_count > 10:
-                    self.changepage_btn.show()
-            alist = soup.findAll('a',attrs={'class':'snap_noshots'})
-            for a in alist:
-                link = a.attrMap['href']
+            elif self.engine == "woonz.com":
+                ## reset the treeview
+                nlist = []
+                link_list = []
+                txt = soup.findAll('td')[0].__str__()
                 try:
-                    t = re.search('(\S.*)(.mp3|.mp4|.ogg|.aac|.wav)', link.lower())
-                    link =  ''.join(t.group(1,2))
-                    name = urllib2.unquote(os.path.basename(link))
-                    nlist.append(name)
-                    link_list.append(link)
-                    gtk.main_iteration()
+                    files_count = re.search('(([0-9]{1,})([^audio & music]))', txt).group()
                 except:
-                    pass
-            ## add to the treeview if ok
-            i = 0
-            for name in nlist:
-                if name and link_list[i]:
-                    self.add_sound(name, link_list[i])
-                    i += 1
+                    self.informations_label.set_text("no results found for %s..." % (self.user_search))
+                    self.search_thread_id = None
+                    return
+                
+                self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
+                if re.search(r'(\S*no result found)', soup.__str__()):
+                    self.changepage_btn.hide()
+                    self.req_start = 1
+                    self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                    self.search_thread_id = None
+                    return
+                else:
+                    self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,files_count))
+                    self.req_start += 1
+                        
+                self.changepage_btn.show()
+                alist = soup.findAll('a',href=True)
+                #count_req = soup.findAll('td',attrs{'align':'left'})
+                #print count_req
+                for a in alist:
+                    name = None
+                    link = None
+                    #print a.attrs
+                    #print dir(a)
+                    
+                    ## search songg class for name
+                    if a.has_key('class'):
+                        if a['class'] == "songg":
+                            name = str(a.next.string).strip()
+                            nlist.append(name)
+                    ## row for download is Download...
+                    if a.string == "Download":
+                        l = a.attrs[0][1]
+                        link = "http://www.woonz.com/" + l
+                        link_list.append(link)
+                ## add to the treeview if ok
+                i = 0
+                for name in nlist:
+                    if name and link_list[i]:
+                        self.add_sound(name, link_list[i])
+                        i += 1
+                    
+            elif self.engine == "findmp3s.com":
+                print value
+            elif self.engine == "skreemr.com":
+                ## l = ? and s = pages (10 results by page...)
+                nlist = []
+                link_list = []
+                files_count = soup.findAll('div',attrs={'class':'results'})[0]
+                if files_count:
+                    files_count = files_count.findAll('b')[1].string
+                    self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
+                    if files_count > 10:
+                        self.changepage_btn.show()
+                alist = soup.findAll('a',attrs={'class':'snap_noshots'})
+                for a in alist:
+                    link = a.attrMap['href']
+                    try:
+                        t = re.search('(\S.*)(.mp3|.mp4|.ogg|.aac|.wav)', link.lower())
+                        link =  ''.join(t.group(1,2))
+                        name = urllib2.unquote(os.path.basename(link))
+                        nlist.append(name)
+                        link_list.append(link)
+                        gtk.main_iteration()
+                    except:
+                        pass
+                ## add to the treeview if ok
+                i = 0
+                for name in nlist:
+                    if name and link_list[i]:
+                        self.add_sound(name, link_list[i])
+                        i += 1
         self.informations_label.set_text("Scan terminated for your request : %s" % self.user_search)
         
     def check_google_links(self,url):
