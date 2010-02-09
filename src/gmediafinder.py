@@ -330,13 +330,13 @@ class GsongFinder(object):
                 alist = soup.findAll('a',attrs={'class':'snap_noshots'})
                 for a in alist:
                     link = a.attrMap['href']
+                    print link
                     try:
                         t = re.search('(\S.*)(.mp3|.mp4|.ogg|.aac|.wav)', link.lower())
                         link =  ''.join(t.group(1,2))
                         name = urllib2.unquote(os.path.basename(link))
                         nlist.append(name)
                         link_list.append(link)
-                        gtk.main_iteration()
                     except:
                         pass
                 ## add to the treeview if ok
