@@ -241,10 +241,8 @@ class GsongFinder(object):
                         alist = soup.findAll('a', href=True)
                         for a in alist:
                             url = a.attrMap['href']
-                            name = a.string
-                            if not name or not url: continue
-                            self.informations_label.set_text("checking links titles : %s\nTesting one file... " % (name))
-                            if re.search(r'\bIndex of\b', str(name)):
+                            if not url: continue
+                            if re.search('href="(\S.*>Index of)', a.__str__()):
                                 self.informations_label.set_text("Index detected on : %s " % (urllib2.unquote(url)))
                                 verified_links = self.check_google_links(url)
                                 if verified_links:
@@ -318,7 +316,7 @@ class GsongFinder(object):
                         i += 1
                     
             elif self.engine == "findmp3s.com":
-                print value
+                pass
             elif self.engine == "skreemr.com":
                 ## l = ? and s = pages (10 results by page...)
                 nlist = []
