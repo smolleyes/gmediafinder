@@ -172,7 +172,10 @@ class GsongFinder(object):
         if user_search != self.user_search:
             self.changepage_btn.hide()
             self.user_search = user_search
-            self.req_start = 1
+            if self.engine == "woonz.com|findmp3s.com":
+                self.req_start = 1
+            elif self.engine == "skreemr.com":
+                self.req_start = 10
             
         self.url = self.search()
         self.data = self.get_url_data(self.url)
@@ -253,7 +256,7 @@ class GsongFinder(object):
                                         self.informations_label.set_text("Sound : %s" % s.string)
                                         print "scanning webpage : %s" % s.string
                                         try:
-                                            req = re.search('(.*%s.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)' % self.user_search, urllib2.unquote(s.__str__().lower())).group(1,2)
+                                            req = re.search('(.*%s.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)' % self.user_search.lower(), urllib2.unquote(s.__str__().lower())).group(1,2)
                                         except:
                                             continue 
                                         link = (url + s.attrMap['href'])
@@ -265,6 +268,8 @@ class GsongFinder(object):
                             self.search_thread_id = None
                     except:
                         pass
+                self.informations_label.set_text("Scan terminated for your request : %s" % self.user_search)
+            
             elif self.engine == "woonz.com":
                 ## reset the treeview
                 nlist = []
@@ -321,12 +326,22 @@ class GsongFinder(object):
                 ## l = ? and s = pages (10 results by page...)
                 nlist = []
                 link_list = []
+                
                 files_count = soup.findAll('div',attrs={'class':'results'})[0]
                 if files_count:
                     files_count = files_count.findAll('b')[1].string
                     self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
-                    if files_count > 10:
+                    if re.search(r'(\S*No results)', files_count.__str__()):
+                        self.changepage_btn.hide()
+                        self.req_start = 10
+                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                        self.search_thread_id = None
+                        return
+                    else:
+                        self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,files_count))
+                        self.req_start += 10
                         self.changepage_btn.show()
+                
                 alist = soup.findAll('a',attrs={'class':'snap_noshots'})
                 for a in alist:
                     link = a.attrMap['href']
@@ -345,7 +360,6 @@ class GsongFinder(object):
                     if name and link_list[i]:
                         self.add_sound(name, link_list[i])
                         i += 1
-        self.informations_label.set_text("Scan terminated for your request : %s" % self.user_search)
         
     def check_google_links(self,url):
         ## test the link for audio file on first scan
@@ -356,28 +370,28 @@ class GsongFinder(object):
             return
         ## first check if content is readeable
         try:
-            req = re.search('href="(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)"', urllib2.unquote(subsoup.__str__().lower())).group(1,2)
+            name = re.search('href="(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)"', urllib2.unquote(subsoup.__str__().lower())).group(1,2)
         except:
             return
-        file = ''.join(req)
+        original_name = req = re.search('href="(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)"', urllib2.unquote(subsoup.__str__())).group(1,2)
+        file = ''.join(original_name)
+        print "file to test content-type: %s" % file
         try:
-            req = urllib.urlopen(url + '/' + file)
+            coded_name = urllib2.quote(file)
+            coded_link = os.path.join(url, coded_name)
+            print coded_link
+            req = urllib.urlopen(coded_link)
             req.close()
         except:
             return
-        link = url + '/' + file
-        name = urllib2.unquote(file)
+        ## test headers
         type = req.headers.get("content-type")
         
         if re.search('audio', type):
-            gtk.gdk.threads_enter()
             print "%s type detected ok, sounds from this website added to the playlist" % type
-            gtk.gdk.threads_leave()
             return subsoup
         else:
-            gtk.gdk.threads_enter()
             print "wrong media type %s, link to another webpage...website rejected" % type
-            gtk.gdk.threads_leave()
             return
     
     def add_sound(self, name, link):
@@ -533,16 +547,6 @@ class GsongFinder(object):
         urllib.urlretrieve(url, self.down_dir+"/"+self.media_name,
         lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,url,self.media_name,self.progressbar))
         self.progressbar.hide()
-        
-    def gthread(self,cmd):
-        thread = threading.Thread(None, cmd)
-        thread.start()
-        while(1):
-            gtk.main_iteration()
-            if not thread.isAlive():
-                break
-            else:
-                time.sleep(0.1)
         
     def exit(self,widget):
         gtk.main_quit()
