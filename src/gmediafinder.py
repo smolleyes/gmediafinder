@@ -93,13 +93,13 @@ class GsongFinder(object):
         "on_song_radio_toggled" : self.option_changed,
         "on_video_radio_toggled" :  self.option_changed,
         "on_img_radio_toggled" :  self.option_changed,
-        "on_search_btn_clicked" : self.get_page_links,
+        "on_search_btn_clicked" : self.prepare_search,
         "on_engine_selector_changed" : self.set_engine,
         "on_quit_menu_activate" : self.exit,
         "on_pause_btn_clicked" : self.pause_resume,
         "on_down_btn_clicked" : self.download_file,
-        "on_changepage_btn_clicked" : self.get_page_links,
-        "on_search_entry_activate" : self.get_page_links,
+        "on_changepage_btn_clicked" : self.change_page,
+        "on_search_entry_activate" : self.prepare_search,
         }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -143,7 +143,7 @@ class GsongFinder(object):
         ## start main loop
         gtk.main()
     
-    def set_engine(self,widget):
+    def set_engine(self,widget=None):
         self.engine = self.engine_selector.get_active_text()
         self.changepage_btn.hide()
         iter = self.engine_selector.get_active_iter()
@@ -151,7 +151,7 @@ class GsongFinder(object):
             self.engine = None
             return
         print "%s engine selected" % self.engine
-        
+
     def get_model(self,widget):
         selected = self.treeview.get_selection()
         self.iter = selected.get_selected()[1]
@@ -166,17 +166,42 @@ class GsongFinder(object):
     def option_changed(self,widget):
         self.search_option = widget.name
         
-    def get_page_links(self,widget=None):
+    def prepare_search(self,widget=None):
         self.search_thread_id = None
+        self.user_search = self.search_entry.get_text()
+        if not self.user_search:
+            self.informations_label.set_text("Please enter an artist/album or song name...")
+            return
+        if not self.engine:
+            self.informations_label.set_text("Please select an engine...")
+            return
+        self.main_engine = self.engine_selector.get_active_text()
+        self.reset_pages()
+        
+        return self.get_page_links()
+        
+    def change_page(self,widget):
         user_search = self.search_entry.get_text()
-        if user_search != self.user_search:
-            self.changepage_btn.hide()
-            self.user_search = user_search
-            if self.engine == "woonz.com|findmp3s.com":
-                self.req_start = 1
-            elif self.engine == "skreemr.com":
-                self.req_start = 10
+        engine = self.engine_selector.get_active_text()
+        if not user_search or user_search != self.user_search \
+        or not engine or engine != self.main_engine:
+            self.reset_pages()
+            return self.prepare_search()
+        else:
+            return self.get_page_links()
+        
+    def reset_pages(self):
+        self.changepage_btn.hide()
+        if self.engine == "woonz.com":
+            self.req_start = 1
+        elif self.engine == "findmp3s.com":
+            self.req_start = 1
+        elif self.engine == "skreemr.com":
+            self.req_start = 10
+            self.page = 1
             
+    ## main search to receive original search when requesting next pages...
+    def get_page_links(self,widget=None):
         self.url = self.search()
         self.data = self.get_url_data(self.url)
         self.start_search()
@@ -184,32 +209,28 @@ class GsongFinder(object):
     def search(self):
         self.model.clear()
         self.informations_label.set_text("Searching for %s with %s " % (self.user_search,self.engine))
-        if not self.user_search:
-            self.informations_label.set_text("Please enter some text to search...")
+        ## encode the name
+        user_search = urllib2.quote(self.user_search)
+        ## prepare the request
+        if self.engine == None:
+            self.informations_label.set_text("Please select a search engine...")
             return
-        else:
-            ## encode the name
-            user_search = urllib2.quote(self.user_search)
-            ## prepare the request
-            if self.engine == None:
-                self.informations_label.set_text("Please select a search engine...")
-                return
-            urlopt = ""
-            baseurl = ""
-            if self.engine == "google.com":
-                baseurl = "http://www.google.com/search?hl=en&num=100&q="
-                urlopt = urllib.quote(self.search_requests[self.search_option]) +'%20'+user_search
-                url = baseurl + urlopt
-            elif self.engine == "woonz.com":
-                url = "http://woonz.com/mp3.php?q=%s&s=1&p=%s" % (user_search,self.req_start)
-            elif self.engine == "findmp3s.com":
-                url = "http://findmp3s.com/search/mp3/%s/%s.html" % (self.req_start,user_search)
-            elif self.engine == "skreemr.com":
-                ## l= ? and s = pages (10 results by page...)
-                url = "http://skreemr.com/results.jsp?q=%s&l=10&s=%s" % (user_search,self.req_start)
-            print url
-            ## 1 for first resquest to not test content type
-            return url
+        urlopt = ""
+        baseurl = ""
+        if self.engine == "google.com":
+            baseurl = "http://www.google.com/search?hl=en&num=100&q="
+            urlopt = urllib.quote(self.search_requests[self.search_option]) +'%20'+user_search
+            url = baseurl + urlopt
+        elif self.engine == "woonz.com":
+            url = "http://woonz.com/mp3.php?q=%s&s=1&p=%s" % (user_search,self.req_start)
+        elif self.engine == "findmp3s.com":
+            url = "http://findmp3s.com/search/mp3/%s/%s.html" % (self.req_start,user_search)
+        elif self.engine == "skreemr.com":
+            ## l= ? and s = pages (10 results by page...)
+            url = "http://skreemr.com/results.jsp?q=%s&l=10&s=%s" % (user_search,self.req_start)
+        print url
+        ## 1 for first resquest to not test content type
+        return url
 
     def get_url_data(self,url):
         user_agent =  'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.2) Gecko/20100124 Ubuntu/9.10 (karmic) Firefox/3.6'
@@ -246,7 +267,7 @@ class GsongFinder(object):
                             url = a.attrMap['href']
                             if not url: continue
                             if re.search('href="(\S.*>Index of)', a.__str__()):
-                                self.informations_label.set_text("Index detected on : %s " % (urllib2.unquote(url)))
+                                self.informations_label.set_text("Media files detected on : %s, scanning... " % (urllib2.unquote(url)))
                                 verified_links = self.check_google_links(url)
                                 if verified_links:
                                     slist = verified_links.findAll('a', href=True)
@@ -265,6 +286,7 @@ class GsongFinder(object):
                                     gtk.gdk.threads_leave()
                                 else:
                                     continue
+                            
                             self.search_thread_id = None
                     except:
                         pass
@@ -321,7 +343,46 @@ class GsongFinder(object):
                         i += 1
                     
             elif self.engine == "findmp3s.com":
-                pass
+                ## l = ? and s = pages (10 results by page...)
+                nlist = []
+                link_list = []
+                
+                pagination_table = soup.findAll('table',attrs={'class':'pagination'})[0]
+                if pagination_table:
+                    next_check = pagination_table.findAll('a')
+                    for a in next_check:
+                        l = str(a.string)
+                        if l == "Next":
+                            next_page = 1
+                    if next_page:
+                        self.informations_label.set_text("Results page %s for %s...(Next page available)" % (self.req_start, self.user_search))
+                        self.req_start += 1
+                        self.changepage_btn.show()
+                    else:
+                        self.changepage_btn.hide()
+                        self.req_start = 1
+                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                        self.search_thread_id = None
+                        return
+                
+                alist = soup.findAll('a',href=True)
+                for a in alist:
+                    link = a.attrMap['href']
+                    print link
+                    try:
+                        t = re.search('download.php\?name=(.*.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)', link.lower()).group(1)
+                        name = urllib2.unquote(t)
+                        nlist.append(name)
+                        link_list.append(link)
+                    except:
+                        pass
+                ## add to the treeview if ok
+                i = 0
+                for name in nlist:
+                    if name and link_list[i]:
+                        self.add_sound(name, link_list[i])
+                        i += 1
+            
             elif self.engine == "skreemr.com":
                 ## l = ? and s = pages (10 results by page...)
                 nlist = []
@@ -334,12 +395,14 @@ class GsongFinder(object):
                     if re.search(r'(\S*No results)', files_count.__str__()):
                         self.changepage_btn.hide()
                         self.req_start = 10
+                        self.page = 1
                         self.informations_label.set_text("no more files found for %s..." % (self.user_search))
                         self.search_thread_id = None
                         return
                     else:
-                        self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,files_count))
+                        self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.page, self.user_search,files_count))
                         self.req_start += 10
+                        self.page += 1
                         self.changepage_btn.show()
                 
                 alist = soup.findAll('a',attrs={'class':'snap_noshots'})
