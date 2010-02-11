@@ -20,7 +20,7 @@ from BeautifulSoup import BeautifulSoup
 ## custom lib
 import constants
 
-gtk.gdk.threads_init()
+gtk.gdk.threads_init() 
 
 # timeout in seconds
 timeout = 10
@@ -29,11 +29,12 @@ socket.setdefaulttimeout(timeout)
 class GsongFinder(object):
     def __init__(self):
         ## default search options
-        gtk.gdk.threads_init()
+        self.search_thread_id = None
         self.media_name = ""
         self.media_link = ""
         self.nbresults = 100
         self.user_search = ""
+        self.play_options = None
         self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
         self.engine_list = {'woonz.com':'','google.com':'','skreemr.com':'','findmp3s.com':''}
         self.engine = None
@@ -77,6 +78,9 @@ class GsongFinder(object):
         self.time_label = self.gladeGui.get_widget("time_label")
         self.time_label.set_text("00:00 / 00:00")
         self.down_btn = self.gladeGui.get_widget("down_btn")
+        
+        self.continue_checkbox = self.gladeGui.get_widget("continue_checkbox")
+        self.loop_checkbox = self.gladeGui.get_widget("loop_checkbox")
         ## search bar
         self.search_entry = self.gladeGui.get_widget("search_entry")
         self.search_btn = self.gladeGui.get_widget("search_btn")
@@ -100,6 +104,8 @@ class GsongFinder(object):
         "on_down_btn_clicked" : self.download_file,
         "on_changepage_btn_clicked" : self.change_page,
         "on_search_entry_activate" : self.prepare_search,
+        "on_continue_checkbox_toggled" : self.set_play_options,
+        "on_loop_checkbox_toggled" : self.set_play_options,
         }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -155,20 +161,27 @@ class GsongFinder(object):
     def get_model(self,widget):
         selected = self.treeview.get_selection()
         self.iter = selected.get_selected()[1]
+        self.path = self.model.get_path(self.iter)
         ## else extract needed metacity's infos
         self.media_name = self.model.get_value(self.iter, 0)
         ## return only theme name and description then extract infos from hash
         self.media_link = self.model.get_value(self.iter, 1)
         # print in the gui
-        self.statbar.push(1,"Selected media : %s" % self.media_name)
+        self.statbar.push(1,"Playing : %s" % self.media_name)
         self.start_stop()
     
     def option_changed(self,widget):
         self.search_option = widget.name
         
     def prepare_search(self,widget=None):
-        self.search_thread_id = None
+        if self.search_thread_id:
+            while self.search_thread_id:
+                self.search_thread_id = None
+                time.sleep(0.5)
+                
         self.user_search = self.search_entry.get_text()
+        #self.user_search_encoded = u'%s' % self.user_search
+        #print self.user_search_encoded
         if not self.user_search:
             self.informations_label.set_text("Please enter an artist/album or song name...")
             return
@@ -180,7 +193,7 @@ class GsongFinder(object):
         
         return self.get_page_links()
         
-    def change_page(self,widget):
+    def change_page(self,widget=None):
         user_search = self.search_entry.get_text()
         engine = self.engine_selector.get_active_text()
         if not user_search or user_search != self.user_search \
@@ -254,42 +267,45 @@ class GsongFinder(object):
         gtk.gdk.threads_enter()
         self.informations_label.set_text("Searching for %s with %s" % (self.user_search,self.engine))
         gtk.gdk.threads_leave()
-        time.sleep(0.2)
-        
+
         if data:
             soup = BeautifulSoup(''.join(data))
             if self.engine == "google.com":
                 while search_thread_id == self.search_thread_id:
-                    try:
-                        time.sleep(0.2)
-                        alist = soup.findAll('a', href=True)
-                        for a in alist:
-                            url = a.attrMap['href']
-                            if not url: continue
-                            if re.search('href="(\S.*>Index of)', a.__str__()):
-                                self.informations_label.set_text("Media files detected on : %s, scanning... " % (urllib2.unquote(url)))
-                                verified_links = self.check_google_links(url)
-                                if verified_links:
-                                    slist = verified_links.findAll('a', href=True)
-                                    ## if ok start the loop
-                                    gtk.gdk.threads_enter()
-                                    for s in slist:
-                                        self.informations_label.set_text("Sound : %s" % s.string)
-                                        print "scanning webpage : %s" % s.string
-                                        try:
-                                            req = re.search('(.*%s.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)' % self.user_search.lower(), urllib2.unquote(s.__str__().lower())).group(1,2)
-                                        except:
-                                            continue 
-                                        link = (url + s.attrMap['href'])
-                                        name = urllib2.unquote(os.path.basename(link))
-                                        self.add_sound(name, link)
-                                    gtk.gdk.threads_leave()
-                                else:
-                                    continue
-                            
-                            self.search_thread_id = None
-                    except:
-                        pass
+                    if search_thread_id == self.search_thread_id:
+                        try:
+                            alist = soup.findAll('a', href=True)
+                            gtk.gdk.threads_enter()
+                            for a in alist:
+                                url = a.attrMap['href']
+                                if not url: continue
+                                if re.search('href="(\S.*>Index of)', a.__str__()):
+                                    self.informations_label.set_text("Media files detected on : %s, scanning... " % (urllib2.unquote(url)))
+                                    verified_links = self.check_google_links(url)
+                                    if verified_links:
+                                        slist = verified_links.findAll('a', href=True)
+                                        gtk.gdk.threads_leave()
+                                        ## if ok start the loop
+                                        gtk.gdk.threads_enter()
+                                        for s in slist:
+                                            self.informations_label.set_text("Sound : %s" % s.string)
+                                            print "scanning webpage : %s" % s.string
+                                            try:
+                                                req = re.search('(.*%s.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)' % self.user_search.lower(), urllib2.unquote(s.__str__().lower())).group(1,2)
+                                            except:
+                                                continue 
+                                            link = url + s.attrMap['href']
+                                            name = urllib2.unquote(os.path.basename(link))
+                                            self.add_sound(name, link)
+                                            time.sleep(0.2)
+                                        gtk.gdk.threads_leave()
+                                    else:
+                                        gtk.gdk.threads_leave()
+                                        continue
+                        except:
+                            gtk.gdk.threads_leave()
+                            pass
+                    self.search_thread_id = None
                 self.informations_label.set_text("Scan terminated for your request : %s" % self.user_search)
             
             elif self.engine == "woonz.com":
@@ -297,6 +313,7 @@ class GsongFinder(object):
                 nlist = []
                 link_list = []
                 txt = soup.findAll('td')[0].__str__()
+                files_count = None
                 try:
                     files_count = re.search('(([0-9]{1,})([^audio & music]))', txt).group()
                 except:
@@ -368,7 +385,6 @@ class GsongFinder(object):
                 alist = soup.findAll('a',href=True)
                 for a in alist:
                     link = a.attrMap['href']
-                    print link
                     try:
                         t = re.search('download.php\?name=(.*.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)', link.lower()).group(1)
                         name = urllib2.unquote(t)
@@ -390,7 +406,11 @@ class GsongFinder(object):
                 
                 files_count = soup.findAll('div',attrs={'class':'results'})[0]
                 if files_count:
-                    files_count = files_count.findAll('b')[1].string
+                    try : 
+                        files_count = files_count.findAll('b')[1].string
+                    except:
+                        self.informations_label.set_text("no results found for %s..." % (self.user_search))
+                        return
                     self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
                     if re.search(r'(\S*No results)', files_count.__str__()):
                         self.changepage_btn.hide()
@@ -408,9 +428,8 @@ class GsongFinder(object):
                 alist = soup.findAll('a',attrs={'class':'snap_noshots'})
                 for a in alist:
                     link = a.attrMap['href']
-                    print link
                     try:
-                        t = re.search('(\S.*)(.mp3|.mp4|.ogg|.aac|.wav)', link.lower())
+                        t = re.search('(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma)', link.lower())
                         link =  ''.join(t.group(1,2))
                         name = urllib2.unquote(os.path.basename(link))
                         nlist.append(name)
@@ -442,7 +461,6 @@ class GsongFinder(object):
         try:
             coded_name = urllib2.quote(file)
             coded_link = os.path.join(url, coded_name)
-            print coded_link
             req = urllib.urlopen(coded_link)
             req.close()
         except:
@@ -487,25 +505,9 @@ class GsongFinder(object):
                                         1, link,
                                         )
         return
-    
-    def search_thread(self):
-        search_thread_id = self.search_thread_id
-        gtk.gdk.threads_enter()
-        self.informations_label.set_text("Searching...")
-        gtk.gdk.threads_leave()
-        time.sleep(0.2)
-        while search_thread_id == self.search_thread_id:
-            if search_thread_id == self.search_thread_id:
-                try:
-                    gtk.gdk.threads_enter()
-                    print "here"
-                    gtk.gdk.threads_leave()
-                    time.sleep(0.2)
-                except: 
-                    break
                 
     def start_search(self):
-        self.search_thread_id = thread.start_new_thread(self.analyse_links, ())
+        self.search_thread_id = thread.start_new_thread(self.analyse_links,())
     
     def start_stop(self,widget=None):
         url = self.media_link
@@ -560,6 +562,7 @@ class GsongFinder(object):
             self.player.set_state(gst.STATE_NULL)
             self.play_btn.set_label("gtk-media-play")
             self.time_label.set_text("00:00 / 00:00")
+            self.check_play_options()
         elif t == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
             print "Error: %s" % err, debug
@@ -567,14 +570,78 @@ class GsongFinder(object):
             self.player.set_state(gst.STATE_NULL)
             self.play_btn.set_label("gtk-media-play")
             self.time_label.set_text("00:00 / 00:00")
+            ## continue if continue option selected...
+            if self.play_options == "continue":
+                self.check_play_options()
             
     def pause_resume(self,widget):
         if self.pause_btn.get_label() == "gtk-media-pause":
-                self.pause_btn.set_label("gtk-media-play")
-                self.player.set_state(gst.STATE_PAUSED)
+            self.pause_btn.set_label("gtk-media-play")
+            self.player.set_state(gst.STATE_PAUSED)
         else:
             self.pause_btn.set_label("gtk-media-pause")
             self.player.set_state(gst.STATE_PLAYING)
+            
+    def set_play_options(self,widget):
+        self.play_options = None
+        wname = widget.name
+        wstate = widget.get_active()
+        if wname == "continue_checkbox":
+            if wstate:
+                self.play_options = "continue"
+                if self.loop_checkbox.get_active():
+                    self.loop_checkbox.set_active(0)
+        elif wname == "loop_checkbox":
+            if wstate:
+                self.play_options = "loop"
+                if self.continue_checkbox.get_active():
+                    self.continue_checkbox.set_active(0)
+                    
+    def check_play_options(self):
+        if self.play_options == "loop":
+            path = self.model.get_path(self.iter)
+            if path:
+                self.treeview.set_cursor(path)
+        elif self.play_options == "continue":
+            iter = None
+            ## first, check if iter is still available (changed search while 
+            ## continue mode for exemple..)
+            if not self.model.get_path(self.iter) == self.path:
+                try:
+                    iter = self.model.get_iter_first()
+                except:
+                    return
+                if iter:
+                    path = self.model.get_path(iter)
+                    self.treeview.set_cursor(path)
+                return
+            ## check for next iter
+            try:
+                iter = self.model.iter_next(self.iter)
+            except:
+                return
+            if iter:
+                path = self.model.get_path(iter)
+                self.treeview.set_cursor(path)
+            else:
+                if not self.engine == "google.com":
+                    ## try changing page
+                    self.change_page()
+                    ## wait for 10 seconds or exit
+                    i = 0
+                    while i < 10:
+                        try:
+                            iter = self.model.get_iter_first()
+                        except:
+                            continue
+                        if iter:
+                            path = self.model.get_path(iter)
+                            self.treeview.set_cursor(path)
+                            break
+                        else:
+                            i += 1
+                            time.sleep(1)
+                
             
     def convert_ns(self, time_int):
         time_int = time_int / 1000000000
@@ -606,12 +673,14 @@ class GsongFinder(object):
 
     def geturl(self,url):
         self.progressbar.show()
-        gtk.main_iteration()
         urllib.urlretrieve(url, self.down_dir+"/"+self.media_name,
         lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,url,self.media_name,self.progressbar))
+        gtk.main_iteration()
         self.progressbar.hide()
         
     def exit(self,widget):
+        """Stop method, sets the event to terminate the thread's main loop"""
+        self.start_stop()
         gtk.main_quit()
 
 def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
@@ -619,9 +688,10 @@ def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
         #XXX Should handle possible filesize=-1.
         if filesize == -1:
             progressbar.set_text("Downloading %-66s" % name)
+            progressbar.set_pulse_step(0.2)
             progressbar.pulse()
-            time.sleep(0.005)
             gtk.main_iteration()
+            time.sleep(0.05)
         else:
             if numblocks != 0:
                 try:
