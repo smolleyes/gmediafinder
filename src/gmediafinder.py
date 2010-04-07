@@ -14,8 +14,13 @@ import pygst
 pygst.require("0.10")
 import gst
 import re
+import html5lib
+from html5lib import sanitizer, treebuilders, treewalkers, serializer
+
 
 from BeautifulSoup import BeautifulSoup
+from BeautifulSoup import BeautifulStoneSoup
+
 
 ## custom lib
 import constants
@@ -169,6 +174,8 @@ class GsongFinder(object):
         # print in the gui
         self.statbar.push(1,"Playing : %s" % self.media_name)
         self.start_stop()
+        #if self.play_btn.get_label() == "gtk-media-stop":
+        #    self.search_pic()
     
     def option_changed(self,widget):
         self.search_option = widget.name
@@ -254,10 +261,10 @@ class GsongFinder(object):
         except:
             return
         try:
-            handle = urllib2.urlopen(req)
+            code = urllib2.urlopen(req)
         except:
             return
-        results = handle.read()
+        results = self.clean_html(code.read())
         return results
         
     def analyse_links(self):
@@ -269,7 +276,7 @@ class GsongFinder(object):
         gtk.gdk.threads_leave()
 
         if data:
-            soup = BeautifulSoup(''.join(data))
+            soup = BeautifulStoneSoup(data,convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
             if self.engine == "google.com":
                 while search_thread_id == self.search_thread_id:
                     if search_thread_id == self.search_thread_id:
@@ -403,27 +410,26 @@ class GsongFinder(object):
                 ## l = ? and s = pages (10 results by page...)
                 nlist = []
                 link_list = []
+                try:
+                    files_count = soup.findAll('table')[1]
+                except:
+                    self.changepage_btn.hide()
+                    self.req_start = 10
+                    self.page = 1
+                    self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                    self.search_thread_id = None
+                    return
                 
-                files_count = soup.findAll('div',attrs={'class':'results'})[0]
                 if files_count:
                     try : 
                         files_count = files_count.findAll('b')[1].string
                     except:
                         self.informations_label.set_text("no results found for %s..." % (self.user_search))
                         return
-                    self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
-                    if re.search(r'(\S*No results)', files_count.__str__()):
-                        self.changepage_btn.hide()
-                        self.req_start = 10
-                        self.page = 1
-                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
-                        self.search_thread_id = None
-                        return
-                    else:
-                        self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.page, self.user_search,files_count))
-                        self.req_start += 10
-                        self.page += 1
-                        self.changepage_btn.show()
+                    self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.page, self.user_search,files_count))
+                    self.req_start += 10
+                    self.page += 1
+                    self.changepage_btn.show()
                 
                 alist = soup.findAll('a',attrs={'class':'snap_noshots'})
                 for a in alist:
@@ -442,6 +448,32 @@ class GsongFinder(object):
                     if name and link_list[i]:
                         self.add_sound(name, link_list[i])
                         i += 1
+    
+    
+    def sanitizer_factory(self,*args, **kwargs):
+        san = sanitizer.HTMLSanitizer(*args, **kwargs)
+        # This isn't available yet
+        # san.strip_tokens = True
+        return san
+
+    def clean_html(self,buf):
+        """Cleans HTML of dangerous tags and content."""
+        buf = buf.strip()
+        if not buf:
+            return buf
+    
+        p = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"),
+                tokenizer=self.sanitizer_factory)
+        dom_tree = p.parseFragment(buf)
+    
+        walker = treewalkers.getTreeWalker("dom")
+        stream = walker(dom_tree)
+    
+        s = serializer.htmlserializer.HTMLSerializer(
+                omit_optional_tags=False,
+                quote_attr_values=False)
+        return s.render(stream)
+
         
     def check_google_links(self,url):
         ## test the link for audio file on first scan
@@ -505,6 +537,26 @@ class GsongFinder(object):
                                         1, link,
                                         )
         return
+    
+    def search_pic(self):
+        name = os.path.splitext(self.media_name)[0].lower()
+        if not name:
+            return
+        user_search = urllib2.quote(name)
+        data = self.get_url_data('http://www.soundunwound.com/sp/release/find?searchPhrase='+user_search)
+        if data:
+            soup = BeautifulSoup(''.join(data))
+        else:
+            return
+        files_count = soup.findAll('td',attrs={'class':'image'})
+        if len(files_count) > 0:
+            alist = soup.findAll('a', href=True)
+        for link in alist:
+            value = link.attrMap['href']
+            print value
+            if re.search('(\S.*%s)' % name, value):
+                print link
+            
                 
     def start_search(self):
         self.search_thread_id = thread.start_new_thread(self.analyse_links,())
@@ -547,7 +599,10 @@ class GsongFinder(object):
                 
         time.sleep(0.2)
         while play_thread_id == self.play_thread_id:
-            pos_int = self.player.query_position(self.time_format, None)[0]
+            try:
+                pos_int = self.player.query_position(self.time_format, None)[0]
+            except:
+                return
             pos_str = self.convert_ns(pos_int)
             if play_thread_id == self.play_thread_id:
                 gtk.gdk.threads_enter()
@@ -680,7 +735,8 @@ class GsongFinder(object):
         
     def exit(self,widget):
         """Stop method, sets the event to terminate the thread's main loop"""
-        self.start_stop()
+        if self.player.set_state(gst.STATE_PLAYING):
+            self.player.set_state(gst.STATE_NULL)
         gtk.main_quit()
 
 def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
