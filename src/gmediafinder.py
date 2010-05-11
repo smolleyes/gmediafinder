@@ -431,9 +431,10 @@ class GsongFinder(object):
                     self.page += 1
                     self.changepage_btn.show()
                 
-                alist = soup.findAll('a',attrs={'class':'snap_noshots'})
+                alist = soup.findAll('a', href=True)
                 for a in alist:
                     link = a.attrMap['href']
+                    print link
                     try:
                         t = re.search('(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma)', link.lower())
                         link =  ''.join(t.group(1,2))
