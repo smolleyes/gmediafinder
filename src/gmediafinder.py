@@ -17,7 +17,6 @@ import re
 import html5lib
 from html5lib import sanitizer, treebuilders, treewalkers, serializer
 
-
 from BeautifulSoup import BeautifulSoup
 from BeautifulSoup import BeautifulStoneSoup
 
@@ -41,7 +40,7 @@ class GsongFinder(object):
         self.user_search = ""
         self.play_options = None
         self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
-        self.engine_list = {'woonz.com':'','google.com':'','skreemr.com':'','findmp3s.com':''}
+        self.engine_list = {'mp3realm.org':'','google.com':'','skreemr.com':'','findmp3s.com':''}
         self.engine = None
         self.search_option = "song_radio"
         self.banned_sites = ['worxpress','null3d','audiozen']
@@ -212,7 +211,7 @@ class GsongFinder(object):
         
     def reset_pages(self):
         self.changepage_btn.hide()
-        if self.engine == "woonz.com":
+        if self.engine == "mp3realm.org":
             self.req_start = 1
         elif self.engine == "findmp3s.com":
             self.req_start = 1
@@ -241,8 +240,8 @@ class GsongFinder(object):
             baseurl = "http://www.google.com/search?hl=en&num=100&q="
             urlopt = urllib.quote(self.search_requests[self.search_option]) +'%20'+user_search
             url = baseurl + urlopt
-        elif self.engine == "woonz.com":
-            url = "http://woonz.com/mp3.php?q=%s&s=1&p=%s" % (user_search,self.req_start)
+        elif self.engine == "mp3realm.org":
+            url = "http://mp3realm.org/search?q=%s&bitrate=&dur=0&pp=50&page=%s" % (user_search,self.req_start)
         elif self.engine == "findmp3s.com":
             url = "http://findmp3s.com/search/mp3/%s/%s.html" % (self.req_start,user_search)
         elif self.engine == "skreemr.com":
@@ -264,7 +263,10 @@ class GsongFinder(object):
             code = urllib2.urlopen(req)
         except:
             return
-        results = self.clean_html(code.read())
+        
+        # si besoin
+        #results = self.clean_html(code.read())
+        results = code.read()
         return results
         
     def analyse_links(self):
@@ -274,9 +276,9 @@ class GsongFinder(object):
         gtk.gdk.threads_enter()
         self.informations_label.set_text("Searching for %s with %s" % (self.user_search,self.engine))
         gtk.gdk.threads_leave()
-
+        
         if data:
-            soup = BeautifulStoneSoup(data,convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
+            soup = BeautifulStoneSoup(data,selfClosingTags=['/>'])
             if self.engine == "google.com":
                 while search_thread_id == self.search_thread_id:
                     if search_thread_id == self.search_thread_id:
@@ -315,21 +317,23 @@ class GsongFinder(object):
                     self.search_thread_id = None
                 self.informations_label.set_text("Scan terminated for your request : %s" % self.user_search)
             
-            elif self.engine == "woonz.com":
+            elif self.engine == "mp3realm.org":
+                soup = BeautifulStoneSoup(self.clean_html(data).decode('UTF8'))
+                
                 ## reset the treeview
                 nlist = []
                 link_list = []
-                txt = soup.findAll('td')[0].__str__()
                 files_count = None
                 try:
-                    files_count = re.search('(([0-9]{1,})([^audio & music]))', txt).group()
+                    #search results div
+                    files_count = soup.findAll('div',attrs={'id':'searchstat'})[0].findAll('strong')[1].string
                 except:
                     self.informations_label.set_text("no results found for %s..." % (self.user_search))
                     self.search_thread_id = None
                     return
                 
                 self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
-                if re.search(r'(\S*no result found)', soup.__str__()):
+                if re.search(r'(\S*Aucuns resultats)', soup.__str__()):
                     self.changepage_btn.hide()
                     self.req_start = 1
                     self.informations_label.set_text("no more files found for %s..." % (self.user_search))
@@ -340,25 +344,17 @@ class GsongFinder(object):
                     self.req_start += 1
                         
                 self.changepage_btn.show()
-                alist = soup.findAll('a',href=True)
-                #count_req = soup.findAll('td',attrs{'align':'left'})
-                #print count_req
-                for a in alist:
-                    name = None
-                    link = None
-                    #print a.attrs
-                    #print dir(a)
-                    
-                    ## search songg class for name
-                    if a.has_key('class'):
-                        if a['class'] == "songg":
-                            name = str(a.next.string).strip()
-                            nlist.append(name)
-                    ## row for download is Download...
-                    if a.string == "Download":
-                        l = a.attrs[0][1]
-                        link = "http://www.woonz.com/" + l
+                flist = re.findall('(http://.*\S\.mp3|\.mp4|\.ogg|\.aac|\.wav|\.wma)', data.lower())
+                for link in flist:
+                    if re.match('http://\'\+this', link) : 
+                        continue 
+                    try:
+                        link = urllib2.unquote(link)
+                        name = urllib2.unquote(os.path.basename(link.decode('UTF8')))
+                        nlist.append(name)
                         link_list.append(link)
+                    except:
+                        continue
                 ## add to the treeview if ok
                 i = 0
                 for name in nlist:
@@ -430,18 +426,18 @@ class GsongFinder(object):
                     self.req_start += 10
                     self.page += 1
                     self.changepage_btn.show()
-                
-                alist = soup.findAll('a', href=True)
+
+                alist = soup.findAll('param', attrs={'name':'FlashVars'})
                 for a in alist:
-                    link = a.attrMap['href']
-                    print link
+                    link = a.attrMap['value']
                     try:
-                        t = re.search('(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma)', link.lower())
-                        link =  ''.join(t.group(1,2))
-                        name = urllib2.unquote(os.path.basename(link))
+                        base = re.search('(soundfile=)(.*\S.mp3|.mp4|.ogg|.aac|.wav|.wma)', link.lower()).group(2)
+                        link = urllib2.unquote(base)
+                        name = urllib2.unquote(os.path.basename(link.decode('UTF8')))
                         nlist.append(name)
                         link_list.append(link)
                     except:
+                        print "pas moyen"
                         pass
                 ## add to the treeview if ok
                 i = 0
@@ -473,7 +469,7 @@ class GsongFinder(object):
         s = serializer.htmlserializer.HTMLSerializer(
                 omit_optional_tags=False,
                 quote_attr_values=False)
-        return s.render(stream)
+        return s.render(stream).decode('UTF8')
 
         
     def check_google_links(self,url):
@@ -564,6 +560,7 @@ class GsongFinder(object):
     
     def start_stop(self,widget=None):
         url = self.media_link
+        print "playing : "+url
         if url:
             if self.play_btn.get_label() == "gtk-media-play":
                 self.play_btn.set_label("gtk-media-stop")
