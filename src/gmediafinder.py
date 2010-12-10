@@ -17,9 +17,8 @@ import re
 import html5lib
 from html5lib import sanitizer, treebuilders, treewalkers, serializer
 
-from BeautifulSoup import BeautifulSoup
-from BeautifulSoup import BeautifulStoneSoup
-
+from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup 
+import HTMLParser 
 
 ## custom lib
 import constants
@@ -40,7 +39,7 @@ class GsongFinder(object):
         self.user_search = ""
         self.play_options = None
         self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
-        self.engine_list = {'mp3realm.org':'','google.com':'','skreemr.com':'','findmp3s.com':''}
+        self.engine_list = {'google.com':'','dilandau.com':'','mp3realm.org':''}
         self.engine = None
         self.search_option = "song_radio"
         self.banned_sites = ['worxpress','null3d','audiozen']
@@ -213,7 +212,7 @@ class GsongFinder(object):
         self.changepage_btn.hide()
         if self.engine == "mp3realm.org":
             self.req_start = 1
-        elif self.engine == "findmp3s.com":
+        elif self.engine == "dilandau.com":
             self.req_start = 1
         elif self.engine == "skreemr.com":
             self.req_start = 10
@@ -222,6 +221,7 @@ class GsongFinder(object):
     ## main search to receive original search when requesting next pages...
     def get_page_links(self,widget=None):
         self.url = self.search()
+        HTMLParser.attrfind = re.compile( r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?') 
         self.data = self.get_url_data(self.url)
         self.start_search()
         
@@ -242,11 +242,8 @@ class GsongFinder(object):
             url = baseurl + urlopt
         elif self.engine == "mp3realm.org":
             url = "http://mp3realm.org/search?q=%s&bitrate=&dur=0&pp=50&page=%s" % (user_search,self.req_start)
-        elif self.engine == "findmp3s.com":
-            url = "http://findmp3s.com/search/mp3/%s/%s.html" % (self.req_start,user_search)
-        elif self.engine == "skreemr.com":
-            ## l= ? and s = pages (10 results by page...)
-            url = "http://skreemr.com/results.jsp?q=%s&l=10&s=%s" % (user_search,self.req_start)
+        elif self.engine == "dilandau.com":
+            url = "http://fr.dilandau.com/telecharger_musique/%s-%d.html" % (user_search,self.req_start)
         print url
         ## 1 for first resquest to not test content type
         return url
@@ -362,17 +359,17 @@ class GsongFinder(object):
                         self.add_sound(name, link_list[i])
                         i += 1
                     
-            elif self.engine == "findmp3s.com":
-                ## l = ? and s = pages (10 results by page...)
+            elif self.engine == "dilandau.com":
+                soup = BeautifulStoneSoup(self.clean_html(data).decode('UTF8'))
                 nlist = []
                 link_list = []
-                
-                pagination_table = soup.findAll('table',attrs={'class':'pagination'})[0]
+                next_page = 1
+                pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
                 if pagination_table:
-                    next_check = pagination_table.findAll('a')
+                    next_check = pagination_table.findAll('a',attrs={'class':'pages'})
                     for a in next_check:
                         l = str(a.string)
-                        if l == "Next":
+                        if l == "Suivante >>":
                             next_page = 1
                     if next_page:
                         self.informations_label.set_text("Results page %s for %s...(Next page available)" % (self.req_start, self.user_search))
@@ -385,22 +382,24 @@ class GsongFinder(object):
                         self.search_thread_id = None
                         return
                 
-                alist = soup.findAll('a',href=True)
-                for a in alist:
-                    link = a.attrMap['href']
+                
+                flist = soup.findAll('a',attrs={'class':'button download_button'})
+                for link in flist:
+                    sound = re.search('(http://.*\S\.mp3|\.mp4|\.ogg|\.aac|\.wav|\.wma)', str(link)).group(0)
                     try:
-                        t = re.search('download.php\?name=(.*.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)', link.lower()).group(1)
-                        name = urllib2.unquote(t)
+                        link = urllib2.unquote(sound)
+                        name = urllib2.unquote(os.path.basename(link.decode('UTF8')))
                         nlist.append(name)
                         link_list.append(link)
                     except:
-                        pass
+                        continue
                 ## add to the treeview if ok
                 i = 0
                 for name in nlist:
                     if name and link_list[i]:
                         self.add_sound(name, link_list[i])
                         i += 1
+            
             
             elif self.engine == "skreemr.com":
                 ## l = ? and s = pages (10 results by page...)
