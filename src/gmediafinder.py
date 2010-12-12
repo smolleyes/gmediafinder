@@ -39,7 +39,7 @@ class GsongFinder(object):
         self.user_search = ""
         self.play_options = None
         self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
-        self.engine_list = {'google.com':'','dilandau.com':'','mp3realm.org':''}
+        self.engine_list = {'google.com':'','dilandau.com':'','mp3realm.org':'','tagoo.ru':''}
         self.engine = None
         self.search_option = "song_radio"
         self.banned_sites = ['worxpress','null3d','audiozen']
@@ -160,6 +160,18 @@ class GsongFinder(object):
             self.engine = None
             return
         print "%s engine selected" % self.engine
+        
+    def reset_pages(self):
+        self.changepage_btn.hide()
+        if self.engine == "mp3realm.org":
+            self.req_start = 1
+        elif self.engine == "dilandau.com":
+            self.req_start = 1
+        elif self.engine == "tagoo.ru":
+            self.req_start = 1
+        elif self.engine == "skreemr.com":
+            self.req_start = 10
+            self.page = 1
 
     def get_model(self,widget):
         selected = self.treeview.get_selection()
@@ -207,16 +219,7 @@ class GsongFinder(object):
             return self.prepare_search()
         else:
             return self.get_page_links()
-        
-    def reset_pages(self):
-        self.changepage_btn.hide()
-        if self.engine == "mp3realm.org":
-            self.req_start = 1
-        elif self.engine == "dilandau.com":
-            self.req_start = 1
-        elif self.engine == "skreemr.com":
-            self.req_start = 10
-            self.page = 1
+    
             
     ## main search to receive original search when requesting next pages...
     def get_page_links(self,widget=None):
@@ -243,6 +246,8 @@ class GsongFinder(object):
             url = "http://mp3realm.org/search?q=%s&bitrate=&dur=0&pp=50&page=%s" % (user_search,self.req_start)
         elif self.engine == "dilandau.com":
             url = "http://fr.dilandau.com/telecharger_musique/%s-%d.html" % (user_search,self.req_start)
+        elif self.engine == "tagoo.ru":
+            url = "http://tagoo.ru/en/search.php?for=audio&search=%s&page=%d&sort=date" % (user_search,self.req_start)
         print url
         ## 1 for first resquest to not test content type
         return url
@@ -276,7 +281,6 @@ class GsongFinder(object):
         HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
         
         if data:
-            print data
             soup = BeautifulStoneSoup(data,selfClosingTags=['/>'])
             if self.engine == "google.com":
                 while search_thread_id == self.search_thread_id:
@@ -362,7 +366,7 @@ class GsongFinder(object):
                         i += 1
                     
             elif self.engine == "dilandau.com":
-                soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'])
+                soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
                 nlist = []
                 link_list = []
                 next_page = 1
@@ -385,6 +389,54 @@ class GsongFinder(object):
                         return
                 
                 flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'button download_button'}) ]
+                for link in flist:
+                    try:
+                        link = urllib2.unquote(link)
+                        name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
+                        nlist.append(name)
+                        link_list.append(link)
+                    except:
+                        continue
+                ## add to the treeview if ok
+                i = 0
+                for name in nlist:
+                    if name and link_list[i]:
+                        self.add_sound(name, link_list[i])
+                        i += 1
+            
+            elif self.engine == "tagoo.ru":
+                soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
+                nlist = []
+                link_list = []
+                next_page = 1
+                results_div = soup.find('div',attrs={'class':'resultinfo'})
+                results_count = re.search('Found about (\d+)', str(results_div)).group(1)
+                print results_count
+                if results_count == 0 :
+                    self.informations_label.set_text("no results for your search : %s " % (self.user_search))
+                    return
+                else:
+					self.informations_label.set_text("%s results found for your search : %s " % (results_count, self.user_search))
+				
+                pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
+                if pagination_table:
+                    next_check = pagination_table.findAll('a')
+                    for a in next_check:
+                        l = str(a.string)
+                        if l == "Next":
+                            next_page = 1
+                    if next_page:
+                        self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,results_count))
+                        self.req_start += 1
+                        self.changepage_btn.show()
+                    else:
+                        self.changepage_btn.hide()
+                        self.req_start = 1
+                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                        self.search_thread_id = None
+                        return
+                
+                flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'link'}) ]
                 for link in flist:
                     try:
                         link = urllib2.unquote(link)
@@ -507,7 +559,6 @@ class GsongFinder(object):
             alist = soup.findAll('a', href=True)
         for link in alist:
             value = link.attrMap['href']
-            print value
             if re.search('(\S.*%s)' % name, value):
                 print link
             
