@@ -183,7 +183,8 @@ class GsongFinder(object):
         self.media_link = self.model.get_value(self.iter, 1)
         # print in the gui
         self.statbar.push(1,"Playing : %s" % self.media_name)
-        self.start_stop()
+        self.stop_play()
+        self.start_play(self.media_link)
         #if self.play_btn.get_label() == "gtk-media-stop":
         #    self.search_pic()
     
@@ -571,15 +572,21 @@ class GsongFinder(object):
         print "playing : "+url
         if url:
             if self.play_btn.get_label() == "gtk-media-play":
-                self.play_btn.set_label("gtk-media-stop")
-                self.player.set_property("uri", url)
-                self.player.set_state(gst.STATE_PLAYING)
-                self.play_thread_id = thread.start_new_thread(self.play_thread, ())
+                return self.start_play(url)
             else:
-                self.play_thread_id = None
-                self.player.set_state(gst.STATE_NULL)
-                self.play_btn.set_label("gtk-media-play")
-                self.time_label.set_text("00:00 / 00:00")
+               return self.stop_play(url)
+                
+    def start_play(self,url):
+		self.play_btn.set_label("gtk-media-stop")
+		self.player.set_property("uri", url)
+		self.player.set_state(gst.STATE_PLAYING)
+		self.play_thread_id = thread.start_new_thread(self.play_thread, ())
+        
+    def stop_play(self):
+		self.play_thread_id = None
+		self.player.set_state(gst.STATE_NULL)
+		self.play_btn.set_label("gtk-media-play")
+		self.time_label.set_text("00:00 / 00:00")
     
     def play_thread(self):
         play_thread_id = self.play_thread_id
