@@ -43,9 +43,9 @@ class GsongFinder(object):
         self.engine = None
         self.search_option = "song_radio"
         self.banned_sites = ['worxpress','null3d','audiozen']
-        self.search_requests = {'song_radio':'mp3 "intitle:index of "',
-                                'video_radio' : 'intitle:index.of   "Parent directory"   "Last modified" "Description"  "Size" (avi|ogv|mpg|mpeg|wmv|mp4) -html -htm -php -asp -txt -pls',
-                                'img_radio':'intitle:index.of   "Parent directory"   "Last modified" "Description"  "Size" (png|jpeg|jpg|svg|gif) -html -htm -php -asp -txt -pls',
+        self.search_requests = {'song_radio':'(mp3|wav|wmv|aac|ogg) "index of "',
+                                'video_radio' : '(avi|ogv|mpg|mpeg|wmv|mp4) "index of "',
+                                'img_radio':'(png|jpeg|jpg|svg|gif) "index of "',
                                 }
         ## small config dir for downloads...
         if not os.path.exists(self.down_dir):
@@ -95,6 +95,14 @@ class GsongFinder(object):
         # progressbar
         self.progressbar = self.gladeGui.get_widget("progressbar")
         
+        # notebook
+        self.notebook = self.gladeGui.get_widget("notebook")
+        self.video_box = self.gladeGui.get_widget("video_box")
+        self.movie_window = gtk.DrawingArea()
+        self.video_box.add(self.movie_window)
+        self.pic_box = self.gladeGui.get_widget("picture_box")
+        self.notebook.set_current_page(0)
+        
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
         "on_song_radio_toggled" : self.option_changed,
@@ -134,14 +142,17 @@ class GsongFinder(object):
         ## connect treeview signals 
         self.treeview.connect('cursor-changed',self.get_model)
         
-        ## create the player
-        
+        ## create the players
         self.player = gst.element_factory_make("playbin2", "player")
         sink = gst.element_factory_make("autoaudiosink")
         self.player.set_property("audio-sink", sink)
         bus = self.player.get_bus()
         bus.add_signal_watch()
+        bus.enable_sync_message_emission()
         bus.connect("message", self.on_message)
+        bus.connect("sync-message::element", self.on_sync_message)
+        
+        
         ## time
         self.time_format = gst.Format(gst.FORMAT_TIME)
         
@@ -189,7 +200,14 @@ class GsongFinder(object):
         #    self.search_pic()
     
     def option_changed(self,widget):
-        self.search_option = widget.name
+		self.search_option = widget.name
+		if self.search_option == "video_radio" :
+			self.notebook.set_current_page(1)
+		elif self.search_option == "img_radio" :
+			self.notebook.set_current_page(2)
+		elif self.search_option == "song_radio" :
+			self.notebook.set_current_page(0)
+	
         
     def prepare_search(self,widget=None):
         if self.search_thread_id:
@@ -240,8 +258,8 @@ class GsongFinder(object):
         urlopt = ""
         baseurl = ""
         if self.engine == "google.com":
-            baseurl = "http://www.google.com/search?num=100&hl=fr&lr=&as_qdr=all&q="
-            urlopt = urllib.quote(self.search_requests[self.search_option]) +'%20'+user_search+"&aq=f&aqi=&aql=&oq=&gs_rfai="
+            baseurl = "http://www.google.fr/search?num=100&ie=UTF-8&q="
+            urlopt = urllib.quote(self.search_requests[self.search_option]) +'%20'+user_search
             url = baseurl + urlopt
         elif self.engine == "mp3realm.org":
             url = "http://mp3realm.org/search?q=%s&bitrate=&dur=0&pp=50&page=%s" % (user_search,self.req_start)
@@ -254,8 +272,8 @@ class GsongFinder(object):
         return url
 
     def get_url_data(self,url):
-        user_agent =  'Mozilla/5.0 (X11; U; Linux i686; fr; rv:1.9.2) Gecko/20100124 Ubuntu/9.10 (karmic) Firefox/3.6'
-        headers =  { 'User-Agent' : user_agent , 'Accept-Language' : 'en-us' }
+        user_agent = 'Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.15 (KHTML, like Gecko) Ubuntu/10.10 Chromium/10.0.608.0 Chrome/10.0.608.0 Safari/534.15'
+        headers =  { 'User-Agent' : user_agent , 'Accept-Language' : 'fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4' }
         ## start the request
         try:
             req = urllib2.Request(url,None,headers)
@@ -301,12 +319,11 @@ class GsongFinder(object):
                                         ## if ok start the loop
                                         gtk.gdk.threads_enter()
                                         for s in slist:
-                                            self.informations_label.set_text("Sound : %s" % s.string)
                                             print "scanning webpage : %s" % s.string
                                             try:
-                                                req = re.search('(.*%s.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)' % self.user_search.lower(), urllib2.unquote(s.__str__().lower())).group(1,2)
+                                                req = re.search('(.*%s.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpg|.mpeg|.mkv|.ogv)' % self.user_search.lower(), urllib2.unquote(s.__str__().lower())).group()
                                             except:
-                                                continue 
+                                                continue
                                             link = url + s.attrMap['href']
                                             name = urllib2.unquote(os.path.basename(link))
                                             self.add_sound(name, link)
@@ -491,10 +508,10 @@ class GsongFinder(object):
             return
         ## first check if content is readeable
         try:
-            name = re.search('href="(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)"', urllib2.unquote(subsoup.__str__().lower())).group(1,2)
+            name = re.search('href="(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv)"', urllib2.unquote(subsoup.__str__().lower())).group(1,2)
         except:
             return
-        original_name = req = re.search('href="(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv)"', urllib2.unquote(subsoup.__str__())).group(1,2)
+        original_name = req = re.search('href="(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.ogv|.mpg)"', urllib2.unquote(subsoup.__str__())).group(1,2)
         file = ''.join(original_name)
         print "file to test content-type: %s" % file
         try:
@@ -507,7 +524,8 @@ class GsongFinder(object):
         ## test headers
         type = req.headers.get("content-type")
         
-        if re.search('audio', type):
+        exp_reg = re.compile("(audio|video)")
+        if re.search(exp_reg, type):
             print "%s type detected ok, sounds from this website added to the playlist" % type
             return subsoup
         else:
@@ -577,12 +595,17 @@ class GsongFinder(object):
                return self.stop_play(url)
                 
     def start_play(self,url):
+		exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
+		if re.search(exp_reg, url):
+			self.notebook.set_current_page(1)
+			self.option_videos.set_active(True)
 		self.play_btn.set_label("gtk-media-stop")
 		self.player.set_property("uri", url)
 		self.player.set_state(gst.STATE_PLAYING)
 		self.play_thread_id = thread.start_new_thread(self.play_thread, ())
+		self.play_thread_id = thread.start_new_thread(self.play_thread, ())
         
-    def stop_play(self):
+    def stop_play(self,widget=None):
 		self.play_thread_id = None
 		self.player.set_state(gst.STATE_NULL)
 		self.play_btn.set_label("gtk-media-play")
@@ -734,6 +757,17 @@ class GsongFinder(object):
             time_str = time_str + "0" + str(time_int)
             
         return time_str
+        
+    def on_sync_message(self, bus, message):
+		if message.structure is None:
+			return
+		message_name = message.structure.get_name()
+		if message_name == "prepare-xwindow-id":
+			imagesink = message.src
+			imagesink.set_property("force-aspect-ratio", True)
+			gtk.gdk.threads_enter()
+			imagesink.set_xwindow_id(self.movie_window.window.xid)
+			gtk.gdk.threads_leave()
     
     def download_file(self,widget):
         print "downloading %s" % self.media_link
@@ -776,8 +810,9 @@ def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
                     progressbar.hide()
                     return
         return
+        
 
 if __name__ == "__main__":
-    GsongFinder()
+    gm = GsongFinder()
     gtk.main()
 

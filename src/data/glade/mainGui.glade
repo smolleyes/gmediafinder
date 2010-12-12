@@ -1,4 +1,4 @@
-<?xml version="1.0"?>
+<?xml version="1.0" encoding="UTF-8"?>
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
@@ -7,7 +7,6 @@
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
-        <property name="orientation">vertical</property>
         <property name="spacing">5</property>
         <child>
           <widget class="GtkFrame" id="frame1">
@@ -50,7 +49,6 @@
         <child>
           <widget class="GtkVBox" id="vbox2">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
             <child>
               <widget class="GtkHBox" id="hbox2">
                 <property name="visible">True</property>
@@ -137,7 +135,7 @@
                   <widget class="GtkEntry" id="search_entry">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="invisible_char">&#x25CF;</property>
+                    <property name="invisible_char">●</property>
                     <signal name="activate" handler="on_search_entry_activate"/>
                   </widget>
                   <packing>
@@ -188,13 +186,75 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkScrolledWindow" id="results_scrollbar">
+          <widget class="GtkNotebook" id="notebook">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="hscrollbar_policy">automatic</property>
-            <property name="vscrollbar_policy">automatic</property>
+            <property name="show_tabs">False</property>
             <child>
-              <placeholder/>
+              <widget class="GtkScrolledWindow" id="results_scrollbar">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="hscrollbar_policy">automatic</property>
+                <property name="vscrollbar_policy">automatic</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </widget>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label4">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">page 1</property>
+              </widget>
+              <packing>
+                <property name="tab_fill">False</property>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkVBox" id="video_box">
+                <property name="visible">True</property>
+                <property name="homogeneous">True</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </widget>
+              <packing>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label5">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">page 2</property>
+              </widget>
+              <packing>
+                <property name="position">1</property>
+                <property name="tab_fill">False</property>
+                <property name="type">tab</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkVBox" id="picture_box">
+                <property name="visible">True</property>
+                <child>
+                  <placeholder/>
+                </child>
+              </widget>
+              <packing>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkLabel" id="label6">
+                <property name="visible">True</property>
+                <property name="label" translatable="yes">page 3</property>
+              </widget>
+              <packing>
+                <property name="position">2</property>
+                <property name="tab_fill">False</property>
+                <property name="type">tab</property>
+              </packing>
             </child>
           </widget>
           <packing>
@@ -204,11 +264,9 @@
         <child>
           <widget class="GtkVBox" id="vbox3">
             <property name="visible">True</property>
-            <property name="orientation">vertical</property>
             <child>
               <widget class="GtkVBox" id="vbox4">
                 <property name="visible">True</property>
-                <property name="orientation">vertical</property>
                 <child>
                   <widget class="GtkHBox" id="hbox4">
                     <property name="visible">True</property>
@@ -312,7 +370,7 @@
                             <child>
                               <widget class="GtkLabel" id="label2">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">T&#xE9;l&#xE9;charger</property>
+                                <property name="label" translatable="yes">Télécharger</property>
                               </widget>
                               <packing>
                                 <property name="padding">2</property>
@@ -362,6 +420,7 @@
               <widget class="GtkStatusbar" id="statusbar">
                 <property name="visible">True</property>
                 <property name="spacing">2</property>
+                <property name="has_resize_grip">False</property>
               </widget>
               <packing>
                 <property name="position">0</property>
