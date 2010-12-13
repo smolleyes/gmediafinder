@@ -1,0 +1,17 @@
+README
+gmediafinder
+setup.py
+Makefile
+VERSION
+COPYING
+gmediafinder.desktop
+GmediaFinder/__init__.py
+GmediaFinder/constants.py
+GmediaFinder/gmediafinder.py
+GmediaFinder/data/__init__.py
+GmediaFinder/data/glade/__init__.py
+GmediaFinder/data/glade/mainGui.glade
+images/22x22/gmediafinder.png
+images/24x24/gmediafinder.png
+images/32x32/gmediafinder.png
+images/48x48/gmediafinder.png
