@@ -164,9 +164,6 @@ class GsongFinder(object):
         self.window.show_all()
         self.progressbar.hide()
         self.changepage_btn.hide()
-        ## start main loop
-        gobject.threads_init()
-        gtk.main()
 
     def set_engine(self,widget=None):
         self.engine = self.engine_selector.get_active_text()
@@ -203,7 +200,6 @@ class GsongFinder(object):
         if self.engine == "youtube.com" :
             self.notebook.set_current_page(1)
         self.statbar.push(1,"Playing : %s" % self.media_name)
-        print "playing : " + self.media_link
         self.stop_play()
         self.start_play(self.media_link)
         #if self.play_btn.get_label() == "gtk-media-stop":
@@ -823,9 +819,7 @@ class GsongFinder(object):
         if message_name == "prepare-xwindow-id":
             imagesink = message.src
             imagesink.set_property("force-aspect-ratio", True)
-            gtk.gdk.threads_enter()
             imagesink.set_xwindow_id(self.movie_window.window.xid)
-            gtk.gdk.threads_leave()
 
     def download_file(self,widget):
         print "downloading %s" % self.media_link
@@ -897,5 +891,6 @@ def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
 
 if __name__ == "__main__":
     g = GsongFinder()
-    g.notebook.set_current_page(1)
+    ## start main loop
+    gobject.threads_init()
     gtk.main()
