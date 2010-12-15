@@ -203,6 +203,7 @@ class GsongFinder(object):
         if self.engine == "youtube.com" :
             self.notebook.set_current_page(1)
         self.statbar.push(1,"Playing : %s" % self.media_name)
+        print "playing : " + self.media_link
         self.stop_play()
         self.start_play(self.media_link)
         #if self.play_btn.get_label() == "gtk-media-stop":
