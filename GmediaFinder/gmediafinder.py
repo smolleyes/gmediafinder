@@ -25,8 +25,6 @@ import HTMLParser
 ## custom lib
 import constants
 
-gtk.gdk.threads_init() 
-
 # timeout in seconds
 timeout = 10
 socket.setdefaulttimeout(timeout)
@@ -167,6 +165,7 @@ class GsongFinder(object):
         self.progressbar.hide()
         self.changepage_btn.hide()
         ## start main loop
+        gobject.threads_init()
         gtk.main()
     
     def set_engine(self,widget=None):
