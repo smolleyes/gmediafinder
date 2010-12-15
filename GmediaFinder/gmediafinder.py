@@ -19,7 +19,7 @@ import html5lib
 import time
 from html5lib import sanitizer, treebuilders, treewalkers, serializer
 
-from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup 
+from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import HTMLParser
 
 ## custom lib
@@ -62,10 +62,10 @@ class GsongFinder(object):
         else:
             img_path = os.path.join(constants.img_path)
         self.window.set_icon_from_file(os.path.join(img_path,'gmediafinder.png'))
-        
+
         ## informations
         self.informations_label = self.gladeGui.get_widget("info_label")
-        
+
         ## search options
         self.options_box = self.gladeGui.get_widget("options_box")
         self.option_songs = self.gladeGui.get_widget("song_radio")
@@ -77,7 +77,7 @@ class GsongFinder(object):
         self.engine_selector.set_active(0)
         for engine in self.engine_list:
             self.engine_selector.append_text(engine)
-        
+
         ## control section
         self.play_btn = self.gladeGui.get_widget("play_btn")
         self.pause_btn = self.gladeGui.get_widget("pause_btn")
@@ -86,27 +86,27 @@ class GsongFinder(object):
         self.time_label = self.gladeGui.get_widget("time_label")
         self.time_label.set_text("00:00 / 00:00")
         self.down_btn = self.gladeGui.get_widget("down_btn")
-        
+
         self.continue_checkbox = self.gladeGui.get_widget("continue_checkbox")
         self.loop_checkbox = self.gladeGui.get_widget("loop_checkbox")
         ## search bar
         self.search_entry = self.gladeGui.get_widget("search_entry")
         self.search_btn = self.gladeGui.get_widget("search_btn")
         self.changepage_btn = self.gladeGui.get_widget("changepage_btn")
-        
+
         ## statbar
         self.statbar = self.gladeGui.get_widget("statusbar")
-        
+
         # progressbar
         self.progressbar = self.gladeGui.get_widget("progressbar")
-        
+
         # notebook
         self.notebook = self.gladeGui.get_widget("notebook")
         self.video_box = self.gladeGui.get_widget("video_box")
         self.movie_window = gtk.DrawingArea()
         self.video_box.add(self.movie_window)
         self.pic_box = self.gladeGui.get_widget("picture_box")
-        
+
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
         "on_song_radio_toggled" : self.option_changed,
@@ -124,7 +124,7 @@ class GsongFinder(object):
         }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
-        
+
         ## finally setup the list
         self.model = gtk.ListStore(str,str)
         self.treeview = gtk.TreeView()
@@ -143,9 +143,9 @@ class GsongFinder(object):
         self.columns[0].set_sort_column_id(1)
         self.columns[1].set_visible(0)
         self.results_scroll.add(self.treeview)
-        ## connect treeview signals 
+        ## connect treeview signals
         self.treeview.connect('cursor-changed',self.get_model)
-        
+
         ## create the players
         self.player = gst.element_factory_make("playbin2", "player")
         sink = gst.element_factory_make("autoaudiosink")
@@ -155,11 +155,11 @@ class GsongFinder(object):
         bus.enable_sync_message_emission()
         bus.connect("message", self.on_message)
         bus.connect("sync-message::element", self.on_sync_message)
-        
-        
+
+
         ## time
         self.time_format = gst.Format(gst.FORMAT_TIME)
-        
+
         ## start gui
         self.window.show_all()
         self.progressbar.hide()
@@ -167,7 +167,7 @@ class GsongFinder(object):
         ## start main loop
         gobject.threads_init()
         gtk.main()
-    
+
     def set_engine(self,widget=None):
         self.engine = self.engine_selector.get_active_text()
         self.changepage_btn.hide()
@@ -176,7 +176,7 @@ class GsongFinder(object):
             self.engine = None
             return
         print "%s engine selected" % self.engine
-        
+
     def reset_pages(self):
         self.changepage_btn.hide()
         if self.engine == "mp3realm.org":
@@ -208,23 +208,23 @@ class GsongFinder(object):
         self.start_play(self.media_link)
         #if self.play_btn.get_label() == "gtk-media-stop":
         #    self.search_pic()
-    
+
     def option_changed(self,widget):
-		self.search_option = widget.name
-		if self.search_option == "video_radio" :
-			self.notebook.set_current_page(0)
-		elif self.search_option == "img_radio" :
-			self.notebook.set_current_page(2)
-		elif self.search_option == "song_radio" :
-			self.notebook.set_current_page(0)
-	
-        
+        self.search_option = widget.name
+        if self.search_option == "video_radio" :
+            self.notebook.set_current_page(0)
+        elif self.search_option == "img_radio" :
+            self.notebook.set_current_page(2)
+        elif self.search_option == "song_radio" :
+            self.notebook.set_current_page(0)
+
+
     def prepare_search(self,widget=None):
         if self.search_thread_id:
             while self.search_thread_id:
                 self.search_thread_id = None
                 time.sleep(0.5)
-                
+
         self.user_search = self.search_entry.get_text()
         #self.user_search_encoded = u'%s' % self.user_search
         #print self.user_search_encoded
@@ -236,9 +236,9 @@ class GsongFinder(object):
             return
         self.main_engine = self.engine_selector.get_active_text()
         self.reset_pages()
-        
+
         return self.get_page_links()
-        
+
     def change_page(self,widget=None):
         user_search = self.search_entry.get_text()
         engine = self.engine_selector.get_active_text()
@@ -248,14 +248,14 @@ class GsongFinder(object):
             return self.prepare_search()
         else:
             return self.get_page_links()
-    
-            
+
+
     ## main search to receive original search when requesting next pages...
-    def get_page_links(self,widget=None): 
+    def get_page_links(self,widget=None):
         self.url = self.search()
         self.data = self.get_url_data(self.url)
         self.start_search()
-        
+
     def search(self):
         self.model.clear()
         self.informations_label.set_text("Searching for %s with %s " % (self.user_search,self.engine))
@@ -295,13 +295,13 @@ class GsongFinder(object):
             code = urllib2.urlopen(req)
         except:
             return
-        
+
         # si besoin
         #results = self.clean_html(code.read())
-        
+
         results = code.read()
         return results
-        
+
     def analyse_links(self):
         data = self.data
         url = self.url
@@ -310,7 +310,7 @@ class GsongFinder(object):
         self.informations_label.set_text("Searching for %s with %s" % (self.user_search,self.engine))
         gtk.gdk.threads_leave()
         HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
-        
+
         if data:
             soup = BeautifulStoneSoup(data,selfClosingTags=['/>'])
             if self.engine == "google.com":
@@ -349,10 +349,10 @@ class GsongFinder(object):
                             pass
                     self.search_thread_id = None
                 self.informations_label.set_text("Scan terminated for your request : %s" % self.user_search)
-            
+
             elif self.engine == "mp3realm.org":
                 soup = BeautifulStoneSoup(self.clean_html(data).decode('UTF8'))
-                
+
                 ## reset the treeview
                 nlist = []
                 link_list = []
@@ -364,7 +364,7 @@ class GsongFinder(object):
                     self.informations_label.set_text("no results found for %s..." % (self.user_search))
                     self.search_thread_id = None
                     return
-                
+
                 self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
                 if re.search(r'(\S*Aucuns resultats)', soup.__str__()):
                     self.changepage_btn.hide()
@@ -375,12 +375,12 @@ class GsongFinder(object):
                 else:
                     self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,files_count))
                     self.req_start += 1
-                        
+
                 self.changepage_btn.show()
                 flist = re.findall('(http://.*\S\.mp3|\.mp4|\.ogg|\.aac|\.wav|\.wma)', data.lower())
                 for link in flist:
-                    if re.match('http://\'\+this', link) : 
-                        continue 
+                    if re.match('http://\'\+this', link) :
+                        continue
                     try:
                         link = urllib2.unquote(link)
                         name = urllib2.unquote(os.path.basename(link.decode('UTF8')))
@@ -394,7 +394,7 @@ class GsongFinder(object):
                     if name and link_list[i]:
                         self.add_sound(name, link_list[i])
                         i += 1
-                    
+
             elif self.engine == "dilandau.com":
                 soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
                 nlist = []
@@ -417,7 +417,7 @@ class GsongFinder(object):
                         self.informations_label.set_text("no more files found for %s..." % (self.user_search))
                         self.search_thread_id = None
                         return
-                
+
                 flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'button download_button'}) ]
                 for link in flist:
                     try:
@@ -433,7 +433,7 @@ class GsongFinder(object):
                     if name and link_list[i]:
                         self.add_sound(name, link_list[i])
                         i += 1
-            
+
             elif self.engine == "tagoo.ru":
                 soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
                 nlist = []
@@ -446,8 +446,8 @@ class GsongFinder(object):
                     self.informations_label.set_text("no results for your search : %s " % (self.user_search))
                     return
                 else:
-					self.informations_label.set_text("%s results found for your search : %s " % (results_count, self.user_search))
-				
+                    self.informations_label.set_text("%s results found for your search : %s " % (results_count, self.user_search))
+
                 pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
                 if pagination_table:
                     next_check = pagination_table.findAll('a')
@@ -465,7 +465,7 @@ class GsongFinder(object):
                         self.informations_label.set_text("no more files found for %s..." % (self.user_search))
                         self.search_thread_id = None
                         return
-                
+
                 flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'link'}) ]
                 for link in flist:
                     try:
@@ -481,7 +481,7 @@ class GsongFinder(object):
                     if name and link_list[i]:
                         self.add_sound(name, link_list[i])
                         i += 1
-                        
+
             elif self.engine == "youtube.com":
                 soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
                 nlist = []
@@ -492,8 +492,8 @@ class GsongFinder(object):
                     self.informations_label.set_text("no results for your search : %s " % (self.user_search))
                     return
                 else:
-					self.informations_label.set_text("%s results found for your search : %s " % (results_count, self.user_search))
-				
+                    self.informations_label.set_text("%s results found for your search : %s " % (results_count, self.user_search))
+
                 pagination_table = soup.findAll('div',attrs={'class':'yt-uix-pager'})
                 if pagination_table:
                     next_page = 1
@@ -507,7 +507,7 @@ class GsongFinder(object):
                         self.informations_label.set_text("no more files found for %s..." % (self.user_search))
                         self.search_thread_id = None
                         return
-                
+
                 flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'video-thumb-with-addto video-thumb ux-thumb-128'}) ]
                 for link in flist:
                     vid_id = re.search("v=(\S+)",link).group(1)
@@ -530,9 +530,9 @@ class GsongFinder(object):
                     if name and link_list[i]:
                         self.add_sound(name, link_list[i])
                         i += 1
-                    
 
-    
+
+
     def sanitizer_factory(self,*args, **kwargs):
         san = sanitizer.HTMLSanitizer(*args, **kwargs)
         # This isn't available yet
@@ -544,20 +544,20 @@ class GsongFinder(object):
         buf = buf.strip()
         if not buf:
             return buf
-    
+
         p = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"),
                 tokenizer=self.sanitizer_factory)
         dom_tree = p.parseFragment(buf)
-    
+
         walker = treewalkers.getTreeWalker("dom")
         stream = walker(dom_tree)
-    
+
         s = serializer.htmlserializer.HTMLSerializer(
                 omit_optional_tags=False,
                 quote_attr_values=False)
         return s.render(stream).decode('UTF-8')
 
-        
+
     def check_google_links(self,url):
         ## test the link for audio file on first scan
         subreq = self.get_url_data(url)
@@ -582,7 +582,7 @@ class GsongFinder(object):
             return
         ## test headers
         type = req.headers.get("content-type")
-        
+
         exp_reg = re.compile("(audio|video)")
         if re.search(exp_reg, type):
             print "%s type detected ok, sounds from this website added to the playlist" % type
@@ -590,14 +590,14 @@ class GsongFinder(object):
         else:
             print "wrong media type %s, link to another webpage...website rejected" % type
             return
-    
+
     def add_sound(self, name, link):
         self.iter = self.model.append()
         self.model.set(self.iter,
                        0, name,
                        1, link,
                        )
-    
+
     def search_videos(self,liste):
         self.model.clear()
         for url in liste:
@@ -621,7 +621,7 @@ class GsongFinder(object):
                                         1, link,
                                         )
         return
-    
+
     def search_pic(self):
         name = os.path.splitext(self.media_name)[0].lower()
         if not name:
@@ -639,11 +639,11 @@ class GsongFinder(object):
             value = link.attrMap['href']
             if re.search('(\S.*%s)' % name, value):
                 print link
-            
-                
+
+
     def start_search(self):
         self.search_thread_id = thread.start_new_thread(self.analyse_links,())
-    
+
     def start_stop(self,widget=None):
         url = self.media_link
         print "playing : "+url
@@ -651,24 +651,24 @@ class GsongFinder(object):
             if self.play_btn.get_label() == "gtk-media-play":
                 return self.start_play(url)
             else:
-               return self.stop_play(url)
-                
+                return self.stop_play(url)
+
     def start_play(self,url):
-		exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
-		if re.search(exp_reg, url):
-			self.notebook.set_current_page(1)
-		self.play_btn.set_label("gtk-media-stop")
-		self.player.set_property("uri", url)
-		self.player.set_state(gst.STATE_PLAYING)
-		self.play_thread_id = thread.start_new_thread(self.play_thread, ())
-		self.play_thread_id = thread.start_new_thread(self.play_thread, ())
-        
+        exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
+        if re.search(exp_reg, url):
+            self.notebook.set_current_page(1)
+        self.play_btn.set_label("gtk-media-stop")
+        self.player.set_property("uri", url)
+        self.player.set_state(gst.STATE_PLAYING)
+        self.play_thread_id = thread.start_new_thread(self.play_thread, ())
+        self.play_thread_id = thread.start_new_thread(self.play_thread, ())
+
     def stop_play(self,widget=None):
-		self.play_thread_id = None
-		self.player.set_state(gst.STATE_NULL)
-		self.play_btn.set_label("gtk-media-play")
-		self.time_label.set_text("00:00 / 00:00")
-    
+        self.play_thread_id = None
+        self.player.set_state(gst.STATE_NULL)
+        self.play_btn.set_label("gtk-media-play")
+        self.time_label.set_text("00:00 / 00:00")
+
     def play_thread(self):
         play_thread_id = self.play_thread_id
         gtk.gdk.threads_enter()
@@ -690,7 +690,7 @@ class GsongFinder(object):
                 break
             except:
                 pass
-                
+
         time.sleep(0.2)
         while play_thread_id == self.play_thread_id:
             try:
@@ -703,7 +703,7 @@ class GsongFinder(object):
                 self.time_label.set_text(pos_str + " / " + dur_str)
                 gtk.gdk.threads_leave()
             time.sleep(1)
-            
+
     def on_message(self, bus, message):
         t = message.type
         if t == gst.MESSAGE_EOS:
@@ -722,7 +722,7 @@ class GsongFinder(object):
             ## continue if continue option selected...
             if self.play_options == "continue":
                 self.check_play_options()
-            
+
     def pause_resume(self,widget):
         if self.pause_btn.get_label() == "gtk-media-pause":
             self.pause_btn.set_label("gtk-media-play")
@@ -730,7 +730,7 @@ class GsongFinder(object):
         else:
             self.pause_btn.set_label("gtk-media-pause")
             self.player.set_state(gst.STATE_PLAYING)
-            
+
     def set_play_options(self,widget):
         self.play_options = None
         wname = widget.name
@@ -745,7 +745,7 @@ class GsongFinder(object):
                 self.play_options = "loop"
                 if self.continue_checkbox.get_active():
                     self.continue_checkbox.set_active(0)
-                    
+
     def check_play_options(self):
         if self.play_options == "loop":
             path = self.model.get_path(self.iter)
@@ -753,7 +753,7 @@ class GsongFinder(object):
                 self.treeview.set_cursor(path)
         elif self.play_options == "continue":
             iter = None
-            ## first, check if iter is still available (changed search while 
+            ## first, check if iter is still available (changed search while
             ## continue mode for exemple..)
             if not self.model.get_path(self.iter) == self.path:
                 try:
@@ -790,8 +790,8 @@ class GsongFinder(object):
                         else:
                             i += 1
                             time.sleep(1)
-                
-            
+
+
     def convert_ns(self, time_int):
         time_int = time_int / 1000000000
         time_str = ""
@@ -813,20 +813,20 @@ class GsongFinder(object):
             time_str = time_str + str(time_int)
         else:
             time_str = time_str + "0" + str(time_int)
-            
+
         return time_str
-        
+
     def on_sync_message(self, bus, message):
-		if message.structure is None:
-			return
-		message_name = message.structure.get_name()
-		if message_name == "prepare-xwindow-id":
-			imagesink = message.src
-			imagesink.set_property("force-aspect-ratio", True)
-			gtk.gdk.threads_enter()
-			imagesink.set_xwindow_id(self.movie_window.window.xid)
-			gtk.gdk.threads_leave()
-    
+        if message.structure is None:
+            return
+        message_name = message.structure.get_name()
+        if message_name == "prepare-xwindow-id":
+            imagesink = message.src
+            imagesink.set_property("force-aspect-ratio", True)
+            gtk.gdk.threads_enter()
+            imagesink.set_xwindow_id(self.movie_window.window.xid)
+            gtk.gdk.threads_leave()
+
     def download_file(self,widget):
         print "downloading %s" % self.media_link
         return self.geturl(self.media_link)
@@ -837,7 +837,7 @@ class GsongFinder(object):
         lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,url,self.media_name,self.progressbar))
         gtk.main_iteration()
         self.progressbar.hide()
-        
+
     def exit(self,widget):
         """Stop method, sets the event to terminate the thread's main loop"""
         if self.player.set_state(gst.STATE_PLAYING):
@@ -872,31 +872,30 @@ def _GetYoutubeVideoInfo(videoID,eurl=None):
 def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
         #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
         #XXX Should handle possible filesize=-1.
-        if filesize == -1:
-            progressbar.set_text("Downloading %-66s" % name)
-            progressbar.set_pulse_step(0.2)
-            progressbar.pulse()
-            gtk.main_iteration()
-            time.sleep(0.05)
-        else:
-            if numblocks != 0:
-                try:
-                    percent = min((numblocks*blocksize*100)/filesize, 100)
-                except:
-                    percent = 100
-                if percent < 100:
-                    time.sleep(0.005)
-                    progressbar.set_text("Downloading %-66s%3d%% done" % (name, percent))
-                    progressbar.set_fraction(percent/100.0)
-                    gtk.main_iteration_do(False)
-                else:
-                    progressbar.hide()
-                    return
-        return
-        
+    if filesize == -1:
+        progressbar.set_text("Downloading %-66s" % name)
+        progressbar.set_pulse_step(0.2)
+        progressbar.pulse()
+        gtk.main_iteration()
+        time.sleep(0.05)
+    else:
+        if numblocks != 0:
+            try:
+                percent = min((numblocks*blocksize*100)/filesize, 100)
+            except:
+                percent = 100
+            if percent < 100:
+                time.sleep(0.005)
+                progressbar.set_text("Downloading %-66s%3d%% done" % (name, percent))
+                progressbar.set_fraction(percent/100.0)
+                gtk.main_iteration_do(False)
+            else:
+                progressbar.hide()
+                return
+    return
+
 
 if __name__ == "__main__":
     g = GsongFinder()
     g.notebook.set_current_page(1)
     gtk.main()
-
