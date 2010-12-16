@@ -1,7 +1,11 @@
 #!/usr/bin/env python
 #-*- coding: UTF-8 -*-
 
-import sys, os, thread, threading, time
+import sys
+import os
+import thread
+import threading
+import time
 import gobject
 import pygtk
 pygtk.require('2.0')
@@ -177,6 +181,7 @@ class GsongFinder(object):
         self.window.show_all()
         self.progressbar.hide()
         self.changepage_btn.hide()
+        self.options_box.hide()
         
         ## start main loop
         gobject.threads_init()
@@ -192,6 +197,11 @@ class GsongFinder(object):
             self.engine = None
             return
         print "%s engine selected" % self.engine
+        if self.engine == "google.com":
+            self.options_box.show()
+        else:
+            self.options_box.hide()
+            
 
     def reset_pages(self):
         self.changepage_btn.hide()
@@ -837,6 +847,7 @@ class GsongFinder(object):
                 win_id = self.movie_window.window.handle
             else:
                 win_id = self.movie_window.window.xid
+            assert win_id
             imagesink = message.src
             imagesink.set_property("force-aspect-ratio", True)
             imagesink.set_xwindow_id(win_id)
