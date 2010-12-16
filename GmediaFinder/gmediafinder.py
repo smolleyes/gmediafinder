@@ -45,7 +45,11 @@ class GsongFinder(object):
         self.nbresults = 100
         self.user_search = ""
         self.play_options = None
-        self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
+        if sys.platform == "win32":
+            import winshell
+            self.down_dir = os.path.join(winshell.my_documents(),"gmediafinder-downloads")
+        else:
+            self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
         self.engine_list = {'youtube.com':'','google.com':'','dilandau.com':'','mp3realm.org':'','tagoo.ru':''}
         self.engine = None
         self.search_option = "song_radio"
@@ -694,6 +698,7 @@ class GsongFinder(object):
         self.play_btn.set_label("gtk-media-play")
         self.is_playing = False
         self.duration = None
+        self.update_time_label()
 
     def play_thread(self):
         play_thread_id = self.play_thread_id
