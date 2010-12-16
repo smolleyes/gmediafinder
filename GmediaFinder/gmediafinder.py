@@ -508,7 +508,7 @@ class GsongFinder(object):
                         self.search_thread_id = None
                         return
 
-                flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'video-thumb-with-addto video-thumb ux-thumb-128'}) ]
+                flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'ux-thumb-wrap contains-addto'}) ]
                 for link in flist:
                     vid_id = re.search("v=(\S+)",link).group(1)
                     vid_obj = _GetYoutubeVideoInfo(vid_id)
