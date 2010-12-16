@@ -820,6 +820,7 @@ class GsongFinder(object):
         if message_name == "prepare-xwindow-id":
             imagesink = message.src
             imagesink.set_property("force-aspect-ratio", True)
+            time.sleep(2)
             imagesink.set_xwindow_id(self.movie_window.window.xid)
 
     def download_file(self,widget):
