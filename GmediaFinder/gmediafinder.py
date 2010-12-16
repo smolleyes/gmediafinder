@@ -829,16 +829,15 @@ class GsongFinder(object):
     def on_sync_message(self, bus, message):
         if message.structure is None:
             return
+        win_id = None
         message_name = message.structure.get_name()
         if message_name == "prepare-xwindow-id":
             if sys.platform == "win32":
                 win_id = self.movie_window.window.handle
             else:
                 win_id = self.movie_window.window.xid
-            assert win_id
             imagesink = message.src
             imagesink.set_property("force-aspect-ratio", True)
-            time.sleep(2)
             imagesink.set_xwindow_id(win_id)
 
     def download_file(self,widget):
