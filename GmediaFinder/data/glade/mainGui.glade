@@ -226,8 +226,6 @@
               <widget class="GtkLabel" id="label5">
                 <property name="visible">True</property>
                 <property name="label" translatable="yes">Video</property>
-                <property name="use_underline">True</property>
-                <property name="selectable">True</property>
               </widget>
               <packing>
                 <property name="position">1</property>
