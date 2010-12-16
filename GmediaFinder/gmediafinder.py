@@ -163,8 +163,6 @@ class GsongFinder(object):
         self.window.show_all()
         self.progressbar.hide()
         self.changepage_btn.hide()
-        ## start main loop
-        gobject.threads_init()
         
 
     def set_engine(self,widget=None):
@@ -679,9 +677,9 @@ class GsongFinder(object):
                     dur_str = self.convert_ns(dur_int)
                 self.time_label.set_text("00:00 / 00:00")
                 time.sleep(0.2)
-                gtk.gdk.threads_enter()
+                #gtk.gdk.threads_enter()
                 self.time_label.set_text("00:00 / " + dur_str)
-                gtk.gdk.threads_leave()
+                #gtk.gdk.threads_leave()
                 break
             except:
                 pass
@@ -694,9 +692,9 @@ class GsongFinder(object):
                 return
             pos_str = self.convert_ns(pos_int)
             if play_thread_id == self.play_thread_id:
-                gtk.gdk.threads_enter()
+                #gtk.gdk.threads_enter()
                 self.time_label.set_text(pos_str + " / " + dur_str)
-                gtk.gdk.threads_leave()
+                #gtk.gdk.threads_leave()
             time.sleep(1)
 
     def on_message(self, bus, message):
@@ -890,4 +888,6 @@ def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
 
 if __name__ == "__main__":
     GsongFinder()
+    ## start main loop
+    gobject.threads_init()
     gtk.main()
