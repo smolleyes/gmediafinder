@@ -164,6 +164,10 @@ class GsongFinder(object):
         self.progressbar.hide()
         self.changepage_btn.hide()
         
+        ## start main loop
+        gobject.threads_init()
+        gtk.main()
+        
 
     def set_engine(self,widget=None):
         self.engine = self.engine_selector.get_active_text()
@@ -302,9 +306,9 @@ class GsongFinder(object):
         data = self.data
         url = self.url
         search_thread_id = self.search_thread_id
-        gtk.gdk.threads_enter()
+        #gtk.gdk.threads_enter()
         self.informations_label.set_text("Searching for %s with %s" % (self.user_search,self.engine))
-        gtk.gdk.threads_leave()
+        #gtk.gdk.threads_leave()
         HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
 
         if data:
@@ -314,7 +318,7 @@ class GsongFinder(object):
                     if search_thread_id == self.search_thread_id:
                         try:
                             alist = soup.findAll('a', href=True)
-                            gtk.gdk.threads_enter()
+                            #gtk.gdk.threads_enter()
                             for a in alist:
                                 url = a.attrMap['href']
                                 if not url: continue
@@ -323,9 +327,9 @@ class GsongFinder(object):
                                     verified_links = self.check_google_links(url)
                                     if verified_links:
                                         slist = verified_links.findAll('a', href=True)
-                                        gtk.gdk.threads_leave()
+                                        #gtk.gdk.threads_leave()
                                         ## if ok start the loop
-                                        gtk.gdk.threads_enter()
+                                        #gtk.gdk.threads_enter()
                                         for s in slist:
                                             print "scanning webpage : %s" % s.string
                                             try:
@@ -336,12 +340,12 @@ class GsongFinder(object):
                                             name = urllib2.unquote(os.path.basename(link))
                                             self.add_sound(name, link)
                                             time.sleep(0.2)
-                                        gtk.gdk.threads_leave()
+                                        #gtk.gdk.threads_leave()
                                     else:
-                                        gtk.gdk.threads_leave()
+                                        #gtk.gdk.threads_leave()
                                         continue
                         except:
-                            gtk.gdk.threads_leave()
+                            #gtk.gdk.threads_leave()
                             pass
                     self.search_thread_id = None
                 self.informations_label.set_text("Scan terminated for your request : %s" % self.user_search)
@@ -888,6 +892,3 @@ def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
 
 if __name__ == "__main__":
     GsongFinder()
-    ## start main loop
-    gobject.threads_init()
-    gtk.main()
