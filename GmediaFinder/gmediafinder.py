@@ -46,8 +46,11 @@ class GsongFinder(object):
         self.user_search = ""
         self.play_options = None
         if sys.platform == "win32":
-            import winshell
-            self.down_dir = os.path.join(winshell.my_documents(),"gmediafinder-downloads")
+            from win32com.shell import shell
+            df = shell.SHGetDesktopFolder()
+            pidl = df.ParseDisplayName(0, None,"::{450d8fba-ad25-11d0-98a8-0800361b1103}")[1]
+            mydocs = shell.SHGetPathFromIDList(pidl)
+            self.down_dir = os.path.join(mydocs,"gmediafinder-downloads")
         else:
             self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
         self.engine_list = {'youtube.com':'','google.com':'','dilandau.com':'','mp3realm.org':'','tagoo.ru':''}
@@ -129,6 +132,7 @@ class GsongFinder(object):
         self.timerbox = self.gladeGui.get_widget("timer_box")
         self.timerbox.add(self.time_label)
         
+        
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
         "on_song_radio_toggled" : self.option_changed,
@@ -143,6 +147,7 @@ class GsongFinder(object):
         "on_search_entry_activate" : self.prepare_search,
         "on_continue_checkbox_toggled" : self.set_play_options,
         "on_loop_checkbox_toggled" : self.set_play_options,
+        "on_vol_btn_value_changed" : self.on_volume_changed,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -856,6 +861,10 @@ class GsongFinder(object):
             imagesink = message.src
             imagesink.set_property("force-aspect-ratio", True)
             imagesink.set_xwindow_id(win_id)
+            
+    def on_volume_changed(self, widget, value=10):
+        self.player.set_property("volume", float(value)) 
+        return True
 
     def download_file(self,widget):
         print "downloading %s" % self.media_link
