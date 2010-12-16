@@ -683,6 +683,7 @@ class GsongFinder(object):
         self.play_thread_id = None
         self.play_btn.set_label("gtk-media-play")
         self.is_playing = False
+        self.duration = None
 
     def play_thread(self):
         play_thread_id = self.play_thread_id
