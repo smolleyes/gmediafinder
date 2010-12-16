@@ -32,6 +32,9 @@ socket.setdefaulttimeout(timeout)
 class GsongFinder(object):
     def __init__(self):
         ## default search options
+        self.is_playing = False
+        self.duration = None
+        self.time_label = gtk.Label("00:00 / 00:00")
         self.search_thread_id = None
         self.media_name = ""
         self.media_link = ""
@@ -83,8 +86,6 @@ class GsongFinder(object):
         self.pause_btn = self.gladeGui.get_widget("pause_btn")
         self.volume_btn = self.gladeGui.get_widget("volume_btn")
         self.play_btn.connect('clicked', self.start_stop)
-        self.time_label = self.gladeGui.get_widget("time_label")
-        self.time_label.set_text("00:00 / 00:00")
         self.down_btn = self.gladeGui.get_widget("down_btn")
 
         self.continue_checkbox = self.gladeGui.get_widget("continue_checkbox")
@@ -106,7 +107,20 @@ class GsongFinder(object):
         self.movie_window = gtk.DrawingArea()
         self.video_box.add(self.movie_window)
         self.pic_box = self.gladeGui.get_widget("picture_box")
-
+        
+        # seekbar and signals
+        self.seekbox = self.gladeGui.get_widget("seekbox")
+        self.adjustment = gtk.Adjustment(0.0, 0.00, 100.0, 0.1, 1.0, 1.0)
+        self.seeker = gtk.HScale(self.adjustment)
+        self.seeker.set_draw_value(False)
+        self.seeker.set_update_policy(gtk.UPDATE_DISCONTINUOUS)
+        self.seekbox.add(self.seeker)
+        self.seeker.connect("button-release-event", self.seeker_button_release_event)
+        
+        #timer
+        self.timerbox = self.gladeGui.get_widget("timer_box")
+        self.timerbox.add(self.time_label)
+        
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
         "on_song_radio_toggled" : self.option_changed,
@@ -121,7 +135,7 @@ class GsongFinder(object):
         "on_search_entry_activate" : self.prepare_search,
         "on_continue_checkbox_toggled" : self.set_play_options,
         "on_loop_checkbox_toggled" : self.set_play_options,
-        }
+         }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
 
@@ -148,7 +162,7 @@ class GsongFinder(object):
 
         ## create the players
         self.player = gst.element_factory_make("playbin2", "player")
-        
+        timer = gobject.timeout_add(1000, self.update_time_label)
         bus = self.player.get_bus()
         bus.add_signal_watch()
         bus.enable_sync_message_emission()
@@ -157,7 +171,7 @@ class GsongFinder(object):
 
 
         ## time
-        self.time_format = gst.Format(gst.FORMAT_TIME)
+        self.timeFormat = gst.Format(gst.FORMAT_TIME)
 
         ## start gui
         self.window.show_all()
@@ -166,6 +180,7 @@ class GsongFinder(object):
         
         ## start main loop
         gobject.threads_init()
+        #gtk.gdk.threads_init()
         gtk.main()
         
 
@@ -646,7 +661,6 @@ class GsongFinder(object):
 
     def start_stop(self,widget=None):
         url = self.media_link
-        print "playing : "+url
         if url:
             if self.play_btn.get_label() == "gtk-media-play":
                 return self.start_play(url)
@@ -661,44 +675,23 @@ class GsongFinder(object):
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
         self.play_thread_id = thread.start_new_thread(self.play_thread, ())
+        self.is_playing = True
 
     def stop_play(self,widget=None):
         self.play_thread_id = None
         self.player.set_state(gst.STATE_NULL)
+        self.play_thread_id = None
         self.play_btn.set_label("gtk-media-play")
-        self.time_label.set_text("00:00 / 00:00")
+        self.is_playing = False
 
     def play_thread(self):
         play_thread_id = self.play_thread_id
-        self.time_label.set_text("00:00 / 00:00")
 
         while play_thread_id == self.play_thread_id:
-            try:
-                dur_int = self.player.query_duration(self.time_format, None)[0]
-                if dur_int == -1:
-                    dur_str = "unknown"
-                else:
-                    dur_str = self.convert_ns(dur_int)
-                self.time_label.set_text("00:00 / 00:00")
-                time.sleep(0.2)
-                #gtk.gdk.threads_enter()
-                self.time_label.set_text("00:00 / " + dur_str)
-                #gtk.gdk.threads_leave()
-                break
-            except:
-                pass
-
-        time.sleep(0.2)
-        while play_thread_id == self.play_thread_id:
-            try:
-                pos_int = self.player.query_position(self.time_format, None)[0]
-            except:
-                return
-            pos_str = self.convert_ns(pos_int)
             if play_thread_id == self.play_thread_id:
-                #gtk.gdk.threads_enter()
-                self.time_label.set_text(pos_str + " / " + dur_str)
-                #gtk.gdk.threads_leave()
+                gtk.gdk.threads_enter()
+                self.update_time_label()
+                gtk.gdk.threads_leave()
             time.sleep(1)
 
     def on_message(self, bus, message):
@@ -707,7 +700,6 @@ class GsongFinder(object):
             self.play_thread_id = None
             self.player.set_state(gst.STATE_NULL)
             self.play_btn.set_label("gtk-media-play")
-            self.time_label.set_text("00:00 / 00:00")
             self.check_play_options()
         elif t == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
@@ -715,7 +707,6 @@ class GsongFinder(object):
             self.play_thread_id = None
             self.player.set_state(gst.STATE_NULL)
             self.play_btn.set_label("gtk-media-play")
-            self.time_label.set_text("00:00 / 00:00")
             ## continue if continue option selected...
             if self.play_options == "continue":
                 self.check_play_options()
@@ -787,41 +778,68 @@ class GsongFinder(object):
                         else:
                             i += 1
                             time.sleep(1)
-
-
-    def convert_ns(self, time_int):
-        time_int = time_int / 1000000000
-        time_str = ""
-        if time_int >= 3600:
-            _hours = time_int / 3600
-            time_int = time_int - (_hours * 3600)
-            time_str = str(_hours) + ":"
-        if time_int >= 600:
-            _mins = time_int / 60
-            time_int = time_int - (_mins * 60)
-            time_str = time_str + str(_mins) + ":"
-        elif time_int >= 60:
-            _mins = time_int / 60
-            time_int = time_int - (_mins * 60)
-            time_str = time_str + "0" + str(_mins) + ":"
+    
+    def convert_ns(self, t):
+        # This method was submitted by Sam Mason.
+        # It's much shorter than the original one.
+        s,ns = divmod(t, 1000000000)
+        m,s = divmod(s, 60)
+        if m < 60:
+            return "%02i:%02i" %(m,s)
         else:
-            time_str = time_str + "00:"
-        if time_int > 9:
-            time_str = time_str + str(time_int)
-        else:
-            time_str = time_str + "0" + str(time_int)
+            h,m = divmod(m, 60)
+            return "%i:%02i:%02i" %(h,m,s)
 
-        return time_str
+    def seeker_button_release_event(self, widget, event):  
+        value = widget.get_value()
+        if self.is_playing == True:
+            duration = self.player.query_duration(self.timeFormat, None)[0] 
+            time = value * (duration / 100)
+            self.player.seek_simple(self.timeFormat, gst.SEEK_FLAG_FLUSH, time)
+
+    def update_time_label(self): 
+        """
+        Update the time_label to display the current location
+        in the media file as well as update the seek bar
+        """ 
+        if self.is_playing == False:
+          return False
+        
+        if self.duration == None:
+          try:
+            self.length = self.player.query_duration(self.timeFormat, None)[0]
+            self.duration = self.convert_ns(self.length)
+          except:
+            self.duration = None
+          
+        if self.duration != None:
+          self.current_position = self.player.query_position(self.timeFormat, None)[0]
+          current_position_formated = self.convert_ns(self.current_position)
+          self.time_label.set_text(current_position_formated + "/" + self.duration)
+      
+          # Update the seek bar
+          # gtk.Adjustment(value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0)
+          percent = (float(self.current_position)/float(self.length))*100.0
+          adjustment = gtk.Adjustment(percent, 0.00, 100.0, 0.1, 1.0, 1.0)
+          self.seeker.set_adjustment(adjustment)
+      
+        return True
+    
 
     def on_sync_message(self, bus, message):
         if message.structure is None:
             return
         message_name = message.structure.get_name()
         if message_name == "prepare-xwindow-id":
+            if sys.platform == "win32":
+                win_id = self.movie_window.window.handle
+            else:
+                win_id = self.movie_window.window.xid
+            assert win_id
             imagesink = message.src
             imagesink.set_property("force-aspect-ratio", True)
             time.sleep(2)
-            imagesink.set_xwindow_id(self.movie_window.window.xid)
+            imagesink.set_xwindow_id(win_id)
 
     def download_file(self,widget):
         print "downloading %s" % self.media_link
