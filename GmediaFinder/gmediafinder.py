@@ -148,8 +148,7 @@ class GsongFinder(object):
 
         ## create the players
         self.player = gst.element_factory_make("playbin2", "player")
-        sink = gst.element_factory_make("autoaudiosink")
-        self.player.set_property("audio-sink", sink)
+        
         bus = self.player.get_bus()
         bus.add_signal_watch()
         bus.enable_sync_message_emission()
@@ -164,6 +163,9 @@ class GsongFinder(object):
         self.window.show_all()
         self.progressbar.hide()
         self.changepage_btn.hide()
+        ## start main loop
+        gobject.threads_init()
+        
 
     def set_engine(self,widget=None):
         self.engine = self.engine_selector.get_active_text()
@@ -657,7 +659,6 @@ class GsongFinder(object):
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
         self.play_thread_id = thread.start_new_thread(self.play_thread, ())
-        self.play_thread_id = thread.start_new_thread(self.play_thread, ())
 
     def stop_play(self,widget=None):
         self.play_thread_id = None
@@ -667,9 +668,7 @@ class GsongFinder(object):
 
     def play_thread(self):
         play_thread_id = self.play_thread_id
-        gtk.gdk.threads_enter()
         self.time_label.set_text("00:00 / 00:00")
-        gtk.gdk.threads_leave()
 
         while play_thread_id == self.play_thread_id:
             try:
@@ -890,7 +889,5 @@ def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
 
 
 if __name__ == "__main__":
-    g = GsongFinder()
-    ## start main loop
-    gobject.threads_init()
+    GsongFinder()
     gtk.main()
