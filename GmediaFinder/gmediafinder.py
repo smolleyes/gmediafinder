@@ -534,13 +534,13 @@ class GsongFinder(object):
                 vquery = self.youtube.search(self.user_search,self.req_start)
                 
                 soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
-                self.count = soup.findAll('p',attrs={'class':'num-results'})[0].findAll('strong')[0].string
+                self.count = int(soup.findAll('p',attrs={'class':'num-results'})[0].findAll('strong')[0].string)
                 if self.count == 0 :
                     self.informations_label.set_text("no results for your search : %s " % (self.user_search))
                     return
                 else:
                     self.informations_label.set_text("%s results found for your search : %s (page %s)" % (self.count, self.user_search, self.req_start))
-                    if self.page_index <= self.page_index - int(self.count):
+                    if self.count <= self.count - self.page_index :
                          self.req_start += 1
                          self.page_index += 50
                          self.changepage_btn.show()
@@ -561,8 +561,6 @@ class GsongFinder(object):
                     try:
                         link = urllib2.unquote(vid_link)
                         name = vid_title
-                        print link
-                        print name
                         if not name or not link:
                             continue
                         else:
