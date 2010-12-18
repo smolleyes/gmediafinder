@@ -483,7 +483,7 @@ class GsongFinder(object):
                 soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
                 nlist = []
                 link_list = []
-                next_page = 0
+                next_page = 1
                 results_div = soup.find('div',attrs={'class':'resultinfo'})
                 results_count = re.search('Found about (\d+)', str(results_div)).group(1)
                 print results_count
@@ -690,6 +690,9 @@ class GsongFinder(object):
                 return self.stop_play(url)
 
     def start_play(self,url):
+        exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
+        if re.search(exp_reg, url) or self.engine == "youtube.Com":
+            self.notebook.set_current_page(1)
         self.play_btn.set_label("gtk-media-stop")
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
@@ -850,7 +853,6 @@ class GsongFinder(object):
     def on_sync_message(self, bus, message):
         if message.structure is None:
             return
-        self.notebook.set_current_page(1)
         win_id = None
         message_name = message.structure.get_name()
         if message_name == "prepare-xwindow-id":
