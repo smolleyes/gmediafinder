@@ -102,6 +102,8 @@ class GsongFinder(object):
         self.down_btn = self.gladeGui.get_widget("down_btn")
 
         self.continue_checkbox = self.gladeGui.get_widget("continue_checkbox")
+        self.continue_checkbox.set_active(1)
+        self.play_options = "continue"
         self.loop_checkbox = self.gladeGui.get_widget("loop_checkbox")
         ## search bar
         self.search_entry = self.gladeGui.get_widget("search_entry")
