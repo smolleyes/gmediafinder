@@ -542,7 +542,7 @@ class GsongFinder(object):
                     return
                 else:
                     self.informations_label.set_text("%s results found for your search : %s (page %s)" % (self.count, self.user_search, self.req_start))
-                    if self.count <= self.count - self.page_index :
+                    if self.count >= self.count - self.page_index :
                          self.req_start += 1
                          self.page_index += 50
                          self.changepage_btn.show()
@@ -569,6 +569,7 @@ class GsongFinder(object):
                             self.add_sound(name, link)
                     except:
                         continue
+                self.search_thread_id = None
 
 
     def sanitizer_factory(self,*args, **kwargs):
@@ -911,7 +912,7 @@ def _GetYoutubeVideoInfo(videoID,eurl=None):
         return
     video_info = dict((k,urllib.unquote_plus(v)) for k,v in
                                (nvp.split('=') for nvp in data.split('&')))
-    conn.request('GET','/get_video?video_id=%s&t=%s' %
+    conn.request('GET','/get_video?video_id=%s&t=%s&fmt=6' %
                          ( video_info['video_id'],video_info['token']))
     response = conn.getresponse()
     direct_url = response.getheader('location')
