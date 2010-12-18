@@ -22,6 +22,8 @@ import re
 import html5lib
 import time
 from html5lib import sanitizer, treebuilders, treewalkers, serializer
+import traceback
+import gdata.service
 
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import HTMLParser
@@ -133,6 +135,9 @@ class GsongFinder(object):
         self.timerbox = self.gladeGui.get_widget("timer_box")
         self.timerbox.add(self.time_label)
         
+        ## youtube client
+        self.youtube = YouTubeClient()
+        
         
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
@@ -230,6 +235,7 @@ class GsongFinder(object):
             self.page = 1
         elif self.engine == "youtube.com":
             self.req_start = 1
+            self.page_index = 0
 
     def get_model(self,widget):
         selected = self.treeview.get_selection()
@@ -477,7 +483,7 @@ class GsongFinder(object):
                 soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
                 nlist = []
                 link_list = []
-                next_page = 1
+                next_page = 0
                 results_div = soup.find('div',attrs={'class':'resultinfo'})
                 results_count = re.search('Found about (\d+)', str(results_div)).group(1)
                 print results_count
@@ -522,34 +528,30 @@ class GsongFinder(object):
                         i += 1
 
             elif self.engine == "youtube.com":
-                soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
                 nlist = []
                 link_list = []
-                next_page = 1
-                results_count = soup.findAll('p',attrs={'class':'num-results'})[0].findAll('strong')[0].string
-                if results_count == 0 :
+                next_page = 0
+                vquery = self.youtube.search(self.user_search,self.req_start)
+                
+                soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
+                self.count = soup.findAll('p',attrs={'class':'num-results'})[0].findAll('strong')[0].string
+                if self.count == 0 :
                     self.informations_label.set_text("no results for your search : %s " % (self.user_search))
                     return
                 else:
-                    self.informations_label.set_text("%s results found for your search : %s " % (results_count, self.user_search))
-
-                pagination_table = soup.findAll('div',attrs={'class':'yt-uix-pager'})
-                if pagination_table:
-                    next_page = 1
-                    if next_page:
-                        self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,results_count))
-                        self.req_start += 1
-                        self.changepage_btn.show()
+                    self.informations_label.set_text("%s results found for your search : %s (page %s)" % (self.count, self.user_search, self.req_start))
+                    if self.page_index <= self.page_index - int(self.count):
+                         self.req_start += 1
+                         self.page_index += 50
+                         self.changepage_btn.show()
                     else:
                         self.changepage_btn.hide()
-                        self.req_start = 1
-                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
-                        self.search_thread_id = None
-                        return
-
-                flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'ux-thumb-wrap contains-addto'}) ]
-                for link in flist:
-                    vid_id = re.search("v=(\S+)",link).group(1)
+                
+                #flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'ux-thumb-wrap contains-addto'}) ]
+                for video in vquery:
+                    vid_pic = self.youtube.get_largest_thumbnail(video)
+                    url = video.GetHtmlLink().href                  
+                    vid_id = re.search("v=(\S+)&",url).group(1)
                     vid_obj = _GetYoutubeVideoInfo(vid_id)
                     if not vid_obj:
                         continue
@@ -559,17 +561,14 @@ class GsongFinder(object):
                     try:
                         link = urllib2.unquote(vid_link)
                         name = vid_title
-                        nlist.append(name)
-                        link_list.append(link)
+                        print link
+                        print name
+                        if not name or not link:
+                            continue
+                        else:
+                            self.add_sound(name, link)
                     except:
                         continue
-                ## add to the treeview if ok
-                i = 0
-                for name in nlist:
-                    if name and link_list[i]:
-                        self.add_sound(name, link_list[i])
-                        i += 1
-
 
 
     def sanitizer_factory(self,*args, **kwargs):
@@ -681,6 +680,7 @@ class GsongFinder(object):
 
 
     def start_search(self):
+        self.page_index = 0
         self.search_thread_id = thread.start_new_thread(self.analyse_links,())
 
     def start_stop(self,widget=None):
@@ -940,6 +940,105 @@ def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
                 progressbar.hide()
                 return
     return
+
+try:
+  from xml.etree import cElementTree as ElementTree
+except ImportError:
+  try:
+    import cElementTree as ElementTree
+  except ImportError:
+    from elementtree import ElementTree
+
+
+class YouTubeClient:
+
+    users_feed = "http://gdata.youtube.com/feeds/users"
+    std_feeds = "http://gdata.youtube.com/feeds/standardfeeds"
+    video_name_re = re.compile(r', "t": "([^"]+)"')
+    
+    def _request(self, feed, *params):
+        service = gdata.service.GDataService(server="gdata.youtube.com")
+        print feed % params
+        return service.Get(feed % params)
+    
+    def search(self, query, page_index):
+        return self._request("http://gdata.youtube.com/feeds/api/videos?q=%s&start-index=%s&max-results=50" % (query, page_index)).entry
+
+    def recently_featured(self, time='today'):
+        return self._request("%s/recently_featured", self.std_feeds).entry
+
+    def top_rated(self):
+        return self._request("%s/top_rated" % self.std_feeds).entry
+
+    def most_viewed(self):
+        return self._request("%s/most_viewed" % self.std_feeds).entry
+
+    def videos_upload_by(self, username):
+        return self._request("%s/%s/uploads", self.users_feed,
+                             username).entry
+
+    def favorite_videos(self, username):
+        return self._request("%s/%s/favorites", self.users_feed,
+                             username).entry
+
+    def get_contacts(self, username):
+        users = self._request("%s/%s/contacts", self.users_feed,
+                              username).entry
+        contacts = [ user.title.text for user in users ]
+        return contacts
+        
+    def get_categories(self):
+        feed_url = "http://gdata.youtube.com/schemas/2007/categories.cat"
+        xml = self._request(feed_url)
+        tree = ElementTree.fromstring(xml)
+        categories = {}
+        for child in tree.getchildren():
+            categories[child.get('term')] = child.get('label')
+        return categories
+    
+    def get_category(self, cid):
+        feed_url = "http://gdata.youtube.com/feeds/videos/-/%s" % cid
+        return self._request(feed_url).entry
+        
+    def get_thumbnails(self, video):
+        doc = video._ToElementTree()
+        urls = {}
+        for c in doc.findall(".//{http://search.yahoo.com/mrss/}group"):
+            for cc in c.findall("{http://search.yahoo.com/mrss/}thumbnail"):
+                width = int(cc.get("width"))
+                height = int(cc.get("height"))
+                size = (width, height)
+                url = cc.get("url")
+                if size not in urls:
+                    urls[size] = [url,]
+                else:
+                    urls[size].append(url)
+        return urls
+
+    def get_largest_thumbnail(self, video):
+        thumbnails = self.get_thumbnails(video)
+        sizes = thumbnails.keys()
+        sizes.sort()
+        return thumbnails[sizes[-1]][0]
+
+    def get_flv_video_url(self, url):
+        flv_url = ''
+        doc = urllib2.urlopen(url)
+        data = doc.read()
+
+        # extract video name
+        match = self.video_name_re.search(data)
+        if match is not None:
+            video_name = match.group(1)
+
+            # extract video id
+            url_splited = url.split("watch?v=")
+            video_id = url_splited[1]     
+
+            flv_url = "http://www.youtube.com/get_video?video_id=%s&t=%s"
+            flv_url = flv_url % (video_id, video_name)
+        return flv_url
+
 
 
 if __name__ == "__main__":
