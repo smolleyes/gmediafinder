@@ -116,6 +116,7 @@ class GsongFinder(object):
         self.notebook = self.gladeGui.get_widget("notebook")
         self.video_box = self.gladeGui.get_widget("video_box")
         self.movie_window = gtk.DrawingArea()
+        self.movie_window.connect('realize', self.on_drawingarea_realized)
         self.video_box.add(self.movie_window)
         self.pic_box = self.gladeGui.get_widget("picture_box")
         
@@ -175,7 +176,11 @@ class GsongFinder(object):
 
         ## create the players
         self.player = gst.element_factory_make("playbin2", "player")
-        timer = gobject.timeout_add(1000, self.update_time_label)
+        audiosink = gst.element_factory_make("autoaudiosink")
+        self.player.set_property("audio-sink", audiosink)
+        self.sink = gst.element_factory_make('xvimagesink')
+        self.sink.set_property('force-aspect-ratio', True)
+        self.player.set_property('video-sink', self.sink)
         bus = self.player.get_bus()
         bus.add_signal_watch()
         bus.enable_sync_message_emission()
@@ -687,9 +692,6 @@ class GsongFinder(object):
                 return self.stop_play(url)
 
     def start_play(self,url):
-        exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
-        if re.search(exp_reg, url):
-            self.notebook.set_current_page(1)
         self.play_btn.set_label("gtk-media-stop")
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
@@ -850,6 +852,7 @@ class GsongFinder(object):
     def on_sync_message(self, bus, message):
         if message.structure is None:
             return
+        self.notebook.set_current_page(1)
         win_id = None
         message_name = message.structure.get_name()
         if message_name == "prepare-xwindow-id":
@@ -860,8 +863,13 @@ class GsongFinder(object):
             assert win_id
             imagesink = message.src
             imagesink.set_property("force-aspect-ratio", True)
+            gtk.gdk.threads_enter()
             imagesink.set_xwindow_id(win_id)
+            gtk.gdk.threads_leave()
             
+    def on_drawingarea_realized(self, sender):
+        self.sink.set_xwindow_id(self.movie_window.window.xid)
+    
     def on_volume_changed(self, widget, value=10):
         self.player.set_property("volume", float(value)) 
         return True
