@@ -50,7 +50,7 @@ data_files = [
 	('share/icons/hicolor/24x24/apps',['images/24x24/gmediafinder.png']),
 	('share/icons/hicolor/48x48/apps',['images/48x48/gmediafinder.png']),
 	('share/applications',['gmediafinder.desktop']),
-	('share/gmediafinder',['GmediaFinder/data/glade/mainGui.glade','GmediaFinder/data/img/gmediafinder.png','GmediaFinder/data/img/sound.png']),
+	('share/gmediafinder',['data/glade/mainGui.glade','data/img/gmediafinder.png','data/img/sound.png']),
 ]
 
 
@@ -89,7 +89,7 @@ if sys.argv[1] == 'install':
 			i += 1
 
 	if not prefix:
-		prefix = '/usr/local'
+		prefix = '/usr'
 	gtk_update_icon_cache = '''gtk-update-icon-cache -f -t \
 %s/share/icons/hicolor''' % prefix
 	root_specified = [s for s in sys.argv if s.startswith('--root')]

@@ -74,8 +74,8 @@ class GsongFinder(object):
         self.window.set_resizable(1)
         self.window.set_size_request(780, 560)
         self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-        if ('/usr/local' in constants.exec_path):
-            self.img_path = '/usr/local/share/gmediafinder'
+        if ('/usr' in constants.exec_path):
+            self.img_path = '/usr/share/gmediafinder'
         else:
             self.img_path = os.path.join(constants.img_path)
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))

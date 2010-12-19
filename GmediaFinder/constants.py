@@ -9,7 +9,7 @@ img_path = os.path.join(data_path,"img")
 glade_path = os.path.join(data_path,"glade")
 
 ## gui
-if ('/usr/local' in exec_path):
-    glade_file = os.path.join('/usr/local/share/gmediafinder/mainGui.glade')
+if ('/usr' in exec_path):
+    glade_file = os.path.join('/usr/share/gmediafinder/mainGui.glade')
 else:
     glade_file = os.path.join(glade_path,'mainGui.glade')
