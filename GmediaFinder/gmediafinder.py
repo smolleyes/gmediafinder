@@ -553,6 +553,7 @@ class GsongFinder(object):
                 if len(vquery) == 0:
                     self.changepage_btn.hide()
                     self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                    self.search_thread_id = None
                     return
                 
                 #flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'ux-thumb-wrap contains-addto'}) ]
@@ -575,7 +576,6 @@ class GsongFinder(object):
                             self.add_sound(name, link)
                     except:
                         continue
-                self.search_thread_id = None
 
 
     def sanitizer_factory(self,*args, **kwargs):
