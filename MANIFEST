@@ -8,6 +8,8 @@ gmediafinder.desktop
 GmediaFinder/__init__.py
 GmediaFinder/constants.py
 GmediaFinder/gmediafinder.py
+GmediaFinder/data/img/gmediafinder.png
+GmediaFinder/data/img/sound.png
 GmediaFinder/data/__init__.py
 GmediaFinder/data/glade/__init__.py
 GmediaFinder/data/glade/mainGui.glade

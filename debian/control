@@ -1,0 +1,19 @@
+Source: gmediafinder
+Section: sound
+Priority: extra
+Version: 0.1
+Maintainer: Laguillaumie Sylvain <s.lagui@free.fr>
+Depends: python, python-central (>= 0.6.7), python-gtk2, python-gdata, python-beautifulsoup, python-html5lib, python-gst0.10, gstreamer0.10-ffmpeg
+Build-Depends: cdbs, debhelper (>= 7.0.50~)
+Standards-Version: 3.8.4
+Homepage: https://github.com/smolleyes/gmediafinder
+#Vcs-Git: git://git.debian.org/collab-maint/gmediafinder.git
+#Vcs-Browser: http://git.debian.org/?p=collab-maint/gmediafinder.git;a=summary
+
+Package: gmediafinder
+Architecture: any
+Depends: ${shlibs:Depends}, ${misc:Depends}
+Description: Gmediafinder, stream/download multimedia files from the web
+ Gmediafinder is a web media browser for youtube videos and some mp3 search engines websites for the sounds
+ You can stream or download files play in continue or loop mode and download files too directly from the gui.
+
