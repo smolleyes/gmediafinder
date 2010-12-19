@@ -271,6 +271,11 @@ class GsongFinder(object):
 
 
     def prepare_search(self,widget=None):
+        if self.search_thread_id:
+            while self.search_thread_id:
+                self.search_thread_id = None
+                time.sleep(0.5)
+                
         self.user_search = self.search_entry.get_text()
         #self.user_search_encoded = u'%s' % self.user_search
         #print self.user_search_encoded
