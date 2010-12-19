@@ -4,7 +4,7 @@ Priority: extra
 Version: 0.1
 Maintainer: Laguillaumie Sylvain <s.lagui@free.fr>
 Depends: python, python-central (>= 0.6.7), python-gtk2, python-gdata, python-beautifulsoup, python-html5lib, python-gst0.10, gstreamer0.10-ffmpeg
-Build-Depends: cdbs, debhelper (>= 7.0.50~)
+Build-Depends: cdbs, debhelper (>= 7.0.50~), python-distutils-extra
 Standards-Version: 3.8.4
 Homepage: https://github.com/smolleyes/gmediafinder
 #Vcs-Git: git://git.debian.org/collab-maint/gmediafinder.git
