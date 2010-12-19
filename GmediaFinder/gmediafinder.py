@@ -972,42 +972,6 @@ class YouTubeClient:
         url = "http://gdata.youtube.com/feeds/api/videos?q=%s&start-index=%s&max-results=25%s" % (query, page_index, params)
         return self._request(url).entry
 
-    def recently_featured(self, time='today'):
-        return self._request("%s/recently_featured", self.std_feeds).entry
-
-    def top_rated(self):
-        return self._request("%s/top_rated" % self.std_feeds).entry
-
-    def most_viewed(self):
-        return self._request("%s/most_viewed" % self.std_feeds).entry
-
-    def videos_upload_by(self, username):
-        return self._request("%s/%s/uploads", self.users_feed,
-                             username).entry
-
-    def favorite_videos(self, username):
-        return self._request("%s/%s/favorites", self.users_feed,
-                             username).entry
-
-    def get_contacts(self, username):
-        users = self._request("%s/%s/contacts", self.users_feed,
-                              username).entry
-        contacts = [ user.title.text for user in users ]
-        return contacts
-        
-    def get_categories(self):
-        feed_url = "http://gdata.youtube.com/schemas/2007/categories.cat"
-        xml = self._request(feed_url)
-        tree = ElementTree.fromstring(xml)
-        categories = {}
-        for child in tree.getchildren():
-            categories[child.get('term')] = child.get('label')
-        return categories
-    
-    def get_category(self, cid):
-        feed_url = "http://gdata.youtube.com/feeds/videos/-/%s" % cid
-        return self._request(feed_url).entry
-        
     def get_thumbnails(self, video):
         doc = video._ToElementTree()
         urls = {}
