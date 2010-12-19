@@ -71,13 +71,13 @@ class GsongFinder(object):
         self.window = self.gladeGui.get_widget("main_window")
         self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
-        self.window.set_default_size(600, 600)
+        self.window.set_default_size(780, 560)
         self.window.set_position("center")
         if ('/usr/local' in constants.exec_path):
-            img_path = '/usr/local/share/gmediafinder'
+            self.img_path = '/usr/local/share/gmediafinder'
         else:
-            img_path = os.path.join(constants.img_path)
-        self.window.set_icon_from_file(os.path.join(img_path,'gmediafinder.png'))
+            self.img_path = os.path.join(constants.img_path)
+        self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
 
         ## informations
         self.informations_label = self.gladeGui.get_widget("info_label")
@@ -124,12 +124,11 @@ class GsongFinder(object):
         # progressbar
         self.progressbar = self.gladeGui.get_widget("progressbar")
 
-        # notebook
-        self.notebook = self.gladeGui.get_widget("notebook")
-        self.video_box = self.gladeGui.get_widget("video_box")
+        # video drawing
+        self.drawing_box = self.gladeGui.get_widget("drawing_box")
         self.movie_window = gtk.DrawingArea()
         self.movie_window.connect('realize', self.on_drawingarea_realized)
-        self.video_box.add(self.movie_window)
+        self.drawing_box.add(self.movie_window)
         self.pic_box = self.gladeGui.get_widget("picture_box")
         
         # seekbar and signals
@@ -169,19 +168,29 @@ class GsongFinder(object):
         self.window.connect('destroy', self.exit)
 
         ## finally setup the list
-        self.model = gtk.ListStore(str,str)
+        (COL_PIXBUF, COL_STRING) = range(2)
+        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,str)
         self.treeview = gtk.TreeView()
         self.treeview.set_model(self.model)
+        
+        column = gtk.TreeViewColumn()
+        column.set_title('Description : ')
+        self.treeview.append_column(column)
+
+        rendererp = gtk.CellRendererPixbuf()
+        column.pack_start(rendererp, expand=False)
+        column.add_attribute(rendererp, 'pixbuf', COL_PIXBUF)
+
         renderer = gtk.CellRendererText()
-        titleColumn = gtk.TreeViewColumn("Name", renderer, text=0)
-        titleColumn.set_min_width(200)
+        renderer.set_fixed_size(200,60)
+        column.pack_start(renderer, expand=True)
+        column.add_attribute(renderer, 'text', COL_STRING)
+        
         pathColumn = gtk.TreeViewColumn("Link", renderer, text=0)
-
-        self.treeview.append_column(titleColumn)
         self.treeview.append_column(pathColumn)
-
+        
         ## setup the scrollview
-        self.results_scroll = self.gladeGui.get_widget("results_scrollbar")
+        self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()
         self.columns[0].set_sort_column_id(1)
         self.columns[1].set_visible(0)
@@ -254,12 +263,11 @@ class GsongFinder(object):
         self.iter = selected.get_selected()[1]
         self.path = self.model.get_path(self.iter)
         ## else extract needed metacity's infos
-        self.media_name = self.model.get_value(self.iter, 0)
+        self.media_name = self.model.get_value(self.iter, 1)
         ## return only theme name and description then extract infos from hash
-        self.media_link = self.model.get_value(self.iter, 1)
+        self.media_link = self.model.get_value(self.iter, 2)
+        print self.media_link
         # print in the gui
-        if self.engine == "youtube.com" :
-            self.notebook.set_current_page(1)
         self.statbar.push(1,"Playing : %s" % self.media_name)
         self.stop_play()
         self.start_play(self.media_link)
@@ -563,24 +571,7 @@ class GsongFinder(object):
                 
                 #flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'ux-thumb-wrap contains-addto'}) ]
                 for video in vquery:
-                    vid_pic = self.youtube.get_largest_thumbnail(video)
-                    url = video.link[1].href
-                    vid_id = os.path.basename(os.path.dirname(url))    
-                    vid_obj = _GetYoutubeVideoInfo(vid_id)
-                    if not vid_obj:
-                        continue
-                    vid_pic = vid_obj[1]["thumbnail_url"]
-                    vid_link = vid_obj[1]['fmt_url_map'].split('|')[-1]
-                    vid_title = vid_obj[1]["title"]
-                    try:
-                        link = urllib2.unquote(vid_link)
-                        name = vid_title
-                        if not name or not link:
-                            continue
-                        else:
-                            self.add_sound(name, link)
-                    except:
-                        continue
+                    self.make_youtube_entry(video)
 
 
     def sanitizer_factory(self,*args, **kwargs):
@@ -641,16 +632,42 @@ class GsongFinder(object):
             print "wrong media type %s, link to another webpage...website rejected" % type
             return
 
-    def add_sound(self, name, link):
+    def add_sound(self, name, media_link, img=None):
         self.iter = self.model.append()
+        if self.engine == "youtube.com":
+            link = self.download_photo(img)
+            img = gtk.gdk.pixbuf_new_from_file(link)
+        else:
+            img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         self.model.set(self.iter,
-                       0, name,
-                       1, link,
-                       )
+                        0, img,
+                        1, name,
+                        2, media_link,
+                        )
+                       
+    def download_photo(self, img_url):
+        filename = os.path.basename(img_url)
+        print filename
+        file_path = "%s%s" % ('/tmp/', filename)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        downloaded_image = file(file_path, "wb")
+
+        image_on_web = urllib.urlopen(img_url)
+        while True:
+            buf = image_on_web.read(65536)
+            if len(buf) == 0:
+                break
+            downloaded_image.write(buf)
+        downloaded_image.close()
+        image_on_web.close()
+
+        return file_path
 
     def search_videos(self,liste):
         self.model.clear()
         for url in liste:
+            
             data = self.get_url_data(url)
             if data:
                 try:
@@ -689,6 +706,22 @@ class GsongFinder(object):
             value = link.attrMap['href']
             if re.search('(\S.*%s)' % name, value):
                 print link
+                
+    def make_youtube_entry(self,video):
+        url = video.link[1].href
+        vid_id = os.path.basename(os.path.dirname(url))    
+        vid_obj = _GetYoutubeVideoInfo(vid_id)
+        if not vid_obj:
+            return
+        vid_pic = vid_obj[1]["thumbnail_url"]
+        vid_link = vid_obj[1]['fmt_url_map'].split('|')[-1]
+        vid_title = vid_obj[1]["title"]
+        name = vid_title
+        if not name or not vid_link:
+            return
+        else:
+            return self.add_sound(name, vid_link, vid_pic)
+
 
 
     def start_search(self):
@@ -705,8 +738,6 @@ class GsongFinder(object):
 
     def start_play(self,url):
         exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
-        if re.search(exp_reg, url) or self.engine == "youtube.Com":
-            self.notebook.set_current_page(1)
         self.play_btn.set_label("gtk-media-stop")
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
