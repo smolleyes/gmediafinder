@@ -3,6 +3,7 @@
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
   <widget class="GtkWindow" id="main_window">
+    <property name="width_request">780</property>
     <property name="window_position">center</property>
     <signal name="destroy_event" handler="on_main_window_destroy_event"/>
     <child>
@@ -258,7 +259,7 @@
           <widget class="GtkHPaned" id="hpaned1">
             <property name="visible">True</property>
             <property name="can_focus">True</property>
-            <property name="position">300</property>
+            <property name="position">350</property>
             <property name="position_set">True</property>
             <child>
               <widget class="GtkVBox" id="vbox6">

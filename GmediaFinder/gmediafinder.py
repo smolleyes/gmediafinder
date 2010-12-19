@@ -47,6 +47,7 @@ class GsongFinder(object):
         self.nbresults = 100
         self.user_search = ""
         self.play_options = None
+        self.fullscreen = False
         if sys.platform == "win32":
             from win32com.shell import shell
             df = shell.SHGetDesktopFolder()
@@ -71,8 +72,8 @@ class GsongFinder(object):
         self.window = self.gladeGui.get_widget("main_window")
         self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
-        self.window.set_default_size(780, 560)
-        self.window.set_position("center")
+        self.window.set_size_request(780, 560)
+        self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
         if ('/usr/local' in constants.exec_path):
             self.img_path = '/usr/local/share/gmediafinder'
         else:
@@ -128,6 +129,7 @@ class GsongFinder(object):
         self.drawing_box = self.gladeGui.get_widget("drawing_box")
         self.movie_window = gtk.DrawingArea()
         self.movie_window.connect('realize', self.on_drawingarea_realized)
+        self.movie_window.add_events( gtk.gdk.BUTTON_PRESS_MASK )
         self.drawing_box.add(self.movie_window)
         self.pic_box = self.gladeGui.get_widget("picture_box")
         
@@ -911,6 +913,7 @@ class GsongFinder(object):
             gtk.gdk.threads_enter()
             imagesink.set_xwindow_id(win_id)
             gtk.gdk.threads_leave()
+
             
     def on_drawingarea_realized(self, sender):
         self.sink.set_xwindow_id(self.movie_window.window.xid)
