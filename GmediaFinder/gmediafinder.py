@@ -82,7 +82,7 @@ class GsongFinder(object):
         ## informations
         self.informations_label = self.gladeGui.get_widget("info_label")
 
-        ## search options
+        ## google search options
         self.options_box = self.gladeGui.get_widget("options_box")
         self.option_songs = self.gladeGui.get_widget("song_radio")
         self.option_videos = self.gladeGui.get_widget("video_radio")
@@ -93,7 +93,15 @@ class GsongFinder(object):
         self.engine_selector.set_active(0)
         for engine in self.engine_list:
             self.engine_selector.append_text(engine)
-
+        
+        # youtube search options
+        self.youtube_options = self.gladeGui.get_widget("youtube_options")
+        self.youtube_options.relevance_opt = self.gladeGui.get_widget("relevance_opt")
+        self.youtube_options.recent_opt = self.gladeGui.get_widget("most_recent_opt")
+        self.youtube_options.relevance_opt.set_active(True)
+        self.youtube_options.viewed_opt = self.gladeGui.get_widget("most_viewed_opt")
+        self.youtube_options.rating_opt = self.gladeGui.get_widget("rating_opt")
+        
         ## control section
         self.play_btn = self.gladeGui.get_widget("play_btn")
         self.pause_btn = self.gladeGui.get_widget("pause_btn")
@@ -203,6 +211,7 @@ class GsongFinder(object):
         self.progressbar.hide()
         self.changepage_btn.hide()
         self.options_box.hide()
+        self.youtube_options.hide()
         
         ## start main loop
         gobject.threads_init()
@@ -211,6 +220,8 @@ class GsongFinder(object):
         
 
     def set_engine(self,widget=None):
+        self.options_box.hide()
+        self.youtube_options.hide()
         self.engine = self.engine_selector.get_active_text()
         self.changepage_btn.hide()
         iter = self.engine_selector.get_active_iter()
@@ -220,8 +231,8 @@ class GsongFinder(object):
         print "%s engine selected" % self.engine
         if self.engine == "google.com":
             self.options_box.show()
-        else:
-            self.options_box.hide()
+        elif self.engine == "youtube.com":
+            self.youtube_options.show()
             
 
     def reset_pages(self):
@@ -236,8 +247,7 @@ class GsongFinder(object):
             self.req_start = 10
             self.page = 1
         elif self.engine == "youtube.com":
-            self.req_start = 1
-            self.page_index = 0
+            self.req_start = 0
 
     def get_model(self,widget):
         selected = self.treeview.get_selection()
@@ -258,20 +268,9 @@ class GsongFinder(object):
 
     def option_changed(self,widget):
         self.search_option = widget.name
-        if self.search_option == "video_radio" :
-            self.notebook.set_current_page(0)
-        elif self.search_option == "img_radio" :
-            self.notebook.set_current_page(2)
-        elif self.search_option == "song_radio" :
-            self.notebook.set_current_page(0)
 
 
     def prepare_search(self,widget=None):
-        if self.search_thread_id:
-            while self.search_thread_id:
-                self.search_thread_id = None
-                time.sleep(0.5)
-
         self.user_search = self.search_entry.get_text()
         #self.user_search_encoded = u'%s' % self.user_search
         #print self.user_search_encoded
@@ -326,7 +325,6 @@ class GsongFinder(object):
             url = "http://tagoo.ru/en/search.php?for=audio&search=%s&page=%d&sort=date" % (user_search,self.req_start)
         elif self.engine == "youtube.com":
             url = "http://www.youtube.com/results?search_query=%s&page=%s" % (user_search,self.req_start)
-        print url
         ## 1 for first resquest to not test content type
         return url
 
@@ -488,7 +486,6 @@ class GsongFinder(object):
                 next_page = 1
                 results_div = soup.find('div',attrs={'class':'resultinfo'})
                 results_count = re.search('Found about (\d+)', str(results_div)).group(1)
-                print results_count
                 if results_count == 0 :
                     self.informations_label.set_text("no results for your search : %s " % (self.user_search))
                     return
@@ -533,27 +530,36 @@ class GsongFinder(object):
                 nlist = []
                 link_list = []
                 next_page = 0
-                vquery = self.youtube.search(self.user_search,self.req_start)
+                self.changepage_btn.show()
+                ## get options
+                params = None
+                if self.youtube_options.relevance_opt.get_active():
+                    params="&orderby=relevance"
+                elif self.youtube_options.recent_opt.get_active():
+                    params="&orderby=published"
+                elif self.youtube_options.viewed_opt.get_active():
+                    params="&orderby=viewCount"
+                elif self.youtube_options.rating_opt.get_active():
+                    params="&orderby=rating"
                 
-                soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
-                self.count = int(soup.findAll('p',attrs={'class':'num-results'})[0].findAll('strong')[0].string)
-                if self.count == 0 :
-                    self.informations_label.set_text("no results for your search : %s " % (self.user_search))
-                    return
+                if self.req_start == 0:
+                    self.req_start = 1
+                elif self.req_start == 1:
+                    self.req_start = 26
                 else:
-                    self.informations_label.set_text("%s results found for your search : %s (page %s)" % (self.count, self.user_search, self.req_start))
-                    if self.count >= self.count - self.page_index :
-                         self.req_start += 1
-                         self.page_index += 50
-                         self.changepage_btn.show()
-                    else:
-                        self.changepage_btn.hide()
+                    self.req_start+=25
+                        
+                vquery = self.youtube.search(self.user_search,self.req_start,params)
+                if len(vquery) == 0:
+                    self.changepage_btn.hide()
+                    self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                    return
                 
                 #flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'ux-thumb-wrap contains-addto'}) ]
                 for video in vquery:
                     vid_pic = self.youtube.get_largest_thumbnail(video)
-                    url = video.GetHtmlLink().href                  
-                    vid_id = re.search("v=(\S+)&",url).group(1)
+                    url = video.link[1].href
+                    vid_id = os.path.basename(os.path.dirname(url))    
                     vid_obj = _GetYoutubeVideoInfo(vid_id)
                     if not vid_obj:
                         continue
@@ -895,29 +901,28 @@ class GsongFinder(object):
         gtk.main_quit()
 
 def _GetYoutubeVideoInfo(videoID,eurl=None):
-    '''
-    Return direct URL to video and dictionary containing additional info
-    >> url,info = GetYoutubeVideoInfo("tmFbteHdiSw")
-    >>
-    '''
-    if not eurl:
-        params = urllib.urlencode({'video_id':videoID})
-    else :
-        params = urllib.urlencode({'video_id':videoID, 'eurl':eurl})
-    conn = httplib.HTTPConnection("www.youtube.com")
-    conn.request("GET","/get_video_info?&%s"%params)
-    response = conn.getresponse()
-    data = response.read()
-    if re.search('status=fail',str(data)):
-        return
-    video_info = dict((k,urllib.unquote_plus(v)) for k,v in
-                               (nvp.split('=') for nvp in data.split('&')))
-    conn.request('GET','/get_video?video_id=%s&t=%s&fmt=6' %
-                         ( video_info['video_id'],video_info['token']))
-    response = conn.getresponse()
-    direct_url = response.getheader('location')
-    return direct_url,video_info
-
+        '''
+        Return direct URL to video and dictionary containing additional info
+        >> url,info = GetYoutubeVideoInfo("tmFbteHdiSw")
+        >>
+        '''
+        if not eurl:
+            params = urllib.urlencode({'video_id':videoID})
+        else :
+            params = urllib.urlencode({'video_id':videoID, 'eurl':eurl})
+        conn = httplib.HTTPConnection("www.youtube.com")
+        conn.request("GET","/get_video_info?&%s"%params)
+        response = conn.getresponse()
+        data = response.read()
+        if re.search('status=fail',str(data)):
+            return
+        video_info = dict((k,urllib.unquote_plus(v)) for k,v in
+                                   (nvp.split('=') for nvp in data.split('&')))
+        conn.request('GET','/get_video?video_id=%s&t=%s&fmt=6' %
+                             ( video_info['video_id'],video_info['token']))
+        response = conn.getresponse()
+        direct_url = response.getheader('location')
+        return direct_url,video_info
 
 def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
         #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
@@ -961,11 +966,11 @@ class YouTubeClient:
     
     def _request(self, feed, *params):
         service = gdata.service.GDataService(server="gdata.youtube.com")
-        print feed % params
         return service.Get(feed % params)
     
-    def search(self, query, page_index):
-        return self._request("http://gdata.youtube.com/feeds/api/videos?q=%s&start-index=%s&max-results=50" % (query, page_index)).entry
+    def search(self, query, page_index, params):
+        url = "http://gdata.youtube.com/feeds/api/videos?q=%s&start-index=%s&max-results=25%s" % (query, page_index, params)
+        return self._request(url).entry
 
     def recently_featured(self, time='today'):
         return self._request("%s/recently_featured", self.std_feeds).entry
@@ -1023,24 +1028,6 @@ class YouTubeClient:
         sizes = thumbnails.keys()
         sizes.sort()
         return thumbnails[sizes[-1]][0]
-
-    def get_flv_video_url(self, url):
-        flv_url = ''
-        doc = urllib2.urlopen(url)
-        data = doc.read()
-
-        # extract video name
-        match = self.video_name_re.search(data)
-        if match is not None:
-            video_name = match.group(1)
-
-            # extract video id
-            url_splited = url.split("watch?v=")
-            video_id = url_splited[1]     
-
-            flv_url = "http://www.youtube.com/get_video?video_id=%s&t=%s"
-            flv_url = flv_url % (video_id, video_name)
-        return flv_url
 
 
 

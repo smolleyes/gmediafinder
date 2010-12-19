@@ -63,59 +63,142 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkHBox" id="options_box">
+                  <widget class="GtkVBox" id="vbox5">
                     <property name="visible">True</property>
                     <child>
-                      <widget class="GtkLabel" id="radio_label">
+                      <widget class="GtkHBox" id="options_box">
                         <property name="visible">True</property>
-                        <property name="xalign">0.059999998658895493</property>
-                        <property name="label" translatable="yes">Search types :</property>
+                        <child>
+                          <widget class="GtkLabel" id="radio_label">
+                            <property name="visible">True</property>
+                            <property name="xalign">0.059999998658895493</property>
+                            <property name="label" translatable="yes">Search types :</property>
+                          </widget>
+                          <packing>
+                            <property name="padding">5</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkRadioButton" id="song_radio">
+                            <property name="label" translatable="yes">Songs</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="draw_indicator">True</property>
+                            <property name="group">img_radio</property>
+                            <signal name="toggled" handler="on_song_radio_toggled"/>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkRadioButton" id="video_radio">
+                            <property name="label" translatable="yes">Videos</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="draw_indicator">True</property>
+                            <property name="group">img_radio</property>
+                            <signal name="toggled" handler="on_video_radio_toggled"/>
+                          </widget>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkRadioButton" id="img_radio">
+                            <property name="label" translatable="yes">Images</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="draw_indicator">True</property>
+                            <property name="group">song_radio</property>
+                            <signal name="toggled" handler="on_img_radio_toggled"/>
+                          </widget>
+                          <packing>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
-                        <property name="padding">5</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkRadioButton" id="song_radio">
-                        <property name="label" translatable="yes">Songs</property>
+                      <widget class="GtkHBox" id="youtube_options">
                         <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="draw_indicator">True</property>
-                        <property name="group">img_radio</property>
-                        <signal name="toggled" handler="on_song_radio_toggled"/>
+                        <child>
+                          <widget class="GtkLabel" id="radio_label1">
+                            <property name="visible">True</property>
+                            <property name="xalign">0.059999998658895493</property>
+                            <property name="label" translatable="yes">Search types :</property>
+                          </widget>
+                          <packing>
+                            <property name="padding">5</property>
+                            <property name="position">0</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkRadioButton" id="relevance_opt">
+                            <property name="label" translatable="yes">Most relevant</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="draw_indicator">True</property>
+                            <property name="group">img_radio</property>
+                            <signal name="toggled" handler="on_song_radio_toggled"/>
+                          </widget>
+                          <packing>
+                            <property name="position">1</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkRadioButton" id="most_recent_opt">
+                            <property name="label" translatable="yes">Most recent</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="draw_indicator">True</property>
+                            <property name="group">img_radio</property>
+                            <signal name="toggled" handler="on_video_radio_toggled"/>
+                          </widget>
+                          <packing>
+                            <property name="position">2</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkRadioButton" id="most_viewed_opt">
+                            <property name="label" translatable="yes">Most viewed</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="draw_indicator">True</property>
+                            <property name="group">song_radio</property>
+                            <signal name="toggled" handler="on_img_radio_toggled"/>
+                          </widget>
+                          <packing>
+                            <property name="position">3</property>
+                          </packing>
+                        </child>
+                        <child>
+                          <widget class="GtkRadioButton" id="rating_opt">
+                            <property name="label" translatable="yes">Most rated</property>
+                            <property name="visible">True</property>
+                            <property name="can_focus">True</property>
+                            <property name="receives_default">False</property>
+                            <property name="active">True</property>
+                            <property name="draw_indicator">True</property>
+                            <property name="group">most_viewed_opt</property>
+                          </widget>
+                          <packing>
+                            <property name="position">4</property>
+                          </packing>
+                        </child>
                       </widget>
                       <packing>
                         <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkRadioButton" id="video_radio">
-                        <property name="label" translatable="yes">Videos</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="draw_indicator">True</property>
-                        <property name="group">img_radio</property>
-                        <signal name="toggled" handler="on_video_radio_toggled"/>
-                      </widget>
-                      <packing>
-                        <property name="position">2</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkRadioButton" id="img_radio">
-                        <property name="label" translatable="yes">Images</property>
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">False</property>
-                        <property name="draw_indicator">True</property>
-                        <property name="group">song_radio</property>
-                        <signal name="toggled" handler="on_img_radio_toggled"/>
-                      </widget>
-                      <packing>
-                        <property name="position">3</property>
                       </packing>
                     </child>
                   </widget>
@@ -308,9 +391,6 @@ audio-volume-high
 audio-volume-low
 audio-volume-medium</property>
                         <signal name="value_changed" handler="on_vol_btn_value_changed"/>
-                        <child>
-                          <placeholder/>
-                        </child>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
