@@ -87,11 +87,9 @@ class GsongFinder(object):
         self.options_box = self.gladeGui.get_widget("options_box")
         self.option_songs = self.gladeGui.get_widget("song_radio")
         self.option_videos = self.gladeGui.get_widget("video_radio")
-        self.option_songs.set_active(True)
         self.option_images = self.gladeGui.get_widget("img_radio")
         ## engine selector (engines only with direct links)
         self.engine_selector = self.gladeGui.get_widget("engine_selector")
-        self.engine_selector.set_active(0)
         for engine in self.engine_list:
             self.engine_selector.append_text(engine)
         
@@ -242,8 +240,10 @@ class GsongFinder(object):
         print "%s engine selected" % self.engine
         if self.engine == "google.com":
             self.options_box.show()
+            self.option_songs.set_active(1)
         elif self.engine == "youtube.com":
             self.youtube_options.show()
+            self.youtube_options.relevance_opt.set_active(1)
             
 
     def reset_pages(self):
