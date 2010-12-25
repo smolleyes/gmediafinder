@@ -127,6 +127,7 @@ class GsongFinder(object):
         self.drawing_box = self.gladeGui.get_widget("drawing_box")
         self.movie_window = gtk.DrawingArea()
         self.movie_window.connect('realize', self.on_drawingarea_realized)
+        self.movie_window.connect('button-press-event', self.on_drawingarea_clicked)
         self.movie_window.add_events( gtk.gdk.BUTTON_PRESS_MASK )
         self.drawing_box.add(self.movie_window)
         self.pic_box = self.gladeGui.get_widget("picture_box")
@@ -740,6 +741,9 @@ class GsongFinder(object):
 
     def start_play(self,url):
         exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
+        if not re.search(exp_reg,url) and not self.engine == "youtube.com":
+            pass
+            
         self.play_btn.set_label("gtk-media-stop")
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
@@ -913,7 +917,11 @@ class GsongFinder(object):
             gtk.gdk.threads_enter()
             imagesink.set_xwindow_id(win_id)
             gtk.gdk.threads_leave()
-
+            
+    def on_drawingarea_clicked(self, widget, event):
+        if event.type == gtk.gdk._2BUTTON_PRESS:
+            print "2click"
+            widget.window.fullscreen()
             
     def on_drawingarea_realized(self, sender):
         self.sink.set_xwindow_id(self.movie_window.window.xid)
