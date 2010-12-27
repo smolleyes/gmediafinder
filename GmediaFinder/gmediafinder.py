@@ -20,6 +20,7 @@ pygst.require("0.10")
 import gst
 import re
 import html5lib
+import tempfile
 import time
 from html5lib import sanitizer, treebuilders, treewalkers, serializer
 import traceback
@@ -126,7 +127,9 @@ class GsongFinder(object):
         # video drawing
         self.drawing_box = self.gladeGui.get_widget("drawing_box")
         self.movie_window = gtk.DrawingArea()
+        self.movie_window.set_size_request(300,300)
         self.movie_window.connect('realize', self.on_drawingarea_realized)
+        self.movie_window.connect('expose-event', self.on_expose_event)
         self.movie_window.connect('button-press-event', self.on_drawingarea_clicked)
         self.movie_window.add_events( gtk.gdk.BUTTON_PRESS_MASK )
         self.drawing_box.add(self.movie_window)
@@ -202,9 +205,12 @@ class GsongFinder(object):
         ## create the players
         self.player = gst.element_factory_make("playbin2", "player")
         audiosink = gst.element_factory_make("autoaudiosink")
+        if sys.platform == "win32":
+            self.sink = gst.element_factory_make('d3dvideosink')
+        else:
+            self.sink = gst.element_factory_make('xvimagesink')
+            self.sink.set_property('force-aspect-ratio', True)
         self.player.set_property("audio-sink", audiosink)
-        self.sink = gst.element_factory_make('xvimagesink')
-        self.sink.set_property('force-aspect-ratio', True)
         self.player.set_property('video-sink', self.sink)
         bus = self.player.get_bus()
         bus.add_signal_watch()
@@ -222,6 +228,8 @@ class GsongFinder(object):
         self.changepage_btn.hide()
         self.options_box.hide()
         self.youtube_options.hide()
+        color = gtk.gdk.color_parse("black")
+        self.movie_window.window.set_background(color)
         
         ## start main loop
         gobject.threads_init()
@@ -651,7 +659,10 @@ class GsongFinder(object):
     def download_photo(self, img_url):
         filename = os.path.basename(img_url)
         print filename
-        file_path = "%s%s" % ('/tmp/', filename)
+        if sys.platform == "win32":
+            file_path = os.path.join(tempfile.gettempdir(), filename)
+        else:
+            file_path = "%s%s" % ('/tmp/', filename)
         if os.path.exists(file_path):
             os.remove(file_path)
         downloaded_image = file(file_path, "wb")
@@ -751,11 +762,10 @@ class GsongFinder(object):
         self.is_playing = True
 
     def stop_play(self,widget=None):
-        self.play_thread_id = None
         self.player.set_state(gst.STATE_NULL)
-        self.play_thread_id = None
         self.play_btn.set_label("gtk-media-play")
         self.is_playing = False
+        self.play_thread_id = None
         self.duration = None
         self.update_time_label()
 
@@ -878,6 +888,9 @@ class GsongFinder(object):
         in the media file as well as update the seek bar
         """ 
         if self.is_playing == False:
+          adjustment = gtk.Adjustment(0, 0.00, 100.0, 0.1, 1.0, 1.0)
+          self.seeker.set_adjustment(adjustment)
+          self.time_label.set_text("00:00 / 00:00")
           return False
         
         if self.duration == None:
@@ -911,20 +924,22 @@ class GsongFinder(object):
                 win_id = self.movie_window.window.handle
             else:
                 win_id = self.movie_window.window.xid
-            assert win_id
-            imagesink = message.src
-            imagesink.set_property("force-aspect-ratio", True)
+            print self.window.window.xid
             gtk.gdk.threads_enter()
-            imagesink.set_xwindow_id(win_id)
+            self.sink.set_xwindow_id(win_id)
             gtk.gdk.threads_leave()
             
     def on_drawingarea_clicked(self, widget, event):
         if event.type == gtk.gdk._2BUTTON_PRESS:
             print "2click"
             widget.window.fullscreen()
-            
+    
     def on_drawingarea_realized(self, sender):
         self.sink.set_xwindow_id(self.movie_window.window.xid)
+            
+    def on_expose_event(self, sender, event):
+        color = gtk.gdk.color_parse("black")
+        self.movie_window.window.set_background(color)
     
     def on_volume_changed(self, widget, value=10):
         self.player.set_property("volume", float(value)) 
