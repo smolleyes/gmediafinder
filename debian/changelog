@@ -1,5 +1,7 @@
-gmediafinder (0.1.1-0ppa3) maverick; urgency=low
+gmediafinder (0.1.1-0ppa5) maverick; urgency=low
 
-  * Initial release for maverick
+  * Add visualisations system
+  * remove tagoo.ru engine, website's down...
+  * now use playbin and not playbin2
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 19 Dec 2010 23:37:53 +0100

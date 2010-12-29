@@ -57,7 +57,8 @@ class GsongFinder(object):
             self.down_dir = os.path.join(mydocs,"gmediafinder-downloads")
         else:
             self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
-        self.engine_list = {'youtube.com':'','google.com':'','dilandau.com':'','mp3realm.org':'','tagoo.ru':''}
+        self.engine_list = {'youtube.com':'','google.com':'','dilandau.com':'','mp3realm.org':''}
+        #,'tagoo.ru':'','iwantmuzik.com':''
         self.engine = None
         self.search_option = "song_radio"
         self.banned_sites = ['worxpress','null3d','audiozen']
@@ -125,14 +126,12 @@ class GsongFinder(object):
         self.progressbar = self.gladeGui.get_widget("progressbar")
 
         # video drawing
-        self.drawing_box = self.gladeGui.get_widget("drawing_box")
-        self.movie_window = gtk.DrawingArea()
-        self.movie_window.set_size_request(300,300)
+        self.movie_window = self.gladeGui.get_widget("drawingarea")
         self.movie_window.connect('realize', self.on_drawingarea_realized)
         self.movie_window.connect('expose-event', self.on_expose_event)
         self.movie_window.connect('button-press-event', self.on_drawingarea_clicked)
         self.movie_window.add_events( gtk.gdk.BUTTON_PRESS_MASK )
-        self.drawing_box.add(self.movie_window)
+        #self.drawing_box.add(self.movie_window)
         self.pic_box = self.gladeGui.get_widget("picture_box")
         
         # seekbar and signals
@@ -151,6 +150,9 @@ class GsongFinder(object):
         ## youtube client
         self.youtube = YouTubeClient()
         
+        ## visualisations
+        self.vis_selector = self.gladeGui.get_widget("vis_chooser")
+        
         
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
@@ -167,6 +169,7 @@ class GsongFinder(object):
         "on_continue_checkbox_toggled" : self.set_play_options,
         "on_loop_checkbox_toggled" : self.set_play_options,
         "on_vol_btn_value_changed" : self.on_volume_changed,
+        "on_vis_chooser_changed" : self.change_visualisation,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -203,13 +206,15 @@ class GsongFinder(object):
         self.treeview.connect('cursor-changed',self.get_model)
 
         ## create the players
-        self.player = gst.element_factory_make("playbin2", "player")
+        self.player = gst.element_factory_make("playbin", "player")
         audiosink = gst.element_factory_make("autoaudiosink")
+        self.vis = self.change_visualisation()
         if sys.platform == "win32":
             self.sink = gst.element_factory_make('d3dvideosink')
         else:
             self.sink = gst.element_factory_make('xvimagesink')
-            self.sink.set_property('force-aspect-ratio', True)
+            if self.engine == "youtube.com":
+                self.sink.set_property('force-aspect-ratio', True)
         self.player.set_property("audio-sink", audiosink)
         self.player.set_property('video-sink', self.sink)
         bus = self.player.get_bus()
@@ -234,8 +239,18 @@ class GsongFinder(object):
         ## start main loop
         gobject.threads_init()
         #gtk.gdk.threads_init()
-        gtk.main()
+        gobject.MainLoop().run() 
         
+    def change_visualisation(self, widget=None):
+        vis = self.vis_selector.get_active_text()
+        if vis == "":
+            self.vis_selector.set_active(0)
+            self.vis = "libvisual_jess"
+        elif vis != "goom":
+            self.vis = "libvisual_"+vis
+        else:
+            self.vis = vis
+        return self.vis
 
     def set_engine(self,widget=None):
         self.options_box.hide()
@@ -268,6 +283,8 @@ class GsongFinder(object):
             self.page = 1
         elif self.engine == "youtube.com":
             self.req_start = 0
+        elif self.engine == "iwantmuzik.com":
+            self.req_start = 1
 
     def get_model(self,widget):
         selected = self.treeview.get_selection()
@@ -277,7 +294,6 @@ class GsongFinder(object):
         self.media_name = self.model.get_value(self.iter, 1)
         ## return only theme name and description then extract infos from hash
         self.media_link = self.model.get_value(self.iter, 2)
-        print self.media_link
         # print in the gui
         self.statbar.push(1,"Playing : %s" % self.media_name)
         self.stop_play()
@@ -349,6 +365,8 @@ class GsongFinder(object):
             url = "http://tagoo.ru/en/search.php?for=audio&search=%s&page=%d&sort=date" % (user_search,self.req_start)
         elif self.engine == "youtube.com":
             url = "http://www.youtube.com/results?search_query=%s&page=%s" % (user_search,self.req_start)
+        elif self.engine == "iwantmuzik.com":
+            url = "http://iwantmuzik.com/search/mp3/%s/%s.html" % (self.req_start,user_search)
         ## 1 for first resquest to not test content type
         return url
 
@@ -465,7 +483,7 @@ class GsongFinder(object):
                         i += 1
 
             elif self.engine == "dilandau.com":
-                soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
+                soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'])
                 nlist = []
                 link_list = []
                 next_page = 1
@@ -488,6 +506,46 @@ class GsongFinder(object):
                         return
 
                 flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'button download_button'}) ]
+                for link in flist:
+                    try:
+                        link = urllib2.unquote(link)
+                        name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
+                        nlist.append(name)
+                        link_list.append(link)
+                    except:
+                        continue
+                ## add to the treeview if ok
+                i = 0
+                for name in nlist:
+                    if name and link_list[i]:
+                        self.add_sound(name, link_list[i])
+                        i += 1
+                        
+            elif self.engine == "iwantmuzik.com":
+                soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'])
+                nlist = []
+                link_list = []
+                next_page = 1
+                print soup
+                pagination_table = soup.findAll('table',attrs={'class':'pagination'})[0]
+                if pagination_table:
+                    next_check = pagination_table.findAll('a')
+                    for a in next_check:
+                        l = str(a.string)
+                        if l == "More results":
+                            next_page = 1
+                    if next_page:
+                        self.informations_label.set_text("Results page %s for %s...(Next page available)" % (self.req_start, self.user_search))
+                        self.req_start += 1
+                        self.changepage_btn.show()
+                    else:
+                        self.changepage_btn.hide()
+                        self.req_start = 1
+                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                        self.search_thread_id = None
+                        return
+
+                flist = [ each.get('href') for each in soup.findAll('div',attrs={'class':'downloading'}).findAll('a')[1] ]
                 for link in flist:
                     try:
                         link = urllib2.unquote(link)
@@ -658,7 +716,6 @@ class GsongFinder(object):
                        
     def download_photo(self, img_url):
         filename = os.path.basename(img_url)
-        print filename
         if sys.platform == "win32":
             file_path = os.path.join(tempfile.gettempdir(), filename)
         else:
@@ -754,7 +811,9 @@ class GsongFinder(object):
         exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
         if not re.search(exp_reg,url) and not self.engine == "youtube.com":
             pass
-            
+        self.vis = self.change_visualisation()
+        self.visual = gst.element_factory_make(self.vis,'visual')
+        self.player.set_property('vis-plugin', self.visual)
         self.play_btn.set_label("gtk-media-stop")
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
@@ -924,7 +983,6 @@ class GsongFinder(object):
                 win_id = self.movie_window.window.handle
             else:
                 win_id = self.movie_window.window.xid
-            print self.window.window.xid
             gtk.gdk.threads_enter()
             self.sink.set_xwindow_id(win_id)
             gtk.gdk.threads_leave()
