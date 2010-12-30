@@ -239,7 +239,8 @@ class GsongFinder(object):
         ## start main loop
         gobject.threads_init()
         #gtk.gdk.threads_init()
-        gobject.MainLoop().run() 
+        self.mainloop = gobject.MainLoop(is_running=True)
+        self.mainloop.run()
         
     def change_visualisation(self, widget=None):
         vis = self.vis_selector.get_active_text()
@@ -1020,7 +1021,7 @@ class GsongFinder(object):
         """Stop method, sets the event to terminate the thread's main loop"""
         if self.player.set_state(gst.STATE_PLAYING):
             self.player.set_state(gst.STATE_NULL)
-        gtk.main_quit()
+        self.mainloop.quit()
 
 def _GetYoutubeVideoInfo(videoID,eurl=None):
         '''
