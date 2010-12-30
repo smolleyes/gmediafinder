@@ -57,7 +57,7 @@ class GsongFinder(object):
             self.down_dir = os.path.join(mydocs,"gmediafinder-downloads")
         else:
             self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
-        self.engine_list = {'youtube.com':'','google.com':'','dilandau.com':'','mp3realm.org':''}
+        self.engine_list = {'youtube.com':'','google.com':'','dilandau.com':'','mp3realm.org':'','iwantmuzik.com':''}
         #,'tagoo.ru':'','iwantmuzik.com':''
         self.engine = None
         self.search_option = "song_radio"
@@ -399,7 +399,8 @@ class GsongFinder(object):
         HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
 
         if data:
-            soup = BeautifulStoneSoup(data,selfClosingTags=['/>'])
+            data = data.decode('utf-8')
+            soup = BeautifulStoneSoup(data)
             if self.engine == "google.com":
                 while search_thread_id == self.search_thread_id:
                     if search_thread_id == self.search_thread_id:
@@ -545,10 +546,11 @@ class GsongFinder(object):
                         self.search_thread_id = None
                         return
 
-                flist = [ each.get('href') for each in soup.findAll('div',attrs={'class':'downloading'}).findAll('a')[1] ]
+                flist = soup.findAll('div',attrs={'class':'download_link'})
                 for link in flist:
                     try:
-                        link = urllib2.unquote(link)
+                        url = re.search('a href="(http\S+.mp3)',str(link)).group(1)
+                        link = urllib2.unquote(url)
                         name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
                         nlist.append(name)
                         link_list.append(link)

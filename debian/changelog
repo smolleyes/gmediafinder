@@ -1,7 +1,5 @@
-gmediafinder (0.1.1-0ppa5) maverick; urgency=low
+gmediafinder (0.1.1-0ppa6~maverick) maverick; urgency=low
 
-  * Add visualisations system
-  * remove tagoo.ru engine, website's down...
-  * now use playbin and not playbin2
+  * add iwantmuzik.com engine
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 19 Dec 2010 23:37:53 +0100
