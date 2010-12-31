@@ -475,7 +475,7 @@ audio-volume-medium</property>
                             <child>
                               <widget class="GtkLabel" id="label2">
                                 <property name="visible">True</property>
-                                <property name="label" translatable="yes">Télécharger</property>
+                                <property name="label" translatable="yes">Download</property>
                               </widget>
                               <packing>
                                 <property name="padding">2</property>

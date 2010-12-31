@@ -49,6 +49,7 @@ class GsongFinder(object):
         self.user_search = ""
         self.play_options = None
         self.fullscreen = False
+        self.play_options = None
         if sys.platform == "win32":
             from win32com.shell import shell
             df = shell.SHGetDesktopFolder()
@@ -57,8 +58,7 @@ class GsongFinder(object):
             self.down_dir = os.path.join(mydocs,"gmediafinder-downloads")
         else:
             self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
-        self.engine_list = {'youtube.com':'','google.com':'','dilandau.com':'','mp3realm.org':'','iwantmuzik.com':''}
-        #,'tagoo.ru':'','iwantmuzik.com':''
+        self.engine_list = {'youtube.com':'','google.com':'','tagoo.ru':'','dilandau.com':'','mp3realm.org':'','iwantmuzik.com':''}
         self.engine = None
         self.search_option = "song_radio"
         self.banned_sites = ['worxpress','null3d','audiozen']
@@ -866,7 +866,6 @@ class GsongFinder(object):
             self.player.set_state(gst.STATE_PLAYING)
 
     def set_play_options(self,widget):
-        self.play_options = None
         wname = widget.name
         wstate = widget.get_active()
         if wname == "continue_checkbox":

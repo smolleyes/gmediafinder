@@ -1,5 +1,9 @@
-gmediafinder (0.1.1-0ppa6~maverick) maverick; urgency=low
+gmediafinder (0.2-0ppa2~maverick) maverick; urgency=low
 
-  * add iwantmuzik.com engine
+  * fix program exit
+  * fix progressbar seek freeze
+  * fix stream's duration retrieving...
+  * fix loop/continue options
+  * add tagoo.ru engine, website reopened..
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 19 Dec 2010 23:37:53 +0100

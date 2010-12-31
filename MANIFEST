@@ -1,9 +1,7 @@
-README
 gmediafinder
 setup.py
 Makefile
 VERSION
-COPYRIGHT
 gmediafinder.desktop
 GmediaFinder/__init__.py
 GmediaFinder/constants.py
