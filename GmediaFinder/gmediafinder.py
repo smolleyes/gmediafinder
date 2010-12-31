@@ -528,7 +528,6 @@ class GsongFinder(object):
                 nlist = []
                 link_list = []
                 next_page = 1
-                print soup
                 pagination_table = soup.findAll('table',attrs={'class':'pagination'})[0]
                 if pagination_table:
                     next_check = pagination_table.findAll('a')
@@ -959,19 +958,22 @@ class GsongFinder(object):
           try:
             self.length = self.player.query_duration(self.timeFormat, None)[0]
             self.duration = self.convert_ns(self.length)
-          except:
+          except gst.QueryError:
             self.duration = None
           
         if self.duration != None:
-          self.current_position = self.player.query_position(self.timeFormat, None)[0]
-          current_position_formated = self.convert_ns(self.current_position)
-          self.time_label.set_text(current_position_formated + "/" + self.duration)
+            try:
+                self.current_position = self.player.query_position(self.timeFormat, None)[0]
+            except gst.QueryError:
+                return 0
+            current_position_formated = self.convert_ns(self.current_position)
+            self.time_label.set_text(current_position_formated + "/" + self.duration)
       
-          # Update the seek bar
-          # gtk.Adjustment(value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0)
-          percent = (float(self.current_position)/float(self.length))*100.0
-          adjustment = gtk.Adjustment(percent, 0.00, 100.0, 0.1, 1.0, 1.0)
-          self.seeker.set_adjustment(adjustment)
+            # Update the seek bar
+            # gtk.Adjustment(value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0)
+            percent = (float(self.current_position)/float(self.length))*100.0
+            adjustment = gtk.Adjustment(percent, 0.00, 100.0, 0.1, 1.0, 1.0)
+            self.seeker.set_adjustment(adjustment)
       
         return True
     

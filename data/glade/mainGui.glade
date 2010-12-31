@@ -102,7 +102,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="draw_indicator">True</property>
-                            <property name="group">img_radio</property>
+                            <property name="group">song_radio</property>
                             <signal name="toggled" handler="on_video_radio_toggled"/>
                           </widget>
                           <packing>
@@ -116,7 +116,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="draw_indicator">True</property>
-                            <property name="group">song_radio</property>
+                            <property name="group">video_radio</property>
                             <signal name="toggled" handler="on_img_radio_toggled"/>
                           </widget>
                           <packing>
@@ -149,7 +149,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="draw_indicator">True</property>
-                            <property name="group">img_radio</property>
+                            <property name="group">most_viewed_opt</property>
                             <signal name="toggled" handler="on_song_radio_toggled"/>
                           </widget>
                           <packing>
@@ -163,7 +163,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="draw_indicator">True</property>
-                            <property name="group">img_radio</property>
+                            <property name="group">most_viewed_opt</property>
                             <signal name="toggled" handler="on_video_radio_toggled"/>
                           </widget>
                           <packing>
@@ -177,7 +177,7 @@
                             <property name="can_focus">True</property>
                             <property name="receives_default">False</property>
                             <property name="draw_indicator">True</property>
-                            <property name="group">song_radio</property>
+                            <property name="group">rating_opt</property>
                             <signal name="toggled" handler="on_img_radio_toggled"/>
                           </widget>
                           <packing>
@@ -192,7 +192,7 @@
                             <property name="receives_default">False</property>
                             <property name="active">True</property>
                             <property name="draw_indicator">True</property>
-                            <property name="group">most_viewed_opt</property>
+                            <property name="group">relevance_opt</property>
                           </widget>
                           <packing>
                             <property name="position">4</property>
