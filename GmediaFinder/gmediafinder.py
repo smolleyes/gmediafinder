@@ -134,8 +134,9 @@ class GsongFinder(object):
         self.movie_window.set_flags(gtk.CAN_FOCUS)
         self.movie_window.unset_flags(gtk.DOUBLE_BUFFERED)
         self.movie_window.connect('realize', self.on_drawingarea_realized)
-        self.movie_window.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('black'))
         self.movie_window.connect('motion-notify-event', self.on_motion_notify)
+        self.movie_window.connect('configure-event', self.on_configure_event)
+        self.movie_window.connect('expose-event', self.on_expose_event)
         self.movie_window.connect('button-press-event', self.on_drawingarea_clicked)
         self.movie_window.add_events( gtk.gdk.BUTTON_PRESS_MASK )
         self.pic_box = self.gladeGui.get_widget("picture_box")
@@ -1025,6 +1026,21 @@ class GsongFinder(object):
     def on_drawingarea_realized(self, sender):
         self.sink.set_xwindow_id(self.movie_window.window.xid)
             
+    def on_expose_event(self, widget, event):
+        x , y, width, height = event.area
+        widget.window.draw_drawable(widget.get_style().fg_gc[gtk.STATE_NORMAL],
+                                      pixmap, x, y, x, y, width, height)
+        return False
+        
+    def on_configure_event(self, widget, event):
+          global pixmap
+   
+          x, y, width, height = widget.get_allocation()
+          pixmap = gtk.gdk.Pixmap(widget.window, width, height)
+          pixmap.draw_rectangle(widget.get_style().black_gc,
+                                True, 0, 0, width, height)
+   
+          return True
         
     def on_motion_notify(self, widget, event):
         print event.y
