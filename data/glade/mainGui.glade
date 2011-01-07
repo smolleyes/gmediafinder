@@ -368,81 +368,22 @@
           </packing>
         </child>
         <child>
-          <widget class="GtkVBox" id="vbox3">
+          <widget class="GtkVBox" id="control_box">
             <property name="visible">True</property>
             <child>
-              <widget class="GtkVBox" id="vbox4">
+              <widget class="GtkHBox" id="hbox5">
                 <property name="visible">True</property>
                 <child>
-                  <widget class="GtkHBox" id="hbox5">
+                  <widget class="GtkHBox" id="hbox12">
                     <property name="visible">True</property>
                     <child>
-                      <widget class="GtkHBox" id="hbox12">
+                      <widget class="GtkButton" id="play_btn">
+                        <property name="label">gtk-media-play</property>
                         <property name="visible">True</property>
-                        <child>
-                          <widget class="GtkButton" id="play_btn">
-                            <property name="label">gtk-media-play</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="use_stock">True</property>
-                            <signal name="clicked" handler="on_play_btn_clicked"/>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkButton" id="pause_btn">
-                            <property name="label">gtk-media-pause</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <property name="use_stock">True</property>
-                            <signal name="clicked" handler="on_pause_btn_clicked"/>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkButton" id="down_btn">
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">True</property>
-                            <signal name="clicked" handler="on_down_btn_clicked"/>
-                            <child>
-                              <widget class="GtkHBox" id="hbox13">
-                                <property name="visible">True</property>
-                                <child>
-                                  <widget class="GtkImage" id="image3">
-                                    <property name="visible">True</property>
-                                    <property name="stock">gtk-go-down</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="position">0</property>
-                                  </packing>
-                                </child>
-                                <child>
-                                  <widget class="GtkLabel" id="label6">
-                                    <property name="visible">True</property>
-                                    <property name="label" translatable="yes">Download</property>
-                                  </widget>
-                                  <packing>
-                                    <property name="padding">2</property>
-                                    <property name="position">1</property>
-                                  </packing>
-                                </child>
-                              </widget>
-                            </child>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_stock">True</property>
+                        <signal name="clicked" handler="on_play_btn_clicked"/>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
@@ -450,22 +391,48 @@
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkHBox" id="seekbox">
+                      <widget class="GtkButton" id="pause_btn">
+                        <property name="label">gtk-media-pause</property>
                         <property name="visible">True</property>
-                        <child>
-                          <placeholder/>
-                        </child>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <property name="use_stock">True</property>
+                        <signal name="clicked" handler="on_pause_btn_clicked"/>
                       </widget>
                       <packing>
-                        <property name="padding">5</property>
+                        <property name="expand">False</property>
                         <property name="position">1</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkHBox" id="timer_box">
+                      <widget class="GtkButton" id="down_btn">
                         <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">True</property>
+                        <signal name="clicked" handler="on_down_btn_clicked"/>
                         <child>
-                          <placeholder/>
+                          <widget class="GtkHBox" id="hbox13">
+                            <property name="visible">True</property>
+                            <child>
+                              <widget class="GtkImage" id="image3">
+                                <property name="visible">True</property>
+                                <property name="stock">gtk-go-down</property>
+                              </widget>
+                              <packing>
+                                <property name="position">0</property>
+                              </packing>
+                            </child>
+                            <child>
+                              <widget class="GtkLabel" id="label6">
+                                <property name="visible">True</property>
+                                <property name="label" translatable="yes">Download</property>
+                              </widget>
+                              <packing>
+                                <property name="padding">2</property>
+                                <property name="position">1</property>
+                              </packing>
+                            </child>
+                          </widget>
                         </child>
                       </widget>
                       <packing>
@@ -473,81 +440,140 @@
                         <property name="position">2</property>
                       </packing>
                     </child>
-                    <child>
-                      <widget class="GtkVolumeButton" id="vol_btn">
-                        <property name="visible">True</property>
-                        <property name="can_focus">True</property>
-                        <property name="receives_default">True</property>
-                        <property name="has_tooltip">True</property>
-                        <property name="focus_on_click">False</property>
-                        <property name="orientation">vertical</property>
-                        <property name="value">50</property>
-                        <property name="size">button</property>
-                        <property name="icons">audio-volume-muted
-audio-volume-high
-audio-volume-low
-audio-volume-medium</property>
-                        <signal name="value_changed" handler="on_vol_btn_value_changed"/>
-                      </widget>
-                      <packing>
-                        <property name="expand">False</property>
-                        <property name="padding">5</property>
-                        <property name="position">3</property>
-                      </packing>
-                    </child>
                   </widget>
                   <packing>
-                    <property name="padding">5</property>
+                    <property name="expand">False</property>
+                    <property name="padding">2</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkHBox" id="hbox4">
+                  <widget class="GtkHBox" id="seekbox">
                     <property name="visible">True</property>
-                    <property name="spacing">2</property>
                     <child>
-                      <widget class="GtkHBox" id="hbox7">
+                      <placeholder/>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="padding">5</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkHBox" id="timer_box">
+                    <property name="visible">True</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkVolumeButton" id="vol_btn">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="relief">none</property>
+                    <property name="focus_on_click">False</property>
+                    <property name="orientation">vertical</property>
+                    <property name="value">1</property>
+                    <property name="size">button</property>
+                    <property name="icons">audio-volume-muted
+audio-volume-high
+audio-volume-low
+audio-volume-medium</property>
+                    <signal name="value_changed" handler="on_vol_btn_value_changed"/>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="padding">5</property>
+                    <property name="position">3</property>
+                  </packing>
+                </child>
+              </widget>
+              <packing>
+                <property name="padding">5</property>
+                <property name="position">0</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkHBox" id="hbox4">
+                <property name="visible">True</property>
+                <property name="spacing">2</property>
+                <child>
+                  <widget class="GtkHBox" id="hbox7">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkLabel" id="label3">
                         <property name="visible">True</property>
-                        <child>
-                          <widget class="GtkLabel" id="label3">
-                            <property name="visible">True</property>
-                            <property name="xalign">0.10000000149011612</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Playlist Options : &lt;/b&gt;</property>
-                            <property name="use_markup">True</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkCheckButton" id="continue_checkbox">
-                            <property name="label" translatable="yes">continue</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="on_continue_checkbox_toggled"/>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkCheckButton" id="loop_checkbox">
-                            <property name="label" translatable="yes">loop</property>
-                            <property name="visible">True</property>
-                            <property name="can_focus">True</property>
-                            <property name="receives_default">False</property>
-                            <property name="draw_indicator">True</property>
-                            <signal name="toggled" handler="on_loop_checkbox_toggled"/>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">2</property>
-                          </packing>
-                        </child>
+                        <property name="xalign">0.10000000149011612</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Playlist Options : &lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="padding">2</property>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkCheckButton" id="continue_checkbox">
+                        <property name="label" translatable="yes">continue</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="on_continue_checkbox_toggled"/>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkCheckButton" id="loop_checkbox">
+                        <property name="label" translatable="yes">loop</property>
+                        <property name="visible">True</property>
+                        <property name="can_focus">True</property>
+                        <property name="receives_default">False</property>
+                        <property name="draw_indicator">True</property>
+                        <signal name="toggled" handler="on_loop_checkbox_toggled"/>
+                      </widget>
+                      <packing>
+                        <property name="expand">False</property>
+                        <property name="position">2</property>
+                      </packing>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="position">0</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkHBox" id="hbox14">
+                    <property name="visible">True</property>
+                    <child>
+                      <placeholder/>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkHBox" id="hbox3">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkLabel" id="label2">
+                        <property name="width_request">128</property>
+                        <property name="visible">True</property>
+                        <property name="xalign">0</property>
+                        <property name="label" translatable="yes">&lt;b&gt;Visualisations :&lt;/b&gt;</property>
+                        <property name="use_markup">True</property>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
@@ -555,36 +581,9 @@ audio-volume-medium</property>
                       </packing>
                     </child>
                     <child>
-                      <widget class="GtkHBox" id="hbox14">
+                      <widget class="GtkComboBoxEntry" id="vis_chooser">
                         <property name="visible">True</property>
-                        <child>
-                          <placeholder/>
-                        </child>
-                      </widget>
-                      <packing>
-                        <property name="position">1</property>
-                      </packing>
-                    </child>
-                    <child>
-                      <widget class="GtkHBox" id="hbox3">
-                        <property name="visible">True</property>
-                        <child>
-                          <widget class="GtkLabel" id="label2">
-                            <property name="width_request">128</property>
-                            <property name="visible">True</property>
-                            <property name="xalign">0</property>
-                            <property name="label" translatable="yes">&lt;b&gt;Visualisations :&lt;/b&gt;</property>
-                            <property name="use_markup">True</property>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">0</property>
-                          </packing>
-                        </child>
-                        <child>
-                          <widget class="GtkComboBoxEntry" id="vis_chooser">
-                            <property name="visible">True</property>
-                            <property name="items" translatable="yes">jess
+                        <property name="items" translatable="yes">jess
 goom
 oinksie
 lv_scope
@@ -593,30 +592,25 @@ jakdaw
 infinite
 corona
 bumpscope</property>
-                            <signal name="changed" handler="on_vis_chooser_changed"/>
-                          </widget>
-                          <packing>
-                            <property name="expand">False</property>
-                            <property name="position">1</property>
-                          </packing>
-                        </child>
+                        <signal name="changed" handler="on_vis_chooser_changed"/>
                       </widget>
                       <packing>
                         <property name="expand">False</property>
-                        <property name="pack_type">end</property>
-                        <property name="position">2</property>
+                        <property name="padding">2</property>
+                        <property name="position">1</property>
                       </packing>
                     </child>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
-                    <property name="position">1</property>
+                    <property name="pack_type">end</property>
+                    <property name="position">2</property>
                   </packing>
                 </child>
               </widget>
               <packing>
                 <property name="expand">False</property>
-                <property name="position">0</property>
+                <property name="position">1</property>
               </packing>
             </child>
           </widget>
@@ -636,18 +630,10 @@ bumpscope</property>
           </packing>
         </child>
         <child>
-          <widget class="GtkHBox" id="hbox6">
+          <widget class="GtkStatusbar" id="statusbar">
             <property name="visible">True</property>
-            <child>
-              <widget class="GtkStatusbar" id="statusbar">
-                <property name="visible">True</property>
-                <property name="spacing">2</property>
-                <property name="has_resize_grip">False</property>
-              </widget>
-              <packing>
-                <property name="position">0</property>
-              </packing>
-            </child>
+            <property name="spacing">2</property>
+            <property name="has_resize_grip">False</property>
           </widget>
           <packing>
             <property name="expand">False</property>

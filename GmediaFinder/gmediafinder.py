@@ -50,6 +50,7 @@ class GsongFinder(object):
         self.play_options = None
         self.fullscreen = False
         self.play_options = None
+        self.mini_player = False
         if sys.platform == "win32":
             from win32com.shell import shell
             df = shell.SHGetDesktopFolder()
@@ -134,14 +135,15 @@ class GsongFinder(object):
         self.movie_window.set_flags(gtk.CAN_FOCUS)
         self.movie_window.unset_flags(gtk.DOUBLE_BUFFERED)
         self.movie_window.connect('realize', self.on_drawingarea_realized)
-        self.movie_window.connect('motion-notify-event', self.on_motion_notify)
+        self.window.connect('motion-notify-event', self.on_motion_notify)
         self.movie_window.connect('configure-event', self.on_configure_event)
         self.movie_window.connect('expose-event', self.on_expose_event)
         self.movie_window.connect('button-press-event', self.on_drawingarea_clicked)
-        self.movie_window.add_events( gtk.gdk.BUTTON_PRESS_MASK )
+        self.movie_window.add_events(gtk.gdk.BUTTON_PRESS_MASK)
         self.pic_box = self.gladeGui.get_widget("picture_box")
         
         # seekbar and signals
+        self.control_box = self.gladeGui.get_widget("control_box")
         self.seekbox = self.gladeGui.get_widget("seekbox")
         self.adjustment = gtk.Adjustment(0.0, 0.00, 100.0, 0.1, 1.0, 1.0)
         self.seeker = gtk.HScale(self.adjustment)
@@ -817,6 +819,7 @@ class GsongFinder(object):
             if self.play_btn.get_label() == "gtk-media-play":
                 return self.start_play(url)
             else:
+                self.statbar.push(1,"Stopped")
                 return self.stop_play(url)
 
     def start_play(self,url):
@@ -1011,6 +1014,8 @@ class GsongFinder(object):
             self.top_infobox.show()
             self.search_box.show()
             self.results_box.show()
+            self.statbar.show()
+            self.control_box.show()
             self.window.window.unfullscreen()
             self.window.set_position(gtk.WIN_POS_CENTER)
         else:
@@ -1043,10 +1048,21 @@ class GsongFinder(object):
           return True
         
     def on_motion_notify(self, widget, event):
-        print event.y
-        if self.fullscreen and event.y < 10:
-            text="Mouse position is: x=%d y=%d" % (event.x, event.y)
-        
+        h=gtk.gdk.screen_height()
+        if self.fullscreen and event.y >= h - 10:
+            self.show_mini_player()
+            time.sleep(0.5)
+            
+    def show_mini_player(self):
+        if self.mini_player == False:
+            self.statbar.hide()
+            self.control_box.hide()
+            self.progressbar.hide()
+            self.mini_player = True
+        else:
+            self.statbar.show()
+            self.control_box.show()
+            self.mini_player = False
     
     def onKeyPress(self, widget, event):
         key = gtk.gdk.keyval_name (event.keyval)
