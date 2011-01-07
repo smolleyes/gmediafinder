@@ -1,9 +1,10 @@
-gmediafinder (0.2-0ppa2~maverick) maverick; urgency=low
+gmediafinder (0.2-0ppa3~maverick) maverick; urgency=low
 
   * fix program exit
   * fix progressbar seek freeze
   * fix stream's duration retrieving...
   * fix loop/continue options
   * add tagoo.ru engine, website reopened..
+  * update gui 
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 19 Dec 2010 23:37:53 +0100

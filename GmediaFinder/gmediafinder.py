@@ -81,11 +81,14 @@ class GsongFinder(object):
         else:
             self.img_path = os.path.join(constants.img_path)
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
-
+        self.window.connect('key-press-event', self.onKeyPress)
         ## informations
+        self.top_infobox = self.gladeGui.get_widget("top_info")
         self.informations_label = self.gladeGui.get_widget("info_label")
 
         ## google search options
+        self.search_box = self.gladeGui.get_widget("search_box")
+        self.results_box = self.gladeGui.get_widget("results_box")
         self.options_box = self.gladeGui.get_widget("options_box")
         self.option_songs = self.gladeGui.get_widget("song_radio")
         self.option_videos = self.gladeGui.get_widget("video_radio")
@@ -126,12 +129,15 @@ class GsongFinder(object):
         self.progressbar = self.gladeGui.get_widget("progressbar")
 
         # video drawing
+        self.video_box = self.gladeGui.get_widget("video_box")
         self.movie_window = self.gladeGui.get_widget("drawingarea")
+        self.movie_window.set_flags(gtk.CAN_FOCUS)
+        self.movie_window.unset_flags(gtk.DOUBLE_BUFFERED)
         self.movie_window.connect('realize', self.on_drawingarea_realized)
-        self.movie_window.connect('expose-event', self.on_expose_event)
+        self.movie_window.modify_bg(gtk.STATE_NORMAL, gtk.gdk.color_parse('black'))
+        self.movie_window.connect('motion-notify-event', self.on_motion_notify)
         self.movie_window.connect('button-press-event', self.on_drawingarea_clicked)
         self.movie_window.add_events( gtk.gdk.BUTTON_PRESS_MASK )
-        #self.drawing_box.add(self.movie_window)
         self.pic_box = self.gladeGui.get_widget("picture_box")
         
         # seekbar and signals
@@ -233,8 +239,8 @@ class GsongFinder(object):
         self.changepage_btn.hide()
         self.options_box.hide()
         self.youtube_options.hide()
-        color = gtk.gdk.color_parse("black")
-        self.movie_window.window.set_background(color)
+        #color = gtk.gdk.color_parse("black")
+        #self.movie_window.window.set_background(color)
         
         ## start main loop
         gobject.threads_init()
@@ -309,7 +315,7 @@ class GsongFinder(object):
     def prepare_search(self,widget=None):
         if self.search_thread_id:
             while self.search_thread_id:
-                self.search_thread_id = None
+                #self.search_thread_id = None
                 time.sleep(0.5)
                 
         self.user_search = self.search_entry.get_text()
@@ -643,6 +649,9 @@ class GsongFinder(object):
                 #flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'ux-thumb-wrap contains-addto'}) ]
                 for video in vquery:
                     self.make_youtube_entry(video)
+        else:
+            return
+        self.search_thread_id = None
 
 
     def sanitizer_factory(self,*args, **kwargs):
@@ -993,15 +1002,44 @@ class GsongFinder(object):
             
     def on_drawingarea_clicked(self, widget, event):
         if event.type == gtk.gdk._2BUTTON_PRESS:
-            print "2click"
-            widget.window.fullscreen()
+            return self.set_fullscreen()
     
+    def set_fullscreen(self,widget=None):
+        if self.fullscreen :
+            self.fullscreen = False
+            self.top_infobox.show()
+            self.search_box.show()
+            self.results_box.show()
+            self.window.window.unfullscreen()
+            self.window.set_position(gtk.WIN_POS_CENTER)
+        else:
+            self.fullscreen = True
+            self.top_infobox.hide()
+            self.search_box.hide()
+            self.results_box.hide()
+            self.window.window.fullscreen()
+            color = gtk.gdk.color_parse("black")
+            self.movie_window.modify_bg(gtk.STATE_NORMAL, color)
+            
+                
     def on_drawingarea_realized(self, sender):
         self.sink.set_xwindow_id(self.movie_window.window.xid)
             
-    def on_expose_event(self, sender, event):
-        color = gtk.gdk.color_parse("black")
-        self.movie_window.window.set_background(color)
+        
+    def on_motion_notify(self, widget, event):
+        print event.y
+        if self.fullscreen and event.y < 10:
+            text="Mouse position is: x=%d y=%d" % (event.x, event.y)
+        
+    
+    def onKeyPress(self, widget, event):
+        key = gtk.gdk.keyval_name (event.keyval)
+        if key == 'f':
+            return self.set_fullscreen()
+
+        # If user press Esc button in fullscreen mode
+        if event.keyval == gtk.keysyms.Escape and self.fullscreen:
+            return self.set_fullscreen()
     
     def on_volume_changed(self, widget, value=10):
         self.player.set_property("volume", float(value)) 
