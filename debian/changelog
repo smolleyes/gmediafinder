@@ -1,4 +1,4 @@
-gmediafinder (0.2.5-0ppa3~maverick) maverick; urgency=low
+gmediafinder (0.2.5-0ppa4~maverick) maverick; urgency=low
 
   * Add fullscreen support and mini player + autohide
   * fix gui 

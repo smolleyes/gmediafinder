@@ -1027,14 +1027,12 @@ class GsongFinder(object):
             self.window.window.unfullscreen()
             self.window.set_position(gtk.WIN_POS_CENTER)
         else:
-            self.fullscreen = True
             self.top_infobox.hide()
             self.search_box.hide()
             self.results_box.hide()
             self.window.window.fullscreen()
-            color = gtk.gdk.color_parse("black")
-            self.movie_window.modify_bg(gtk.STATE_NORMAL, color)
-            
+            self.fullscreen = True
+            self.mini_player = True
                 
     def on_drawingarea_realized(self, sender):
         self.sink.set_xwindow_id(self.movie_window.window.xid)
