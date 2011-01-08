@@ -50,7 +50,8 @@ class GsongFinder(object):
         self.play_options = None
         self.fullscreen = False
         self.play_options = None
-        self.mini_player = False
+        self.mini_player = True
+        self.timer = 0
         if sys.platform == "win32":
             from win32com.shell import shell
             df = shell.SHGetDesktopFolder()
@@ -817,6 +818,7 @@ class GsongFinder(object):
         url = self.media_link
         if url:
             if self.play_btn.get_label() == "gtk-media-play":
+                self.statbar.push(1,"Playing : %s" % self.media_name)
                 return self.start_play(url)
             else:
                 self.statbar.push(1,"Stopped")
@@ -966,6 +968,12 @@ class GsongFinder(object):
           self.time_label.set_text("00:00 / 00:00")
           return False
         
+        ## update timer for mini_player and hide it if more than 5 sec 
+        ## without mouse movements
+        self.timer += 1
+        if self.fullscreen == True and self.mini_player == True and self.timer > 5 :
+            self.show_mini_player()
+        
         if self.duration == None:
           try:
             self.length = self.player.query_duration(self.timeFormat, None)[0]
@@ -1049,20 +1057,20 @@ class GsongFinder(object):
         
     def on_motion_notify(self, widget, event):
         h=gtk.gdk.screen_height()
+        self.timer = 0
         if self.fullscreen and event.y >= h - 10:
             self.show_mini_player()
             time.sleep(0.5)
             
     def show_mini_player(self):
-        if self.mini_player == False:
+        if self.mini_player == True:
             self.statbar.hide()
             self.control_box.hide()
-            self.progressbar.hide()
-            self.mini_player = True
+            self.mini_player = False
         else:
             self.statbar.show()
             self.control_box.show()
-            self.mini_player = False
+            self.mini_player = True
     
     def onKeyPress(self, widget, event):
         key = gtk.gdk.keyval_name (event.keyval)
