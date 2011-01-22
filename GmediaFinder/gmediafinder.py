@@ -87,7 +87,10 @@ class GsongFinder(object):
         ## informations
         self.top_infobox = self.gladeGui.get_widget("top_info")
         self.informations_label = self.gladeGui.get_widget("info_label")
-
+        # options menu
+        self.about_btn= self.gladeGui.get_widget("about_menu")
+        self.settings_btn= self.gladeGui.get_widget("settings_menu")
+        
         ## google search options
         self.search_box = self.gladeGui.get_widget("search_box")
         self.results_box = self.gladeGui.get_widget("results_box")
@@ -107,6 +110,20 @@ class GsongFinder(object):
         self.youtube_options.relevance_opt.set_active(True)
         self.youtube_options.viewed_opt = self.gladeGui.get_widget("most_viewed_opt")
         self.youtube_options.rating_opt = self.gladeGui.get_widget("rating_opt")
+        ## video quality combobox
+        youtube_quality_box = self.gladeGui.get_widget("youtube_quality_box")
+        self.youtube_quality_model = gtk.ListStore(str)
+        self.youtube_video_rate = gtk.ComboBox(self.youtube_quality_model)
+        cell = gtk.CellRendererText()
+        self.youtube_video_rate.pack_start(cell, True)
+        self.youtube_video_rate.add_attribute(cell, 'text', 0)
+        youtube_quality_box.add(self.youtube_video_rate)
+        new_iter = self.youtube_quality_model.append()
+        self.youtube_quality_model.set(new_iter,
+                                0, "Quality",
+                                )
+        self.youtube_video_rate.set_active(0)
+        self.youtube_video_rate.connect('changed', self.set_youtube_video_rate)
         
         ## control section
         self.play_btn = self.gladeGui.get_widget("play_btn")
@@ -180,13 +197,15 @@ class GsongFinder(object):
         "on_loop_checkbox_toggled" : self.set_play_options,
         "on_vol_btn_value_changed" : self.on_volume_changed,
         "on_vis_chooser_changed" : self.change_visualisation,
+        "on_about_menu_activate" : self.on_about_btn_pressed,
+        "on_settings_menu_activate" : self.on_settings_btn_pressed,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
 
         ## finally setup the list
         (COL_PIXBUF, COL_STRING) = range(2)
-        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,str)
+        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object)
         self.treeview = gtk.TreeView()
         self.treeview.set_model(self.model)
         
@@ -206,11 +225,15 @@ class GsongFinder(object):
         pathColumn = gtk.TreeViewColumn("Link", renderer, text=0)
         self.treeview.append_column(pathColumn)
         
+        qualityColumn = gtk.TreeViewColumn("Quality", renderer, text=0)
+        self.treeview.append_column(qualityColumn)
+        
         ## setup the scrollview
         self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()
         self.columns[0].set_sort_column_id(1)
         self.columns[1].set_visible(0)
+        self.columns[2].set_visible(0)
         self.results_scroll.add(self.treeview)
         ## connect treeview signals
         self.treeview.connect('cursor-changed',self.get_model)
@@ -243,9 +266,10 @@ class GsongFinder(object):
         self.changepage_btn.hide()
         self.options_box.hide()
         self.youtube_options.hide()
-        #color = gtk.gdk.color_parse("black")
-        #self.movie_window.window.set_background(color)
+        self.youtube_video_rate.hide()
         
+        self.engine_selector.set_active(0)
+        self.youtube_video_rate.set_active(0)
         ## start main loop
         gobject.threads_init()
         #gtk.gdk.threads_init()
@@ -266,6 +290,7 @@ class GsongFinder(object):
     def set_engine(self,widget=None):
         self.options_box.hide()
         self.youtube_options.hide()
+        self.youtube_video_rate.hide()
         self.engine = self.engine_selector.get_active_text()
         self.changepage_btn.hide()
         iter = self.engine_selector.get_active_iter()
@@ -278,6 +303,7 @@ class GsongFinder(object):
             self.option_songs.set_active(1)
         elif self.engine == "youtube.com":
             self.youtube_options.show()
+            self.youtube_video_rate.show()
             self.youtube_options.relevance_opt.set_active(1)
             
 
@@ -308,23 +334,26 @@ class GsongFinder(object):
         # print in the gui
         self.statbar.push(1,"Playing : %s" % self.media_name)
         self.stop_play()
+        ## check youtube quality
+        if self.engine == "youtube.com":
+            self.quality_list = self.model.get_value(self.iter, 3)
+            self.youtube_quality_model.clear()
+            if not self.quality_list:
+                return
+            for rate in self.quality_list:
+                new_iter = self.youtube_quality_model.append()
+                self.youtube_quality_model.set(new_iter,
+                                0, rate,
+                                )
+            self.youtube_video_rate.set_active(0)
         self.start_play(self.media_link)
-        #if self.play_btn.get_label() == "gtk-media-stop":
-        #    self.search_pic()
-
+        
     def option_changed(self,widget):
         self.search_option = widget.name
 
 
     def prepare_search(self,widget=None):
-        if self.search_thread_id:
-            while self.search_thread_id:
-                #self.search_thread_id = None
-                time.sleep(0.5)
-                
         self.user_search = self.search_entry.get_text()
-        #self.user_search_encoded = u'%s' % self.user_search
-        #print self.user_search_encoded
         if not self.user_search:
             self.informations_label.set_text("Please enter an artist/album or song name...")
             return
@@ -410,7 +439,6 @@ class GsongFinder(object):
         HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
 
         if data:
-            data = data.decode('utf-8')
             soup = BeautifulStoneSoup(data)
             if self.engine == "google.com":
                 while search_thread_id == self.search_thread_id:
@@ -499,7 +527,13 @@ class GsongFinder(object):
                 nlist = []
                 link_list = []
                 next_page = 1
-                pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
+                try:
+                    pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
+                except:
+                    self.changepage_btn.hide()
+                    self.informations_label.set_text("no files found for %s..." % (self.user_search))
+                    self.search_thread_id = None
+                    return
                 if pagination_table:
                     next_check = pagination_table.findAll('a',attrs={'class':'pages'})
                     for a in next_check:
@@ -557,6 +591,11 @@ class GsongFinder(object):
                         return
 
                 flist = soup.findAll('div',attrs={'class':'download_link'})
+                if len(flist) == 0:
+                    self.changepage_btn.hide()
+                    self.informations_label.set_text("no files found for %s..." % (self.user_search))
+                    self.search_thread_id = None
+                    return
                 for link in flist:
                     try:
                         url = re.search('a href="(http\S+.mp3)',str(link)).group(1)
@@ -579,7 +618,13 @@ class GsongFinder(object):
                 link_list = []
                 next_page = 1
                 results_div = soup.find('div',attrs={'class':'resultinfo'})
-                results_count = re.search('Found about (\d+)', str(results_div)).group(1)
+                try:
+                    results_count = re.search('Found about (\d+)', str(results_div)).group(1)
+                except:
+                    self.changepage_btn.hide()
+                    self.informations_label.set_text("No results found for %s..." % (self.user_search))
+                    self.search_thread_id = None
+                    return
                 if results_count == 0 :
                     self.informations_label.set_text("no results for your search : %s " % (self.user_search))
                     return
@@ -716,17 +761,20 @@ class GsongFinder(object):
             print "wrong media type %s, link to another webpage...website rejected" % type
             return
 
-    def add_sound(self, name, media_link, img=None):
+    def add_sound(self, name, media_link, img=None, quality_list=None):
+        if not name or not media_link:
+            return
         self.iter = self.model.append()
         if self.engine == "youtube.com":
-            link = self.download_photo(img)
-            img = gtk.gdk.pixbuf_new_from_file(link)
+            img_data = self.download_photo(img)
+            img = gtk.gdk.pixbuf_new_from_file(img_data)
         else:
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         self.model.set(self.iter,
                         0, img,
                         1, name,
                         2, media_link,
+                        3, quality_list,
                         )
                        
     def download_photo(self, img_url):
@@ -750,30 +798,6 @@ class GsongFinder(object):
 
         return file_path
 
-    def search_videos(self,liste):
-        self.model.clear()
-        for url in liste:
-            
-            data = self.get_url_data(url)
-            if data:
-                try:
-                    soup = BeautifulSoup(''.join(data))
-                except:
-                    continue
-                alist = soup.findAll('a', href=True)
-                for ref in alist:
-                    value = ref.attrMap['href']
-                    value = urllib.unquote(value)
-                    exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
-                    if re.search(exp_reg, value):
-                        link = os.path.join(url,value)
-                        name = os.path.basename(link)
-                        self.iter = self.model.append()
-                        self.model.set(self.iter,
-                                        0, name,
-                                        1, link,
-                                        )
-        return
 
     def search_pic(self):
         name = os.path.splitext(self.media_name)[0].lower()
@@ -796,20 +820,25 @@ class GsongFinder(object):
     def make_youtube_entry(self,video):
         url = video.link[1].href
         vid_id = os.path.basename(os.path.dirname(url))    
-        vid_obj = _GetYoutubeVideoInfo(vid_id)
-        if not vid_obj:
+        try:
+            vid_obj,links_arr,quality_arr = _GetYoutubeVideoInfo(vid_id)
+        except:
             return
-        vid_pic = vid_obj[1]["thumbnail_url"]
-        vid_link = vid_obj[1]['fmt_url_map'].split('|')[-1]
-        vid_title = vid_obj[1]["title"]
+        vid_pic = vid_obj["thumbnail_url"]
+        vid_title = vid_obj["title"]
         name = vid_title
-        if not name or not vid_link:
+        if not name or not links_arr:
             return
         else:
-            return self.add_sound(name, vid_link, vid_pic)
-
-
-
+            return self.add_sound(name, links_arr, vid_pic, quality_arr)
+            
+    def set_youtube_video_rate(self,widget):
+        active = self.youtube_video_rate.get_active()
+        if active >= 0 :
+            self.stop_play()
+            self.start_play(self.media_link[active])
+            
+        
     def start_search(self):
         self.page_index = 0
         self.search_thread_id = thread.start_new_thread(self.analyse_links,())
@@ -825,12 +854,10 @@ class GsongFinder(object):
                 return self.stop_play(url)
 
     def start_play(self,url):
-        exp_reg = re.compile("(.avi|.mpg|.mpeg|.wmv|.mp4|.mkv)$")
-        if not re.search(exp_reg,url) and not self.engine == "youtube.com":
-            pass
-        self.vis = self.change_visualisation()
-        self.visual = gst.element_factory_make(self.vis,'visual')
-        self.player.set_property('vis-plugin', self.visual)
+        if not sys.platform == "win32":
+            self.vis = self.change_visualisation()
+            self.visual = gst.element_factory_make(self.vis,'visual')
+            self.player.set_property('vis-plugin', self.visual)
         self.play_btn.set_label("gtk-media-stop")
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
@@ -1035,7 +1062,12 @@ class GsongFinder(object):
             self.mini_player = True
                 
     def on_drawingarea_realized(self, sender):
-        self.sink.set_xwindow_id(self.movie_window.window.xid)
+        if sys.platform == "win32":
+            window = self.movie_window.get_window()
+            window.ensure_native()
+            self.sink.set_xwindow_id(self.movie_window.window.handle)
+        else:
+            self.sink.set_xwindow_id(self.movie_window.window.xid)
             
     def on_expose_event(self, widget, event):
         x , y, width, height = event.area
@@ -1071,8 +1103,8 @@ class GsongFinder(object):
             self.mini_player = True
     
     def onKeyPress(self, widget, event):
-        key = gtk.gdk.keyval_name (event.keyval)
-        if key == 'f':
+        key = gtk.gdk.keyval_name(event.keyval)
+        if key == 'F2':
             return self.set_fullscreen()
 
         # If user press Esc button in fullscreen mode
@@ -1084,6 +1116,10 @@ class GsongFinder(object):
         return True
 
     def download_file(self,widget):
+        if self.engine == "youtube.com":
+            media_link = self.media_link[0]
+            print "downloading %s" % media_link
+            return self.geturl(media_link)
         print "downloading %s" % self.media_link
         return self.geturl(self.media_link)
 
@@ -1093,6 +1129,20 @@ class GsongFinder(object):
         lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,url,self.media_name,self.progressbar))
         gtk.main_iteration()
         self.progressbar.hide()
+        
+    def on_about_btn_pressed(self, widget):
+        dlg = self.gladeGui.get_widget("aboutdialog")
+        #dlg.set_version(VERSION)
+        response = dlg.run()
+        if response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
+            dlg.hide()
+            
+    def on_settings_btn_pressed(self, widget):
+        dlg = self.gladeGui.get_widget("settings_dialog")
+        #dlg.set_version(VERSION)
+        response = dlg.run()
+        if response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
+            dlg.hide()
 
     def exit(self,widget):
         """Stop method, sets the event to terminate the thread's main loop"""
@@ -1118,11 +1168,31 @@ def _GetYoutubeVideoInfo(videoID,eurl=None):
             return
         video_info = dict((k,urllib.unquote_plus(v)) for k,v in
                                    (nvp.split('=') for nvp in data.split('&')))
-        conn.request('GET','/get_video?video_id=%s&t=%s&fmt=6' %
+        conn.request('GET','/get_video?video_id=%s&t=%s' %
                              ( video_info['video_id'],video_info['token']))
         response = conn.getresponse()
-        direct_url = response.getheader('location')
-        return direct_url,video_info
+        quality_arr = []
+        links_arr = []
+        link_list = video_info['fmt_stream_map'].split(",")
+        quality_list = video_info['fmt_map'].split(",")
+        for link in link_list:
+            links_arr.append(link.split("|")[1])
+        for quality in quality_list:
+            codec = _get_codec(quality)
+            quality_arr.append(quality.split("/")[1] + "|%s" % codec)
+        return video_info,links_arr,quality_arr
+
+def _get_codec(num):
+    codec=None
+    if re.match('5|34|35',num):
+        codec = "flv"
+    elif re.match('18|22|37|38',num):
+        codec= "mp4"
+    elif re.match('43|45',num):
+        codec= "webm"
+    elif re.match('17',num):
+        codec= "3gp"
+    return codec
 
 def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
         #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)

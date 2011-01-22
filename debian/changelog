@@ -1,6 +1,5 @@
-gmediafinder (0.2.5-0ppa4~maverick) maverick; urgency=low
+gmediafinder (0.5-0ppa0~maverick) maverick; urgency=low
 
-  * Add fullscreen support and mini player + autohide
-  * fix gui 
+  * Add video quality selection for youtube
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 19 Dec 2010 23:37:53 +0100
