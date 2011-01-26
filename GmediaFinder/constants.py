@@ -1,10 +1,13 @@
 #-*- coding: UTF-8 -*-
-import os
+import os,sys
 
 version = "0.1"
 app_name = "Gmediafinder"
 exec_path =  os.path.dirname(os.path.abspath(__file__))
-data_path =  os.path.join(exec_path,"../data")
+if sys.platform == "win32" and not ('constants.py' in os.listdir(os.path.abspath('.'))):
+    data_path= "data"
+else:
+    data_path =  os.path.join(exec_path,"../data")
 img_path = os.path.join(data_path,"img")
 glade_path = os.path.join(data_path,"glade")
 

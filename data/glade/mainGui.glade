@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="UTF-8"?>
+<?xml version="1.0"?>
 <glade-interface>
   <!-- interface-requires gtk+ 2.16 -->
   <!-- interface-naming-policy project-wide -->
@@ -11,18 +11,16 @@
         <property name="visible">True</property>
         <property name="spacing">5</property>
         <child>
-          <widget class="GtkMenuBar" id="menubar1">
+          <widget class="GtkMenuBar" id="options_bar">
             <property name="visible">True</property>
-            <property name="ubuntu_local">True</property>
             <child>
               <widget class="GtkMenuItem" id="menuitem2">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">É_dition</property>
+                <property name="label" translatable="yes">&#xC9;_dition</property>
                 <property name="use_underline">True</property>
                 <child>
                   <widget class="GtkMenu" id="menu2">
                     <property name="visible">True</property>
-                    <property name="ubuntu_local">True</property>
                     <child>
                       <widget class="GtkImageMenuItem" id="settings_menu">
                         <property name="label">gtk-preferences</property>
@@ -44,7 +42,6 @@
                 <child>
                   <widget class="GtkMenu" id="menu3">
                     <property name="visible">True</property>
-                    <property name="ubuntu_local">True</property>
                     <child>
                       <widget class="GtkImageMenuItem" id="about_menu">
                         <property name="label">gtk-about</property>
@@ -115,6 +112,7 @@
                     <signal name="changed" handler="on_engine_selector_changed"/>
                   </widget>
                   <packing>
+                    <property name="padding">2</property>
                     <property name="position">0</property>
                   </packing>
                 </child>
@@ -264,6 +262,7 @@
                 </child>
               </widget>
               <packing>
+                <property name="padding">5</property>
                 <property name="position">0</property>
               </packing>
             </child>
@@ -274,7 +273,7 @@
                   <widget class="GtkEntry" id="search_entry">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
-                    <property name="invisible_char">●</property>
+                    <property name="invisible_char">&#x25CF;</property>
                     <signal name="activate" handler="on_search_entry_activate"/>
                   </widget>
                   <packing>

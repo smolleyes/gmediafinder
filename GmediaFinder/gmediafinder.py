@@ -22,7 +22,7 @@ import re
 import html5lib
 import tempfile
 import time
-from html5lib import sanitizer, treebuilders, treewalkers, serializer
+from html5lib import sanitizer, treebuilders, treewalkers, serializer, treewalkers
 import traceback
 import gdata.service
 
@@ -30,7 +30,10 @@ from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import HTMLParser
 
 ## custom lib
-import constants
+try:
+    from GmediaFinder import constants
+except:
+    import constants
 
 # timeout in seconds
 timeout = 10
@@ -88,6 +91,7 @@ class GsongFinder(object):
         self.top_infobox = self.gladeGui.get_widget("top_info")
         self.informations_label = self.gladeGui.get_widget("info_label")
         # options menu
+        self.options_bar = self.gladeGui.get_widget("options_bar")
         self.about_btn= self.gladeGui.get_widget("about_menu")
         self.settings_btn= self.gladeGui.get_widget("settings_menu")
         
@@ -210,7 +214,7 @@ class GsongFinder(object):
         self.treeview.set_model(self.model)
         
         column = gtk.TreeViewColumn()
-        column.set_title('Description : ')
+        column.set_title(' Results : ')
         self.treeview.append_column(column)
 
         rendererp = gtk.CellRendererPixbuf()
@@ -432,7 +436,7 @@ class GsongFinder(object):
     def analyse_links(self):
         data = self.data
         url = self.url
-        search_thread_id = self.search_thread_id
+        #search_thread_id = self.search_thread_id
         #gtk.gdk.threads_enter()
         self.informations_label.set_text("Searching for %s with %s" % (self.user_search,self.engine))
         #gtk.gdk.threads_leave()
@@ -441,45 +445,39 @@ class GsongFinder(object):
         if data:
             soup = BeautifulStoneSoup(data)
             if self.engine == "google.com":
-                while search_thread_id == self.search_thread_id:
-                    if search_thread_id == self.search_thread_id:
-                        try:
-                            alist = soup.findAll('a', href=True)
-                            #gtk.gdk.threads_enter()
-                            for a in alist:
-                                url = a.attrMap['href']
-                                if not url: continue
-                                if re.search('href="(\S.*>Index of)', a.__str__()):
-                                    self.informations_label.set_text("Media files detected on : %s, scanning... " % (urllib2.unquote(url)))
-                                    verified_links = self.check_google_links(url)
-                                    if verified_links:
-                                        slist = verified_links.findAll('a', href=True)
-                                        #gtk.gdk.threads_leave()
-                                        ## if ok start the loop
-                                        #gtk.gdk.threads_enter()
-                                        for s in slist:
-                                            print "scanning webpage : %s" % s.string
-                                            try:
-                                                req = re.search('(.*%s.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpg|.mpeg|.mkv|.ogv)' % self.user_search.lower(), urllib2.unquote(s.__str__().lower())).group()
-                                            except:
-                                                continue
-                                            link = url + s.attrMap['href']
-                                            name = urllib2.unquote(os.path.basename(link))
-                                            self.add_sound(name, link)
-                                            time.sleep(0.2)
-                                        #gtk.gdk.threads_leave()
-                                    else:
-                                        #gtk.gdk.threads_leave()
+                try:
+                    alist = soup.findAll('a', href=True)
+                    #gtk.gdk.threads_enter()
+                    for a in alist:
+                        url = a.attrMap['href']
+                        if not url: continue
+                        if re.search('href="(\S.*>Index of)', a.__str__()):
+                            self.informations_label.set_text("Media files detected on : %s, scanning... " % (urllib2.unquote(url)))
+                            verified_links = self.check_google_links(url)
+                            if verified_links:
+                                slist = verified_links.findAll('a', href=True)
+                                #gtk.gdk.threads_leave()
+                                ## if ok start the loop
+                                #gtk.gdk.threads_enter()
+                                for s in slist:
+                                    print "scanning webpage : %s" % s.string
+                                    try:
+                                        req = re.search('(.*%s.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpg|.mpeg|.mkv|.ogv)' % self.user_search.lower(), urllib2.unquote(s.__str__().lower())).group()
+                                    except:
                                         continue
-                        except:
-                            #gtk.gdk.threads_leave()
-                            pass
-                    self.search_thread_id = None
+                                    link = url + s.attrMap['href']
+                                    name = urllib2.unquote(os.path.basename(link))
+                                    self.add_sound(name, link)
+                            else:
+                                continue
+                except:
+                    #gtk.gdk.threads_leave()
+                    pass
+                self.search_thread_id = None
                 self.informations_label.set_text("Scan terminated for your request : %s" % self.user_search)
 
             elif self.engine == "mp3realm.org":
                 soup = BeautifulStoneSoup(self.clean_html(data).decode('UTF8'))
-
                 ## reset the treeview
                 nlist = []
                 link_list = []
@@ -698,6 +696,7 @@ class GsongFinder(object):
                 #flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'ux-thumb-wrap contains-addto'}) ]
                 for video in vquery:
                     self.make_youtube_entry(video)
+                self.search_thread_id = None
         else:
             return
         self.search_thread_id = None
@@ -1051,12 +1050,14 @@ class GsongFinder(object):
             self.results_box.show()
             self.statbar.show()
             self.control_box.show()
+            self.options_bar.show()
             self.window.window.unfullscreen()
             self.window.set_position(gtk.WIN_POS_CENTER)
         else:
             self.top_infobox.hide()
             self.search_box.hide()
             self.results_box.hide()
+            self.options_bar.hide()
             self.window.window.fullscreen()
             self.fullscreen = True
             self.mini_player = True
@@ -1096,6 +1097,7 @@ class GsongFinder(object):
         if self.mini_player == True:
             self.statbar.hide()
             self.control_box.hide()
+            self.options_bar.hide()
             self.mini_player = False
         else:
             self.statbar.show()
