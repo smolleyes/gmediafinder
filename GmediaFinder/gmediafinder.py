@@ -74,6 +74,10 @@ class GsongFinder(object):
         ## small config dir for downloads...
         if not os.path.exists(self.down_dir):
             os.mkdir(self.down_dir)
+        ## Get Icons shown on buttons
+        settings = gtk.settings_get_default()
+        gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
+		
         ## gui
         self.gladeGui = gtk.glade.XML(constants.glade_file, None ,constants.app_name)
         self.window = self.gladeGui.get_widget("main_window")
