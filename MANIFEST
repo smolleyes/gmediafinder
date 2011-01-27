@@ -13,3 +13,7 @@ images/22x22/gmediafinder.png
 images/24x24/gmediafinder.png
 images/32x32/gmediafinder.png
 images/48x48/gmediafinder.png
+images/48x48/gmediafinder.ico
+win32/setup.py
+gpl-2.0.txt
+

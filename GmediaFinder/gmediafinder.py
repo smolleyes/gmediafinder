@@ -25,6 +25,7 @@ import time
 from html5lib import sanitizer, treebuilders, treewalkers, serializer, treewalkers
 import traceback
 import gdata.service
+from configobj import ConfigObj
 
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import HTMLParser
@@ -55,14 +56,31 @@ class GsongFinder(object):
         self.play_options = None
         self.mini_player = True
         self.timer = 0
+        self.settings_folder = None
+        self.conf_file = None
+        self.youtube_max_res = "320x240"
         if sys.platform == "win32":
-            from win32com.shell import shell
+            from win32com.shell import shell, shellcon
             df = shell.SHGetDesktopFolder()
             pidl = df.ParseDisplayName(0, None,"::{450d8fba-ad25-11d0-98a8-0800361b1103}")[1]
             mydocs = shell.SHGetPathFromIDList(pidl)
             self.down_dir = os.path.join(mydocs,"gmediafinder-downloads")
+            self.settings_folder = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0),"gmediafinder")
         else:
             self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
+            self.settings_folder = os.path.join(os.getenv('HOME'),".config/gmediafinder")
+
+        ## conf file
+        self.conf_file = os.path.join(self.settings_folder, 'gmediafinder_config')
+        if not os.path.exists(self.settings_folder):
+            os.mkdir(self.settings_folder)
+            fd = os.open(self.conf_file, os.O_RDWR|os.O_CREAT)
+            os.write(fd,"youtube_max_res=%s" % self.youtube_max_res)
+            os.close(fd)
+        self.config = ConfigObj(self.conf_file,write_empty_values=True)
+        ## get default max_res for youtube videos
+        self.youtube_max_res = self.config["youtube_max_res"]
+        
         self.engine_list = {'youtube.com':'','google.com':'','tagoo.ru':'','dilandau.com':'','mp3realm.org':'','iwantmuzik.com':''}
         self.engine = None
         self.search_option = "song_radio"
@@ -77,7 +95,7 @@ class GsongFinder(object):
         ## Get Icons shown on buttons
         settings = gtk.settings_get_default()
         gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
-		
+        
         ## gui
         self.gladeGui = gtk.glade.XML(constants.glade_file, None ,constants.app_name)
         self.window = self.gladeGui.get_widget("main_window")
@@ -98,6 +116,13 @@ class GsongFinder(object):
         self.options_bar = self.gladeGui.get_widget("options_bar")
         self.about_btn= self.gladeGui.get_widget("about_menu")
         self.settings_btn= self.gladeGui.get_widget("settings_menu")
+        
+        ## youtube video quality choices
+        self.res320 = self.gladeGui.get_widget("res1")
+        self.res640 = self.gladeGui.get_widget("res2")
+        self.res854 = self.gladeGui.get_widget("res3")
+        self.res1280 = self.gladeGui.get_widget("res4")
+        self.res1920 = self.gladeGui.get_widget("res5")
         
         ## google search options
         self.search_box = self.gladeGui.get_widget("search_box")
@@ -130,8 +155,7 @@ class GsongFinder(object):
         self.youtube_quality_model.set(new_iter,
                                 0, "Quality",
                                 )
-        self.youtube_video_rate.set_active(0)
-        self.youtube_video_rate.connect('changed', self.set_youtube_video_rate)
+        self.youtube_video_rate.connect('changed', self.on_youtube_video_rate_changed)
         
         ## control section
         self.play_btn = self.gladeGui.get_widget("play_btn")
@@ -207,6 +231,11 @@ class GsongFinder(object):
         "on_vis_chooser_changed" : self.change_visualisation,
         "on_about_menu_activate" : self.on_about_btn_pressed,
         "on_settings_menu_activate" : self.on_settings_btn_pressed,
+        "on_res1_toggled" : self.set_max_youtube_res,
+        "on_res2_toggled" : self.set_max_youtube_res,
+        "on_res3_toggled" : self.set_max_youtube_res,
+        "on_res4_toggled" : self.set_max_youtube_res,
+        "on_res5_toggled" : self.set_max_youtube_res,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -353,8 +382,9 @@ class GsongFinder(object):
                 self.youtube_quality_model.set(new_iter,
                                 0, rate,
                                 )
-            self.youtube_video_rate.set_active(0)
-        self.start_play(self.media_link)
+            self.set_default_youtube_video_rate()
+        else:
+			self.start_play(self.media_link)
         
     def option_changed(self,widget):
         self.search_option = widget.name
@@ -440,10 +470,10 @@ class GsongFinder(object):
     def analyse_links(self):
         data = self.data
         url = self.url
-        #search_thread_id = self.search_thread_id
-        #gtk.gdk.threads_enter()
+        search_thread_id = self.search_thread_id
+        gtk.gdk.threads_enter()
         self.informations_label.set_text("Searching for %s with %s" % (self.user_search,self.engine))
-        #gtk.gdk.threads_leave()
+        gtk.gdk.threads_leave()
         HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
 
         if data:
@@ -835,12 +865,32 @@ class GsongFinder(object):
         else:
             return self.add_sound(name, links_arr, vid_pic, quality_arr)
             
-    def set_youtube_video_rate(self,widget):
-        active = self.youtube_video_rate.get_active()
-        if active >= 0 :
-            self.stop_play()
-            self.start_play(self.media_link[active])
+    def set_default_youtube_video_rate(self,widget=None):
+		active = self.youtube_video_rate.get_active()
+		qn = 0
+		## if there s only one quality available, read it...
+		if active == -1:
+			if len(self.quality_list) == 1:
+				self.youtube_video_rate.set_active(0)
+			for frate in self.quality_list:
+				rate = frate.split('|')[0]
+				h = int(rate.split('x')[0])
+				dh = int(self.youtube_max_res.split('x')[0])
+				if h > dh:
+					qn+=1
+					continue
+				else:
+					self.youtube_video_rate.set_active(qn)
+			active = self.youtube_video_rate.get_active()
+		else:
+			if self.quality_list:
+				active = self.youtube_video_rate.get_active()
             
+    def on_youtube_video_rate_changed(self,widget):
+		active = self.youtube_video_rate.get_active()
+		if self.media_link:
+			self.stop_play()
+			self.start_play(self.media_link[active])
         
     def start_search(self):
         self.page_index = 0
@@ -1120,6 +1170,17 @@ class GsongFinder(object):
     def on_volume_changed(self, widget, value=10):
         self.player.set_property("volume", float(value)) 
         return True
+    
+    def set_max_youtube_res(self, widget):
+		if widget.get_active():
+			self.youtube_max_res = widget.get_child().get_label()
+			self.config["youtube_max_res"]=self.youtube_max_res
+			## return a dic as conf
+			try:
+				self.config.write()
+			except:
+				print "Can't write to the %s config file..." % self.conf_file
+		
 
     def download_file(self,widget):
         if self.engine == "youtube.com":
@@ -1144,11 +1205,21 @@ class GsongFinder(object):
             dlg.hide()
             
     def on_settings_btn_pressed(self, widget):
-        dlg = self.gladeGui.get_widget("settings_dialog")
-        #dlg.set_version(VERSION)
-        response = dlg.run()
-        if response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
-            dlg.hide()
+		dlg = self.gladeGui.get_widget("settings_dialog")
+		#dlg.set_version(VERSION)
+		if self.youtube_max_res == "320x240":
+			self.res320.set_active(1)
+		elif self.youtube_max_res == "640x320":
+			self.res640.set_active(1)
+		elif self.youtube_max_res == "854x480":
+			self.res854.set_active(1)
+		elif self.youtube_max_res == "1280x720":
+			self.res1280.set_active(1)
+		elif self.youtube_max_res == "1920x1080":
+			self.res1920.set_active(1)
+		response = dlg.run()
+		if response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
+			dlg.hide()
 
     def exit(self,widget):
         """Stop method, sets the event to terminate the thread's main loop"""
@@ -1181,11 +1252,20 @@ def _GetYoutubeVideoInfo(videoID,eurl=None):
         links_arr = []
         link_list = video_info['fmt_stream_map'].split(",")
         quality_list = video_info['fmt_map'].split(",")
-        for link in link_list:
-            links_arr.append(link.split("|")[1])
+        ## remove flv links...
+        i = 0
         for quality in quality_list:
             codec = _get_codec(quality)
-            quality_arr.append(quality.split("/")[1] + "|%s" % codec)
+            if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
+                i+=1
+                continue
+            elif codec == "flv" and quality.split("/")[1] != "320x240":
+				i+=1
+				continue
+            else:
+                links_arr.append(link_list[i].split("|")[1])
+                quality_arr.append(quality.split("/")[1] + "|%s" % codec)
+                i+=1
         return video_info,links_arr,quality_arr
 
 def _get_codec(num):
