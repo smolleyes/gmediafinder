@@ -2,10 +2,13 @@ from distutils.core import setup
 
 from glob import glob
 import os
+from os import path
+
 
 import pygtk
 pygtk.require('2.0')
 import gtk, sys
+import shutil
 
 import pygst
 pygst.require('0.10')
@@ -29,6 +32,25 @@ try:
 except ImportError:
     pass
 
+mfcdir = 'C:\Python26\Lib\site-packages\pythonwin'
+mfcfiles = [path.join(mfcdir, i) for i in ["mfc90.dll","mfc90u.dll" ,"mfcm90.dll","mfcm90u.dll","Microsoft.VC90.MFC.manifest"]]
+gstPath = "C:\gst"
+
+print ('Deploying GStreamer')
+# Copy gstreamer binaries to the dist folder
+for name in os.listdir(os.path.join(gstPath, 'bin')):
+    shutil.copy (os.path.join(gstPath, 'bin', name),
+                 os.path.join (os.getcwd(), 'dist/bin'))
+for file in filter(lambda f: f.endswith('.dll'),
+                       os.listdir(path.join(gstPath, 'bin'))):
+        if not os.path.isfile(path.join('dist', file)):
+            shutil.copy(path.join(gstPath, 'bin', file), 'dist')
+
+if not os.path.exists(os.path.join(gstPath, 'lib', 'gstreamer-0.10')):
+    shutil.copytree(os.path.join(gstPath, 'lib', 'gstreamer-0.10'),
+                    os.path.join(os.path.join (os.getcwd(), 'dist/lib'), 'gstreamer-0.10'))
+shutil.copyfile("C:\\libxml2-2.dll", 'dist/libxml2-2.dll')
+
 setup(
     name = 'gmediafinder',
     packages = ['GmediaFinder'],
@@ -46,11 +68,11 @@ setup(
                   'py2exe': {
                       'bundle_files': 3,
                       'packages':'encodings',
-                      'includes': 'cairo, pango, pangocairo, atk, gobject, gio, pygst, gst'
+                      'includes': 'cairo, pango, pangocairo, atk, gobject, gio, gst, gtk'
                   }
               },
 
-    data_files=[
+    data_files=[("Microsoft.VC90.MFC", mfcfiles),
                    ('images/22x22',['images/22x22/gmediafinder.png']),
 	('images/24x24',['images/24x24/gmediafinder.png']),
 	('images/48x48/apps',['images/48x48/gmediafinder.png']),
