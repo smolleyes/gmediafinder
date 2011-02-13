@@ -1,0 +1,49 @@
+INSTALLATION ON LINUX:
+----------------------
+
+install from ppa for ubuntu:
+----------------------------
+
+sudo apt-add-repository ppa:s-lagui/ppa
+sudo apt-get update
+sudo apt-get install gmediafinder
+
+Get sources form git:
+---------------------
+
+install the current dependencies first:
+python-gtk2, python-gdata, python-beautifulsoup, python-html5lib, python-gst0.10, gstreamer0.10-ffmpeg,
+libvisual-0.4-0, libvisual-0.4-plugins, python-configobj, python-glade2
+
+IMPORTANT!
+the python-beautifulsoup package Must be in version >=3.2 or you'll experience many problems...
+
+then you can use the setup.py to install or start the software directy...
+
+check the source code:
+----------------------
+git clone git://github.com/smolleyes/gmediafinder.git
+
+for setup.py:
+cd gmediafinder; sudo python setup.py install (or uninstall to remove)
+
+direct use:
+cd gmediafinder/GmediaFinder; python gmediafinder.py
+
+!! Be sure to not have the packaged version installed in the same time !! (from the ppa or the deb ...)
+
+
+INSTALLATION ON WINDOWS:
+------------------------
+
+1/ install the vcredist x86 or 64
+http://www.penguincape.org/downloads/smo/gmediafinder/vcredist_x86.exe
+or
+http://www.penguincape.org/downloads/smo/gmediafinder/vcredist_x64.exe
+
+2/ install the setup:
+http://www.penguincape.org/downloads/smo/gmediafinder/gmediafinder_setup.exe
+
+
+
+enjoy !

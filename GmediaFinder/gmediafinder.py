@@ -59,6 +59,7 @@ class GsongFinder(object):
         self.settings_folder = None
         self.conf_file = None
         self.youtube_max_res = "320x240"
+        self.active_downloads = 0
         if sys.platform == "win32":
             from win32com.shell import shell, shellcon
             df = shell.SHGetDesktopFolder()
@@ -76,8 +77,14 @@ class GsongFinder(object):
             os.mkdir(self.settings_folder)
             fd = os.open(self.conf_file, os.O_RDWR|os.O_CREAT)
             os.write(fd,"youtube_max_res=%s" % self.youtube_max_res)
+            os.write(fd,"download_path=%s" % self.down_dir)
             os.close(fd)
         self.config = ConfigObj(self.conf_file,write_empty_values=True)
+        try:
+		    ddir = self.config["download_path"]
+        except:
+			self.config["download_path"] = self.down_dir
+			self.config.write()
         ## get default max_res for youtube videos
         self.youtube_max_res = self.config["youtube_max_res"]
         
@@ -116,6 +123,9 @@ class GsongFinder(object):
         self.options_bar = self.gladeGui.get_widget("options_bar")
         self.about_btn= self.gladeGui.get_widget("about_menu")
         self.settings_btn= self.gladeGui.get_widget("settings_menu")
+        
+        ## notebook
+        self.notebook = self.gladeGui.get_widget("notebook")
         
         ## youtube video quality choices
         self.res320 = self.gladeGui.get_widget("res1")
@@ -175,10 +185,19 @@ class GsongFinder(object):
 
         ## statbar
         self.statbar = self.gladeGui.get_widget("statusbar")
-
-        # progressbar
-        self.progressbar = self.gladeGui.get_widget("progressbar")
-
+        
+        ## downloads
+        self.down_box = self.gladeGui.get_widget("down_box")
+        self.down_container = gtk.VBox(False, 5)
+        self.down_scroll = gtk.ScrolledWindow()
+        self.down_scroll.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
+        self.down_scroll.add_with_viewport(self.down_container)
+        self.down_box.add(self.down_scroll)
+        self.active_down_label = self.gladeGui.get_widget("active_down_label")
+        self.path_btn = self.gladeGui.get_widget("select_path_btn")
+        self.path_btn.set_current_folder(self.down_dir)
+        self.path_btn.connect('current-folder-changed',self.update_down_path)
+         
         # video drawing
         self.video_box = self.gladeGui.get_widget("video_box")
         self.movie_window = self.gladeGui.get_widget("drawingarea")
@@ -231,6 +250,9 @@ class GsongFinder(object):
         "on_vis_chooser_changed" : self.change_visualisation,
         "on_about_menu_activate" : self.on_about_btn_pressed,
         "on_settings_menu_activate" : self.on_settings_btn_pressed,
+        "on_active_down_btn_clicked" : self.change_notebook_page,
+        "on_return_btn_clicked" : self.change_notebook_page,
+        "on_select_path_btn_file_set" : self.update_down_path,
         "on_res1_toggled" : self.set_max_youtube_res,
         "on_res2_toggled" : self.set_max_youtube_res,
         "on_res3_toggled" : self.set_max_youtube_res,
@@ -299,7 +321,6 @@ class GsongFinder(object):
 
         ## start gui
         self.window.show_all()
-        self.progressbar.hide()
         self.changepage_btn.hide()
         self.options_box.hide()
         self.youtube_options.hide()
@@ -323,6 +344,10 @@ class GsongFinder(object):
         else:
             self.vis = vis
         return self.vis
+        
+    def update_down_path(self,widget=None):
+		self.config["download_path"] = widget.get_current_folder()
+		self.config.write()
 
     def set_engine(self,widget=None):
         self.options_box.hide()
@@ -359,7 +384,13 @@ class GsongFinder(object):
             self.req_start = 0
         elif self.engine == "iwantmuzik.com":
             self.req_start = 1
-
+            
+    def change_notebook_page(self, widget):
+		if self.notebook.get_current_page() == 0:
+			self.notebook.set_current_page(1)
+		elif self.notebook.get_current_page() == 1:
+			self.notebook.set_current_page(0)
+	
     def get_model(self,widget):
         selected = self.treeview.get_selection()
         self.iter = selected.get_selected()[1]
@@ -368,6 +399,7 @@ class GsongFinder(object):
         self.media_name = self.model.get_value(self.iter, 1)
         ## return only theme name and description then extract infos from hash
         self.media_link = self.model.get_value(self.iter, 2)
+        self.media_img = self.model.get_value(self.iter, 0)
         # print in the gui
         self.statbar.push(1,"Playing : %s" % self.media_name)
         self.stop_play()
@@ -522,6 +554,7 @@ class GsongFinder(object):
                 except:
                     self.informations_label.set_text("no results found for %s..." % (self.user_search))
                     self.search_thread_id = None
+                    self.search_btn.set_sensitive(1)
                     return
 
                 self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
@@ -530,6 +563,7 @@ class GsongFinder(object):
                     self.req_start = 1
                     self.informations_label.set_text("no more files found for %s..." % (self.user_search))
                     self.search_thread_id = None
+                    self.search_btn.set_sensitive(1)
                     return
                 else:
                     self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,files_count))
@@ -565,6 +599,7 @@ class GsongFinder(object):
                     self.changepage_btn.hide()
                     self.informations_label.set_text("no files found for %s..." % (self.user_search))
                     self.search_thread_id = None
+                    self.search_btn.set_sensitive(1)
                     return
                 if pagination_table:
                     next_check = pagination_table.findAll('a',attrs={'class':'pages'})
@@ -581,6 +616,7 @@ class GsongFinder(object):
                         self.req_start = 1
                         self.informations_label.set_text("no more files found for %s..." % (self.user_search))
                         self.search_thread_id = None
+                        self.search_btn.set_sensitive(1)
                         return
 
                 flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'button download_button'}) ]
@@ -620,6 +656,7 @@ class GsongFinder(object):
                         self.req_start = 1
                         self.informations_label.set_text("no more files found for %s..." % (self.user_search))
                         self.search_thread_id = None
+                        self.search_btn.set_sensitive(1)
                         return
 
                 flist = soup.findAll('div',attrs={'class':'download_link'})
@@ -627,6 +664,7 @@ class GsongFinder(object):
                     self.changepage_btn.hide()
                     self.informations_label.set_text("no files found for %s..." % (self.user_search))
                     self.search_thread_id = None
+                    self.search_btn.set_sensitive(1)
                     return
                 for link in flist:
                     try:
@@ -656,9 +694,12 @@ class GsongFinder(object):
                     self.changepage_btn.hide()
                     self.informations_label.set_text("No results found for %s..." % (self.user_search))
                     self.search_thread_id = None
+                    self.search_btn.set_sensitive(1)
                     return
                 if results_count == 0 :
                     self.informations_label.set_text("no results for your search : %s " % (self.user_search))
+                    self.search_thread_id = None
+                    self.search_btn.set_sensitive(1)
                     return
                 else:
                     self.informations_label.set_text("%s results found for your search : %s " % (results_count, self.user_search))
@@ -679,6 +720,7 @@ class GsongFinder(object):
                         self.req_start = 1
                         self.informations_label.set_text("no more files found for %s..." % (self.user_search))
                         self.search_thread_id = None
+                        self.search_btn.set_sensitive(1)
                         return
 
                 flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'link'}) ]
@@ -725,14 +767,17 @@ class GsongFinder(object):
                     self.changepage_btn.hide()
                     self.informations_label.set_text("no more files found for %s..." % (self.user_search))
                     self.search_thread_id = None
+                    self.search_btn.set_sensitive(1)
                     return
                 
-                #flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'ux-thumb-wrap contains-addto'}) ]
                 for video in vquery:
                     self.make_youtube_entry(video)
                 self.search_thread_id = None
         else:
+            self.search_thread_id = None
+            self.search_btn.set_sensitive(1)
             return
+        self.search_btn.set_sensitive(1)
         self.search_thread_id = None
 
 
@@ -795,14 +840,13 @@ class GsongFinder(object):
             return
 
     def add_sound(self, name, media_link, img=None, quality_list=None):
-        if not name or not media_link:
-            return
         self.iter = self.model.append()
         if self.engine == "youtube.com":
-            img_data = self.download_photo(img)
-            img = gtk.gdk.pixbuf_new_from_file(img_data)
+            img = self.download_photo(img)
         else:
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
+        if not name or not media_link or not img:
+            return
         self.model.set(self.iter,
                         0, img,
                         1, name,
@@ -811,45 +855,17 @@ class GsongFinder(object):
                         )
                        
     def download_photo(self, img_url):
-        filename = os.path.basename(img_url)
-        if sys.platform == "win32":
-            file_path = os.path.join(tempfile.gettempdir(), filename)
-        else:
-            file_path = "%s%s" % ('/tmp/', filename)
-        if os.path.exists(file_path):
-            os.remove(file_path)
-        downloaded_image = file(file_path, "wb")
+		temp_file = tempfile.NamedTemporaryFile()
+		image_on_web = urllib.urlopen(img_url).read()
+		temp_file.write(image_on_web)
+		temp_file.flush()
+		try:
+			pixb = gtk.gdk.pixbuf_new_from_file_at_size(temp_file.name, 100, 100)
+		except:
+			return
+		temp_file.close()
+		return pixb
 
-        image_on_web = urllib.urlopen(img_url)
-        while True:
-            buf = image_on_web.read(65536)
-            if len(buf) == 0:
-                break
-            downloaded_image.write(buf)
-        downloaded_image.close()
-        image_on_web.close()
-
-        return file_path
-
-
-    def search_pic(self):
-        name = os.path.splitext(self.media_name)[0].lower()
-        if not name:
-            return
-        user_search = urllib2.quote(name)
-        data = self.get_url_data('http://www.soundunwound.com/sp/release/find?searchPhrase='+user_search)
-        if data:
-            soup = BeautifulSoup(''.join(data))
-        else:
-            return
-        files_count = soup.findAll('td',attrs={'class':'image'})
-        if len(files_count) > 0:
-            alist = soup.findAll('a', href=True)
-        for link in alist:
-            value = link.attrMap['href']
-            if re.search('(\S.*%s)' % name, value):
-                print link
-                
     def make_youtube_entry(self,video):
         url = video.link[1].href
         vid_id = os.path.basename(os.path.dirname(url))    
@@ -890,10 +906,12 @@ class GsongFinder(object):
 		active = self.youtube_video_rate.get_active()
 		if self.media_link:
 			self.stop_play()
+			self.media_codec = self.quality_list[active].split('|')[1]
 			self.start_play(self.media_link[active])
         
     def start_search(self):
         self.page_index = 0
+        self.search_btn.set_sensitive(0)
         self.search_thread_id = thread.start_new_thread(self.analyse_links,())
 
     def start_stop(self,widget=None):
@@ -907,6 +925,7 @@ class GsongFinder(object):
                 return self.stop_play(url)
 
     def start_play(self,url):
+        self.active_link = url
         if not sys.platform == "win32":
             self.vis = self.change_visualisation()
             self.visual = gst.element_factory_make(self.vis,'visual')
@@ -924,6 +943,7 @@ class GsongFinder(object):
         self.play_thread_id = None
         self.duration = None
         self.update_time_label()
+        self.active_link = None
 
     def play_thread(self):
         play_thread_id = self.play_thread_id
@@ -1184,18 +1204,40 @@ class GsongFinder(object):
 
     def download_file(self,widget):
         if self.engine == "youtube.com":
-            media_link = self.media_link[0]
-            print "downloading %s" % media_link
-            return self.geturl(media_link)
-        print "downloading %s" % self.media_link
-        return self.geturl(self.media_link)
+			return self.geturl(self.active_link, self.media_codec)
+        return self.geturl(self.active_link)
 
-    def geturl(self,url):
-        self.progressbar.show()
-        urllib.urlretrieve(url, self.down_dir+"/"+self.media_name,
-        lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,url,self.media_name,self.progressbar))
-        gtk.main_iteration()
-        self.progressbar.hide()
+    def geturl(self, url, codec=None):
+        self.notebook.set_current_page(1)
+        if self.engine == "youtube.com":
+            name = self.media_name+".%s" % codec
+        else:
+            name = self.media_name
+        box = gtk.HBox(False, 5)
+        box.pack_start(gtk.image_new_from_pixbuf(self.media_img), False,False, 5)
+        box.pack_start(gtk.Label(name), False, False, 5)
+        pbar = gtk.ProgressBar()
+        box.pack_end(pbar, False, False, 25)
+        self.down_container.pack_start(box, False ,False, 5)
+        box.show_all()
+        self.down_thread = thread.start_new_thread(self.start_download,(url, name, pbar))
+                
+    def start_download(self, url, name, pbar):
+        self.active_downloads += 1
+        self.active_down_label.set_text(str(self.active_downloads))
+        ## download...
+        try:
+			urllib.urlretrieve(url, self.down_dir+"/"+ name,
+			lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,url,name,pbar))
+        except:
+			pbar.set_text("Failed...")
+			return self.decrease_down_count()
+        return self.decrease_down_count()
+    
+    def decrease_down_count(self):
+        if self.active_downloads > 0:
+			self.active_downloads -= 1
+			self.active_down_label.set_text(str(self.active_downloads))
         
     def on_about_btn_pressed(self, widget):
         dlg = self.gladeGui.get_widget("aboutdialog")
@@ -1267,6 +1309,18 @@ def _GetYoutubeVideoInfo(videoID,eurl=None):
                 quality_arr.append(quality.split("/")[1] + "|%s" % codec)
                 i+=1
         return video_info,links_arr,quality_arr
+        
+def _create_folderchooser_open():
+    buttons     = (gtk.STOCK_CANCEL, gtk.RESPONSE_CANCEL,
+                   gtk.STOCK_OPEN,   gtk.RESPONSE_OK)
+    filechooser = gtk.FileChooserDialog("Select a folder as download path...",
+                                        None,
+                                        gtk.FILE_CHOOSER_ACTION_OPEN,
+                                        buttons)
+    filechooser.set_current_folder(self.down_dir)
+    filechooser.set_position('center')
+    filechooser.set_action(gtk.FILE_CHOOSER_ACTION_SELECT_FOLDER)
+    return filechooser
 
 def _get_codec(num):
     codec=None
@@ -1284,26 +1338,28 @@ def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
         #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
         #XXX Should handle possible filesize=-1.
     if filesize == -1:
+        gtk.gdk.threads_enter()
         progressbar.set_text("Downloading %-66s" % name)
         progressbar.set_pulse_step(0.2)
         progressbar.pulse()
-        gtk.main_iteration()
-        time.sleep(0.05)
+        gtk.gdk.threads_leave()
+        time.sleep(0.1)
     else:
         if numblocks != 0:
             try:
                 percent = min((numblocks*blocksize*100)/filesize, 100)
             except:
                 percent = 100
-            if percent < 100:
-                time.sleep(0.005)
-                progressbar.set_text("Downloading %-66s%3d%% done" % (name, percent))
-                progressbar.set_fraction(percent/100.0)
-                gtk.main_iteration_do(False)
-            else:
-                progressbar.hide()
                 return
-    return
+            if percent < 100:
+                gtk.gdk.threads_enter()
+                progressbar.set_text("Downloading... %3d%% done" % percent)
+                progressbar.set_fraction(percent/100.0)
+                gtk.gdk.threads_leave()
+                time.sleep(0.1)
+            else:
+                progressbar.set_text("Download complete")
+                return
 
 try:
   from xml.etree import cElementTree as ElementTree
