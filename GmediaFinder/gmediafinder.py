@@ -348,6 +348,7 @@ class GsongFinder(object):
     def update_down_path(self,widget=None):
 		self.config["download_path"] = widget.get_current_folder()
 		self.config.write()
+		self.down_dir = widget.get_current_folder()
 
     def set_engine(self,widget=None):
         self.options_box.hide()

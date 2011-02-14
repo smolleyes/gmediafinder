@@ -1,4 +1,4 @@
-gmediafinder (0.7-0ppa0~maverick) maverick; urgency=low
+gmediafinder (0.7-0ppa2~maverick) maverick; urgency=low
 
   * add new download manager
   * possibility to change the download path
