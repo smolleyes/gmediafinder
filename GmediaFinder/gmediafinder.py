@@ -81,7 +81,7 @@ class GsongFinder(object):
             os.close(fd)
         self.config = ConfigObj(self.conf_file,write_empty_values=True)
         try:
-		    ddir = self.config["download_path"]
+		    self.down_dir = self.config["download_path"]
         except:
 			self.config["download_path"] = self.down_dir
 			self.config.write()
