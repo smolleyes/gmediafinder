@@ -123,8 +123,6 @@ class GsongFinder(object):
         self.informations_label = self.gladeGui.get_widget("info_label")
         # options menu
         self.options_bar = self.gladeGui.get_widget("options_bar")
-        self.about_btn= self.gladeGui.get_widget("about_menu")
-        self.settings_btn= self.gladeGui.get_widget("settings_menu")
         
         ## notebook
         self.notebook = self.gladeGui.get_widget("notebook")

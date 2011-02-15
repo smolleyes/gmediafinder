@@ -10,7 +10,7 @@
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
         <child>
-          <widget class="GtkHBox" id="hbox3">
+          <widget class="GtkHBox" id="options_bar">
             <property name="visible">True</property>
             <property name="spacing">2</property>
             <child>
