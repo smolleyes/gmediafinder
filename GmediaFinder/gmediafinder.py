@@ -1223,6 +1223,7 @@ class GsongFinder(object):
             return self.set_fullscreen()
     
     def on_volume_changed(self, widget, value=10):
+        print value
         self.player.set_property("volume", float(value)) 
         return True
     
