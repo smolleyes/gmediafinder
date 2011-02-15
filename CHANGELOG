@@ -1,3 +1,8 @@
+v0.7.2:
+* add remove download button when download is finished
+* add show download folder button
+* add download rate and ETA in downloads progress bars
+
 v0.7.1:
 * better youtube search results, but slower...
 * gui update

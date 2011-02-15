@@ -12,6 +12,7 @@
         <child>
           <widget class="GtkHBox" id="options_bar">
             <property name="visible">True</property>
+            <property name="border_width">2</property>
             <property name="spacing">2</property>
             <child>
               <widget class="GtkButton" id="home_menu_btn">

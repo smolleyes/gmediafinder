@@ -62,6 +62,7 @@ class GsongFinder(object):
         self.conf_file = None
         self.youtube_max_res = "320x240"
         self.active_downloads = 0
+        self.thread_num = 0
         if sys.platform == "win32":
             from win32com.shell import shell, shellcon
             df = shell.SHGetDesktopFolder()
@@ -1253,23 +1254,48 @@ class GsongFinder(object):
         box = gtk.HBox(False, 5)
         box.pack_start(gtk.image_new_from_pixbuf(self.media_img), False,False, 5)
         box.pack_start(gtk.Label(name), False, False, 5)
+        btnf = gtk.Button()
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_FIND, gtk.ICON_SIZE_BUTTON)
+        btnf.add(image)
+        box.pack_end(btnf, False, False, 5)
+        btn = gtk.Button()
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON)
+        btn.add(image)
+        box.pack_end(btn, False, False, 5)
         pbar = gtk.ProgressBar()
-        box.pack_end(pbar, False, False, 25)
+        box.pack_end(pbar, False, False, 5)
         self.down_container.pack_start(box, False ,False, 5)
         box.show_all()
-        self.down_thread = thread.start_new_thread(self.start_download,(url, name, pbar))
-                
-    def start_download(self, url, name, pbar):
+        btnf.hide()
+        btn.hide()
+        self.thread_num+=1
+        down_thread = thread.start_new_thread(self.start_download,(url, name, pbar, btnf,btn))
+        btnf.connect('clicked', self.show_folder, self.down_dir)
+        btn.connect('clicked', self.remove_download)
+
+    def show_folder(self,widget,path):
+		os.system('xdg-open %s' % path)
+	
+    def remove_download(self, widget):
+        ch = widget.parent
+        ch.parent.remove(ch)
+		    
+    def start_download(self, url, name, pbar, btnf, btn):
         self.active_downloads += 1
         self.active_down_label.set_text(str(self.active_downloads))
         ## download...
         try:
+			start_time = time.time()
 			urllib.urlretrieve(url, self.down_dir+"/"+ name,
-			lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,url,name,pbar))
+			lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,start_time,url,name,pbar))
+			btnf.show()
+			btn.show()
+			return self.decrease_down_count()
         except:
 			pbar.set_text("Failed...")
 			return self.decrease_down_count()
-        return self.decrease_down_count()
     
     def decrease_down_count(self):
         if self.active_downloads > 0:
@@ -1318,7 +1344,7 @@ def _get_codec(num):
         codec= "3gp"
     return codec
 
-def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
+def _reporthook(numblocks, blocksize, filesize, start_time, url, name, progressbar):
         #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
         #XXX Should handle possible filesize=-1.
     if filesize == -1:
@@ -1332,18 +1358,38 @@ def _reporthook(numblocks, blocksize, filesize, url, name, progressbar):
         if numblocks != 0:
             try:
                 percent = min((numblocks*blocksize*100)/filesize, 100)
+                currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
+                kbps_speed = numblocks * blocksize / (time.time() - start_time)
+                kbps_speed = kbps_speed / 1024
+                total = float(filesize) / (1024 * 1024)
+                mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total)
+                e = ' at %d Kb/s ' % kbps_speed
+                e += calc_eta(start_time, time.time(), total, currently_downloaded)
             except:
                 percent = 100
                 return
             if percent < 100:
                 gtk.gdk.threads_enter()
-                progressbar.set_text("Downloading... %3d%% done" % percent)
+                progressbar.set_text("%s %3d%% %s" % (mbs,percent,e))
                 progressbar.set_fraction(percent/100.0)
                 gtk.gdk.threads_leave()
                 time.sleep(0.1)
             else:
                 progressbar.set_text("Download complete")
                 return
+
+def calc_eta(start, now, total, current):
+		if total is None:
+			return '--:--'
+		dif = now - start
+		if current == 0 or dif < 0.001: # One millisecond
+			return '--:--'
+		rate = float(current) / dif
+		eta = long((float(total) - float(current)) / rate)
+		(eta_mins, eta_secs) = divmod(eta, 60)
+		if eta_mins > 99:
+			return '--:--'
+		return ' ETA : %02d:%02d' % (eta_mins, eta_secs)          
 
 try:
   from xml.etree import cElementTree as ElementTree
