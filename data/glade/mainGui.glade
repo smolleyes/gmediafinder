@@ -10,56 +10,166 @@
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
         <child>
-          <widget class="GtkMenuBar" id="options_bar">
+          <widget class="GtkHBox" id="hbox3">
             <property name="visible">True</property>
-            <property name="ubuntu_local">True</property>
+            <property name="spacing">2</property>
             <child>
-              <widget class="GtkMenuItem" id="menuitem1">
+              <widget class="GtkButton" id="home_menu_btn">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">É_dition</property>
-                <property name="use_underline">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_home_menu_btn_clicked"/>
                 <child>
-                  <widget class="GtkMenu" id="menu1">
+                  <widget class="GtkHBox" id="hbox4">
                     <property name="visible">True</property>
-                    <property name="ubuntu_local">True</property>
                     <child>
-                      <widget class="GtkImageMenuItem" id="settings_menu">
-                        <property name="label">gtk-preferences</property>
+                      <widget class="GtkImage" id="image3">
                         <property name="visible">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_settings_menu_activate"/>
+                        <property name="stock">gtk-home</property>
                       </widget>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="home_btn">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Playlist</property>
+                      </widget>
+                      <packing>
+                        <property name="padding">5</property>
+                        <property name="position">1</property>
+                      </packing>
                     </child>
                   </widget>
                 </child>
               </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">0</property>
+              </packing>
             </child>
             <child>
-              <widget class="GtkMenuItem" id="menuitem3">
+              <widget class="GtkButton" id="down_menu_btn">
                 <property name="visible">True</property>
-                <property name="label" translatable="yes">Aid_e</property>
-                <property name="use_underline">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_down_menu_btn_clicked"/>
                 <child>
-                  <widget class="GtkMenu" id="menu4">
+                  <widget class="GtkHBox" id="hbox5">
                     <property name="visible">True</property>
-                    <property name="ubuntu_local">True</property>
                     <child>
-                      <widget class="GtkImageMenuItem" id="about_menu">
-                        <property name="label">gtk-about</property>
+                      <widget class="GtkImage" id="image5">
                         <property name="visible">True</property>
-                        <property name="use_underline">True</property>
-                        <property name="use_stock">True</property>
-                        <signal name="activate" handler="on_about_menu_activate"/>
+                        <property name="stock">gtk-go-down</property>
                       </widget>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label5">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Downloads</property>
+                      </widget>
+                      <packing>
+                        <property name="padding">5</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="active_down_label">
+                        <property name="visible">True</property>
+                      </widget>
+                      <packing>
+                        <property name="padding">2</property>
+                        <property name="position">2</property>
+                      </packing>
                     </child>
                   </widget>
                 </child>
               </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">1</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="settings_menu">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_settings_menu_clicked"/>
+                <child>
+                  <widget class="GtkHBox" id="hbox8">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkImage" id="image2">
+                        <property name="visible">True</property>
+                        <property name="stock">gtk-preferences</property>
+                      </widget>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="label3">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">Settings</property>
+                      </widget>
+                      <packing>
+                        <property name="padding">5</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">2</property>
+              </packing>
+            </child>
+            <child>
+              <widget class="GtkButton" id="about_menu">
+                <property name="visible">True</property>
+                <property name="can_focus">True</property>
+                <property name="receives_default">True</property>
+                <signal name="clicked" handler="on_about_menu_clicked"/>
+                <child>
+                  <widget class="GtkHBox" id="hbox7">
+                    <property name="visible">True</property>
+                    <child>
+                      <widget class="GtkImage" id="image6">
+                        <property name="visible">True</property>
+                        <property name="stock">gtk-help</property>
+                      </widget>
+                      <packing>
+                        <property name="position">0</property>
+                      </packing>
+                    </child>
+                    <child>
+                      <widget class="GtkLabel" id="about_menu_label">
+                        <property name="visible">True</property>
+                        <property name="label" translatable="yes">About</property>
+                      </widget>
+                      <packing>
+                        <property name="padding">5</property>
+                        <property name="position">1</property>
+                      </packing>
+                    </child>
+                  </widget>
+                </child>
+              </widget>
+              <packing>
+                <property name="expand">False</property>
+                <property name="position">3</property>
+              </packing>
             </child>
           </widget>
           <packing>
             <property name="expand">False</property>
+            <property name="padding">5</property>
             <property name="position">0</property>
           </packing>
         </child>
@@ -87,6 +197,8 @@
                           <widget class="GtkAlignment" id="alignment2">
                             <property name="visible">True</property>
                             <property name="yalign">0</property>
+                            <property name="top_padding">2</property>
+                            <property name="bottom_padding">5</property>
                             <property name="left_padding">3</property>
                             <child>
                               <widget class="GtkLabel" id="info_label">
@@ -114,6 +226,7 @@
                       </widget>
                       <packing>
                         <property name="expand">False</property>
+                        <property name="padding">3</property>
                         <property name="position">0</property>
                       </packing>
                     </child>
@@ -526,43 +639,6 @@
                               </packing>
                             </child>
                             <child>
-                              <widget class="GtkButton" id="active_down_btn">
-                                <property name="visible">True</property>
-                                <property name="can_focus">True</property>
-                                <property name="receives_default">True</property>
-                                <property name="tooltip" translatable="yes">Active downloads</property>
-                                <signal name="clicked" handler="on_active_down_btn_clicked"/>
-                                <child>
-                                  <widget class="GtkHBox" id="active_down_cont">
-                                    <property name="visible">True</property>
-                                    <child>
-                                      <widget class="GtkImage" id="image2">
-                                        <property name="visible">True</property>
-                                        <property name="stock">gtk-go-down</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="position">0</property>
-                                      </packing>
-                                    </child>
-                                    <child>
-                                      <widget class="GtkLabel" id="active_down_label">
-                                        <property name="visible">True</property>
-                                        <property name="label" translatable="yes">0</property>
-                                      </widget>
-                                      <packing>
-                                        <property name="position">1</property>
-                                      </packing>
-                                    </child>
-                                  </widget>
-                                </child>
-                              </widget>
-                              <packing>
-                                <property name="expand">False</property>
-                                <property name="fill">False</property>
-                                <property name="position">1</property>
-                              </packing>
-                            </child>
-                            <child>
                               <widget class="GtkHBox" id="youtube_quality_box">
                                 <property name="visible">True</property>
                                 <child>
@@ -572,7 +648,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="padding">5</property>
-                                <property name="position">2</property>
+                                <property name="position">1</property>
                               </packing>
                             </child>
                             <child>
@@ -583,7 +659,7 @@
                                 </child>
                               </widget>
                               <packing>
-                                <property name="position">3</property>
+                                <property name="position">2</property>
                               </packing>
                             </child>
                             <child>
@@ -596,7 +672,7 @@
                               <packing>
                                 <property name="expand">False</property>
                                 <property name="padding">5</property>
-                                <property name="position">4</property>
+                                <property name="position">3</property>
                               </packing>
                             </child>
                             <child>
@@ -616,7 +692,7 @@ audio-volume-medium</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
-                                <property name="position">5</property>
+                                <property name="position">4</property>
                               </packing>
                             </child>
                           </widget>
@@ -785,13 +861,11 @@ bumpscope</property>
                               <widget class="GtkHBox" id="hbox1">
                                 <property name="visible">True</property>
                                 <child>
-                                  <widget class="GtkButton" id="return_btn">
-                                    <property name="label">gtk-go-back</property>
+                                  <widget class="GtkHBox" id="hbox9">
                                     <property name="visible">True</property>
-                                    <property name="can_focus">True</property>
-                                    <property name="receives_default">True</property>
-                                    <property name="use_stock">True</property>
-                                    <signal name="clicked" handler="on_return_btn_clicked"/>
+                                    <child>
+                                      <placeholder/>
+                                    </child>
                                   </widget>
                                   <packing>
                                     <property name="position">0</property>
@@ -1245,9 +1319,6 @@ Public License instead of this License.</property>
           <widget class="GtkHButtonBox" id="dialog-action_area1">
             <property name="visible">True</property>
             <property name="layout_style">end</property>
-            <child>
-              <placeholder/>
-            </child>
           </widget>
           <packing>
             <property name="expand">False</property>

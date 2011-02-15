@@ -1,7 +1,7 @@
-gmediafinder (0.7-0ppa2~maverick) maverick; urgency=low
+gmediafinder (0.7.1-0ppa1~maverick) maverick; urgency=low
 
-  * add new download manager
-  * possibility to change the download path
+  * better youtube search results, but slower...
+  * gui update
   * fix...
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 27 Jan 2011 21:28:53 +0100
