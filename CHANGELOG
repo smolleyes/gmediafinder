@@ -1,3 +1,6 @@
+v0.7.3
+* add yes/no dialog before download if the file already exist...
+
 v0.7.2:
 * add remove download button when download is finished
 * add show download folder button

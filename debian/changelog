@@ -1,7 +1,5 @@
-gmediafinder (0.7.2-0ppa1~maverick) maverick; urgency=low
+gmediafinder (0.7.3-0ppa1~maverick) maverick; urgency=low
 
-  * add remove download button when download is finished
-  * add show download folder button 
-  * add download rate and ETA in downloads progress bars
+  * add yes/no dialog before download if the file already exist...
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 27 Jan 2011 21:28:53 +0100

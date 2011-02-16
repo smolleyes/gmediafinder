@@ -1223,7 +1223,6 @@ class GsongFinder(object):
             return self.set_fullscreen()
     
     def on_volume_changed(self, widget, value=10):
-        print value
         self.player.set_property("volume", float(value)) 
         return True
     
@@ -1244,7 +1243,6 @@ class GsongFinder(object):
         return self.geturl(self.active_link)
 
     def geturl(self, url, codec=None):
-        self.notebook.set_current_page(1)
         if self.engine == "youtube.com":
             name = self.media_name+".%s" % codec
         else:
@@ -1252,6 +1250,12 @@ class GsongFinder(object):
         if re.search('\/', name):
 			name = re.sub('\/','-', name)
 			self.media_name = name
+        target = os.path.join(self.down_dir,name)
+        if os.path.exists(target):
+			ret = yesno("Download","The file:\n\n%s \n\nalready exist, download again ?" % target)
+			if ret == "No":
+				return
+        self.notebook.set_current_page(1)
         box = gtk.HBox(False, 5)
         box.pack_start(gtk.image_new_from_pixbuf(self.media_img), False,False, 5)
         box.pack_start(gtk.Label(name), False, False, 5)
@@ -1390,7 +1394,24 @@ def calc_eta(start, now, total, current):
 		(eta_mins, eta_secs) = divmod(eta, 60)
 		if eta_mins > 99:
 			return '--:--'
-		return ' ETA : %02d:%02d' % (eta_mins, eta_secs)          
+		return ' ETA : %02d:%02d' % (eta_mins, eta_secs)
+		
+def yesno(title,msg):
+    dialog = gtk.MessageDialog(parent = None,
+    buttons = gtk.BUTTONS_YES_NO,
+    flags =gtk.DIALOG_DESTROY_WITH_PARENT,
+    type = gtk.MESSAGE_QUESTION,
+    message_format = msg
+    )
+    dialog.set_position("center")
+    dialog.set_title(title)
+    result = dialog.run()
+    dialog.destroy()
+
+    if result == gtk.RESPONSE_YES:
+        return "Yes"
+    elif result == gtk.RESPONSE_NO:
+        return "No"   
 
 try:
   from xml.etree import cElementTree as ElementTree
