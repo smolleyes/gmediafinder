@@ -75,7 +75,8 @@ setup(
     data_files=[("Microsoft.VC90.MFC", mfcfiles),
                    ('images/22x22',['images/22x22/gmediafinder.png']),
 	('images/24x24',['images/24x24/gmediafinder.png']),
-	('images/48x48/apps',['images/48x48/gmediafinder.png']),
+	('images/48x48',['images/48x48/gmediafinder.png','images/48x48/gmediafinder.ico']),
+        ('images/48x48/apps',['images/48x48/gmediafinder.png']),
 	('data/glade',['data/glade/mainGui.glade']),
         ('data/img',['data/img/gmediafinder.png','data/img/sound.png']),
                ]

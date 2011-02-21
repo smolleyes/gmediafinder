@@ -844,35 +844,31 @@ class GsongFinder(object):
     def add_sound(self, name, media_link, img=None, quality_list=None):
         self.iter = self.model.append()
         if self.engine == "youtube.com":
-            img = self.download_photo(img)
+            cimg = self.download_photo(img)
         else:
-            img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
-        if not name or not media_link or not img:
+            cimg = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
+        if not name or not media_link or not cimg:
             return
         self.model.set(self.iter,
-                        0, img,
+                        0, cimg,
                         1, name,
                         2, media_link,
                         3, quality_list,
                         )
                        
     def download_photo(self, img_url):
-		temp_file = tempfile.NamedTemporaryFile()
-		image_on_web = urllib2.urlopen(img_url).read()
-		temp_file.write(image_on_web)
-		temp_file.flush()
+		image_on_web = urllib.urlretrieve(img_url)
 		try:
-			pixb = gtk.gdk.pixbuf_new_from_file_at_size(temp_file.name, 100, 100)
-		except:
-			return
-		temp_file.close()
+		    pixb = gtk.gdk.pixbuf_new_from_file_at_size(image_on_web[0],100,100)
+		except gobject.GError, error:
+                    return False
 		return pixb
 
     def make_youtube_entry(self,video):
 		url = video.link[1].href
 		vid_id = os.path.basename(os.path.dirname(url))
 		vid_obj = self.yt_client.GetYouTubeVideoEntry(video_id='%s' % vid_id)
-		vid_pic = vid_obj.media.thumbnail[0].url
+		vid_pic = vid_obj.media.thumbnail[2].url
 		vid_title = vid_obj.title.text
 		links_arr = []
 		quality_arr = []
@@ -1281,8 +1277,11 @@ class GsongFinder(object):
         btn.connect('clicked', self.remove_download)
 
     def show_folder(self,widget,path):
-		os.system('xdg-open %s' % path)
-	
+        if sys.platform == "win32":
+	    os.system('explorer %s' % path)
+	else:
+            os.system('xdg-open %s' % path)
+        
     def remove_download(self, widget):
         ch = widget.parent
         ch.parent.remove(ch)
