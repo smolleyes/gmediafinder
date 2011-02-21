@@ -407,7 +407,7 @@ class GsongFinder(object):
         self.stop_play()
         ## check youtube quality
         if self.engine == "youtube.com":
-            self.quality_list = self.model.get_value(self.iter, 3)
+            self.media_link,self.quality_list = self.get_quality_list(self.media_link)
             self.youtube_quality_model.clear()
             if not self.quality_list:
                 return
@@ -422,7 +422,46 @@ class GsongFinder(object):
         
     def option_changed(self,widget):
         self.search_option = widget.name
-
+        
+    def get_quality_list(self,vid_id):
+        links_arr = []
+        quality_arr = []
+        try:
+			req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
+			stream = urllib2.urlopen(req)
+			contents = stream.read()
+			## links list
+			regexp1 = re.compile("fmt_stream_map=([^&]+)&")
+			matches = regexp1.search(contents).group(1)
+			fmt_arr = urllib2.unquote(matches).split(',')
+			## quality_list
+			regexp1 = re.compile("fmt_map=([^&]+)&")
+			matches = regexp1.search(contents).group(1)
+			quality_list = urllib2.unquote(matches).split(',')
+			##
+			stream.close()
+			link_list = []
+			for link in fmt_arr:
+				res = link.split('|')[1]
+				link_list.append(res)
+			## remove flv links...
+			i = 0
+			for quality in quality_list:
+				codec = _get_codec(quality)
+				if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
+					i+=1
+					continue
+				elif codec == "flv" and quality.split("/")[1] != "320x240":
+					i+=1
+					continue
+				else:
+					links_arr.append(link_list[i])
+					quality_arr.append(quality.split("/")[1] + "|%s" % codec)
+					i+=1
+        except:
+		    print "removed %s" % vid_id
+		    return
+        return links_arr, quality_arr
 
     def prepare_search(self,widget=None):
         self.user_search = self.search_entry.get_text()
@@ -762,7 +801,7 @@ class GsongFinder(object):
                 elif self.req_start == 1:
                     self.req_start = 11
                 else:
-                    self.req_start+=10
+                    self.req_start+=25
                         
                 vquery = self.youtube.search(self.user_search,self.req_start,params)
                 if len(vquery) == 0:
@@ -861,56 +900,18 @@ class GsongFinder(object):
 		try:
 		    pixb = gtk.gdk.pixbuf_new_from_file_at_size(image_on_web[0],100,100)
 		except gobject.GError, error:
-                    return False
+			return False
 		return pixb
 
     def make_youtube_entry(self,video):
-		url = video.link[1].href
-		vid_id = os.path.basename(os.path.dirname(url))
-		vid_obj = self.yt_client.GetYouTubeVideoEntry(video_id='%s' % vid_id)
-		vid_pic = vid_obj.media.thumbnail[2].url
-		vid_title = vid_obj.title.text
-		links_arr = []
-		quality_arr = []
-		try:
-			req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
-			stream = urllib2.urlopen(req)
-			contents = stream.read()
-			## links list
-			regexp1 = re.compile("fmt_stream_map=([^&]+)&")
-			matches = regexp1.search(contents).group(1)
-			fmt_arr = urllib2.unquote(matches).split(',')
-			## quality_list
-			regexp1 = re.compile("fmt_map=([^&]+)&")
-			matches = regexp1.search(contents).group(1)
-			quality_list = urllib2.unquote(matches).split(',')
-			##
-			stream.close()
-			link_list = []
-			for link in fmt_arr:
-				res = link.split('|')[1]
-				link_list.append(res)
-			## remove flv links...
-			i = 0
-			for quality in quality_list:
-				codec = _get_codec(quality)
-				if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
-					i+=1
-					continue
-				elif codec == "flv" and quality.split("/")[1] != "320x240":
-					i+=1
-					continue
-				else:
-					links_arr.append(link_list[i])
-					quality_arr.append(quality.split("/")[1] + "|%s" % codec)
-					i+=1
-		except:
-		    print "removed %s" % vid_id
-		    return
-		if not vid_title or not links_arr or not vid_pic:
+        url = video.link[1].href
+        vid_id = os.path.basename(os.path.dirname(url))
+        #vid_obj = self.yt_client.GetYouTubeVideoEntry(video_id='%s' % vid_id)
+        vid_pic = "http://i.ytimg.com/vi/%s/2.jpg" % vid_id
+        vid_title = video.title.text
+        if not vid_title or not url or not vid_pic:
 			return
-		else:
-			return self.add_sound(vid_title, links_arr, vid_pic, quality_arr)
+        return self.add_sound(vid_title, vid_id, vid_pic)
             
     def set_default_youtube_video_rate(self,widget=None):
 		active = self.youtube_video_rate.get_active()
@@ -1432,7 +1433,7 @@ class YouTubeClient:
         return service.Get(feed % params)
     
     def search(self, query, page_index, params):
-        url = "http://gdata.youtube.com/feeds/api/videos?q=%s&start-index=%s&max-results=10%s" % (query, page_index, params)
+        url = "http://gdata.youtube.com/feeds/api/videos?q=%s&start-index=%s&max-results=25%s" % (query, page_index, params)
         return self._request(url).entry
 
     def get_thumbnails(self, video):
