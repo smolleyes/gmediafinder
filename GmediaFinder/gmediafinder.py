@@ -799,7 +799,7 @@ class GsongFinder(object):
                 if self.req_start == 0:
                     self.req_start = 1
                 elif self.req_start == 1:
-                    self.req_start = 11
+                    self.req_start = 26
                 else:
                     self.req_start+=25
                         
