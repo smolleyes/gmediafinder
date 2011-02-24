@@ -60,6 +60,7 @@ class GsongFinder(object):
         self.timer = 0
         self.settings_folder = None
         self.conf_file = None
+        self.spinner = gtk.Spinner()
         self.youtube_max_res = "320x240"
         self.active_downloads = 0
         self.thread_num = 0
@@ -550,6 +551,7 @@ class GsongFinder(object):
         HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
 
         if data:
+            self.changepage_btn.set_sensitive(0)
             soup = BeautifulStoneSoup(data)
             if self.engine == "google.com":
                 try:
@@ -820,6 +822,7 @@ class GsongFinder(object):
             return
         self.search_btn.set_sensitive(1)
         self.search_thread_id = None
+        self.changepage_btn.set_sensitive(1)
 
 
     def sanitizer_factory(self,*args, **kwargs):
@@ -886,7 +889,8 @@ class GsongFinder(object):
             cimg = self.download_photo(img)
         else:
             cimg = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
-        if not name or not media_link or not cimg:
+        cw = cimg.get_width()
+        if not name or not media_link or not cimg or cw == 0:
             return
         self.model.set(self.iter,
                         0, cimg,
@@ -1256,38 +1260,86 @@ class GsongFinder(object):
         box = gtk.HBox(False, 5)
         box.pack_start(gtk.image_new_from_pixbuf(self.media_img), False,False, 5)
         box.pack_start(gtk.Label(name), False, False, 5)
+        ## show folder button
         btnf = gtk.Button()
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_FIND, gtk.ICON_SIZE_BUTTON)
         btnf.add(image)
         box.pack_end(btnf, False, False, 5)
+        btnf.set_tooltip_text("Show")
+        ## convert button
+        btn_conv = gtk.Button()
+        if self.engine == "youtube.com":
+            image = gtk.Image()
+            image.set_from_stock(gtk.STOCK_CONVERT, gtk.ICON_SIZE_BUTTON)
+            btn_conv.add(image)
+            box.pack_end(btn_conv, False, False, 5)
+            btn_conv.set_tooltip_text("Convert to mp3")
+			## spinner
+            spinner = gtk.Spinner()
+            box.pack_end(spinner, False, False, 5)
+		## clear button
         btn = gtk.Button()
         image = gtk.Image()
         image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON)
         btn.add(image)
         box.pack_end(btn, False, False, 5)
+        btn.set_tooltip_text("Remove")
         pbar = gtk.ProgressBar()
         box.pack_end(pbar, False, False, 5)
         self.down_container.pack_start(box, False ,False, 5)
         box.show_all()
         btnf.hide()
+        if self.engine == "youtube.com":
+			btn_conv.hide()
+			spinner.hide()
+			btn_conv.connect('clicked', self.extract_audio,self.media_name,codec,spinner,btn_conv)
         btn.hide()
-        self.thread_num+=1
-        down_thread = thread.start_new_thread(self.start_download,(url, name, pbar, btnf,btn))
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
+        down_thread = thread.start_new_thread(self.start_download,(url, name, pbar, btnf,btn,btn_conv))
 
     def show_folder(self,widget,path):
         if sys.platform == "win32":
 	    os.system('explorer %s' % path)
 	else:
-            os.system('xdg-open %s' % path)
+		os.system('xdg-open %s' % path)
         
     def remove_download(self, widget):
         ch = widget.parent
         ch.parent.remove(ch)
+        
+    def extract_audio(self,widget,name,codec,spin,convbtn,block=False):
+		convbtn.hide()
+		spin.show()
+		spin.start()
+		src = os.path.join(self.down_dir,name+'.'+codec)
+		target = os.path.join(self.down_dir,name+'.mp3')
+		if os.path.exists(target):
+			os.remove(target)
+		self.statbar.push(1,"Converting process started...")
+		(pid, stdin, stdout, stderr) = gobject.spawn_async(['/usr/bin/ffmpeg', '-i', src, '-f', 'mp3', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
+		data = (spin,convbtn)
+		gobject.child_watch_add(pid, self.task_done,data)
+		
+    def task_done(self,pid,ret,data):
+		spin = data[0]
+		convbtn = data[1]
+		spin.stop()
+		spin.hide()
+		convbtn.show()
+		print "ret = %d" % ret
+		if ret == 0:
+			self.statbar.push(1,"Mp3 successfully created !")
+		else:
+			self.statbar.push(1,"Converting failed...")
+		time.sleep(10)
+		if self.is_playing:
+			self.statbar.push(1,"Playing %s" % self.media_name)
+		else:
+			self.statbar.push(1,"Stopped")
 		    
-    def start_download(self, url, name, pbar, btnf, btn):
+    def start_download(self, url, name, pbar, btnf, btn,btn_conv):
         self.active_downloads += 1
         self.active_down_label.set_text(str(self.active_downloads))
         ## download...
@@ -1296,10 +1348,12 @@ class GsongFinder(object):
 			urllib.urlretrieve(url, self.down_dir+"/"+ name,
 			lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,start_time,url,name,pbar))
 			btnf.show()
+			btn_conv.show()
 			btn.show()
 			return self.decrease_down_count()
         except:
 			pbar.set_text("Failed...")
+			btn.show()
 			return self.decrease_down_count()
     
     def decrease_down_count(self):
