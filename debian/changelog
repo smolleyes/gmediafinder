@@ -1,6 +1,7 @@
-gmediafinder (0.8.1-0ppa1~maverick) maverick; urgency=low
+gmediafinder (0.8.2-0ppa1~maverick) maverick; urgency=low
 
-  * Add function to extract audio from youtube mp4 or flv as mp3 directly from the gui with ffmpeg
+  * Add skreemr.org and imusicz.net engine
+  * Remove iwantmusik.com engine
   * fix...
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100

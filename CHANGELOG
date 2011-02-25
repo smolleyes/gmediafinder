@@ -1,3 +1,8 @@
+v0.8.2:
+* Add skreemr.org and imusicz.net engine
+* Remove iwantmusik.com engine
+* fix...
+
 v0.8.1:
 * Add function to extract audio from youtube mp4 or flv as mp3 directly from t
 he gui with ffmpeg
