@@ -1328,16 +1328,18 @@ class GsongFinder(object):
 		spin.stop()
 		spin.hide()
 		convbtn.show()
-		print "ret = %d" % ret
 		if ret == 0:
 			self.statbar.push(1,"Mp3 successfully created !")
 		else:
 			self.statbar.push(1,"Converting failed...")
+		while gtk.events_pending():
+			gtk.main_iteration()
 		time.sleep(10)
 		if self.is_playing:
 			self.statbar.push(1,"Playing %s" % self.media_name)
 		else:
 			self.statbar.push(1,"Stopped")
+
 		    
     def start_download(self, url, name, pbar, btnf, btn,btn_conv):
         self.active_downloads += 1
