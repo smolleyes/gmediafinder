@@ -474,7 +474,10 @@ class GsongFinder(object):
             return
         self.main_engine = self.engine_selector.get_active_text()
         self.reset_pages()
-
+        if self.engine == "imusicz.net":
+			socket.setdefaulttimeout(30)
+        else:
+			socket.setdefaulttimeout(10)
         thread.start_new_thread(self.get_page_links,())
 
     def change_page(self,widget=None):
@@ -550,7 +553,7 @@ class GsongFinder(object):
         self.informations_label.set_text("Searching for %s with %s" % (self.user_search,self.engine))
         gtk.gdk.threads_leave()
         HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
-
+        socket.setdefaulttimeout(10)
         if data:
             self.changepage_btn.set_sensitive(0)
             soup = BeautifulStoneSoup(data)
@@ -784,7 +787,7 @@ class GsongFinder(object):
                         i += 1
             
             elif self.engine == "imusicz.net":
-                soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'])
+                soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'],convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
                 nlist = []
                 link_list = []
                 next_page = 1
@@ -820,7 +823,7 @@ class GsongFinder(object):
                         name = re.search('name=(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv)',str(furl)).group(1)
                         linkId= re.search('url=(\S.*)&amp',str(furl)).group(1)
                         link = urllib2.unquote('http://imusicz.net/download.php?url='+linkId)
-                        name = urllib2.unquote(name.decode('utf-8'))
+                        name = BeautifulStoneSoup(name, convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
                         nlist.append(name)
                         link_list.append(link)
                     except:
