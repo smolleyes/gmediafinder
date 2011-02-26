@@ -997,14 +997,13 @@ class GsongFinder(object):
             return
 
     def add_sound(self, name, media_link, img=None, quality_list=None):
-        self.iter = self.model.append()
         if self.engine == "youtube.com":
             cimg = self.download_photo(img)
         else:
             cimg = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
-        cw = cimg.get_width()
-        if not name or not media_link or not cimg or cw == 0:
+        if not name or not media_link or not cimg:
             return
+        self.iter = self.model.append()
         self.model.set(self.iter,
                         0, cimg,
                         1, name,
@@ -1422,7 +1421,7 @@ class GsongFinder(object):
         ch = widget.parent
         ch.parent.remove(ch)
         
-    def extract_audio(self,widget,name,codec,spin,convbtn,block=False):
+    def extract_audio(self,widget,name,codec,spin,convbtn):
 		convbtn.hide()
 		spin.show()
 		spin.start()
