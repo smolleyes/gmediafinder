@@ -60,7 +60,6 @@ class GsongFinder(object):
         self.timer = 0
         self.settings_folder = None
         self.conf_file = None
-        self.spinner = gtk.Spinner()
         self.youtube_max_res = "320x240"
         self.active_downloads = 0
         self.thread_num = 0
