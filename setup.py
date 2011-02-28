@@ -50,7 +50,7 @@ data_files = [
 	('share/icons/hicolor/24x24/apps',['images/24x24/gmediafinder.png']),
 	('share/icons/hicolor/48x48/apps',['images/48x48/gmediafinder.png']),
 	('share/applications',['gmediafinder.desktop']),
-	('share/gmediafinder',['data/glade/mainGui.glade','data/img/gmediafinder.png','data/img/sound.png']),
+	('share/gmediafinder',['data/glade/mainGui.glade','data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif']),
 ]
 
 
