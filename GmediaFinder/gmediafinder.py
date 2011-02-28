@@ -1388,8 +1388,9 @@ class GsongFinder(object):
             box.pack_end(btn_conv, False, False, 5)
             btn_conv.set_tooltip_text("Convert to mp3")
 			## spinner
-            spinner = gtk.Spinner()
-            box.pack_end(spinner, False, False, 5)
+            self.throbber = gtk.Image()
+            self.throbber.set_from_file(self.img_path+'/throbber.png')
+            box.pack_end(self.throbber, False, False, 5)
 		## clear button
         btn = gtk.Button()
         image = gtk.Image()
@@ -1404,8 +1405,8 @@ class GsongFinder(object):
         btnf.hide()
         if self.engine == "youtube.com":
 			btn_conv.hide()
-			spinner.hide()
-			btn_conv.connect('clicked', self.extract_audio,self.media_name,codec,spinner,btn_conv)
+			self.throbber.hide()
+			btn_conv.connect('clicked', self.extract_audio,self.media_name,codec,btn_conv)
         btn.hide()
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
@@ -1421,24 +1422,26 @@ class GsongFinder(object):
         ch = widget.parent
         ch.parent.remove(ch)
         
-    def extract_audio(self,widget,name,codec,spin,convbtn):
+    def extract_audio(self,widget,name,codec,convbtn):
 		convbtn.hide()
-		spin.show()
-		spin.start()
+		self.animation = gtk.gdk.PixbufAnimation(self.img_path+'/throbber.gif')
+		self.loader_pixbuf = self.throbber.get_pixbuf() # save the Image contents so we can set it back later
+		self.throbber.set_from_animation(self.animation)
+		self.throbber.show()
 		src = os.path.join(self.down_dir,name+'.'+codec)
 		target = os.path.join(self.down_dir,name+'.mp3')
 		if os.path.exists(target):
 			os.remove(target)
 		self.statbar.push(1,"Converting process started...")
 		(pid, stdin, stdout, stderr) = gobject.spawn_async(['/usr/bin/ffmpeg', '-i', src, '-f', 'mp3', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
-		data = (spin,convbtn)
-		gobject.child_watch_add(pid, self.task_done,data)
+		data = (convbtn)
+		gobject.child_watch_add(pid, self.task_done,convbtn)
+		while gtk.events_pending():
+			gtk.main_iteration()
 		
-    def task_done(self,pid,ret,data):
-		spin = data[0]
-		convbtn = data[1]
-		spin.stop()
-		spin.hide()
+    def task_done(self,pid,ret,convbtn):
+		self.throbber.set_from_pixbuf(self.loader_pixbuf)
+		self.throbber.hide()
 		convbtn.show()
 		if ret == 0:
 			self.statbar.push(1,"Mp3 successfully created !")
@@ -1446,7 +1449,7 @@ class GsongFinder(object):
 			self.statbar.push(1,"Converting failed...")
 		while gtk.events_pending():
 			gtk.main_iteration()
-		time.sleep(10)
+		time.sleep(5)
 		if self.is_playing:
 			self.statbar.push(1,"Playing %s" % self.media_name)
 		else:
