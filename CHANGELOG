@@ -1,6 +1,7 @@
 v0.8.2:
 * Add skreemr.org and imusicz.net engine
 * Remove iwantmusik.com engine
+* Remove gtk.Spinner()
 * fix...
 
 v0.8.1:

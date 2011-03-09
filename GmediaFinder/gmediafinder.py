@@ -63,6 +63,7 @@ class GsongFinder(object):
         self.youtube_max_res = "320x240"
         self.active_downloads = 0
         self.thread_num = 0
+        print constants.exec_path
         if sys.platform == "win32":
             from win32com.shell import shell, shellcon
             df = shell.SHGetDesktopFolder()
@@ -1362,6 +1363,9 @@ class GsongFinder(object):
         if re.search('\/', name):
 			name = re.sub('\/','-', name)
 			self.media_name = name
+	if re.search('\"', name):
+			name = re.sub('\"','', name)
+			self.media_name = name
         target = os.path.join(self.down_dir,name)
         if os.path.exists(target):
 			ret = yesno("Download","The file:\n\n%s \n\nalready exist, download again ?" % target)
@@ -1387,9 +1391,9 @@ class GsongFinder(object):
             box.pack_end(btn_conv, False, False, 5)
             btn_conv.set_tooltip_text("Convert to mp3")
 			## spinner
-            self.throbber = gtk.Image()
-            self.throbber.set_from_file(self.img_path+'/throbber.png')
-            box.pack_end(self.throbber, False, False, 5)
+            throbber = gtk.Image()
+            throbber.set_from_file(self.img_path+'/throbber.png')
+            box.pack_end(throbber, False, False, 5)
 		## clear button
         btn = gtk.Button()
         image = gtk.Image()
@@ -1404,8 +1408,8 @@ class GsongFinder(object):
         btnf.hide()
         if self.engine == "youtube.com":
 			btn_conv.hide()
-			self.throbber.hide()
-			btn_conv.connect('clicked', self.extract_audio,self.media_name,codec,btn_conv)
+			throbber.hide()
+			btn_conv.connect('clicked', self.extract_audio,self.media_name,codec,btn_conv,throbber)
         btn.hide()
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
@@ -1421,31 +1425,32 @@ class GsongFinder(object):
         ch = widget.parent
         ch.parent.remove(ch)
         
-    def extract_audio(self,widget,name,codec,convbtn):
+    def extract_audio(self,widget,name,codec,convbtn,throbber):
 		convbtn.hide()
 		self.animation = gtk.gdk.PixbufAnimation(self.img_path+'/throbber.gif')
-		self.loader_pixbuf = self.throbber.get_pixbuf() # save the Image contents so we can set it back later
-		self.throbber.set_from_animation(self.animation)
-		self.throbber.show()
+		self.loader_pixbuf = throbber.get_pixbuf() # save the Image contents so we can set it back later
+		throbber.set_from_animation(self.animation)
+		throbber.show()
 		src = os.path.join(self.down_dir,name+'.'+codec)
 		target = os.path.join(self.down_dir,name+'.mp3')
 		if os.path.exists(target):
 			os.remove(target)
 		self.statbar.push(1,"Converting process started...")
-		(pid, stdin, stdout, stderr) = gobject.spawn_async(['/usr/bin/ffmpeg', '-i', src, '-f', 'mp3', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
-		data = (convbtn)
-		gobject.child_watch_add(pid, self.task_done,convbtn)
-		while gtk.events_pending():
-			gtk.main_iteration()
+		if sys.platform == "win32":
+                    ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(constants.exec_path)),'ffmpeg\\ffmpeg.exe')
+                else:
+                    ffmpeg_path = "/usr/bin/ffmpeg"
+                (pid,t,r,s) = gobject.spawn_async([ffmpeg_path, '-i', src, '-f', 'mp3', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
+                data=(convbtn,throbber)
+                gobject.child_watch_add(pid, self.task_done,data)
 		
-    def task_done(self,pid,ret,convbtn):
-		self.throbber.set_from_pixbuf(self.loader_pixbuf)
-		self.throbber.hide()
+    def task_done(self,pid,ret,data):
+                throbber=data[1]
+                convbtn=data[0]
+		throbber.set_from_pixbuf(self.loader_pixbuf)
+		throbber.hide()
 		convbtn.show()
-		if ret == 0:
-			self.statbar.push(1,"Mp3 successfully created !")
-		else:
-			self.statbar.push(1,"Converting failed...")
+		self.statbar.push(1,"Mp3 successfully created !")
 		while gtk.events_pending():
 			gtk.main_iteration()
 		time.sleep(5)

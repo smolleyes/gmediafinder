@@ -41,12 +41,15 @@ print ('Deploying GStreamer')
 for name in os.listdir(os.path.join(gstPath, 'bin')):
     shutil.copy (os.path.join(gstPath, 'bin', name),
                  os.path.join (os.getcwd(), 'dist/bin'))
+## copy ffmpeg dir
+if not os.path.exists(os.path.join(os.getcwd(), 'dist\\ffmpeg')):
+    shutil.copytree(os.path.join(os.getcwd(), 'win32\\ffmpeg'),os.path.join(os.getcwd(), 'dist\\ffmpeg'))
 for file in filter(lambda f: f.endswith('.dll'),
                        os.listdir(path.join(gstPath, 'bin'))):
         if not os.path.isfile(path.join('dist', file)):
             shutil.copy(path.join(gstPath, 'bin', file), 'dist')
 
-if not os.path.exists(os.path.join(gstPath, 'lib', 'gstreamer-0.10')):
+if not os.path.exists(os.path.join(os.getcwd(), 'dist\\lib\\gstreamer-0.10')):
     shutil.copytree(os.path.join(gstPath, 'lib', 'gstreamer-0.10'),
                     os.path.join(os.path.join (os.getcwd(), 'dist/lib'), 'gstreamer-0.10'))
 shutil.copyfile("C:\\libxml2-2.dll", 'dist/libxml2-2.dll')
@@ -57,16 +60,12 @@ setup(
     description = 'Stream and download youtube or mp3 search engines files',
     version = '1.0',
 
-    windows = [
-                  {
-                      'script': 'GmediaFinder/gmediafinder.py',
-                      'icon_resources': [(1, "data/img/gmediafinder.ico")],
-                  }
-              ],
+    windows = ['GmediaFinder/gmediafinder.py'],
 
     options = {
                   'py2exe': {
-                      'bundle_files': 3,
+                      'unbuffered': True,
+                      'optimize': 2,
                       'packages':'encodings',
                       'includes': 'cairo, pango, pangocairo, atk, gobject, gio, gst, gtk'
                   }
