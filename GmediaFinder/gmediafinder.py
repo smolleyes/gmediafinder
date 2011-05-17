@@ -36,6 +36,8 @@ try:
     from GmediaFinder import constants
 except:
     import constants
+    
+from constants import _
 
 # timeout in seconds
 timeout = 30
@@ -108,7 +110,7 @@ class GsongFinder(object):
         gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
         
         ## gui
-        self.gladeGui = gtk.glade.XML(constants.glade_file, None ,constants.app_name)
+        self.gladeGui = gtk.glade.XML(constants.glade_file, None ,constants.APP_NAME)
         self.window = self.gladeGui.get_widget("main_window")
         self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
@@ -165,7 +167,7 @@ class GsongFinder(object):
         youtube_quality_box.add(self.youtube_video_rate)
         new_iter = self.youtube_quality_model.append()
         self.youtube_quality_model.set(new_iter,
-                                0, "Quality",
+                                0, _("Quality"),
                                 )
         self.youtube_video_rate.connect('changed', self.on_youtube_video_rate_changed)
         
@@ -271,7 +273,7 @@ class GsongFinder(object):
         self.treeview.set_model(self.model)
         
         column = gtk.TreeViewColumn()
-        column.set_title(' Results : ')
+        column.set_title(_(' Results : '))
         self.treeview.append_column(column)
 
         rendererp = gtk.CellRendererPixbuf()
@@ -359,10 +361,10 @@ class GsongFinder(object):
         self.engine = self.engine_selector.get_active_text()
         self.changepage_btn.hide()
         iter = self.engine_selector.get_active_iter()
-        if self.engine == "Select an engine":
+        if self.engine_selector.get_active() == 0:
             self.engine = None
             return
-        print "%s engine selected" % self.engine
+        print _("%s engine selected") % self.engine
         if self.engine == "google.com":
             self.options_box.show()
             self.option_songs.set_active(1)
@@ -404,7 +406,7 @@ class GsongFinder(object):
         self.media_link = self.model.get_value(self.iter, 2)
         self.media_img = self.model.get_value(self.iter, 0)
         # print in the gui
-        self.statbar.push(1,"Playing : %s" % self.media_name)
+        self.statbar.push(1,_("Playing : %s") % self.media_name)
         self.stop_play()
         ## check youtube quality
         if self.engine == "youtube.com":
@@ -465,12 +467,14 @@ class GsongFinder(object):
         return links_arr, quality_arr
 
     def prepare_search(self,widget=None):
+        if not self.search_thread_id == None:
+			return
         self.user_search = self.search_entry.get_text()
         if not self.user_search:
-            self.informations_label.set_text("Please enter an artist/album or song name...")
+            self.informations_label.set_text(_("Please enter an artist/album or song name..."))
             return
         if not self.engine:
-            self.informations_label.set_text("Please select an engine...")
+            self.informations_label.set_text(_("Please select an engine..."))
             return
         self.main_engine = self.engine_selector.get_active_text()
         self.reset_pages()
@@ -499,12 +503,12 @@ class GsongFinder(object):
 
     def search(self):
         self.model.clear()
-        self.informations_label.set_text("Searching for %s with %s " % (self.user_search,self.engine))
+        self.informations_label.set_text(_("Searching for %s with %s ") % (self.user_search,self.engine))
         ## encode the name
         user_search = urllib2.quote(self.user_search)
         ## prepare the request
         if self.engine == None:
-            self.informations_label.set_text("Please select a search engine...")
+            self.informations_label.set_text(_("Please select a search engine..."))
             return
         urlopt = ""
         baseurl = ""
@@ -550,7 +554,7 @@ class GsongFinder(object):
         url = self.url
         search_thread_id = self.search_thread_id
         gtk.gdk.threads_enter()
-        self.informations_label.set_text("Searching for %s with %s" % (self.user_search,self.engine))
+        self.informations_label.set_text(_("Searching for %s with %s") % (self.user_search,self.engine))
         gtk.gdk.threads_leave()
         HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
         socket.setdefaulttimeout(10)
@@ -565,7 +569,7 @@ class GsongFinder(object):
                         url = a.attrMap['href']
                         if not url: continue
                         if re.search('href="(\S.*>Index of)', a.__str__()):
-                            self.informations_label.set_text("Media files detected on : %s, scanning... " % (urllib2.unquote(url)))
+                            self.informations_label.set_text(_("Media files detected on : %s, scanning... ") % (urllib2.unquote(url)))
                             verified_links = self.check_google_links(url)
                             if verified_links:
                                 slist = verified_links.findAll('a', href=True)
@@ -573,7 +577,7 @@ class GsongFinder(object):
                                 ## if ok start the loop
                                 #gtk.gdk.threads_enter()
                                 for s in slist:
-                                    print "scanning webpage : %s" % s.string
+                                    print _("scanning webpage : %s") % s.string
                                     try:
                                         req = re.search('(.*%s.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpg|.mpeg|.mkv|.ogv)' % self.user_search.lower(), urllib2.unquote(s.__str__().lower())).group()
                                     except:
@@ -587,7 +591,7 @@ class GsongFinder(object):
                     #gtk.gdk.threads_leave()
                     pass
                 self.search_thread_id = None
-                self.informations_label.set_text("Scan terminated for your request : %s" % self.user_search)
+                self.informations_label.set_text(_("Scan terminated for your request : %s") % self.user_search)
 
             elif self.engine == "mp3realm.org":
                 soup = BeautifulStoneSoup(self.clean_html(data).decode('UTF8'))
@@ -599,21 +603,21 @@ class GsongFinder(object):
                     #search results div
                     files_count = soup.findAll('div',attrs={'id':'searchstat'})[0].findAll('strong')[1].string
                 except:
-                    self.informations_label.set_text("no results found for %s..." % (self.user_search))
+                    self.informations_label.set_text(_("no results found for %s...") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
 
-                self.informations_label.set_text("%s files found for %s" % (files_count, self.user_search))
+                self.informations_label.set_text(_("%s files found for %s") % (files_count, self.user_search))
                 if re.search(r'(\S*Aucuns resultats)', soup.__str__()):
                     self.changepage_btn.hide()
                     self.req_start = 1
-                    self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                    self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
                 else:
-                    self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,files_count))
+                    self.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.req_start, self.user_search,files_count))
                     self.req_start += 1
 
                 self.changepage_btn.show()
@@ -644,7 +648,7 @@ class GsongFinder(object):
                     pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
                 except:
                     self.changepage_btn.hide()
-                    self.informations_label.set_text("no files found for %s..." % (self.user_search))
+                    self.informations_label.set_text(_("no files found for %s...") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
@@ -655,13 +659,13 @@ class GsongFinder(object):
                         if l == "Suivante >>":
                             next_page = 1
                     if next_page:
-                        self.informations_label.set_text("Results page %s for %s...(Next page available)" % (self.req_start, self.user_search))
+                        self.informations_label.set_text(_("Results page %s for %s...(Next page available)") % (self.req_start, self.user_search))
                         self.req_start += 1
                         self.changepage_btn.show()
                     else:
                         self.changepage_btn.hide()
                         self.req_start = 1
-                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                        self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
                         self.search_thread_id = None
                         self.search_btn.set_sensitive(1)
                         return
@@ -695,13 +699,13 @@ class GsongFinder(object):
                         if l == "More results":
                             next_page = 1
                     if next_page:
-                        self.informations_label.set_text("Results page %s for %s...(Next page available)" % (self.req_start, self.user_search))
+                        self.informations_label.set_text(_("Results page %s for %s...(Next page available)") % (self.req_start, self.user_search))
                         self.req_start += 1
                         self.changepage_btn.show()
                     else:
                         self.changepage_btn.hide()
                         self.req_start = 1
-                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                        self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
                         self.search_thread_id = None
                         self.search_btn.set_sensitive(1)
                         return
@@ -709,7 +713,7 @@ class GsongFinder(object):
                 flist = soup.findAll('div',attrs={'class':'download_link'})
                 if len(flist) == 0:
                     self.changepage_btn.hide()
-                    self.informations_label.set_text("no files found for %s..." % (self.user_search))
+                    self.informations_label.set_text(_("no files found for %s...") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
@@ -739,17 +743,17 @@ class GsongFinder(object):
                     results_count = re.search('Found about (\d+)', str(results_div)).group(1)
                 except:
                     self.changepage_btn.hide()
-                    self.informations_label.set_text("No results found for %s..." % (self.user_search))
+                    self.informations_label.set_text(_("No results found for %s...") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
                 if results_count == 0 :
-                    self.informations_label.set_text("no results for your search : %s " % (self.user_search))
+                    self.informations_label.set_text(_("no results for your search : %s ") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
                 else:
-                    self.informations_label.set_text("%s results found for your search : %s " % (results_count, self.user_search))
+                    self.informations_label.set_text(_("%s results found for your search : %s ") % (results_count, self.user_search))
 
                 pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
                 if pagination_table:
@@ -759,13 +763,13 @@ class GsongFinder(object):
                         if l == "Next":
                             next_page = 1
                     if next_page:
-                        self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.req_start, self.user_search,results_count))
+                        self.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.req_start, self.user_search,results_count))
                         self.req_start += 1
                         self.changepage_btn.show()
                     else:
                         self.changepage_btn.hide()
                         self.req_start = 1
-                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                        self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
                         self.search_thread_id = None
                         self.search_btn.set_sensitive(1)
                         return
@@ -799,13 +803,13 @@ class GsongFinder(object):
                         if l == "Next":
                             next_page = 1
                     if next_page:
-                        self.informations_label.set_text("Results page %s for %s...(Next page available)" % (self.req_start, self.user_search))
+                        self.informations_label.set_text(_("Results page %s for %s...(Next page available)") % (self.req_start, self.user_search))
                         self.req_start += 1
                         self.changepage_btn.show()
                     else:
                         self.changepage_btn.hide()
                         self.req_start = 1
-                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                        self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
                         self.search_thread_id = None
                         self.search_btn.set_sensitive(1)
                         return
@@ -813,7 +817,7 @@ class GsongFinder(object):
                 flist = soup.findAll('td',attrs={'width':'75'})
                 if len(flist) == 0:
                     self.changepage_btn.hide()
-                    self.informations_label.set_text("no files found for %s..." % (self.user_search))
+                    self.informations_label.set_text(_("no files found for %s...") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
@@ -846,17 +850,17 @@ class GsongFinder(object):
                     results_count = results_div.findAll('b')[1].string
                 except:
                     self.changepage_btn.hide()
-                    self.informations_label.set_text("No results found for %s..." % (self.user_search))
+                    self.informations_label.set_text(_("No results found for %s...") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
                 if results_count == 0 :
-                    self.informations_label.set_text("no results for your search : %s " % (self.user_search))
+                    self.informations_label.set_text(_("no results for your search : %s ") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
                 else:
-                    self.informations_label.set_text("%s results found for your search : %s " % (results_count, self.user_search))
+                    self.informations_label.set_text(_("%s results found for your search : %s ") % (results_count, self.user_search))
 
                 pagination_table = soup.find('div',attrs={'class':'previousnext'})
                 if pagination_table:
@@ -866,7 +870,7 @@ class GsongFinder(object):
                         if l == "Next>>":
                             next_page = 1
                     if next_page:
-                        self.informations_label.set_text("Results page %s for %s...(%s results)" % (self.page, self.user_search,results_count))
+                        self.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.page, self.user_search,results_count))
                         self.req_start += 10
                         self.page += 1
                         self.changepage_btn.show()
@@ -874,7 +878,7 @@ class GsongFinder(object):
                         self.changepage_btn.hide()
                         self.req_start = 10
                         self.page = 1
-                        self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                        self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
                         self.search_thread_id = None
                         self.search_btn.set_sensitive(1)
                         return
@@ -922,7 +926,7 @@ class GsongFinder(object):
                 vquery = self.youtube.search(self.user_search,self.req_start,params)
                 if len(vquery) == 0:
                     self.changepage_btn.hide()
-                    self.informations_label.set_text("no more files found for %s..." % (self.user_search))
+                    self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
                     self.search_thread_id = None
                     self.search_btn.set_sensitive(1)
                     return
@@ -1066,10 +1070,10 @@ class GsongFinder(object):
         url = self.media_link
         if url:
             if self.play_btn.get_label() == "gtk-media-play":
-                self.statbar.push(1,"Playing : %s" % self.media_name)
+                self.statbar.push(1,_("Playing : %s") % self.media_name)
                 return self.start_play(url)
             else:
-                self.statbar.push(1,"Stopped")
+                self.statbar.push(1,_("Stopped"))
                 return self.stop_play(url)
 
     def start_play(self,url):
@@ -1368,7 +1372,7 @@ class GsongFinder(object):
 			self.media_name = name
         target = os.path.join(self.down_dir,name)
         if os.path.exists(target):
-			ret = yesno("Download","The file:\n\n%s \n\nalready exist, download again ?" % target)
+			ret = yesno(_("Download"),_("The file:\n\n%s \n\nalready exist, download again ?") % target)
 			if ret == "No":
 				return
         self.notebook.set_current_page(1)
@@ -1389,7 +1393,7 @@ class GsongFinder(object):
             image.set_from_stock(gtk.STOCK_CONVERT, gtk.ICON_SIZE_BUTTON)
             btn_conv.add(image)
             box.pack_end(btn_conv, False, False, 5)
-            btn_conv.set_tooltip_text("Convert to mp3")
+            btn_conv.set_tooltip_text(_("Convert to mp3"))
 			## spinner
             throbber = gtk.Image()
             throbber.set_from_file(self.img_path+'/throbber.png')
@@ -1400,7 +1404,7 @@ class GsongFinder(object):
         image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON)
         btn.add(image)
         box.pack_end(btn, False, False, 5)
-        btn.set_tooltip_text("Remove")
+        btn.set_tooltip_text(_("Remove"))
         pbar = gtk.ProgressBar()
         box.pack_end(pbar, False, False, 5)
         self.down_container.pack_start(box, False ,False, 5)
@@ -1435,7 +1439,7 @@ class GsongFinder(object):
 		target = os.path.join(self.down_dir,name+'.mp3')
 		if os.path.exists(target):
 			os.remove(target)
-		self.statbar.push(1,"Converting process started...")
+		self.statbar.push(1,_("Converting process started..."))
 		if sys.platform == "win32":
                     ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(constants.exec_path)),'ffmpeg\\ffmpeg.exe')
                 else:
@@ -1450,14 +1454,14 @@ class GsongFinder(object):
 		throbber.set_from_pixbuf(self.loader_pixbuf)
 		throbber.hide()
 		convbtn.show()
-		self.statbar.push(1,"Mp3 successfully created !")
+		self.statbar.push(1,_("Mp3 successfully created !"))
 		while gtk.events_pending():
 			gtk.main_iteration()
 		time.sleep(5)
 		if self.is_playing:
-			self.statbar.push(1,"Playing %s" % self.media_name)
+			self.statbar.push(1,_("Playing %s") % self.media_name)
 		else:
-			self.statbar.push(1,"Stopped")
+			self.statbar.push(1,_("Stopped"))
 
 		    
     def start_download(self, url, name, pbar, btnf, btn,btn_conv):
@@ -1473,7 +1477,7 @@ class GsongFinder(object):
 			btn.show()
 			return self.decrease_down_count()
         except:
-			pbar.set_text("Failed...")
+			pbar.set_text(_("Failed..."))
 			btn.show()
 			return self.decrease_down_count()
     
@@ -1529,7 +1533,7 @@ def _reporthook(numblocks, blocksize, filesize, start_time, url, name, progressb
         #XXX Should handle possible filesize=-1.
     if filesize == -1:
         gtk.gdk.threads_enter()
-        progressbar.set_text("Downloading %-66s" % name)
+        progressbar.set_text(_("Downloading %-66s") % name)
         progressbar.set_pulse_step(0.2)
         progressbar.pulse()
         gtk.gdk.threads_leave()
@@ -1555,7 +1559,7 @@ def _reporthook(numblocks, blocksize, filesize, start_time, url, name, progressb
                 gtk.gdk.threads_leave()
                 time.sleep(0.1)
             else:
-                progressbar.set_text("Download complete")
+                progressbar.set_text(_("Download complete"))
                 return
 
 def calc_eta(start, now, total, current):
@@ -1569,7 +1573,7 @@ def calc_eta(start, now, total, current):
 		(eta_mins, eta_secs) = divmod(eta, 60)
 		if eta_mins > 99:
 			return '--:--'
-		return ' ETA : %02d:%02d' % (eta_mins, eta_secs)
+		return ' Restant : %02d:%02d' % (eta_mins, eta_secs)
 		
 def yesno(title,msg):
     dialog = gtk.MessageDialog(parent = None,

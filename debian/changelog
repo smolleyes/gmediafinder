@@ -1,8 +1,5 @@
-gmediafinder (0.8.2-0ppa4~maverick) maverick; urgency=low
+gmediafinder (0.8.3-0ppa2~natty) natty; urgency=low
 
-  * Add skreemr.org and imusicz.net engine
-  * Remove iwantmusik.com engine
-  * Remove gtk.Spinner()
   * fix...
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
