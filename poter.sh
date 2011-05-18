@@ -14,18 +14,18 @@ exit 0
 fi
 
 ## cree pot fichier glade et des .py
-xgettext -k_ -kN_ -o $basedir/Gmediafinder.pot GmediaFinder/*.py data/glade/*.glade
+xgettext -k_ -kN_ -o $basedir/Gmediafinder.pot *.desktop.in GmediaFinder/*.py data/glade/*.glade
 
 ## create or update po files
 LANGLIST="en fr"
 for lang in $LANGLIST; do
-if [ ! -e "$basedir"/$lang/$lang.po ]; then
-	msginit --input=$basedir/Gmediafinder.pot --output=$basedir/$lang/$lang.po --locale=$lang_$(echo "$lang" | tr '[:lower:]' '[:upper:]')
+if [ ! -e "$basedir"/$lang.po ]; then
+	msginit --input=$basedir/Gmediafinder.pot --output=$basedir/$lang.po --locale=$lang_$(echo "$lang" | tr '[:lower:]' '[:upper:]')
 else
-	msginit --input=$basedir/Gmediafinder.pot --output=$basedir/$lang/$lang-update.po --locale=$lang_$(echo "$lang" | tr '[:lower:]' '[:upper:]')
-	msgmerge -U $basedir/$lang/$lang.po $basedir/$lang/$lang-update.po
+	msginit --input=$basedir/Gmediafinder.pot --output=$basedir/$lang-update.po --locale=$lang_$(echo "$lang" | tr '[:lower:]' '[:upper:]')
+	msgmerge -U $basedir/$lang.po $basedir/$lang-update.po
 	## clean files
-	rm $basedir/$lang/$lang-update.po
-	rm $basedir/$lang/$lang.po~
+	rm $basedir/$lang-update.po
+	rm $basedir/$lang.po~
 fi
 done

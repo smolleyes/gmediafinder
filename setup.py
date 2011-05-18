@@ -5,6 +5,14 @@ from stat import *
 from distutils.core import setup
 from distutils.command.install import install as _install
 
+try:
+    from DistUtilsExtra.command import *
+except ImportError:
+    print 'Cannot install gmediafinder :('
+    print 'Would you please install package "python-distutils-extra" first?'
+    sys.exit()
+import glob
+
 INSTALLED_FILES = '.installed_files'
 
 #stolen from ccsm
@@ -50,7 +58,8 @@ data_files = [
 	('share/icons/hicolor/24x24/apps',['images/24x24/gmediafinder.png']),
 	('share/icons/hicolor/48x48/apps',['images/48x48/gmediafinder.png']),
 	('share/applications',['gmediafinder.desktop']),
-	('share/gmediafinder',['data/glade/mainGui.glade','data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif']),
+	('share/gmediafinder/glade',['data/glade/mainGui.glade']),
+	('share/gmediafinder/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif']),
 ]
 
 
@@ -64,9 +73,13 @@ setup(
 	packages=packages,
 	scripts=['gmediafinder'],
 	data_files=data_files,
-	cmdclass={
-		'uninstall': uninstall,
-		'install': install},
+	cmdclass={'build' :  build_extra.build_extra,
+	    'build_i18n' :  build_i18n.build_i18n,
+	    'build_help' :  build_help.build_help,
+	    'build_icons' :  build_icons.build_icons,
+	    'uninstall': uninstall,
+	    'install': install,
+	    },
 )
 
 #Stolen from ccsm's setup.py
@@ -90,6 +103,7 @@ if sys.argv[1] == 'install':
 
 	if not prefix:
 		prefix = '/usr'
+	os.system('chmod +x %s' % os.path.join(prefix,'bin/gmediafinder'))
 	gtk_update_icon_cache = '''gtk-update-icon-cache -f -t \
 %s/share/icons/hicolor''' % prefix
 	root_specified = [s for s in sys.argv if s.startswith('--root')]

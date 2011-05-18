@@ -3,21 +3,25 @@ import os,sys,gtk
 import gettext
 from Translation import Translation
 
-version = "0.1"
-APP_NAME = "Gmediafinder"
+version = "0.9"
+APP_NAME = "gmediafinder"
 exec_path =  os.path.dirname(os.path.abspath(__file__))
-if sys.platform == "win32" and not ('constants.py' in os.listdir(os.path.abspath('.'))):
-    data_path= "data"
-else:
-    data_path =  os.path.join(exec_path,"../data")
-img_path = os.path.join(data_path,"img")
-glade_path = os.path.join(data_path,"glade")
 
 ## gui
-if ('/usr' in exec_path):
-    glade_file = os.path.join('/usr/share/gmediafinder/mainGui.glade')
+if ('/usr/local' in exec_path):
+    data_path = os.path.join('/usr/local/share/gmediafinder')
+elif ('/usr' in exec_path):
+	data_path = os.path.join('/usr/share/gmediafinder')
 else:
-    glade_file = os.path.join(glade_path,'mainGui.glade')
+    data_path =  os.path.join(exec_path,"../data")
+
+if sys.platform == "win32" and not ('constants.py' in os.listdir(os.path.abspath('.'))):
+    data_path= "data"
+
+img_path = os.path.join(data_path,"img")
+glade_path = os.path.join(data_path,"glade")
+glade_file = os.path.join(glade_path,"mainGui.glade")
+print glade_file
 
 
 ## LOCALISATION

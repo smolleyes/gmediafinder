@@ -241,7 +241,7 @@ msgstr "Afficher plus de résultats"
 
 #: data/glade/mainGui.glade:717
 msgid "<b>Playlist Options : </b>"
-msgstr "<b>Playlist Options : </b>"
+msgstr "<b>Options de lecture : </b>"
 
 #: data/glade/mainGui.glade:728
 msgid "continue"

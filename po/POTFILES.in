@@ -1,0 +1,5 @@
+GmediaFinder/gmediafinder.py
+GmediaFinder/constants.py
+GmediaFinder/Translation.py
+gmediafinder.desktop.in
+data/glade/mainGui.glade

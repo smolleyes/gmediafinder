@@ -11,7 +11,7 @@ debug = 0
 class Translation():
         """Gestion des traductions"""
         def __init__(self, _appli, _source_lang, _rep_trad):
-                self.appli = 'Gmediafinder'
+                self.appli = 'gmediafinder'
                 self.source_lang = _source_lang
                 self.rep_trad = _rep_trad
                 self.languages = self._traductions_disponibles()

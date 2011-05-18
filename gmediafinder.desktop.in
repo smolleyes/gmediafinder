@@ -1,0 +1,11 @@
+[Desktop Entry]
+Version=1.0
+Name=Gmediafinder
+_Comment=Find multimedia files on the web
+Exec=gmediafinder
+Icon=gmediafinder
+Terminal=false
+X-MultipleArgs=false
+Type=Application
+Categories=AudioVideo
+Name[fr_FR]=Gmediafinder
