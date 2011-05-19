@@ -1,7 +1,5 @@
-gmediafinder (0.9-0ppa4~natty) natty; urgency=high
+gmediafinder (0.9.1-0ppa1~natty) natty; urgency=high
 
-  * add translation system
-  * add french traduction
-  * fix....
+  * fix audio convertion
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100

@@ -1437,13 +1437,14 @@ class GsongFinder(object):
 		if os.path.exists(target):
 			os.remove(target)
 		self.statbar.push(1,_("Converting process started..."))
-		if sys.platform == "win32":
-                    ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(constants.exec_path)),'ffmpeg\\ffmpeg.exe')
-                else:
-                    ffmpeg_path = "/usr/bin/ffmpeg"
-                (pid,t,r,s) = gobject.spawn_async([ffmpeg_path, '-i', src, '-f', 'mp3', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
-                data=(convbtn,throbber)
-                gobject.child_watch_add(pid, self.task_done,data)
+		if sys.platform != "linux2":
+			ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(constants.exec_path)),'ffmpeg\\ffmpeg.exe')
+			(pid,t,r,s) = gobject.spawn_async([ffmpeg_path, '-i', src, '-f', 'mp3', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
+		else:
+			ffmpeg_path = "/usr/bin/ffmpeg"
+			(pid,t,r,s) = gobject.spawn_async([ffmpeg_path, '-i', src, '-f', 'ogg', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
+		data=(convbtn,throbber)
+		gobject.child_watch_add(pid, self.task_done,data)
 		
     def task_done(self,pid,ret,data):
                 throbber=data[1]
@@ -1451,7 +1452,7 @@ class GsongFinder(object):
 		throbber.set_from_pixbuf(self.loader_pixbuf)
 		throbber.hide()
 		convbtn.show()
-		self.statbar.push(1,_("Mp3 successfully created !"))
+		self.statbar.push(1,_("Audio file successfully created !"))
 		while gtk.events_pending():
 			gtk.main_iteration()
 		time.sleep(5)
