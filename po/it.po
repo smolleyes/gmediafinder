@@ -1,71 +1,71 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
 #
-#, fuzzy
+#   <symbianflo@fastwebnet.it>, 2011
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-05-21 22:41+0200\n"
-"PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
-"Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
+"PO-Revision-Date: 2011-05-21 19:57+0000\n"
+"Last-Translator: symbianflo <symbianflo@fastwebnet.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
+"Language: it\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=CHARSET\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
 #: GmediaFinder/gmediafinder.py:158
 msgid "Quality"
-msgstr ""
+msgstr "Qualità"
 
 #: GmediaFinder/gmediafinder.py:264
 msgid " Results : "
-msgstr ""
+msgstr "Risultati"
 
 #: GmediaFinder/gmediafinder.py:353
 #, python-format
 msgid "%s engine selected"
-msgstr ""
+msgstr "%s motore  scelto"
 
 #: GmediaFinder/gmediafinder.py:394 GmediaFinder/gmediafinder.py:1006
 #, python-format
 msgid "Playing : %s"
-msgstr ""
+msgstr "Lettura %s"
 
 #: GmediaFinder/gmediafinder.py:466
 msgid "Please enter an artist/album or song name..."
-msgstr ""
+msgstr "Si prega  di inserire un'artista/album o nome del brano..."
 
 #: GmediaFinder/gmediafinder.py:469
 msgid "Please select an engine..."
-msgstr ""
+msgstr "Si prega di scegliere un motore ..."
 
 #: GmediaFinder/gmediafinder.py:488 GmediaFinder/gmediafinder.py:525
 #, python-format
 msgid "Searching for %s with %s "
-msgstr ""
+msgstr "Ricerca per %s con %s"
 
 #: GmediaFinder/gmediafinder.py:530
 msgid "Please select a search engine..."
-msgstr ""
+msgstr "Si prega di scegliere un motore di ricerca"
 
 #: GmediaFinder/gmediafinder.py:572
 #, python-format
 msgid "Searching for %s with %s"
-msgstr ""
+msgstr "Ricerca per %s con %s"
 
 #: GmediaFinder/gmediafinder.py:586
 #, python-format
 msgid "no results found for %s..."
-msgstr ""
+msgstr "Nessun' risultato trovato per %s..."
 
 #: GmediaFinder/gmediafinder.py:590
 #, python-format
 msgid "%s files found for %s"
-msgstr ""
+msgstr "%s  file trovati per %s"
 
 #: GmediaFinder/gmediafinder.py:594 GmediaFinder/gmediafinder.py:645
 #: GmediaFinder/gmediafinder.py:684 GmediaFinder/gmediafinder.py:746
@@ -73,48 +73,48 @@ msgstr ""
 #: GmediaFinder/gmediafinder.py:899
 #, python-format
 msgid "no more files found for %s..."
-msgstr ""
+msgstr "nessun' altro file trovato per %s"
 
 #: GmediaFinder/gmediafinder.py:598 GmediaFinder/gmediafinder.py:740
 #: GmediaFinder/gmediafinder.py:844
 #, python-format
 msgid "Results page %s for %s...(%s results)"
-msgstr ""
+msgstr "Pagina dei risultati %s per %s...(%s risultati)"
 
 #: GmediaFinder/gmediafinder.py:629 GmediaFinder/gmediafinder.py:691
 #: GmediaFinder/gmediafinder.py:795
 #, python-format
 msgid "no files found for %s..."
-msgstr ""
+msgstr "nessun' file trovato per %s"
 
 #: GmediaFinder/gmediafinder.py:639 GmediaFinder/gmediafinder.py:678
 #: GmediaFinder/gmediafinder.py:782
 #, python-format
 msgid "Results page %s for %s...(Next page available)"
-msgstr ""
+msgstr "Pagina dei risultati %s per %s...(Disponibile la pagina seguente)"
 
 #: GmediaFinder/gmediafinder.py:720 GmediaFinder/gmediafinder.py:826
 #, python-format
 msgid "No results found for %s..."
-msgstr ""
+msgstr "Nessun' risultato per %s..."
 
 #: GmediaFinder/gmediafinder.py:724 GmediaFinder/gmediafinder.py:830
 #, python-format
 msgid "no results for your search : %s "
-msgstr ""
+msgstr "nessun risultato per la vostra ricerca : %s"
 
 #: GmediaFinder/gmediafinder.py:728 GmediaFinder/gmediafinder.py:834
 #, python-format
 msgid "%s results found for your search : %s "
-msgstr ""
+msgstr "%s risultati trovati per la vostra ricerca : %s"
 
 #: GmediaFinder/gmediafinder.py:1009 GmediaFinder/gmediafinder.py:1414
 msgid "Stopped"
-msgstr ""
+msgstr "Fermatto"
 
 #: GmediaFinder/gmediafinder.py:1320 data/glade/mainGui.glade:1057
 msgid "Download"
-msgstr ""
+msgstr "Scaricamento"
 
 #: GmediaFinder/gmediafinder.py:1320
 #, python-format
@@ -125,40 +125,45 @@ msgid ""
 "\n"
 "already exist, download again ?"
 msgstr ""
+"Il file:\n"
+"\n"
+"%s\n"
+"\n"
+"esiste già, lo scarico di nuovo?"
 
 #: GmediaFinder/gmediafinder.py:1348
 msgid "Convert to mp3"
-msgstr ""
+msgstr "Convertire in mp3"
 
 #: GmediaFinder/gmediafinder.py:1359
 msgid "Remove"
-msgstr ""
+msgstr "Elimina"
 
 #: GmediaFinder/gmediafinder.py:1392
 msgid "Converting process started..."
-msgstr ""
+msgstr "Processo di conversione avviato ..."
 
 #: GmediaFinder/gmediafinder.py:1407
 msgid "Audio file successfully created !"
-msgstr ""
+msgstr "File audio creato con successso !"
 
 #: GmediaFinder/gmediafinder.py:1412
 #, python-format
 msgid "Playing %s"
-msgstr ""
+msgstr "Riproduzione %s"
 
 #: GmediaFinder/gmediafinder.py:1430
 msgid "Failed..."
-msgstr ""
+msgstr "Fallito ..."
 
 #: GmediaFinder/gmediafinder.py:1486
 #, python-format
 msgid "Downloading %-66s"
-msgstr ""
+msgstr "Scaricamento %-66s"
 
 #: GmediaFinder/gmediafinder.py:1512
 msgid "Download complete"
-msgstr ""
+msgstr "Scaricamento completato"
 
 #: data/glade/mainGui.glade:11
 msgid ""
@@ -509,67 +514,67 @@ msgstr ""
 
 #: data/glade/mainGui.glade:418
 msgid "Playlist"
-msgstr ""
+msgstr "Lista dei brani"
 
 #: data/glade/mainGui.glade:463
 msgid "Downloads"
-msgstr ""
+msgstr "Scaricamenti"
 
 #: data/glade/mainGui.glade:520
 msgid "Settings"
-msgstr ""
+msgstr "Impostazioni"
 
 #: data/glade/mainGui.glade:565
 msgid "About"
-msgstr ""
+msgstr "Informazioni"
 
 #: data/glade/mainGui.glade:640
 msgid "<b>Informations :</b>"
-msgstr ""
+msgstr "<b>informazioni :</b>"
 
 #: data/glade/mainGui.glade:667
 msgid "Select an engine"
-msgstr ""
+msgstr "Selezionare un motore "
 
 #: data/glade/mainGui.glade:690
 msgid "Search types :"
-msgstr ""
+msgstr "Tipi di ricerca"
 
 #: data/glade/mainGui.glade:701
 msgid "Most relevant"
-msgstr ""
+msgstr "Più rilevanti"
 
 #: data/glade/mainGui.glade:718
 msgid "Most recent"
-msgstr ""
+msgstr "Più recenti"
 
 #: data/glade/mainGui.glade:735
 msgid "Most viewed"
-msgstr ""
+msgstr "Più visti"
 
 #: data/glade/mainGui.glade:752
 msgid "Most rated"
-msgstr ""
+msgstr "Più votati"
 
 #: data/glade/mainGui.glade:914
 msgid "Show more results"
-msgstr ""
+msgstr "Mostra altri risultati"
 
 #: data/glade/mainGui.glade:1172
 msgid "<b>Playlist Options : </b>"
-msgstr ""
+msgstr "<b>Opzioni della lista dei brani : </b>"
 
 #: data/glade/mainGui.glade:1184
 msgid "continue"
-msgstr ""
+msgstr "continua"
 
 #: data/glade/mainGui.glade:1200
 msgid "loop"
-msgstr ""
+msgstr "loop"
 
 #: data/glade/mainGui.glade:1245
 msgid "<b>Visualisations :</b>"
-msgstr ""
+msgstr "<b>Visualizzazioni : </b>"
 
 #: data/glade/mainGui.glade:1258
 msgid ""
@@ -583,55 +588,64 @@ msgid ""
 "corona\n"
 "bumpscope"
 msgstr ""
+"jess\n"
+"goom\n"
+"oinksie\n"
+"lv_scope\n"
+"lv_analyzer\n"
+"jakdaw\n"
+"infinite\n"
+"corona\n"
+"bumpscope"
 
 #: data/glade/mainGui.glade:1314
 msgid "page 1"
-msgstr ""
+msgstr "pagina1"
 
 #: data/glade/mainGui.glade:1374
 msgid "Download path :     "
-msgstr ""
+msgstr "Scarica in :     "
 
 #: data/glade/mainGui.glade:1392
 msgid "Choose a folder"
-msgstr ""
+msgstr "Scegliere una cartella"
 
 #: data/glade/mainGui.glade:1423
 msgid "<b>Downloads  : </b>"
-msgstr ""
+msgstr "<b>Scaricamenti   : </b>"
 
 #: data/glade/mainGui.glade:1439
 msgid "page 2"
-msgstr ""
+msgstr "pagina 2"
 
 #: data/glade/mainGui.glade:1480
 msgid "Options"
-msgstr ""
+msgstr "Opzioni"
 
 #: data/glade/mainGui.glade:1531
 msgid "Max resolution : "
-msgstr ""
+msgstr "Massima risoluzione :  "
 
 #: data/glade/mainGui.glade:1558
 msgid "320x240"
-msgstr ""
+msgstr "320x240"
 
 #: data/glade/mainGui.glade:1577
 msgid "640x320"
-msgstr ""
+msgstr "640x320"
 
 #: data/glade/mainGui.glade:1594
 msgid "854x480"
-msgstr ""
+msgstr "845x480"
 
 #: data/glade/mainGui.glade:1611
 msgid "1280x720"
-msgstr ""
+msgstr "1280x720"
 
 #: data/glade/mainGui.glade:1628
 msgid "1920x1080"
-msgstr ""
+msgstr "1920x1080"
 
 #: data/glade/mainGui.glade:1666
 msgid "<b>Youtube video options : </b>"
-msgstr ""
+msgstr "<b>Youtube opzioni video : </b>"

@@ -53,7 +53,6 @@ class GsongFinder(object):
         self.is_playing = False
         self.duration = None
         self.time_label = gtk.Label("00:00 / 00:00")
-        self.search_thread_id = None
         self.media_name = ""
         self.media_link = ""
         self.nbresults = 100
@@ -112,7 +111,7 @@ class GsongFinder(object):
         self.window = self.gladeGui.get_widget("main_window")
         self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
-        self.window.set_size_request(780, 560)
+        self.window.set_default_size(780, 560)
         self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
         self.img_path = constants.img_path
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
@@ -396,19 +395,28 @@ class GsongFinder(object):
         self.stop_play()
         ## check youtube quality
         if self.engine == "youtube.com":
-            self.media_link,self.quality_list = self.get_quality_list(self.media_link)
-            self.youtube_quality_model.clear()
-            if not self.quality_list:
-                return
-            for rate in self.quality_list:
-                new_iter = self.youtube_quality_model.append()
-                self.youtube_quality_model.set(new_iter,
-                                0, rate,
-                                )
-            self.set_default_youtube_video_rate()
+			self.idle_add_lock(self.load_youtube_res,())
         else:
-			self.start_play(self.media_link)
+			self.start_play()
+
+    def idle_add_lock(self, func, *args):
+       return gobject.idle_add(_with_lock, func, args)
+       
+    def timeout_add_lock(millisecs, func, *args):
+       return gobject.timeout_add(millisecs, _with_lock, func, args)
         
+    def load_youtube_res(self,args=None):
+		self.youtube_quality_model.clear()
+		self.media_link,self.quality_list = self.get_quality_list(self.media_link)
+		if not self.quality_list:
+			return
+		for rate in self.quality_list:
+			new_iter = self.youtube_quality_model.append()
+			self.youtube_quality_model.set(new_iter,
+							0, rate,
+							)
+		return self.set_default_youtube_video_rate()
+
     def option_changed(self,widget):
         self.search_option = widget.name
         
@@ -453,8 +461,6 @@ class GsongFinder(object):
         return links_arr, quality_arr
 
     def prepare_search(self,widget=None):
-        if not self.search_thread_id == None:
-			return
         self.user_search = self.search_entry.get_text()
         if not self.user_search:
             self.informations_label.set_text(_("Please enter an artist/album or song name..."))
@@ -473,30 +479,26 @@ class GsongFinder(object):
         self.search_btn.set_sensitive(0)
 
         if self.engine == "youporn.com":
-            self.search_thread_id = thread.start_new_thread(self.search_youporn,())
+			self.idle_add_lock(self.search_youporn,())
         else:
-            thread.start_new_thread(self.get_page_links,())
+            self.idle_add_lock(self.get_page_links,())
 
-    def search_youporn(self):
+    def search_youporn(self,args=None):
 		self.model.clear()
 		self.informations_label.set_text(_("Searching for %s with %s ") % (self.user_search,self.engine))
 		i=0
-		thread_id = self.search_thread_id
-		while thread_id == self.search_thread_id:
-			if thread_id == self.search_thread_id:
-				videos,img=self.yp.search(self.user_search,self.req_start)
-				for video in videos:
-					name = video.split('/')[3]
-					vid_url = self.yp.get_video_url(video)
-					try:
-						if vid_url and img[i]:
-							self.add_sound(name, vid_url, img[i])
-							i+=1
-						else:
-							continue
-					except:
-						continue
-				self.search_thread_id = None
+		videos,img=self.yp.search(self.user_search,self.req_start)
+		for video in videos:
+			name = video.split('/')[3]
+			vid_url = self.yp.get_video_url(video)
+			try:
+				if vid_url and img[i]:
+					self.add_sound(name, vid_url, img[i])
+					i+=1
+				else:
+					continue
+			except:
+				continue
 		self.req_start += 1
 		self.changepage_btn.show()
 		self.search_btn.set_sensitive(1)
@@ -514,13 +516,12 @@ class GsongFinder(object):
 
 
     ## main search to receive original search when requesting next pages...
-    def get_page_links(self,widget=None):
+    def get_page_links(self,args=None):
         self.url = self.search()
         self.data = self.get_url_data(self.url)
         return self.start_search()
 
     def search(self):
-        self.model.clear()
         self.informations_label.set_text(_("Searching for %s with %s ") % (self.user_search,self.engine))
         ## encode the name
         user_search = urllib2.quote(self.user_search)
@@ -565,370 +566,348 @@ class GsongFinder(object):
         results = code.read()
         return results
 
-    def analyse_links(self):
+    def analyse_links(self,args=None):
         data = self.data
         url = self.url
-        thread_id = self.search_thread_id
-        while thread_id == self.search_thread_id:
-			if thread_id == self.search_thread_id:
-				self.informations_label.set_text(_("Searching for %s with %s") % (self.user_search,self.engine))
-				HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
-				if data:
-					soup = BeautifulStoneSoup(data)
-					if self.engine == "mp3realm.org":
-						soup = BeautifulStoneSoup(self.clean_html(data).decode('UTF8'))
-						## reset the treeview
-						nlist = []
-						link_list = []
-						files_count = None
-						try:
-							#search results div
-							files_count = soup.findAll('div',attrs={'id':'searchstat'})[0].findAll('strong')[1].string
-						except:
-							self.informations_label.set_text(_("no results found for %s...") % (self.user_search))
-							self.search_thread_id = None
-							self.search_btn.set_sensitive(1)
-							return
-
-						self.informations_label.set_text(_("%s files found for %s") % (files_count, self.user_search))
-						if re.search(r'(\S*Aucuns resultats)', soup.__str__()):
-							self.changepage_btn.hide()
-							self.req_start = 1
-							self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
-							self.search_thread_id = None
-							self.search_btn.set_sensitive(1)
-							return
-						else:
-							self.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.req_start, self.user_search,files_count))
-							self.req_start += 1
-
-						self.changepage_btn.show()
-						flist = re.findall('(http://.*\S\.mp3|\.mp4|\.ogg|\.aac|\.wav|\.wma)', data.lower())
-						for link in flist:
-							if re.match('http://\'\+this', link) :
-								continue
-							try:
-								link = urllib2.unquote(link)
-								name = urllib2.unquote(os.path.basename(link.decode('UTF8')))
-								nlist.append(name)
-								link_list.append(link)
-							except:
-								continue
-						## add to the treeview if ok
-						i = 0
-						for name in nlist:
-							if name and link_list[i]:
-								self.add_sound(name, link_list[i])
-								i += 1
-						self.search_thread_id = None
-
-					elif self.engine == "dilandau.com":
-						soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'])
-						nlist = []
-						link_list = []
-						next_page = 1
-						try:
-							pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
-						except:
-							self.changepage_btn.hide()
-							self.informations_label.set_text(_("no files found for %s...") % (self.user_search))
-							self.search_thread_id = None
-							self.search_btn.set_sensitive(1)
-							return
-						if pagination_table:
-							next_check = pagination_table.findAll('a',attrs={'class':'pages'})
-							for a in next_check:
-								l = str(a.string)
-								if l == "Suivante >>":
-									next_page = 1
-							if next_page:
-								self.informations_label.set_text(_("Results page %s for %s...(Next page available)") % (self.req_start, self.user_search))
-								self.req_start += 1
-								self.changepage_btn.show()
-							else:
-								self.changepage_btn.hide()
-								self.req_start = 1
-								self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
-								self.search_thread_id = None
-								self.search_btn.set_sensitive(1)
-								return
-
-						flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'button download_button'}) ]
-						for link in flist:
-							try:
-								link = urllib2.unquote(link)
-								name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
-								nlist.append(name)
-								link_list.append(link)
-							except:
-								continue
-						## add to the treeview if ok
-						i = 0
-						for name in nlist:
-							if name and link_list[i]:
-								self.add_sound(name, link_list[i])
-								i += 1
-						self.search_thread_id = None
-								
-					elif self.engine == "iwantmuzik.com":
-						soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'])
-						nlist = []
-						link_list = []
-						next_page = 1
-						pagination_table = soup.findAll('table',attrs={'class':'pagination'})[0]
-						if pagination_table:
-							next_check = pagination_table.findAll('a')
-							for a in next_check:
-								l = str(a.string)
-								if l == "More results":
-									next_page = 1
-							if next_page:
-								self.informations_label.set_text(_("Results page %s for %s...(Next page available)") % (self.req_start, self.user_search))
-								self.req_start += 1
-								self.changepage_btn.show()
-							else:
-								self.changepage_btn.hide()
-								self.req_start = 1
-								self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
-								self.search_thread_id = None
-								self.search_btn.set_sensitive(1)
-								return
-
-						flist = soup.findAll('div',attrs={'class':'download_link'})
-						if len(flist) == 0:
-							self.changepage_btn.hide()
-							self.informations_label.set_text(_("no files found for %s...") % (self.user_search))
-							self.search_thread_id = None
-							self.search_btn.set_sensitive(1)
-							return
-						for link in flist:
-							try:
-								url = re.search('a href="(http\S+.mp3)',str(link)).group(1)
-								link = urllib2.unquote(url)
-								name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
-								nlist.append(name)
-								link_list.append(link)
-							except:
-								continue
-						## add to the treeview if ok
-						i = 0
-						for name in nlist:
-							if name and link_list[i]:
-								self.add_sound(name, link_list[i])
-								i += 1
-						self.search_thread_id = None
-
-					elif self.engine == "tagoo.ru":
-						soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
-						nlist = []
-						link_list = []
-						next_page = 1
-						results_div = soup.find('div',attrs={'class':'resultinfo'})
-						try:
-							results_count = re.search('Found about (\d+)', str(results_div)).group(1)
-						except:
-							self.changepage_btn.hide()
-							self.informations_label.set_text(_("No results found for %s...") % (self.user_search))
-							self.search_thread_id = None
-							self.search_btn.set_sensitive(1)
-							return
-						if results_count == 0 :
-							self.informations_label.set_text(_("no results for your search : %s ") % (self.user_search))
-							self.search_thread_id = None
-							self.search_btn.set_sensitive(1)
-							return
-						else:
-							self.informations_label.set_text(_("%s results found for your search : %s ") % (results_count, self.user_search))
-
-						pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
-						if pagination_table:
-							next_check = pagination_table.findAll('a')
-							for a in next_check:
-								l = str(a.string)
-								if l == "Next":
-									next_page = 1
-							if next_page:
-								self.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.req_start, self.user_search,results_count))
-								self.req_start += 1
-								self.changepage_btn.show()
-							else:
-								self.changepage_btn.hide()
-								self.req_start = 1
-								self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
-								self.search_thread_id = None
-								self.search_btn.set_sensitive(1)
-								return
-
-						flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'link'}) ]
-						for link in flist:
-							try:
-								link = urllib2.unquote(link)
-								name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
-								nlist.append(name)
-								link_list.append(link)
-							except:
-								continue
-						## add to the treeview if ok
-						i = 0
-						for name in nlist:
-							if name and link_list[i]:
-								self.add_sound(name, link_list[i])
-								i += 1
-						self.search_thread_id = None
-					
-					elif self.engine == "imusicz.net":
-						soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'],convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
-						nlist = []
-						link_list = []
-						next_page = 1
-						pagination_table = soup.find('table',attrs={'class':'pagination'})
-						if pagination_table:
-							next_check = pagination_table.findAll('a')
-							for a in next_check:
-								l = str(a.string)
-								if l == "Next":
-									next_page = 1
-							if next_page:
-								self.informations_label.set_text(_("Results page %s for %s...(Next page available)") % (self.req_start, self.user_search))
-								self.req_start += 1
-								self.changepage_btn.show()
-							else:
-								self.changepage_btn.hide()
-								self.req_start = 1
-								self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
-								self.search_thread_id = None
-								self.search_btn.set_sensitive(1)
-								return
-
-						flist = soup.findAll('td',attrs={'width':'75'})
-						if len(flist) == 0:
-							self.changepage_btn.hide()
-							self.informations_label.set_text(_("no files found for %s...") % (self.user_search))
-							self.search_thread_id = None
-							self.search_btn.set_sensitive(1)
-							return
-						for link in flist:
-							try:
-								furl = re.search('a href="(http(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv)(\S.*)redirect)"(\S.*)Download',str(link)).group(1)
-								name = re.search('name=(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv)',str(furl)).group(1)
-								linkId= re.search('url=(\S.*)&amp',str(furl)).group(1)
-								link = urllib2.unquote('http://imusicz.net/download.php?url='+linkId)
-								name = BeautifulStoneSoup(name, convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
-								nlist.append(name)
-								link_list.append(link)
-							except:
-								continue
-						## add to the treeview if ok
-						i = 0
-						for name in nlist:
-							if name and link_list[i]:
-								self.add_sound(name, link_list[i])
-								i += 1
-						self.search_thread_id = None
-					
-					elif self.engine == "skreemr.com":
-						soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
-						nlist = []
-						link_list = []
-						next_page = 1
-						results_div = soup.find('p',attrs={'class':'counter'})
-						try:
-							results_count = results_div.findAll('b')[1].string
-						except:
-							self.changepage_btn.hide()
-							self.informations_label.set_text(_("No results found for %s...") % (self.user_search))
-							self.search_thread_id = None
-							self.search_btn.set_sensitive(1)
-							return
-						if results_count == 0 :
-							self.informations_label.set_text(_("no results for your search : %s ") % (self.user_search))
-							self.search_thread_id = None
-							self.search_btn.set_sensitive(1)
-							return
-						else:
-							self.informations_label.set_text(_("%s results found for your search : %s ") % (results_count, self.user_search))
-
-						pagination_table = soup.find('div',attrs={'class':'previousnext'})
-						if pagination_table:
-							next_check = pagination_table.findAll('a')
-							for a in next_check:
-								l = str(a.string)
-								if l == "Next>>":
-									next_page = 1
-							if next_page:
-								self.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.page, self.user_search,results_count))
-								self.req_start += 10
-								self.page += 1
-								self.changepage_btn.show()
-							else:
-								self.changepage_btn.hide()
-								self.req_start = 10
-								self.page = 1
-								self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
-								self.search_thread_id = None
-								self.search_btn.set_sensitive(1)
-								return
-
-						flist = soup.findAll('a',href=True)
-						for link in flist:
-							try:
-								url = re.search('a href="(http(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))"',str(link)).group(1)
-								link = urllib2.unquote(url)
-								name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
-								nlist.append(name)
-								link_list.append(link)
-							except:
-								continue
-						## add to the treeview if ok
-						i = 0
-						for name in nlist:
-							if name and link_list[i]:
-								self.add_sound(name, link_list[i])
-								i += 1
-						self.search_thread_id = None
-
-					elif self.engine == "youtube.com":
-						nlist = []
-						link_list = []
-						next_page = 0
-						self.changepage_btn.show()
-						## get options
-						params = None
-						if self.youtube_options.relevance_opt.get_active():
-							params="&orderby=relevance"
-						elif self.youtube_options.recent_opt.get_active():
-							params="&orderby=published"
-						elif self.youtube_options.viewed_opt.get_active():
-							params="&orderby=viewCount"
-						elif self.youtube_options.rating_opt.get_active():
-							params="&orderby=rating"
-						
-						if self.req_start == 0:
-							self.req_start = 1
-						elif self.req_start == 1:
-							self.req_start = 26
-						else:
-							self.req_start+=25
-								
-						vquery = self.youtube.search(self.user_search,self.req_start,params)
-						if len(vquery) == 0:
-							self.changepage_btn.hide()
-							self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
-							self.search_btn.set_sensitive(1)
-							self.search_thread_id = None
-							return
-						
-						for video in vquery:
-							self.make_youtube_entry(video)
-						self.search_thread_id = None
-				else:
-					self.search_thread_id = None
+        self.informations_label.set_text(_("Searching for %s with %s") % (self.user_search,self.engine))
+        HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
+        if data:
+			soup = BeautifulStoneSoup(data)
+			if self.engine == "mp3realm.org":
+				soup = BeautifulStoneSoup(self.clean_html(data).decode('UTF8'))
+				## reset the treeview
+				nlist = []
+				link_list = []
+				files_count = None
+				try:
+					#search results div
+					files_count = soup.findAll('div',attrs={'id':'searchstat'})[0].findAll('strong')[1].string
+				except:
+					self.informations_label.set_text(_("no results found for %s...") % (self.user_search))
 					self.search_btn.set_sensitive(1)
-					self.changepage_btn.set_sensitive(1)
 					return
+
+				self.informations_label.set_text(_("%s files found for %s") % (files_count, self.user_search))
+				if re.search(r'(\S*Aucuns resultats)', soup.__str__()):
+					self.changepage_btn.hide()
+					self.req_start = 1
+					self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
+					self.search_btn.set_sensitive(1)
+					return
+				else:
+					self.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.req_start, self.user_search,files_count))
+					self.req_start += 1
+
+				self.changepage_btn.show()
+				flist = re.findall('(http://.*\S\.mp3|\.mp4|\.ogg|\.aac|\.wav|\.wma)', data.lower())
+				for link in flist:
+					if re.match('http://\'\+this', link) :
+						continue
+					try:
+						link = urllib2.unquote(link)
+						name = urllib2.unquote(os.path.basename(link.decode('UTF8')))
+						nlist.append(name)
+						link_list.append(link)
+					except:
+						continue
+				## add to the treeview if ok
+				i = 0
+				for name in nlist:
+					if name and link_list[i]:
+						self.add_sound(name, link_list[i])
+						i += 1
+
+			elif self.engine == "dilandau.com":
+				soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'])
+				nlist = []
+				link_list = []
+				next_page = 1
+				try:
+					pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
+				except:
+					self.changepage_btn.hide()
+					self.informations_label.set_text(_("no files found for %s...") % (self.user_search))
+					self.search_btn.set_sensitive(1)
+					return
+				if pagination_table:
+					next_check = pagination_table.findAll('a',attrs={'class':'pages'})
+					for a in next_check:
+						l = str(a.string)
+						if l == "Suivante >>":
+							next_page = 1
+					if next_page:
+						self.informations_label.set_text(_("Results page %s for %s...(Next page available)") % (self.req_start, self.user_search))
+						self.req_start += 1
+						self.changepage_btn.show()
+					else:
+						self.changepage_btn.hide()
+						self.req_start = 1
+						self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
+						self.search_btn.set_sensitive(1)
+						return
+
+				flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'button download_button'}) ]
+				for link in flist:
+					try:
+						link = urllib2.unquote(link)
+						name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
+						nlist.append(name)
+						link_list.append(link)
+					except:
+						continue
+				## add to the treeview if ok
+				i = 0
+				for name in nlist:
+					if name and link_list[i]:
+						self.add_sound(name, link_list[i])
+						i += 1
+						
+			elif self.engine == "iwantmuzik.com":
+				soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'])
+				nlist = []
+				link_list = []
+				next_page = 1
+				pagination_table = soup.findAll('table',attrs={'class':'pagination'})[0]
+				if pagination_table:
+					next_check = pagination_table.findAll('a')
+					for a in next_check:
+						l = str(a.string)
+						if l == "More results":
+							next_page = 1
+					if next_page:
+						self.informations_label.set_text(_("Results page %s for %s...(Next page available)") % (self.req_start, self.user_search))
+						self.req_start += 1
+						self.changepage_btn.show()
+					else:
+						self.changepage_btn.hide()
+						self.req_start = 1
+						self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
+						self.search_btn.set_sensitive(1)
+						return
+
+				flist = soup.findAll('div',attrs={'class':'download_link'})
+				if len(flist) == 0:
+					self.changepage_btn.hide()
+					self.informations_label.set_text(_("no files found for %s...") % (self.user_search))
+					self.search_btn.set_sensitive(1)
+					return
+				for link in flist:
+					try:
+						url = re.search('a href="(http\S+.mp3)',str(link)).group(1)
+						link = urllib2.unquote(url)
+						name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
+						nlist.append(name)
+						link_list.append(link)
+					except:
+						continue
+				## add to the treeview if ok
+				i = 0
+				for name in nlist:
+					if name and link_list[i]:
+						self.add_sound(name, link_list[i])
+						i += 1
+
+			elif self.engine == "tagoo.ru":
+				soup = BeautifulStoneSoup(self.clean_html(data).decode('utf-8'),selfClosingTags=['/>'])
+				nlist = []
+				link_list = []
+				next_page = 1
+				results_div = soup.find('div',attrs={'class':'resultinfo'})
+				try:
+					results_count = re.search('Found about (\d+)', str(results_div)).group(1)
+				except:
+					self.changepage_btn.hide()
+					self.informations_label.set_text(_("No results found for %s...") % (self.user_search))
+					self.search_btn.set_sensitive(1)
+					return
+				if results_count == 0 :
+					self.informations_label.set_text(_("no results for your search : %s ") % (self.user_search))
+					self.search_btn.set_sensitive(1)
+					return
+				else:
+					self.informations_label.set_text(_("%s results found for your search : %s ") % (results_count, self.user_search))
+				try:
+				    pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
+				except:
+					return
+				if pagination_table:
+					next_check = pagination_table.findAll('a')
+					for a in next_check:
+						l = str(a.string)
+						if l == "Next":
+							next_page = 1
+					if next_page:
+						self.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.req_start, self.user_search,results_count))
+						self.req_start += 1
+						self.changepage_btn.show()
+					else:
+						self.changepage_btn.hide()
+						self.req_start = 1
+						self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
+						self.search_btn.set_sensitive(1)
+						return
+
+				flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'link'}) ]
+				for link in flist:
+					try:
+						link = urllib2.unquote(link)
+						name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
+						nlist.append(name)
+						link_list.append(link)
+					except:
+						continue
+				## add to the treeview if ok
+				i = 0
+				for name in nlist:
+					if name and link_list[i]:
+						try:
+						    self.add_sound(name, link_list[i])
+						    i += 1
+						except:
+							continue
+			
+			elif self.engine == "imusicz.net":
+				soup = BeautifulStoneSoup(self.clean_html(data).encode('utf-8'),selfClosingTags=['/>'],convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
+				nlist = []
+				link_list = []
+				next_page = 1
+				pagination_table = soup.find('table',attrs={'class':'pagination'})
+				if pagination_table:
+					next_check = pagination_table.findAll('a')
+					for a in next_check:
+						l = str(a.string)
+						if l == "Next":
+							next_page = 1
+					if next_page:
+						self.informations_label.set_text(_("Results page %s for %s...(Next page available)") % (self.req_start, self.user_search))
+						self.req_start += 1
+						self.changepage_btn.show()
+					else:
+						self.changepage_btn.hide()
+						self.req_start = 1
+						self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
+						self.search_btn.set_sensitive(1)
+						return
+
+				flist = soup.findAll('td',attrs={'width':'75'})
+				if len(flist) == 0:
+					self.changepage_btn.hide()
+					self.informations_label.set_text(_("no files found for %s...") % (self.user_search))
+					self.search_btn.set_sensitive(1)
+					return
+				for link in flist:
+					try:
+						furl = re.search('a href="(http(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv)(\S.*)redirect)"(\S.*)Download',str(link)).group(1)
+						name = re.search('name=(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv)',str(furl)).group(1)
+						linkId= re.search('url=(\S.*)&amp',str(furl)).group(1)
+						link = urllib2.unquote('http://imusicz.net/download.php?url='+linkId)
+						name = BeautifulStoneSoup(name, convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
+						nlist.append(name)
+						link_list.append(link)
+					except:
+						continue
+				## add to the treeview if ok
+				i = 0
+				for name in nlist:
+					if name and link_list[i]:
+						self.add_sound(name, link_list[i])
+						i += 1
+			
+			elif self.engine == "skreemr.com":
+				soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
+				nlist = []
+				link_list = []
+				next_page = 1
+				results_div = soup.find('p',attrs={'class':'counter'})
+				try:
+					results_count = results_div.findAll('b')[1].string
+				except:
+					self.changepage_btn.hide()
+					self.informations_label.set_text(_("No results found for %s...") % (self.user_search))
+					self.search_btn.set_sensitive(1)
+					return
+				if results_count == 0 :
+					self.informations_label.set_text(_("no results for your search : %s ") % (self.user_search))
+					self.search_btn.set_sensitive(1)
+					return
+				else:
+					self.informations_label.set_text(_("%s results found for your search : %s ") % (results_count, self.user_search))
+
+				pagination_table = soup.find('div',attrs={'class':'previousnext'})
+				if pagination_table:
+					next_check = pagination_table.findAll('a')
+					for a in next_check:
+						l = str(a.string)
+						if l == "Next>>":
+							next_page = 1
+					if next_page:
+						self.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.page, self.user_search,results_count))
+						self.req_start += 10
+						self.page += 1
+						self.changepage_btn.show()
+					else:
+						self.changepage_btn.hide()
+						self.req_start = 10
+						self.page = 1
+						self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
+						self.search_btn.set_sensitive(1)
+						return
+
+				flist = soup.findAll('a',href=True)
+				for link in flist:
+					try:
+						url = re.search('a href="(http(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))"',str(link)).group(1)
+						link = urllib2.unquote(url)
+						name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
+						nlist.append(name)
+						link_list.append(link)
+					except:
+						continue
+				## add to the treeview if ok
+				i = 0
+				for name in nlist:
+					if name and link_list[i]:
+						self.add_sound(name, link_list[i])
+						i += 1
+
+			elif self.engine == "youtube.com":
+				nlist = []
+				link_list = []
+				next_page = 0
+				self.changepage_btn.show()
+				## get options
+				params = None
+				if self.youtube_options.relevance_opt.get_active():
+					params="&orderby=relevance"
+				elif self.youtube_options.recent_opt.get_active():
+					params="&orderby=published"
+				elif self.youtube_options.viewed_opt.get_active():
+					params="&orderby=viewCount"
+				elif self.youtube_options.rating_opt.get_active():
+					params="&orderby=rating"
+				
+				if self.req_start == 0:
+					self.req_start = 1
+				elif self.req_start == 1:
+					self.req_start = 26
+				else:
+					self.req_start+=25
+						
+				vquery = self.youtube.search(self.user_search,self.req_start,params)
+				if len(vquery) == 0:
+					self.changepage_btn.hide()
+					self.informations_label.set_text(_("no more files found for %s...") % (self.user_search))
+					self.search_btn.set_sensitive(1)
+					return
+				
+				for video in vquery:
+					self.make_youtube_entry(video)
+        else:
+			self.search_btn.set_sensitive(1)
+			self.changepage_btn.set_sensitive(1)
+			return
         self.search_btn.set_sensitive(1)
         self.changepage_btn.set_sensitive(1)
-        self.search_thread_id = None
 
     def sanitizer_factory(self,*args, **kwargs):
         san = sanitizer.HTMLSanitizer(*args, **kwargs)
@@ -1017,8 +996,8 @@ class GsongFinder(object):
         
     def start_search(self):
         self.page_index = 0
-        self.search_btn.set_sensitive(0)
-        self.search_thread_id = thread.start_new_thread(self.analyse_links,())
+        self.model.clear()
+        self.idle_add_lock(self.analyse_links,())
 
     def start_stop(self,widget=None):
         url = self.media_link
@@ -1037,6 +1016,7 @@ class GsongFinder(object):
             self.visual = gst.element_factory_make(self.vis,'visual')
             self.player.set_property('vis-plugin', self.visual)
         self.play_btn.set_label("gtk-media-stop")
+        self.pause_btn.set_label("gtk-media-pause")
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
         self.play_thread_id = thread.start_new_thread(self.play_thread, ())
@@ -1080,6 +1060,8 @@ class GsongFinder(object):
                 self.check_play_options()
 
     def pause_resume(self,widget):
+        if not self.is_playing:
+			return
         if self.pause_btn.get_label() == "gtk-media-pause":
             self.pause_btn.set_label("gtk-media-play")
             self.player.set_state(gst.STATE_PAUSED)
@@ -1251,9 +1233,13 @@ class GsongFinder(object):
         if sys.platform == "win32":
             window = self.movie_window.get_window()
             window.ensure_native()
+            gtk.gdk.threads_enter()
             self.sink.set_xwindow_id(self.movie_window.window.handle)
+            gtk.gdk.threads_leave()
         else:
-            self.sink.set_xwindow_id(self.movie_window.window.xid)
+			gtk.gdk.threads_enter()
+			self.sink.set_xwindow_id(self.movie_window.window.xid)
+			gtk.gdk.threads_leave()
             
     def on_expose_event(self, widget, event):
         x , y, width, height = event.area
@@ -1336,8 +1322,15 @@ class GsongFinder(object):
 				return
         self.notebook.set_current_page(1)
         box = gtk.HBox(False, 5)
+        vbox = gtk.VBox(False, 5)
+        label = gtk.Label(name)
+        label.set_alignment(0, 0.5)
+        vbox.pack_start(label, False, False, 5)
+        pbar = gtk.ProgressBar()
+        pbar.set_size_request(400, 25)
+        vbox.pack_end(pbar, False, False, 5)
         box.pack_start(gtk.image_new_from_pixbuf(self.media_img), False,False, 5)
-        box.pack_start(gtk.Label(name), False, False, 5)
+        box.pack_start(vbox, False, False, 5)
         ## show folder button
         btnf = gtk.Button()
         image = gtk.Image()
@@ -1364,8 +1357,6 @@ class GsongFinder(object):
         btn.add(image)
         box.pack_end(btn, False, False, 5)
         btn.set_tooltip_text(_("Remove"))
-        pbar = gtk.ProgressBar()
-        box.pack_end(pbar, False, False, 5)
         self.down_container.pack_start(box, False ,False, 5)
         box.show_all()
         btnf.hide()
@@ -1520,6 +1511,13 @@ def _reporthook(numblocks, blocksize, filesize, start_time, url, name, progressb
             else:
                 progressbar.set_text(_("Download complete"))
                 return
+
+def _with_lock(func, args):
+		gtk.threads_enter()
+		try:
+			return func(*args)
+		finally:
+			gtk.threads_leave()
 
 def calc_eta(start, now, total, current):
 		if total is None:
