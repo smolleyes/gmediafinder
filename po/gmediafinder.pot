@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-21 22:41+0200\n"
+"POT-Creation-Date: 2011-05-22 00:34+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr ""
 msgid "%s engine selected"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:394 GmediaFinder/gmediafinder.py:1006
+#: GmediaFinder/gmediafinder.py:394 GmediaFinder/gmediafinder.py:1009
 #, python-format
 msgid "Playing : %s"
 msgstr ""
@@ -108,15 +108,15 @@ msgstr ""
 msgid "%s results found for your search : %s "
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1009 GmediaFinder/gmediafinder.py:1414
+#: GmediaFinder/gmediafinder.py:1012 GmediaFinder/gmediafinder.py:1417
 msgid "Stopped"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1320 data/glade/mainGui.glade:1057
+#: GmediaFinder/gmediafinder.py:1323 data/glade/mainGui.glade:1056
 msgid "Download"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1320
+#: GmediaFinder/gmediafinder.py:1323
 #, python-format
 msgid ""
 "The file:\n"
@@ -126,37 +126,37 @@ msgid ""
 "already exist, download again ?"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1348
+#: GmediaFinder/gmediafinder.py:1351
 msgid "Convert to mp3"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1359
+#: GmediaFinder/gmediafinder.py:1362
 msgid "Remove"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1392
+#: GmediaFinder/gmediafinder.py:1395
 msgid "Converting process started..."
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1407
+#: GmediaFinder/gmediafinder.py:1410
 msgid "Audio file successfully created !"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1412
+#: GmediaFinder/gmediafinder.py:1415
 #, python-format
 msgid "Playing %s"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1430
+#: GmediaFinder/gmediafinder.py:1433
 msgid "Failed..."
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1486
+#: GmediaFinder/gmediafinder.py:1489
 #, python-format
 msgid "Downloading %-66s"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:1512
+#: GmediaFinder/gmediafinder.py:1515
 msgid "Download complete"
 msgstr ""
 
@@ -507,71 +507,71 @@ msgid ""
 "Public License instead of this License."
 msgstr ""
 
-#: data/glade/mainGui.glade:418
+#: data/glade/mainGui.glade:417
 msgid "Playlist"
 msgstr ""
 
-#: data/glade/mainGui.glade:463
+#: data/glade/mainGui.glade:462
 msgid "Downloads"
 msgstr ""
 
-#: data/glade/mainGui.glade:520
+#: data/glade/mainGui.glade:519
 msgid "Settings"
 msgstr ""
 
-#: data/glade/mainGui.glade:565
+#: data/glade/mainGui.glade:564
 msgid "About"
 msgstr ""
 
-#: data/glade/mainGui.glade:640
+#: data/glade/mainGui.glade:639
 msgid "<b>Informations :</b>"
 msgstr ""
 
-#: data/glade/mainGui.glade:667
+#: data/glade/mainGui.glade:666
 msgid "Select an engine"
 msgstr ""
 
-#: data/glade/mainGui.glade:690
+#: data/glade/mainGui.glade:689
 msgid "Search types :"
 msgstr ""
 
-#: data/glade/mainGui.glade:701
+#: data/glade/mainGui.glade:700
 msgid "Most relevant"
 msgstr ""
 
-#: data/glade/mainGui.glade:718
+#: data/glade/mainGui.glade:717
 msgid "Most recent"
 msgstr ""
 
-#: data/glade/mainGui.glade:735
+#: data/glade/mainGui.glade:734
 msgid "Most viewed"
 msgstr ""
 
-#: data/glade/mainGui.glade:752
+#: data/glade/mainGui.glade:751
 msgid "Most rated"
 msgstr ""
 
-#: data/glade/mainGui.glade:914
+#: data/glade/mainGui.glade:913
 msgid "Show more results"
 msgstr ""
 
-#: data/glade/mainGui.glade:1172
+#: data/glade/mainGui.glade:1171
 msgid "<b>Playlist Options : </b>"
 msgstr ""
 
-#: data/glade/mainGui.glade:1184
+#: data/glade/mainGui.glade:1183
 msgid "continue"
 msgstr ""
 
-#: data/glade/mainGui.glade:1200
+#: data/glade/mainGui.glade:1199
 msgid "loop"
 msgstr ""
 
-#: data/glade/mainGui.glade:1245
+#: data/glade/mainGui.glade:1244
 msgid "<b>Visualisations :</b>"
 msgstr ""
 
-#: data/glade/mainGui.glade:1258
+#: data/glade/mainGui.glade:1257
 msgid ""
 "jess\n"
 "goom\n"
@@ -584,54 +584,66 @@ msgid ""
 "bumpscope"
 msgstr ""
 
-#: data/glade/mainGui.glade:1314
+#: data/glade/mainGui.glade:1313
 msgid "page 1"
 msgstr ""
 
-#: data/glade/mainGui.glade:1374
+#: data/glade/mainGui.glade:1373
 msgid "Download path :     "
 msgstr ""
 
-#: data/glade/mainGui.glade:1392
+#: data/glade/mainGui.glade:1391
 msgid "Choose a folder"
 msgstr ""
 
-#: data/glade/mainGui.glade:1423
+#: data/glade/mainGui.glade:1422
 msgid "<b>Downloads  : </b>"
 msgstr ""
 
-#: data/glade/mainGui.glade:1439
+#: data/glade/mainGui.glade:1438
 msgid "page 2"
 msgstr ""
 
-#: data/glade/mainGui.glade:1480
+#: data/glade/mainGui.glade:1479
 msgid "Options"
 msgstr ""
 
-#: data/glade/mainGui.glade:1531
+#: data/glade/mainGui.glade:1563
 msgid "Max resolution : "
 msgstr ""
 
-#: data/glade/mainGui.glade:1558
+#: data/glade/mainGui.glade:1590
 msgid "320x240"
 msgstr ""
 
-#: data/glade/mainGui.glade:1577
+#: data/glade/mainGui.glade:1607
 msgid "640x320"
 msgstr ""
 
-#: data/glade/mainGui.glade:1594
+#: data/glade/mainGui.glade:1623
 msgid "854x480"
 msgstr ""
 
-#: data/glade/mainGui.glade:1611
+#: data/glade/mainGui.glade:1639
 msgid "1280x720"
 msgstr ""
 
-#: data/glade/mainGui.glade:1628
+#: data/glade/mainGui.glade:1655
 msgid "1920x1080"
 msgstr ""
 
-#: data/glade/mainGui.glade:1666
+#: data/glade/mainGui.glade:1692
 msgid "<b>Youtube video options : </b>"
+msgstr ""
+
+#: data/glade/mainGui.glade:1707
+msgid "search options"
+msgstr ""
+
+#: data/glade/mainGui.glade:1736
+msgid "<b>Select your engines : </b>"
+msgstr ""
+
+#: data/glade/mainGui.glade:1759
+msgid "Engines"
 msgstr ""

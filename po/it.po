@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-21 22:41+0200\n"
+"POT-Creation-Date: 2011-05-22 00:32+0200\n"
 "PO-Revision-Date: 2011-05-21 19:57+0000\n"
 "Last-Translator: symbianflo <symbianflo@fastwebnet.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -30,7 +30,7 @@ msgstr "Risultati"
 msgid "%s engine selected"
 msgstr "%s motore  scelto"
 
-#: GmediaFinder/gmediafinder.py:394 GmediaFinder/gmediafinder.py:1006
+#: GmediaFinder/gmediafinder.py:394 GmediaFinder/gmediafinder.py:1009
 #, python-format
 msgid "Playing : %s"
 msgstr "Lettura %s"
@@ -108,15 +108,15 @@ msgstr "nessun risultato per la vostra ricerca : %s"
 msgid "%s results found for your search : %s "
 msgstr "%s risultati trovati per la vostra ricerca : %s"
 
-#: GmediaFinder/gmediafinder.py:1009 GmediaFinder/gmediafinder.py:1414
+#: GmediaFinder/gmediafinder.py:1012 GmediaFinder/gmediafinder.py:1417
 msgid "Stopped"
 msgstr "Fermatto"
 
-#: GmediaFinder/gmediafinder.py:1320 data/glade/mainGui.glade:1057
+#: GmediaFinder/gmediafinder.py:1323 data/glade/mainGui.glade:1056
 msgid "Download"
 msgstr "Scaricamento"
 
-#: GmediaFinder/gmediafinder.py:1320
+#: GmediaFinder/gmediafinder.py:1323
 #, python-format
 msgid ""
 "The file:\n"
@@ -131,37 +131,37 @@ msgstr ""
 "\n"
 "esiste già, lo scarico di nuovo?"
 
-#: GmediaFinder/gmediafinder.py:1348
+#: GmediaFinder/gmediafinder.py:1351
 msgid "Convert to mp3"
 msgstr "Convertire in mp3"
 
-#: GmediaFinder/gmediafinder.py:1359
+#: GmediaFinder/gmediafinder.py:1362
 msgid "Remove"
 msgstr "Elimina"
 
-#: GmediaFinder/gmediafinder.py:1392
+#: GmediaFinder/gmediafinder.py:1395
 msgid "Converting process started..."
 msgstr "Processo di conversione avviato ..."
 
-#: GmediaFinder/gmediafinder.py:1407
+#: GmediaFinder/gmediafinder.py:1410
 msgid "Audio file successfully created !"
 msgstr "File audio creato con successso !"
 
-#: GmediaFinder/gmediafinder.py:1412
+#: GmediaFinder/gmediafinder.py:1415
 #, python-format
 msgid "Playing %s"
 msgstr "Riproduzione %s"
 
-#: GmediaFinder/gmediafinder.py:1430
+#: GmediaFinder/gmediafinder.py:1433
 msgid "Failed..."
 msgstr "Fallito ..."
 
-#: GmediaFinder/gmediafinder.py:1486
+#: GmediaFinder/gmediafinder.py:1489
 #, python-format
 msgid "Downloading %-66s"
 msgstr "Scaricamento %-66s"
 
-#: GmediaFinder/gmediafinder.py:1512
+#: GmediaFinder/gmediafinder.py:1515
 msgid "Download complete"
 msgstr "Scaricamento completato"
 
@@ -512,71 +512,71 @@ msgid ""
 "Public License instead of this License."
 msgstr ""
 
-#: data/glade/mainGui.glade:418
+#: data/glade/mainGui.glade:417
 msgid "Playlist"
 msgstr "Lista dei brani"
 
-#: data/glade/mainGui.glade:463
+#: data/glade/mainGui.glade:462
 msgid "Downloads"
 msgstr "Scaricamenti"
 
-#: data/glade/mainGui.glade:520
+#: data/glade/mainGui.glade:519
 msgid "Settings"
 msgstr "Impostazioni"
 
-#: data/glade/mainGui.glade:565
+#: data/glade/mainGui.glade:564
 msgid "About"
 msgstr "Informazioni"
 
-#: data/glade/mainGui.glade:640
+#: data/glade/mainGui.glade:639
 msgid "<b>Informations :</b>"
 msgstr "<b>informazioni :</b>"
 
-#: data/glade/mainGui.glade:667
+#: data/glade/mainGui.glade:666
 msgid "Select an engine"
 msgstr "Selezionare un motore "
 
-#: data/glade/mainGui.glade:690
+#: data/glade/mainGui.glade:689
 msgid "Search types :"
 msgstr "Tipi di ricerca"
 
-#: data/glade/mainGui.glade:701
+#: data/glade/mainGui.glade:700
 msgid "Most relevant"
 msgstr "Più rilevanti"
 
-#: data/glade/mainGui.glade:718
+#: data/glade/mainGui.glade:717
 msgid "Most recent"
 msgstr "Più recenti"
 
-#: data/glade/mainGui.glade:735
+#: data/glade/mainGui.glade:734
 msgid "Most viewed"
 msgstr "Più visti"
 
-#: data/glade/mainGui.glade:752
+#: data/glade/mainGui.glade:751
 msgid "Most rated"
 msgstr "Più votati"
 
-#: data/glade/mainGui.glade:914
+#: data/glade/mainGui.glade:913
 msgid "Show more results"
 msgstr "Mostra altri risultati"
 
-#: data/glade/mainGui.glade:1172
+#: data/glade/mainGui.glade:1171
 msgid "<b>Playlist Options : </b>"
 msgstr "<b>Opzioni della lista dei brani : </b>"
 
-#: data/glade/mainGui.glade:1184
+#: data/glade/mainGui.glade:1183
 msgid "continue"
 msgstr "continua"
 
-#: data/glade/mainGui.glade:1200
+#: data/glade/mainGui.glade:1199
 msgid "loop"
 msgstr "loop"
 
-#: data/glade/mainGui.glade:1245
+#: data/glade/mainGui.glade:1244
 msgid "<b>Visualisations :</b>"
 msgstr "<b>Visualizzazioni : </b>"
 
-#: data/glade/mainGui.glade:1258
+#: data/glade/mainGui.glade:1257
 msgid ""
 "jess\n"
 "goom\n"
@@ -598,54 +598,67 @@ msgstr ""
 "corona\n"
 "bumpscope"
 
-#: data/glade/mainGui.glade:1314
+#: data/glade/mainGui.glade:1313
 msgid "page 1"
 msgstr "pagina1"
 
-#: data/glade/mainGui.glade:1374
+#: data/glade/mainGui.glade:1373
 msgid "Download path :     "
 msgstr "Scarica in :     "
 
-#: data/glade/mainGui.glade:1392
+#: data/glade/mainGui.glade:1391
 msgid "Choose a folder"
 msgstr "Scegliere una cartella"
 
-#: data/glade/mainGui.glade:1423
+#: data/glade/mainGui.glade:1422
 msgid "<b>Downloads  : </b>"
 msgstr "<b>Scaricamenti   : </b>"
 
-#: data/glade/mainGui.glade:1439
+#: data/glade/mainGui.glade:1438
 msgid "page 2"
 msgstr "pagina 2"
 
-#: data/glade/mainGui.glade:1480
+#: data/glade/mainGui.glade:1479
 msgid "Options"
 msgstr "Opzioni"
 
-#: data/glade/mainGui.glade:1531
+#: data/glade/mainGui.glade:1563
 msgid "Max resolution : "
 msgstr "Massima risoluzione :  "
 
-#: data/glade/mainGui.glade:1558
+#: data/glade/mainGui.glade:1590
 msgid "320x240"
 msgstr "320x240"
 
-#: data/glade/mainGui.glade:1577
+#: data/glade/mainGui.glade:1607
 msgid "640x320"
 msgstr "640x320"
 
-#: data/glade/mainGui.glade:1594
+#: data/glade/mainGui.glade:1623
 msgid "854x480"
 msgstr "845x480"
 
-#: data/glade/mainGui.glade:1611
+#: data/glade/mainGui.glade:1639
 msgid "1280x720"
 msgstr "1280x720"
 
-#: data/glade/mainGui.glade:1628
+#: data/glade/mainGui.glade:1655
 msgid "1920x1080"
 msgstr "1920x1080"
 
-#: data/glade/mainGui.glade:1666
+#: data/glade/mainGui.glade:1692
 msgid "<b>Youtube video options : </b>"
 msgstr "<b>Youtube opzioni video : </b>"
+
+#: data/glade/mainGui.glade:1707
+msgid "search options"
+msgstr ""
+
+#: data/glade/mainGui.glade:1736
+#, fuzzy
+msgid "<b>Select your engines : </b>"
+msgstr "Selezionare un motore "
+
+#: data/glade/mainGui.glade:1759
+msgid "Engines"
+msgstr ""

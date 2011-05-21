@@ -33,9 +33,9 @@ import HTMLParser
 
 ## custom lib
 try:
-    from GmediaFinder import constants
+	import constants
 except:
-    import constants
+    from GmediaFinder import constants
     
 from constants import _
 #from engines.youporn import *
@@ -415,7 +415,7 @@ class GsongFinder(object):
 			self.youtube_quality_model.set(new_iter,
 							0, rate,
 							)
-		return self.set_default_youtube_video_rate()
+		self.set_default_youtube_video_rate()
 
     def option_changed(self,widget):
         self.search_option = widget.name
@@ -991,7 +991,10 @@ class GsongFinder(object):
 		active = self.youtube_video_rate.get_active()
 		if self.media_link:
 			self.stop_play()
-			self.media_codec = self.quality_list[active].split('|')[1]
+			try:
+			    self.media_codec = self.quality_list[active].split('|')[1]
+			except:
+				pass
 			self.start_play(self.media_link[active])
         
     def start_search(self):
