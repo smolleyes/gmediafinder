@@ -397,7 +397,7 @@ class GsongFinder(object):
         if self.engine == "youtube.com":
 			self.idle_add_lock(self.load_youtube_res,())
         else:
-			self.start_play()
+			self.start_play(self.media_link)
 
     def idle_add_lock(self, func, *args):
        return gobject.idle_add(_with_lock, func, args)
