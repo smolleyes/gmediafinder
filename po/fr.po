@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-21 17:25+0200\n"
+"POT-Creation-Date: 2011-05-21 19:32+0200\n"
 "PO-Revision-Date: 2011-05-18 01:22+0200\n"
 "Last-Translator: smo <s.lagui@free.fr>\n"
 "Language-Team: Language FR\n"
@@ -16,106 +16,106 @@ msgstr ""
 "Content-Type: text/plain; charset=utf-8\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: GmediaFinder/gmediafinder.py:157
+#: GmediaFinder/gmediafinder.py:159
 msgid "Quality"
 msgstr "Qualité"
 
-#: GmediaFinder/gmediafinder.py:263
+#: GmediaFinder/gmediafinder.py:265
 msgid " Results : "
 msgstr " Résultats"
 
-#: GmediaFinder/gmediafinder.py:352
+#: GmediaFinder/gmediafinder.py:354
 #, python-format
 msgid "%s engine selected"
 msgstr "Moteur %s sélectionné"
 
-#: GmediaFinder/gmediafinder.py:393 GmediaFinder/gmediafinder.py:1025
+#: GmediaFinder/gmediafinder.py:395 GmediaFinder/gmediafinder.py:1027
 #, python-format
 msgid "Playing : %s"
 msgstr "Lecture : %s"
 
-#: GmediaFinder/gmediafinder.py:458
+#: GmediaFinder/gmediafinder.py:460
 msgid "Please enter an artist/album or song name..."
 msgstr "Entrer votre recherche..."
 
-#: GmediaFinder/gmediafinder.py:461
+#: GmediaFinder/gmediafinder.py:463
 msgid "Please select an engine..."
 msgstr "Aucun moteur sélectionné"
 
-#: GmediaFinder/gmediafinder.py:480 GmediaFinder/gmediafinder.py:522
+#: GmediaFinder/gmediafinder.py:482 GmediaFinder/gmediafinder.py:524
 #, python-format
 msgid "Searching for %s with %s "
 msgstr "Recherche de %s avec %s "
 
-#: GmediaFinder/gmediafinder.py:527
+#: GmediaFinder/gmediafinder.py:529
 msgid "Please select a search engine..."
 msgstr "Aucun moteur sélectionné"
 
-#: GmediaFinder/gmediafinder.py:572
+#: GmediaFinder/gmediafinder.py:574
 #, python-format
 msgid "Searching for %s with %s"
 msgstr "Recherche de %s avec %s"
 
-#: GmediaFinder/gmediafinder.py:586
+#: GmediaFinder/gmediafinder.py:588
 #, python-format
 msgid "no results found for %s..."
 msgstr "Aucun résultat pour : %s"
 
-#: GmediaFinder/gmediafinder.py:591
+#: GmediaFinder/gmediafinder.py:593
 #, python-format
 msgid "%s files found for %s"
 msgstr "%s fichiers trouvés pour %s"
 
-#: GmediaFinder/gmediafinder.py:595 GmediaFinder/gmediafinder.py:649
-#: GmediaFinder/gmediafinder.py:690 GmediaFinder/gmediafinder.py:755
-#: GmediaFinder/gmediafinder.py:796 GmediaFinder/gmediafinder.py:865
-#: GmediaFinder/gmediafinder.py:914
+#: GmediaFinder/gmediafinder.py:597 GmediaFinder/gmediafinder.py:651
+#: GmediaFinder/gmediafinder.py:692 GmediaFinder/gmediafinder.py:757
+#: GmediaFinder/gmediafinder.py:798 GmediaFinder/gmediafinder.py:867
+#: GmediaFinder/gmediafinder.py:916
 #, python-format
 msgid "no more files found for %s..."
 msgstr "Aucun résultat supplémentaire pour %s... "
 
-#: GmediaFinder/gmediafinder.py:600 GmediaFinder/gmediafinder.py:749
-#: GmediaFinder/gmediafinder.py:857
+#: GmediaFinder/gmediafinder.py:602 GmediaFinder/gmediafinder.py:751
+#: GmediaFinder/gmediafinder.py:859
 #, python-format
 msgid "Results page %s for %s...(%s results)"
 msgstr "Page de résultat %s pour %s... (%s résultats)"
 
-#: GmediaFinder/gmediafinder.py:632 GmediaFinder/gmediafinder.py:698
-#: GmediaFinder/gmediafinder.py:804
+#: GmediaFinder/gmediafinder.py:634 GmediaFinder/gmediafinder.py:700
+#: GmediaFinder/gmediafinder.py:806
 #, python-format
 msgid "no files found for %s..."
 msgstr "Aucun résultat pour : %s"
 
-#: GmediaFinder/gmediafinder.py:643 GmediaFinder/gmediafinder.py:684
-#: GmediaFinder/gmediafinder.py:790
+#: GmediaFinder/gmediafinder.py:645 GmediaFinder/gmediafinder.py:686
+#: GmediaFinder/gmediafinder.py:792
 #, python-format
 msgid "Results page %s for %s...(Next page available)"
 msgstr "Page de résultat %s pour %s... (Page suivante disponible)"
 
-#: GmediaFinder/gmediafinder.py:729 GmediaFinder/gmediafinder.py:837
+#: GmediaFinder/gmediafinder.py:731 GmediaFinder/gmediafinder.py:839
 #, python-format
 msgid "No results found for %s..."
 msgstr "Aucun résultat pour : %s"
 
-#: GmediaFinder/gmediafinder.py:734 GmediaFinder/gmediafinder.py:842
+#: GmediaFinder/gmediafinder.py:736 GmediaFinder/gmediafinder.py:844
 #, python-format
 msgid "no results for your search : %s "
 msgstr "Aucun résultat pour : %s"
 
-#: GmediaFinder/gmediafinder.py:739 GmediaFinder/gmediafinder.py:847
+#: GmediaFinder/gmediafinder.py:741 GmediaFinder/gmediafinder.py:849
 #, python-format
 msgid "%s results found for your search : %s "
 msgstr "%s résultats trouvés pour : %s"
 
-#: GmediaFinder/gmediafinder.py:1028 GmediaFinder/gmediafinder.py:1416
+#: GmediaFinder/gmediafinder.py:1030 GmediaFinder/gmediafinder.py:1423
 msgid "Stopped"
 msgstr "Arrêté"
 
-#: GmediaFinder/gmediafinder.py:1327 data/glade/mainGui.glade:1058
+#: GmediaFinder/gmediafinder.py:1334 data/glade/mainGui.glade:1058
 msgid "Download"
 msgstr "Télécharger"
 
-#: GmediaFinder/gmediafinder.py:1327
+#: GmediaFinder/gmediafinder.py:1334
 #, python-format
 msgid ""
 "The file:\n"
@@ -130,37 +130,37 @@ msgstr ""
 "\n"
 "existe déjà, Télécharger à nouveau ?"
 
-#: GmediaFinder/gmediafinder.py:1348
+#: GmediaFinder/gmediafinder.py:1355
 msgid "Convert to mp3"
 msgstr "Convertir en mp3"
 
-#: GmediaFinder/gmediafinder.py:1359
+#: GmediaFinder/gmediafinder.py:1366
 msgid "Remove"
 msgstr "Supprimer"
 
-#: GmediaFinder/gmediafinder.py:1394
+#: GmediaFinder/gmediafinder.py:1401
 msgid "Converting process started..."
 msgstr "Conversion en cours..."
 
-#: GmediaFinder/gmediafinder.py:1409
+#: GmediaFinder/gmediafinder.py:1416
 msgid "Audio file successfully created !"
 msgstr "Fichier audio crée avec succès !"
 
-#: GmediaFinder/gmediafinder.py:1414
+#: GmediaFinder/gmediafinder.py:1421
 #, python-format
 msgid "Playing %s"
 msgstr "Lecture : %s"
 
-#: GmediaFinder/gmediafinder.py:1432
+#: GmediaFinder/gmediafinder.py:1439
 msgid "Failed..."
 msgstr "Erreur..."
 
-#: GmediaFinder/gmediafinder.py:1488
+#: GmediaFinder/gmediafinder.py:1495
 #, python-format
 msgid "Downloading %-66s"
 msgstr "Téléchargement %-66s"
 
-#: GmediaFinder/gmediafinder.py:1514
+#: GmediaFinder/gmediafinder.py:1521
 msgid "Download complete"
 msgstr "Téléchargement terminé"
 

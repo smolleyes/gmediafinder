@@ -65,6 +65,7 @@ class GsongFinder(object):
         self.timer = 0
         self.settings_folder = None
         self.conf_file = None
+        self.seeker_move = None
         self.youtube_max_res = "320x240"
         self.active_downloads = 0
         self.thread_num = 0
@@ -121,7 +122,8 @@ class GsongFinder(object):
         self.informations_label = self.gladeGui.get_widget("info_label")
         # options menu
         self.options_bar = self.gladeGui.get_widget("options_bar")
-        
+        self.search_box = self.gladeGui.get_widget("search_box")
+        self.results_box = self.gladeGui.get_widget("results_box")
         ## notebook
         self.notebook = self.gladeGui.get_widget("notebook")
         
@@ -211,7 +213,7 @@ class GsongFinder(object):
         self.seeker.set_update_policy(gtk.UPDATE_DISCONTINUOUS)
         self.seekbox.add(self.seeker)
         self.seeker.connect("button-release-event", self.seeker_button_release_event)
-        
+        self.seeker.connect("button-press-event", self.seeker_block)
         #timer
         self.timerbox = self.gladeGui.get_widget("timer_box")
         self.timerbox.add(self.time_label)
@@ -1055,7 +1057,8 @@ class GsongFinder(object):
         while play_thread_id == self.play_thread_id:
             if play_thread_id == self.play_thread_id:
                 gtk.gdk.threads_enter()
-                self.update_time_label()
+                if not self.seeker_move:
+                    self.update_time_label()
                 gtk.gdk.threads_leave()
             time.sleep(1)
 
@@ -1154,13 +1157,17 @@ class GsongFinder(object):
             h,m = divmod(m, 60)
             return "%i:%02i:%02i" %(h,m,s)
 
-    def seeker_button_release_event(self, widget, event):  
+    def seeker_button_release_event(self, widget, event):
+        self.seeker_move = None 
         value = widget.get_value()
         if self.is_playing == True:
             duration = self.player.query_duration(self.timeFormat, None)[0] 
             time = value * (duration / 100)
             self.player.seek_simple(self.timeFormat, gst.SEEK_FLAG_FLUSH, time)
 
+    def seeker_block(self,widget,event):
+		self.seeker_move = 1
+    
     def update_time_label(self): 
         """
         Update the time_label to display the current location
@@ -1396,7 +1403,7 @@ class GsongFinder(object):
 			ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(constants.exec_path)),'ffmpeg\\ffmpeg.exe')
 		else:
 			ffmpeg_path = "/usr/bin/ffmpeg"
-		(pid,t,r,s) = gobject.spawn_async([ffmpeg_path, '-i', src, '-f', 'ogg', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
+		(pid,t,r,s) = gobject.spawn_async([ffmpeg_path, '-i', src, '-f', 'mp3', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
 		data=(convbtn,throbber)
 		gobject.child_watch_add(pid, self.task_done,data)
 		
