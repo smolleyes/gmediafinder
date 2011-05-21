@@ -8,8 +8,10 @@ cd "/home/smo/Documents/gmediafinder"
 if [ "$1" = "cmo" ]; then
 echo "genere le .mo"
 ## finalise en creeant le .mo
-msgfmt --output-file=$basedir/fr/LC_MESSAGES/gmediafinder.mo $basedir/fr/fr.po
-msgfmt --output-file=$basedir/en/LC_MESSAGES/gmediafinder.mo $basedir/en/en.po
+mkdir -p $basedir/fr/LC_MESSAGES
+mkdir -p $basedir/en/LC_MESSAGES
+msgfmt --output-file=$basedir/fr/LC_MESSAGES/gmediafinder.mo $basedir/fr.po
+msgfmt --output-file=$basedir/en/LC_MESSAGES/gmediafinder.mo $basedir/en.po
 exit 0
 fi
 

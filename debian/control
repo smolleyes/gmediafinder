@@ -9,7 +9,7 @@ XS-Python-Version: current
 
 Package: gmediafinder
 Architecture: all
-Depends: ${misc:Depends}, ${python:Depends}, python-gtk2, python-gdata, python-beautifulsoup, python-html5lib, python-gst0.10, gstreamer0.10-ffmpeg, libvisual-0.4-0, libvisual-0.4-plugins, python-configobj, ffmpeg
+Depends: ${misc:Depends}, ${python:Depends}, python-gtk2, python-gdata, python-beautifulsoup, python-html5lib, python-gst0.10, gstreamer0.10-ffmpeg, libvisual-0.4-0, libvisual-0.4-plugins, python-configobj, ffmpeg, libavutil-extra-50, libavcodec-extra-52
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
 Description: Gmediafinder, stream/download multimedia files from the web

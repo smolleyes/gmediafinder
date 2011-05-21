@@ -3,7 +3,7 @@ import os,sys,gtk
 import gettext
 from Translation import Translation
 
-version = "0.9"
+version = "0.9.1"
 APP_NAME = "gmediafinder"
 exec_path =  os.path.dirname(os.path.abspath(__file__))
 
@@ -21,8 +21,6 @@ if sys.platform == "win32" and not ('constants.py' in os.listdir(os.path.abspath
 img_path = os.path.join(data_path,"img")
 glade_path = os.path.join(data_path,"glade")
 glade_file = os.path.join(glade_path,"mainGui.glade")
-print glade_file
-
 
 ## LOCALISATION
 source_lang = "en"
