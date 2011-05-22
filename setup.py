@@ -15,6 +15,7 @@ except ImportError:
 import glob
 
 INSTALLED_FILES = '.installed_files'
+prefix="/usr"
 
 #stolen from ccsm
 class install (_install):
@@ -90,7 +91,7 @@ setup(
 #Stolen from ccsm's setup.py
 if sys.argv[1] == 'install':
 	
-	prefix = None
+	prefix = "/usr"
 
 	if len (sys.argv) > 2:
 		i = 0
