@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-22 14:57+0200\n"
-"PO-Revision-Date: 2011-05-22 08:57+0000\n"
+"POT-Creation-Date: 2011-05-22 15:19+0200\n"
+"PO-Revision-Date: 2011-05-22 13:02+0000\n"
 "Last-Translator: symbianflo <symbianflo@fastwebnet.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: ro\n"
@@ -653,13 +653,12 @@ msgstr "<b>Opţiuni video Youtube : </b>"
 
 #: data/glade/mainGui.glade:1708
 msgid "search options"
-msgstr ""
+msgstr "opţiuni de "
 
 #: data/glade/mainGui.glade:1743
-#, fuzzy
 msgid "<b>Select your engines : </b>"
-msgstr "Alegeţi un motor"
+msgstr "<b>Selectaţi motoarele : </b>"
 
 #: data/glade/mainGui.glade:1766
 msgid "Engines"
-msgstr ""
+msgstr "Motoare"

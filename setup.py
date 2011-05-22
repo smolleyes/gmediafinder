@@ -75,7 +75,7 @@ setup(
 	author_email='s.lagui@free.fr',
 	url='http://penguincape.org',
 	packages=packages,
-	package_dir={'GmediaFinder': '.'},
+	package_dir={'GmediaFinder/': '.'},
 	scripts=['gmediafinder'],
 	data_files=data_files,
 	cmdclass={'build' :  build_extra.build_extra,

@@ -7,8 +7,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-22 14:57+0200\n"
-"PO-Revision-Date: 2011-05-21 19:57+0000\n"
+"POT-Creation-Date: 2011-05-22 15:19+0200\n"
+"PO-Revision-Date: 2011-05-22 13:05+0000\n"
 "Last-Translator: symbianflo <symbianflo@fastwebnet.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: it\n"
@@ -55,7 +55,7 @@ msgstr "Si prega di scegliere un motore ..."
 #: GmediaFinder/gmediafinder.py:493 GmediaFinder/gmediafinder.py:531
 #, python-format
 msgid "Searching for %s with %s "
-msgstr "Ricerca per %s con %s"
+msgstr "Ricerca per %s su %s"
 
 #: GmediaFinder/gmediafinder.py:536
 msgid "Please select a search engine..."
@@ -64,7 +64,7 @@ msgstr "Si prega di scegliere un motore di ricerca"
 #: GmediaFinder/gmediafinder.py:578
 #, python-format
 msgid "Searching for %s with %s"
-msgstr "Ricerca per %s con %s"
+msgstr "Ricerca per %s su %s"
 
 #: GmediaFinder/gmediafinder.py:592
 #, python-format
@@ -123,7 +123,7 @@ msgstr "Fermatto"
 
 #: GmediaFinder/gmediafinder.py:1329 data/glade/mainGui.glade:1056
 msgid "Download"
-msgstr "Scaricamento"
+msgstr "Scarica"
 
 #: GmediaFinder/gmediafinder.py:1329
 #, python-format
@@ -652,13 +652,12 @@ msgstr "<b>Youtube opzioni video : </b>"
 
 #: data/glade/mainGui.glade:1708
 msgid "search options"
-msgstr ""
+msgstr "opzioni di ricerca"
 
 #: data/glade/mainGui.glade:1743
-#, fuzzy
 msgid "<b>Select your engines : </b>"
-msgstr "Selezionare un motore "
+msgstr "<b>Selezionare i motori di ricerca : </b>"
 
 #: data/glade/mainGui.glade:1766
 msgid "Engines"
-msgstr ""
+msgstr "Motori"
