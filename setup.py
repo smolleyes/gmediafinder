@@ -75,7 +75,7 @@ setup(
 	author='Laguillaumie sylvain',
 	author_email='s.lagui@free.fr',
 	url='http://penguincape.org',
-	packages=packages,
+	packages=packages,package_dir={'bzrlib.plugins.explorer': '.'}
 	scripts=['gmediafinder'],
 	data_files=data_files,
 	cmdclass={'build' :  build_extra.build_extra,
