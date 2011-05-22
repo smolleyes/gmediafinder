@@ -393,7 +393,7 @@ Public License instead of this License.</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
-                <signal name="clicked" handler="on_home_menu_btn_clicked" swapped="no"/>
+                <signal name="clicked" handler="on_home_menu_btn_clicked" />
                 <child>
                   <widget class="GtkHBox" id="hbox4">
                     <property name="visible">True</property>
@@ -438,7 +438,7 @@ Public License instead of this License.</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
-                <signal name="clicked" handler="on_down_menu_btn_clicked" swapped="no"/>
+                <signal name="clicked" handler="on_down_menu_btn_clicked" />
                 <child>
                   <widget class="GtkHBox" id="hbox5">
                     <property name="visible">True</property>
@@ -495,7 +495,7 @@ Public License instead of this License.</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
-                <signal name="clicked" handler="on_settings_menu_clicked" swapped="no"/>
+                <signal name="clicked" handler="on_settings_menu_clicked" />
                 <child>
                   <widget class="GtkHBox" id="hbox8">
                     <property name="visible">True</property>
@@ -540,7 +540,7 @@ Public License instead of this License.</property>
                 <property name="can_focus">True</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
-                <signal name="clicked" handler="on_about_menu_clicked" swapped="no"/>
+                <signal name="clicked" handler="on_about_menu_clicked" />
                 <child>
                   <widget class="GtkHBox" id="hbox7">
                     <property name="visible">True</property>
@@ -664,7 +664,7 @@ Public License instead of this License.</property>
                                 <property name="visible">True</property>
                                 <property name="can_focus">False</property>
                                 <property name="items" translatable="yes">Select an engine</property>
-                                <signal name="changed" handler="on_engine_selector_changed" swapped="no"/>
+                                <signal name="changed" handler="on_engine_selector_changed" />
                               </widget>
                               <packing>
                                 <property name="expand">True</property>
@@ -704,7 +704,7 @@ Public License instead of this License.</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">rating_opt</property>
-                                        <signal name="group_changed" handler="on_relevance_opt_group_changed" swapped="no"/>
+                                        <signal name="group_changed" handler="on_relevance_opt_group_changed" />
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>
@@ -721,7 +721,7 @@ Public License instead of this License.</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">rating_opt</property>
-                                        <signal name="group_changed" handler="on_most_recent_opt_group_changed" swapped="no"/>
+                                        <signal name="group_changed" handler="on_most_recent_opt_group_changed" />
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>
@@ -738,7 +738,7 @@ Public License instead of this License.</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">rating_opt</property>
-                                        <signal name="group_changed" handler="on_most_viewed_opt_group_changed" swapped="no"/>
+                                        <signal name="group_changed" handler="on_most_viewed_opt_group_changed" />
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>
@@ -755,7 +755,7 @@ Public License instead of this License.</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">relevance_opt</property>
-                                        <signal name="group_changed" handler="on_rating_opt_group_changed" swapped="no"/>
+                                        <signal name="group_changed" handler="on_rating_opt_group_changed" />
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>
@@ -798,7 +798,7 @@ Public License instead of this License.</property>
                                 <property name="secondary_icon_activatable">False</property>
                                 <property name="primary_icon_sensitive">True</property>
                                 <property name="secondary_icon_sensitive">True</property>
-                                <signal name="activate" handler="on_search_entry_activate" swapped="no"/>
+                                <signal name="activate" handler="on_search_entry_activate" />
                               </widget>
                               <packing>
                                 <property name="expand">True</property>
@@ -815,7 +815,7 @@ Public License instead of this License.</property>
                                 <property name="receives_default">True</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="use_stock">True</property>
-                                <signal name="clicked" handler="on_search_btn_clicked" swapped="no"/>
+                                <signal name="clicked" handler="on_search_btn_clicked" />
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -874,7 +874,7 @@ Public License instead of this License.</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
                                     <property name="use_action_appearance">False</property>
-                                    <signal name="clicked" handler="on_changepage_btn_clicked" swapped="no"/>
+                                    <signal name="clicked" handler="on_changepage_btn_clicked" />
                                     <child>
                                       <widget class="GtkHBox" id="hbox18">
                                         <property name="visible">True</property>
@@ -1002,7 +1002,7 @@ Public License instead of this License.</property>
                                     <property name="receives_default">True</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_stock">True</property>
-                                    <signal name="clicked" handler="on_play_btn_clicked" swapped="no"/>
+                                    <signal name="clicked" handler="on_play_btn_clicked" />
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1018,7 +1018,7 @@ Public License instead of this License.</property>
                                     <property name="receives_default">True</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="use_stock">True</property>
-                                    <signal name="clicked" handler="on_pause_btn_clicked" swapped="no"/>
+                                    <signal name="clicked" handler="on_pause_btn_clicked" />
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1032,7 +1032,7 @@ Public License instead of this License.</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
                                     <property name="use_action_appearance">False</property>
-                                    <signal name="clicked" handler="on_down_btn_clicked" swapped="no"/>
+                                    <signal name="clicked" handler="on_down_btn_clicked" />
                                     <child>
                                       <widget class="GtkHBox" id="hbox23">
                                         <property name="visible">True</property>
@@ -1138,7 +1138,7 @@ Public License instead of this License.</property>
 audio-volume-high
 audio-volume-low
 audio-volume-medium</property>
-                                <signal name="value_changed" handler="on_vol_btn_value_changed" swapped="no"/>
+                                <signal name="value_changed" handler="on_vol_btn_value_changed" />
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
@@ -1186,7 +1186,7 @@ audio-volume-medium</property>
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
-                                    <signal name="toggled" handler="on_continue_checkbox_toggled" swapped="no"/>
+                                    <signal name="toggled" handler="on_continue_checkbox_toggled" />
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1202,7 +1202,7 @@ audio-volume-medium</property>
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
-                                    <signal name="toggled" handler="on_loop_checkbox_toggled" swapped="no"/>
+                                    <signal name="toggled" handler="on_loop_checkbox_toggled" />
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1263,7 +1263,7 @@ jakdaw
 infinite
 corona
 bumpscope</property>
-                                    <signal name="changed" handler="on_vis_chooser_changed" swapped="no"/>
+                                    <signal name="changed" handler="on_vis_chooser_changed" />
                                     <child internal-child="entry">
                                       <widget class="GtkEntry" id="comboboxentry-entry2">
                                         <property name="can_focus">False</property>
@@ -1499,7 +1499,7 @@ bumpscope</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
-                <signal name="delete_event" handler="gtk_false" swapped="no"/>
+                <signal name="delete_event" handler="gtk_false" />
               </widget>
               <packing>
                 <property name="expand">False</property>

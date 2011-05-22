@@ -1,5 +1,6 @@
-gmediafinder (0.9.2-0ppa9~natty) natty; urgency=high
+gmediafinder (0.9.3-0ppa1~natty) natty; urgency=high
 
-  * fix
+  * add new plugins system
+  * add ro language
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
