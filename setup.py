@@ -15,7 +15,6 @@ except ImportError:
 import glob
 
 INSTALLED_FILES = '.installed_files'
-prefix="/usr"
 
 #stolen from ccsm
 class install (_install):

@@ -12,7 +12,6 @@ data/img/gmediafinder.png
 data/img/gmediafinder.ico
 data/glade
 data/glade/mainGui.glade
-MANIFEST
 gmediafinder
 GmediaFinder
 GmediaFinder/engines.py
