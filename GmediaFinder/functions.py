@@ -1,12 +1,11 @@
-#!/usr/bin/env python
-# -*- coding: utf-8 -*-
-
 import os
 import gtk
 import time
 import re
+import gdata.service,gdata.youtube
+import gdata.youtube.service as yt_service
 
-def _get_codec(num):
+def get_codec(num):
     codec=None
     if re.match('5|34|35',num):
         codec = "flv"
@@ -18,7 +17,7 @@ def _get_codec(num):
         codec= "3gp"
     return codec
 
-def _reporthook(numblocks, blocksize, filesize, start_time, url, name, progressbar):
+def reporthook(numblocks, blocksize, filesize, start_time, url, name, progressbar):
         #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
         #XXX Should handle possible filesize=-1.
     if filesize == -1:
@@ -52,7 +51,7 @@ def _reporthook(numblocks, blocksize, filesize, start_time, url, name, progressb
                 progressbar.set_text(_("Download complete"))
                 return
 
-def _with_lock(func, args):
+def with_lock(func, args):
 		gtk.threads_enter()
 		try:
 			return func(*args)

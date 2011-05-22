@@ -24,20 +24,14 @@ import tempfile
 import time
 from html5lib import sanitizer, treebuilders, treewalkers, serializer, treewalkers
 import traceback
-import gdata.service,gdata.youtube
-import gdata.youtube.service as yt_service
 from configobj import ConfigObj
 
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import HTMLParser
 
 ## custom lib
-try:
-	import constants
-except:
-    from GmediaFinder import constants
-    
-from constants import _
+
+from constants import *	
 from engines import Engines
 from functions import *
 
@@ -104,13 +98,13 @@ class GsongFinder(object):
         gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
         
         ## gui
-        self.gladeGui = gtk.glade.XML(constants.glade_file, None ,constants.APP_NAME)
+        self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
         self.window = self.gladeGui.get_widget("main_window")
         self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
         self.window.set_default_size(780, 560)
         self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-        self.img_path = constants.img_path
+        self.img_path = img_path
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
         self.window.connect('key-press-event', self.onKeyPress)
         ## informations
@@ -405,10 +399,10 @@ class GsongFinder(object):
 			self.start_play(self.media_link)
 
     def idle_add_lock(self, func, *args):
-       return gobject.idle_add(_with_lock, func, args)
+       return gobject.idle_add(with_lock, func, args)
        
     def timeout_add_lock(millisecs, func, *args):
-       return gobject.timeout_add(millisecs, _with_lock, func, args)
+       return gobject.timeout_add(millisecs, with_lock, func, args)
         
     def load_youtube_res(self,args=None):
 		self.youtube_quality_model.clear()
@@ -449,7 +443,7 @@ class GsongFinder(object):
 			## remove flv links...
 			i = 0
 			for quality in quality_list:
-				codec = _get_codec(quality)
+				codec = get_codec(quality)
 				if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
 					i+=1
 					continue
@@ -473,7 +467,7 @@ class GsongFinder(object):
         if not self.engine:
             self.informations_label.set_text(_("Please select an engine..."))
             return
-        self.main_engine = self.engine_selector.get_active_text()
+        self.main_engine = self.engine_selector.getSelected()
         self.reset_pages()
         if self.engine == "imusicz.net":
 			socket.setdefaulttimeout(30)
@@ -1400,7 +1394,7 @@ class GsongFinder(object):
 			os.remove(target)
 		self.statbar.push(1,_("Converting process started..."))
 		if sys.platform != "linux2":
-			ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(constants.exec_path)),'ffmpeg\\ffmpeg.exe')
+			ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(exec_path)),'ffmpeg\\ffmpeg.exe')
 		else:
 			ffmpeg_path = "/usr/bin/ffmpeg"
 		(pid,t,r,s) = gobject.spawn_async([ffmpeg_path, '-i', src, '-f', 'mp3', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
@@ -1430,7 +1424,7 @@ class GsongFinder(object):
         try:
 			start_time = time.time()
 			urllib.urlretrieve(url, self.down_dir+"/"+ name,
-			lambda nb, bs, fs, url=url: _reporthook(nb,bs,fs,start_time,url,name,pbar))
+			lambda nb, bs, fs, url=url: reporthook(nb,bs,fs,start_time,url,name,pbar))
 			btnf.show()
 			btn_conv.show()
 			btn.show()
