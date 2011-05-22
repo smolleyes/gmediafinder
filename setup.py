@@ -51,7 +51,7 @@ class uninstall(_install):
 
 version = open('VERSION', 'r').read().strip()	
 
-packages = ['GmediaFinder']
+packages = ['GmediaFinder','GmediaFinder.lib','GmediaFinder.lib.engines']
 
 data_files = [
 	('share/icons/hicolor/22x22/apps',['images/22x22/gmediafinder.png']),
