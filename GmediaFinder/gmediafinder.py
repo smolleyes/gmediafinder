@@ -38,8 +38,8 @@ except:
     from GmediaFinder import constants
     
 from constants import _
-#from engines.youporn import *
-#from engines.youporn import YouPorn
+from engines import Engines
+from functions import *
 
 # timeout in seconds
 timeout = 30
@@ -48,8 +48,6 @@ socket.setdefaulttimeout(timeout)
 class GsongFinder(object):
     def __init__(self):
         ## default search options
-        self.yt_client = yt_service.YouTubeService()
-        #self.yp = YouPorn()
         self.is_playing = False
         self.duration = None
         self.time_label = gtk.Label("00:00 / 00:00")
@@ -97,7 +95,6 @@ class GsongFinder(object):
         self.youtube_max_res = self.config["youtube_max_res"]
         
         self.engine_list = {'youtube.com':'','tagoo.ru':'','dilandau.com':'','mp3realm.org':'','skreemr.com':'','imusicz.net':''}
-        #'youporn.com':''
         self.engine = None
         ## small config dir for downloads...
         if not os.path.exists(self.down_dir):
@@ -132,11 +129,6 @@ class GsongFinder(object):
         self.res854 = self.gladeGui.get_widget("res3")
         self.res1280 = self.gladeGui.get_widget("res4")
         self.res1920 = self.gladeGui.get_widget("res5")
-        
-        ## engine selector (engines only with direct links)
-        self.engine_selector = self.gladeGui.get_widget("engine_selector")
-        for engine in self.engine_list:
-            self.engine_selector.append_text(engine)
         
         # youtube search options
         self.youtube_options = self.gladeGui.get_widget("youtube_options")
@@ -306,7 +298,10 @@ class GsongFinder(object):
         bus.enable_sync_message_emission()
         bus.connect("message", self.on_message)
         bus.connect("sync-message::element", self.on_sync_message)
-
+        
+        ## engines
+        self.dlg = self.gladeGui.get_widget("settings_dialog")
+        self.engines_box = self.gladeGui.get_widget("engines_box")
 
         ## time
         self.timeFormat = gst.Format(gst.FORMAT_TIME)
@@ -316,9 +311,19 @@ class GsongFinder(object):
         self.changepage_btn.hide()
         self.youtube_options.hide()
         self.youtube_video_rate.hide()
-        
-        self.engine_selector.set_active(0)
         self.youtube_video_rate.set_active(0)
+        
+        ## start engines
+        combo = self.gladeGui.get_widget("engine_selector")
+        self.engine_selector = ComboBox(combo)
+        self.yt_client = yt_service.YouTubeService()
+        self.engines_client = Engines(self)
+        
+        ## engine selector (engines only with direct links)
+        for engine in self.engine_list:
+            self.engine_selector.append(engine)
+        self.engine_selector.select(0)
+        
         ## start main loop
         gobject.threads_init()
         #gtk.gdk.threads_init()
@@ -344,10 +349,10 @@ class GsongFinder(object):
     def set_engine(self,widget=None):
         self.youtube_options.hide()
         self.youtube_video_rate.hide()
-        self.engine = self.engine_selector.get_active_text()
+        self.engine = self.engine_selector.getSelected()
         self.changepage_btn.hide()
-        iter = self.engine_selector.get_active_iter()
-        if self.engine_selector.get_active() == 0:
+        iter = self.engine_selector.getSelectedIndex()
+        if self.engine_selector.getSelected() == 0:
             self.engine = None
             return
         print _("%s engine selected") % self.engine
@@ -372,7 +377,7 @@ class GsongFinder(object):
             self.req_start = 0
         elif self.engine == "imusicz.net":
             self.req_start = 1
-        elif self.engine == "youporn.com":
+        elif self.engine == "YouPorn":
             self.req_start = 1
             
     def show_downloads(self, widget):
@@ -478,7 +483,7 @@ class GsongFinder(object):
         self.changepage_btn.set_sensitive(0)
         self.search_btn.set_sensitive(0)
 
-        if self.engine == "youporn.com":
+        if self.engine == "YouPorn":
 			self.idle_add_lock(self.search_youporn,())
         else:
             self.idle_add_lock(self.get_page_links,())
@@ -487,10 +492,11 @@ class GsongFinder(object):
 		self.model.clear()
 		self.informations_label.set_text(_("Searching for %s with %s ") % (self.user_search,self.engine))
 		i=0
-		videos,img=self.yp.search(self.user_search,self.req_start)
+		engine = getattr(self.engines_client,'%s' % self.engine)
+		videos,img=engine.search(self.user_search,self.req_start)
 		for video in videos:
 			name = video.split('/')[3]
-			vid_url = self.yp.get_video_url(video)
+			vid_url = engine.get_video_url(video)
 			try:
 				if vid_url and img[i]:
 					self.add_sound(name, vid_url, img[i])
@@ -543,7 +549,7 @@ class GsongFinder(object):
             url = "http://imusicz.net/search/mp3/%s/%s.html" % (self.req_start,user_search)
         elif self.engine == "skreemr.com":
 			url = "http://skreemr.com/results.jsp?q=%s&l=10&s=%s" % (user_search,self.req_start)
-        elif self.engine == "mp3realm.org":
+        elif self.engine == "YouPorn":
             url = "http://youporn.com/search/relevance?query=%s&type=straight&page=%s" % (user_search,self.req_start)
         return url
 
@@ -1447,7 +1453,6 @@ class GsongFinder(object):
             dlg.hide()
             
     def on_settings_btn_pressed(self, widget):
-		dlg = self.gladeGui.get_widget("settings_dialog")
 		#dlg.set_version(VERSION)
 		if self.youtube_max_res == "320x240":
 			self.res320.set_active(1)
@@ -1459,143 +1464,16 @@ class GsongFinder(object):
 			self.res1280.set_active(1)
 		elif self.youtube_max_res == "1920x1080":
 			self.res1920.set_active(1)
-		response = dlg.run()
-		if response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
-			dlg.hide()
+		self.dlg.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+		response = self.dlg.run()
+		if response == gtk.FALSE or response == gtk.TRUE or response == gtk.RESPONSE_DELETE_EVENT:
+			self.dlg.hide()
 
     def exit(self,widget):
         """Stop method, sets the event to terminate the thread's main loop"""
         if self.player.set_state(gst.STATE_PLAYING):
             self.player.set_state(gst.STATE_NULL)
         self.mainloop.quit()
-
-def _get_codec(num):
-    codec=None
-    if re.match('5|34|35',num):
-        codec = "flv"
-    elif re.match('18|22|37|38',num):
-        codec= "mp4"
-    elif re.match('43|45',num):
-        codec= "webm"
-    elif re.match('17',num):
-        codec= "3gp"
-    return codec
-
-def _reporthook(numblocks, blocksize, filesize, start_time, url, name, progressbar):
-        #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
-        #XXX Should handle possible filesize=-1.
-    if filesize == -1:
-        gtk.gdk.threads_enter()
-        progressbar.set_text(_("Downloading %-66s") % name)
-        progressbar.set_pulse_step(0.2)
-        progressbar.pulse()
-        gtk.gdk.threads_leave()
-        time.sleep(0.1)
-    else:
-        if numblocks != 0:
-            try:
-                percent = min((numblocks*blocksize*100)/filesize, 100)
-                currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
-                kbps_speed = numblocks * blocksize / (time.time() - start_time)
-                kbps_speed = kbps_speed / 1024
-                total = float(filesize) / (1024 * 1024)
-                mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total)
-                e = ' at %d Kb/s ' % kbps_speed
-                e += calc_eta(start_time, time.time(), total, currently_downloaded)
-            except:
-                percent = 100
-                return
-            if percent < 100:
-                gtk.gdk.threads_enter()
-                progressbar.set_text("%s %3d%% %s" % (mbs,percent,e))
-                progressbar.set_fraction(percent/100.0)
-                gtk.gdk.threads_leave()
-                time.sleep(0.1)
-            else:
-                progressbar.set_text(_("Download complete"))
-                return
-
-def _with_lock(func, args):
-		gtk.threads_enter()
-		try:
-			return func(*args)
-		finally:
-			gtk.threads_leave()
-
-def calc_eta(start, now, total, current):
-		if total is None:
-			return '--:--'
-		dif = now - start
-		if current == 0 or dif < 0.001: # One millisecond
-			return '--:--'
-		rate = float(current) / dif
-		eta = long((float(total) - float(current)) / rate)
-		(eta_mins, eta_secs) = divmod(eta, 60)
-		if eta_mins > 99:
-			return '--:--'
-		return ' Restant : %02d:%02d' % (eta_mins, eta_secs)
-		
-def yesno(title,msg):
-    dialog = gtk.MessageDialog(parent = None,
-    buttons = gtk.BUTTONS_YES_NO,
-    flags =gtk.DIALOG_DESTROY_WITH_PARENT,
-    type = gtk.MESSAGE_QUESTION,
-    message_format = msg
-    )
-    dialog.set_position("center")
-    dialog.set_title(title)
-    result = dialog.run()
-    dialog.destroy()
-
-    if result == gtk.RESPONSE_YES:
-        return "Yes"
-    elif result == gtk.RESPONSE_NO:
-        return "No"   
-
-try:
-  from xml.etree import cElementTree as ElementTree
-except ImportError:
-  try:
-    import cElementTree as ElementTree
-  except ImportError:
-    from elementtree import ElementTree
-
-
-class YouTubeClient:
-
-    users_feed = "http://gdata.youtube.com/feeds/users"
-    std_feeds = "http://gdata.youtube.com/feeds/standardfeeds"
-    video_name_re = re.compile(r', "t": "([^"]+)"')
-    
-    def _request(self, feed, *params):
-        service = gdata.service.GDataService(server="gdata.youtube.com")
-        return service.Get(feed % params)
-    
-    def search(self, query, page_index, params):
-        url = "http://gdata.youtube.com/feeds/api/videos?q=%s&start-index=%s&max-results=25%s" % (query, page_index, params)
-        return self._request(url).entry
-
-    def get_thumbnails(self, video):
-        doc = video._ToElementTree()
-        urls = {}
-        for c in doc.findall(".//{http://search.yahoo.com/mrss/}group"):
-            for cc in c.findall("{http://search.yahoo.com/mrss/}thumbnail"):
-                width = int(cc.get("width"))
-                height = int(cc.get("height"))
-                size = (width, height)
-                url = cc.get("url")
-                if size not in urls:
-                    urls[size] = [url,]
-                else:
-                    urls[size].append(url)
-        return urls
-
-    def get_largest_thumbnail(self, video):
-        thumbnails = self.get_thumbnails(video)
-        sizes = thumbnails.keys()
-        sizes.sort()
-        return thumbnails[sizes[-1]][0]
-
 
 
 if __name__ == "__main__":

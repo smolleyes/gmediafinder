@@ -22,6 +22,7 @@ img_path = os.path.join(data_path,"img")
 glade_path = os.path.join(data_path,"glade")
 glade_file = os.path.join(glade_path,"mainGui.glade")
 
+
 ## LOCALISATION
 source_lang = "en"
 rep_trad = "/usr/share/locale"

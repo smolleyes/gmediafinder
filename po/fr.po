@@ -1,121 +1,132 @@
-# Language FR translations for PACKAGE package.
-# Copyright (C) 2011 THE PACKAGE'S COPYRIGHT HOLDER
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# smo <s.lagui@free.fr>, 2011.
-#
+# 
+#   <s.lagui@free.fr>, 2011
+# smo <s.lagui@free.fr>, 2011
 msgid ""
 msgstr ""
-"Project-Id-Version: PACKAGE VERSION\n"
+"Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-22 00:32+0200\n"
-"PO-Revision-Date: 2011-05-18 01:22+0200\n"
-"Last-Translator: smo <s.lagui@free.fr>\n"
-"Language-Team: Language FR\n"
-"Language: FR\n"
+"POT-Creation-Date: 2011-05-22 13:11+0200\n"
+"PO-Revision-Date: 2011-05-22 11:15+0000\n"
+"Last-Translator: paokouran <s.lagui@free.fr>\n"
+"Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
-"Content-Type: text/plain; charset=utf-8\n"
+"Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
+"Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: GmediaFinder/gmediafinder.py:158
+#: GmediaFinder/functions.py:26
+#, python-format
+msgid "Downloading %-66s"
+msgstr "Téléchargement %-66s"
+
+#: GmediaFinder/functions.py:52
+msgid "Download complete"
+msgstr "Téléchargement terminé"
+
+#: GmediaFinder/gmediafinder.py:150
 msgid "Quality"
 msgstr "Qualité"
 
-#: GmediaFinder/gmediafinder.py:264
+#: GmediaFinder/gmediafinder.py:256
 msgid " Results : "
 msgstr " Résultats"
 
-#: GmediaFinder/gmediafinder.py:353
+#: GmediaFinder/gmediafinder.py:358
 #, python-format
 msgid "%s engine selected"
 msgstr "Moteur %s sélectionné"
 
-#: GmediaFinder/gmediafinder.py:394 GmediaFinder/gmediafinder.py:1009
+#: GmediaFinder/gmediafinder.py:399 GmediaFinder/gmediafinder.py:1015
 #, python-format
 msgid "Playing : %s"
 msgstr "Lecture : %s"
 
-#: GmediaFinder/gmediafinder.py:466
+#: GmediaFinder/gmediafinder.py:471
 msgid "Please enter an artist/album or song name..."
 msgstr "Entrer votre recherche..."
 
-#: GmediaFinder/gmediafinder.py:469
+#: GmediaFinder/gmediafinder.py:474
 msgid "Please select an engine..."
 msgstr "Aucun moteur sélectionné"
 
-#: GmediaFinder/gmediafinder.py:488 GmediaFinder/gmediafinder.py:525
+#: GmediaFinder/gmediafinder.py:493 GmediaFinder/gmediafinder.py:531
 #, python-format
 msgid "Searching for %s with %s "
 msgstr "Recherche de %s avec %s "
 
-#: GmediaFinder/gmediafinder.py:530
+#: GmediaFinder/gmediafinder.py:536
 msgid "Please select a search engine..."
 msgstr "Aucun moteur sélectionné"
 
-#: GmediaFinder/gmediafinder.py:572
+#: GmediaFinder/gmediafinder.py:578
 #, python-format
 msgid "Searching for %s with %s"
 msgstr "Recherche de %s avec %s"
 
-#: GmediaFinder/gmediafinder.py:586
+#: GmediaFinder/gmediafinder.py:592
 #, python-format
 msgid "no results found for %s..."
 msgstr "Aucun résultat pour : %s"
 
-#: GmediaFinder/gmediafinder.py:590
+#: GmediaFinder/gmediafinder.py:596
 #, python-format
 msgid "%s files found for %s"
 msgstr "%s fichiers trouvés pour %s"
 
-#: GmediaFinder/gmediafinder.py:594 GmediaFinder/gmediafinder.py:645
-#: GmediaFinder/gmediafinder.py:684 GmediaFinder/gmediafinder.py:746
-#: GmediaFinder/gmediafinder.py:788 GmediaFinder/gmediafinder.py:852
-#: GmediaFinder/gmediafinder.py:899
+#: GmediaFinder/gmediafinder.py:600 GmediaFinder/gmediafinder.py:651
+#: GmediaFinder/gmediafinder.py:690 GmediaFinder/gmediafinder.py:752
+#: GmediaFinder/gmediafinder.py:794 GmediaFinder/gmediafinder.py:858
+#: GmediaFinder/gmediafinder.py:905
 #, python-format
 msgid "no more files found for %s..."
 msgstr "Aucun résultat supplémentaire pour %s... "
 
-#: GmediaFinder/gmediafinder.py:598 GmediaFinder/gmediafinder.py:740
-#: GmediaFinder/gmediafinder.py:844
+#: GmediaFinder/gmediafinder.py:604 GmediaFinder/gmediafinder.py:746
+#: GmediaFinder/gmediafinder.py:850
 #, python-format
 msgid "Results page %s for %s...(%s results)"
 msgstr "Page de résultat %s pour %s... (%s résultats)"
 
-#: GmediaFinder/gmediafinder.py:629 GmediaFinder/gmediafinder.py:691
-#: GmediaFinder/gmediafinder.py:795
+#: GmediaFinder/gmediafinder.py:635 GmediaFinder/gmediafinder.py:697
+#: GmediaFinder/gmediafinder.py:801
 #, python-format
 msgid "no files found for %s..."
 msgstr "Aucun résultat pour : %s"
 
-#: GmediaFinder/gmediafinder.py:639 GmediaFinder/gmediafinder.py:678
-#: GmediaFinder/gmediafinder.py:782
+#: GmediaFinder/gmediafinder.py:645 GmediaFinder/gmediafinder.py:684
+#: GmediaFinder/gmediafinder.py:788
 #, python-format
 msgid "Results page %s for %s...(Next page available)"
 msgstr "Page de résultat %s pour %s... (Page suivante disponible)"
 
-#: GmediaFinder/gmediafinder.py:720 GmediaFinder/gmediafinder.py:826
+#: GmediaFinder/gmediafinder.py:726 GmediaFinder/gmediafinder.py:832
 #, python-format
 msgid "No results found for %s..."
 msgstr "Aucun résultat pour : %s"
 
-#: GmediaFinder/gmediafinder.py:724 GmediaFinder/gmediafinder.py:830
+#: GmediaFinder/gmediafinder.py:730 GmediaFinder/gmediafinder.py:836
 #, python-format
 msgid "no results for your search : %s "
 msgstr "Aucun résultat pour : %s"
 
-#: GmediaFinder/gmediafinder.py:728 GmediaFinder/gmediafinder.py:834
+#: GmediaFinder/gmediafinder.py:734 GmediaFinder/gmediafinder.py:840
 #, python-format
 msgid "%s results found for your search : %s "
 msgstr "%s résultats trouvés pour : %s"
 
-#: GmediaFinder/gmediafinder.py:1012 GmediaFinder/gmediafinder.py:1417
+#: GmediaFinder/gmediafinder.py:1018 GmediaFinder/gmediafinder.py:1423
 msgid "Stopped"
 msgstr "Arrêté"
 
-#: GmediaFinder/gmediafinder.py:1323 data/glade/mainGui.glade:1056
+#: GmediaFinder/gmediafinder.py:1329 data/glade/mainGui.glade:1056
 msgid "Download"
-msgstr "Télécharger"
+msgstr "Téléchargement"
 
-#: GmediaFinder/gmediafinder.py:1323
+#: GmediaFinder/gmediafinder.py:1329
 #, python-format
 msgid ""
 "The file:\n"
@@ -130,39 +141,30 @@ msgstr ""
 "\n"
 "existe déjà, Télécharger à nouveau ?"
 
-#: GmediaFinder/gmediafinder.py:1351
+#: GmediaFinder/gmediafinder.py:1357
 msgid "Convert to mp3"
 msgstr "Convertir en mp3"
 
-#: GmediaFinder/gmediafinder.py:1362
+#: GmediaFinder/gmediafinder.py:1368
 msgid "Remove"
 msgstr "Supprimer"
 
-#: GmediaFinder/gmediafinder.py:1395
+#: GmediaFinder/gmediafinder.py:1401
 msgid "Converting process started..."
 msgstr "Conversion en cours..."
 
-#: GmediaFinder/gmediafinder.py:1410
+#: GmediaFinder/gmediafinder.py:1416
 msgid "Audio file successfully created !"
 msgstr "Fichier audio crée avec succès !"
 
-#: GmediaFinder/gmediafinder.py:1415
+#: GmediaFinder/gmediafinder.py:1421
 #, python-format
 msgid "Playing %s"
 msgstr "Lecture : %s"
 
-#: GmediaFinder/gmediafinder.py:1433
+#: GmediaFinder/gmediafinder.py:1439
 msgid "Failed..."
 msgstr "Erreur..."
-
-#: GmediaFinder/gmediafinder.py:1489
-#, python-format
-msgid "Downloading %-66s"
-msgstr "Téléchargement %-66s"
-
-#: GmediaFinder/gmediafinder.py:1515
-msgid "Download complete"
-msgstr "Téléchargement terminé"
 
 #: data/glade/mainGui.glade:11
 msgid ""
@@ -305,8 +307,7 @@ msgid ""
 "\n"
 "    a) Accompany it with the complete corresponding machine-readable\n"
 "    source code, which must be distributed under the terms of Sections\n"
-"    1 and 2 above on a medium customarily used for software interchange; "
-"or,\n"
+"    1 and 2 above on a medium customarily used for software interchange; or,\n"
 "\n"
 "    b) Accompany it with a written offer, valid for at least three\n"
 "    years, to give any third party, for a charge no more than your\n"
@@ -413,8 +414,7 @@ msgid ""
 "later version\", you have the option of following the terms and conditions\n"
 "either of that version or of any later version published by the Free\n"
 "Software Foundation.  If the Program does not specify a version number of\n"
-"this License, you may choose any version ever published by the Free "
-"Software\n"
+"this License, you may choose any version ever published by the Free Software\n"
 "Foundation.\n"
 "\n"
 "  10. If you wish to incorporate parts of the Program into other free\n"
@@ -430,8 +430,7 @@ msgid ""
 "  11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY\n"
 "FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN\n"
 "OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES\n"
-"PROVIDE THE PROGRAM \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EITHER "
-"EXPRESSED\n"
+"PROVIDE THE PROGRAM \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED\n"
 "OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF\n"
 "MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS\n"
 "TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE\n"
@@ -484,8 +483,7 @@ msgid ""
 "when it starts in an interactive mode:\n"
 "\n"
 "    Gnomovision version 69, Copyright (C) year name of author\n"
-"    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show "
-"w'.\n"
+"    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
 "    This is free software, and you are welcome to redistribute it\n"
 "    under certain conditions; type `show c' for details.\n"
 "\n"
@@ -513,7 +511,7 @@ msgstr ""
 
 #: data/glade/mainGui.glade:417
 msgid "Playlist"
-msgstr "Accueil"
+msgstr "Recherche"
 
 #: data/glade/mainGui.glade:462
 msgid "Downloads"
@@ -587,10 +585,19 @@ msgid ""
 "corona\n"
 "bumpscope"
 msgstr ""
+"jess\n"
+"goom\n"
+"oinksie\n"
+"lv_scope\n"
+"lv_analyzer\n"
+"jakdaw\n"
+"infinite\n"
+"corona\n"
+"bumpscope"
 
 #: data/glade/mainGui.glade:1313
 msgid "page 1"
-msgstr ""
+msgstr "page 1"
 
 #: data/glade/mainGui.glade:1373
 msgid "Download path :     "
@@ -610,63 +617,46 @@ msgstr ""
 
 #: data/glade/mainGui.glade:1479
 msgid "Options"
-msgstr ""
+msgstr "Options"
 
-#: data/glade/mainGui.glade:1563
+#: data/glade/mainGui.glade:1564
 msgid "Max resolution : "
 msgstr "Résolution max : "
 
-#: data/glade/mainGui.glade:1590
+#: data/glade/mainGui.glade:1591
 msgid "320x240"
-msgstr ""
+msgstr "320x240"
 
-#: data/glade/mainGui.glade:1607
+#: data/glade/mainGui.glade:1608
 msgid "640x320"
-msgstr ""
+msgstr "640x320"
 
-#: data/glade/mainGui.glade:1623
+#: data/glade/mainGui.glade:1624
 msgid "854x480"
-msgstr ""
+msgstr "854x480"
 
-#: data/glade/mainGui.glade:1639
+#: data/glade/mainGui.glade:1640
 msgid "1280x720"
-msgstr ""
+msgstr "1280x720"
 
-#: data/glade/mainGui.glade:1655
+#: data/glade/mainGui.glade:1656
 msgid "1920x1080"
-msgstr ""
+msgstr "1920x1080"
 
-#: data/glade/mainGui.glade:1692
+#: data/glade/mainGui.glade:1693
 msgid "<b>Youtube video options : </b>"
 msgstr "<b>Options vidéo Youtube : </b>"
 
-#: data/glade/mainGui.glade:1707
+#: data/glade/mainGui.glade:1708
 msgid "search options"
-msgstr ""
+msgstr "Options de recherche"
 
-#: data/glade/mainGui.glade:1736
-#, fuzzy
+#: data/glade/mainGui.glade:1743
 msgid "<b>Select your engines : </b>"
-msgstr "Sélectionnez un moteur : "
+msgstr "<b>Sélectionnez vos moteurs : </b>"
 
-#: data/glade/mainGui.glade:1759
+#: data/glade/mainGui.glade:1766
 msgid "Engines"
-msgstr ""
+msgstr "Moteurs"
 
-#~ msgid "Media files detected on : %s, scanning... "
-#~ msgstr "Fichiers media détectés sur : %s, scan en cours... "
 
-#~ msgid "scanning webpage : %s"
-#~ msgstr "scan la page : %s"
-
-#~ msgid "Scan terminated for your request : %s"
-#~ msgstr "Scan terminé pour votre recherche : %s"
-
-#~ msgid "Songs"
-#~ msgstr "Audio"
-
-#~ msgid "Videos"
-#~ msgstr "Vidéos"
-
-#~ msgid "Images"
-#~ msgstr "Images"
