@@ -10,7 +10,7 @@ try:
     from DistUtilsExtra.command import *
 except ImportError:
     print 'Cannot install gmediafinder :('
-    print 'Would you please install package "python-distutils-extra" first?'
+    print 'Would you please install package "python-distutils-extra and python-setuptools" first?'
     sys.exit()
 import glob
 
