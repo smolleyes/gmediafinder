@@ -53,7 +53,6 @@ class uninstall(_install):
 version = open('VERSION', 'r').read().strip()	
 
 packages = find_packages()
-package_dir={'GmediaFinder': '.'})
 
 data_files = [
 	('share/icons/hicolor/22x22/apps',['images/22x22/gmediafinder.png']),
@@ -75,7 +74,8 @@ setup(
 	author='Laguillaumie sylvain',
 	author_email='s.lagui@free.fr',
 	url='http://penguincape.org',
-	packages=packages,package_dir={'bzrlib.plugins.explorer': '.'},
+	packages=packages,
+	package_dir={'GmediaFinder': '.'},
 	scripts=['gmediafinder'],
 	data_files=data_files,
 	cmdclass={'build' :  build_extra.build_extra,
