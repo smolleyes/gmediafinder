@@ -60,6 +60,9 @@ data_files = [
 	('share/applications',['gmediafinder.desktop']),
 	('share/gmediafinder/glade',['data/glade/mainGui.glade']),
 	('share/gmediafinder/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif']),
+	('share/pyshared/GmediaFinder/', ['GmediaFinder/__init__.py']),
+	('share/pyshared/GmediaFinder/lib/', ['GmediaFinder/__init__.py']),
+	('share/pyshared/GmediaFinder/lib/engines/', ['GmediaFinder/__init__.py']),
 ]
 
 
