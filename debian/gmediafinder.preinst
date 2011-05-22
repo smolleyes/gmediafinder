@@ -6,7 +6,7 @@ set -e
 # pycentral does not remove normally remove its symlinks on an
 # upgrade. Since we're using python-support, however, those symlinks
 # will be broken. This tells python-central to clean up any symlinks.
-if [ -e /var/lib/dpkg/info/python-gmediafinder.list ] && which pycentral >/dev/null 2>&1
+if [ -e /var/lib/dpkg/info/gmediafinder.list ] && which pycentral >/dev/null 2>&1
 then
     pycentral pkgremove gmediafinder
 fi

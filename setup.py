@@ -61,11 +61,10 @@ data_files = [
 	('share/applications',['gmediafinder.desktop']),
 	('share/gmediafinder/glade',['data/glade/mainGui.glade']),
 	('share/gmediafinder/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif']),
+	('share/pyshared/GmediaFinder/', ['GmediaFinder/__init__.py']),
+	('share/pyshared/GmediaFinder/lib/', ['GmediaFinder/__init__.py']),
+	('share/pyshared/GmediaFinder/lib/engines/', ['GmediaFinder/__init__.py']),
 ]
-
-#('share/pyshared/GmediaFinder/', ['GmediaFinder/__init__.py']),
-#('share/pyshared/GmediaFinder/lib/', ['GmediaFinder/__init__.py']),
-#('share/pyshared/GmediaFinder/lib/engines/', ['GmediaFinder/__init__.py']),
 
 setup(
 	name='gmediafinder',
@@ -75,8 +74,6 @@ setup(
 	author_email='s.lagui@free.fr',
 	url='http://penguincape.org',
 	packages=packages,
-	package_dir={'GmediaFinder/': '.'},
-	include_package_data=True,
 	scripts=['gmediafinder'],
 	data_files=data_files,
 	cmdclass={'build' :  build_extra.build_extra,
