@@ -2,7 +2,7 @@
 
 import sys, os
 from stat import *
-from distutils.core import setup
+from distutils.core import setup, find_packages
 from distutils.command.install import install as _install
 
 try:
@@ -51,7 +51,7 @@ class uninstall(_install):
 
 version = open('VERSION', 'r').read().strip()	
 
-packages = ['GmediaFinder','GmediaFinder.lib','GmediaFinder.lib.engines']
+packages = find_packages()
 
 data_files = [
 	('share/icons/hicolor/22x22/apps',['images/22x22/gmediafinder.png']),
@@ -60,9 +60,6 @@ data_files = [
 	('share/applications',['gmediafinder.desktop']),
 	('share/gmediafinder/glade',['data/glade/mainGui.glade']),
 	('share/gmediafinder/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif']),
-	('share/pyshared/GmediaFinder/', ['GmediaFinder/__init__.py']),
-	('share/pyshared/GmediaFinder/lib/', ['GmediaFinder/__init__.py']),
-	('share/pyshared/GmediaFinder/lib/engines/', ['GmediaFinder/__init__.py']),
 ]
 
 
