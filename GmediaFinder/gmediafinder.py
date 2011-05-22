@@ -478,11 +478,11 @@ class GsongFinder(object):
         self.search_btn.set_sensitive(0)
 
         if self.engine == "YouPorn":
-			self.idle_add_lock(self.search_youporn,())
+			self.idle_add_lock(self.searchg,())
         else:
             self.idle_add_lock(self.get_page_links,())
 
-    def search_youporn(self,args=None):
+    def searchg(self,args=None):
 		self.model.clear()
 		self.informations_label.set_text(_("Searching for %s with %s ") % (self.user_search,self.engine))
 		i=0
@@ -506,7 +506,7 @@ class GsongFinder(object):
 
     def change_page(self,widget=None):
         user_search = self.search_entry.get_text()
-        engine = self.engine_selector.get_active_text()
+        engine = self.engine_selector.getSelected()
         if not user_search or user_search != self.user_search \
         or not engine or engine != self.main_engine:
             self.reset_pages()
@@ -935,7 +935,7 @@ class GsongFinder(object):
 
 
     def add_sound(self, name, media_link, img=None, quality_list=None):
-        if self.engine == "youtube.com" or self.engine == "youporn.com":
+        if self.engine == "youtube.com" or self.engine == "YouPorn":
             cimg = self.download_photo(img)
         else:
             cimg = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
