@@ -2,6 +2,7 @@
 
 import sys, os
 from stat import *
+from setuptools import find_packages
 from distutils.core import setup, find_packages
 from distutils.command.install import install as _install
 
