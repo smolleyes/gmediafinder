@@ -15,7 +15,7 @@ mkdir -p $basedir/ro/LC_MESSAGES
 msgfmt --output-file=$basedir/fr/LC_MESSAGES/gmediafinder.mo $basedir/fr.po
 msgfmt --output-file=$basedir/en/LC_MESSAGES/gmediafinder.mo $basedir/en.po
 msgfmt --output-file=$basedir/it/LC_MESSAGES/gmediafinder.mo $basedir/it.po
-msgfmt --output-file=$basedir/ro/LC_MESSAGES/gmediafinder.mo $basedir/iro.po
+msgfmt --output-file=$basedir/ro/LC_MESSAGES/gmediafinder.mo $basedir/ro.po
 exit 0
 fi
 
