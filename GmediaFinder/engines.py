@@ -18,13 +18,15 @@ class Engines(object):
 	
 	def load_engines(self):
 		# local engines
-		self.local_engines_list = os.listdir(constants.exec_path+'/lib/engines')
+		self.local_engines_list = []
+		for engine in os.listdir(constants.exec_path+'/lib/engines'):
+			if os.path.isdir(os.path.join(constants.exec_path+'/lib/engines', engine)):
+				self.local_engines_list.append(engine)
 		# activated plugins list in the gmf config file
 		self.load_plugins_conf()
+		self.engines_list = self.gui.config["engines"]
 		# create checkbuttons and activate it if the engine is in the config file...
 		for engine in self.local_engines_list:
-			if not os.path.isdir(os.path.join(constants.exec_path+'/lib/engines', engine)):
-				continue
 			checkbox = gtk.CheckButton(engine)
 			checkbox.set_alignment(0, 0.5)
 			self.gui.engines_box.pack_start(checkbox,False,False,5)
@@ -49,7 +51,7 @@ class Engines(object):
 			self.engines_list = self.gui.config["engines"]
 		except:
 			## add new engines key in the config file if not present
-			self.gui.config["engines"] = ""
+			self.gui.config["engines"] = self.local_engines_list
 			self.gui.config.write()
 			
 			
