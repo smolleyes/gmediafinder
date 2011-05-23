@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-23 14:31+0200\n"
+"POT-Creation-Date: 2011-05-24 00:18+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -26,50 +26,50 @@ msgstr ""
 msgid "Download complete"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:140
+#: GmediaFinder/gmediafinder.py:142
 msgid "Quality"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:246
+#: GmediaFinder/gmediafinder.py:248
 msgid " Results : "
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:348
+#: GmediaFinder/gmediafinder.py:350
 #, python-format
 msgid "%s engine selected"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:371 GmediaFinder/gmediafinder.py:530
+#: GmediaFinder/gmediafinder.py:373 GmediaFinder/gmediafinder.py:532
 #, python-format
 msgid "Playing : %s"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:474
+#: GmediaFinder/gmediafinder.py:476
 msgid "Please enter an artist/album or song name..."
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:477
+#: GmediaFinder/gmediafinder.py:479
 msgid "Please select an engine..."
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:492 GmediaFinder/gmediafinder.py:504
+#: GmediaFinder/gmediafinder.py:494 GmediaFinder/gmediafinder.py:506
 #, python-format
 msgid "Searching for %s with %s "
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:495
+#: GmediaFinder/gmediafinder.py:497
 msgid "Please select a search engine..."
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:533 GmediaFinder/gmediafinder.py:938
+#: GmediaFinder/gmediafinder.py:535 GmediaFinder/gmediafinder.py:940
 msgid "Stopped"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:844 data/glade/mainGui.glade:1056
+#: GmediaFinder/gmediafinder.py:846 data/glade/mainGui.glade:1056
 msgid "Download"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:844
+#: GmediaFinder/gmediafinder.py:846
 #, python-format
 msgid ""
 "The file:\n"
@@ -79,28 +79,28 @@ msgid ""
 "already exist, download again ?"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:872
+#: GmediaFinder/gmediafinder.py:874
 msgid "Convert to mp3"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:883
+#: GmediaFinder/gmediafinder.py:885
 msgid "Remove"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:916
+#: GmediaFinder/gmediafinder.py:918
 msgid "Converting process started..."
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:931
+#: GmediaFinder/gmediafinder.py:933
 msgid "Audio file successfully created !"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:936
+#: GmediaFinder/gmediafinder.py:938
 #, python-format
 msgid "Playing %s"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:954
+#: GmediaFinder/gmediafinder.py:956
 msgid "Failed..."
 msgstr ""
 

@@ -82,8 +82,10 @@ class GsongFinder(object):
 			self.config["download_path"] = self.down_dir
 			self.config.write()
         ## get default max_res for youtube videos
-        self.youtube_max_res = self.config["youtube_max_res"]
-        
+        try:
+			self.youtube_max_res = self.config["youtube_max_res"]
+        except:
+			self.config["youtube_max_res"] = self.youtube_max_res
         self.engine_list = {}
         self.engine = None
         ## small config dir for downloads...

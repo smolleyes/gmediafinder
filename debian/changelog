@@ -1,5 +1,5 @@
-gmediafinder (0.9.3.2-0ppa2~natty) natty; urgency=high
+gmediafinder (0.9.3.3-0ppa1~natty) natty; urgency=high
 
-  * fix plugins init
+  * fix software init
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
