@@ -4,7 +4,10 @@ import urllib
 import socket
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 
-from functions import *
+try:
+	from functions import *
+except:
+	from GmediaFinder.functions import *
 
 class Imusicz(object):
     def __init__(self,gui):

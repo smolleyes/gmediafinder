@@ -64,14 +64,16 @@ data_files = [
 	('share/pyshared/GmediaFinder/', ['GmediaFinder/__init__.py']),
 	('share/pyshared/GmediaFinder/lib/', ['GmediaFinder/__init__.py']),
 	('share/pyshared/GmediaFinder/lib/engines/', ['GmediaFinder/__init__.py']),
-	('share/pyshared/GmediaFinder/lib/engines/Skreemr/', ['GmediaFinder/__init__.py','Skreemr.py']),
-	('share/pyshared/GmediaFinder/lib/engines/Youtube/', ['GmediaFinder/__init__.py','Youtube.py']),
-	('share/pyshared/GmediaFinder/lib/engines/Mp3Realm/', ['GmediaFinder/__init__.py','Mp3Realm.py']),
-	('share/pyshared/GmediaFinder/lib/engines/Dilandau/', ['GmediaFinder/__init__.py','Dilandau.py']),
-	('share/pyshared/GmediaFinder/lib/engines/Tagoo/', ['GmediaFinder/__init__.py','Tagoo.py']),
-	('share/pyshared/GmediaFinder/lib/engines/Imusicz/', ['GmediaFinder/__init__.py','Imusicz.py']),
-	('share/pyshared/GmediaFinder/lib/engines/YouPorn/', ['GmediaFinder/__init__.py','YouPorn.py']),
 ]
+
+#('share/pyshared/GmediaFinder/lib/engines/Skreemr/', ['GmediaFinder/__init__.py','Skreemr.py']),
+	#('share/pyshared/GmediaFinder/lib/engines/Youtube/', ['GmediaFinder/__init__.py','Youtube.py']),
+	#('share/pyshared/GmediaFinder/lib/engines/Mp3Realm/', ['GmediaFinder/__init__.py','Mp3Realm.py']),
+	#('share/pyshared/GmediaFinder/lib/engines/Dilandau/', ['GmediaFinder/__init__.py','Dilandau.py']),
+	#('share/pyshared/GmediaFinder/lib/engines/Tagoo/', ['GmediaFinder/__init__.py','Tagoo.py']),
+	#('share/pyshared/GmediaFinder/lib/engines/Imusicz/', ['GmediaFinder/__init__.py','Imusicz.py']),
+	#('share/pyshared/GmediaFinder/lib/engines/YouPorn/', ['GmediaFinder/__init__.py','YouPorn.py']),
+
 
 setup(
 	name='gmediafinder',

@@ -3,9 +3,14 @@ import re
 import urllib
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 
-from functions import *
-from functions import YouTubeClient
-from functions import download_photo
+try:
+	from functions import *
+	from functions import YouTubeClient
+	from functions import download_photo
+except:
+	from GmediaFinder.functions import *
+	from GmediaFinder.functions import YouTubeClient
+	from GmediaFinder.functions import download_photo
 
 class Youtube(object):
     def __init__(self,gui):

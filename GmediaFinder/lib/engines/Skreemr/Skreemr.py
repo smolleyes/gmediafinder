@@ -3,7 +3,10 @@ import re
 import urllib
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 
-from functions import *
+try:
+	from functions import *
+except:
+	from GmediaFinder.functions import *
 
 class Skreemr(object):
     def __init__(self,gui):
