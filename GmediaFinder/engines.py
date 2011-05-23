@@ -24,7 +24,7 @@ class Engines(object):
                 self.local_engines_list.append(engine)
         # activated plugins list in the gmf config file
         self.load_plugins_conf()
-        # create checkbuttons and activate it if the engine is in the config file...
+        # create checkbtn of enabled plugins in the gui
         for engine in self.local_engines_list:
             checkbox = gtk.CheckButton(engine)
             checkbox.set_alignment(0, 0.5)
@@ -51,7 +51,10 @@ class Engines(object):
                 self.engines_list.append(eng)
         except:
             ## add new engines key in the config file if not present
+            ## disable YouPorn by default
             self.gui.config["engines"] = self.local_engines_list
+            if ('YouPorn' in self.local_engines_list):
+				self.gui.config["engines"].remove('YouPorn')
             self.gui.config.write()
             self.engines_list = self.local_engines_list
             
