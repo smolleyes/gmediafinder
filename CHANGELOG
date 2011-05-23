@@ -1,3 +1,8 @@
+v 0.9.3.2
+ * new translation system with fr,it and ro language
+ * new plugins system
+ * many fixes
+
 v0.8.2:
 * Add skreemr.org and imusicz.net engine
 * Remove iwantmusik.com engine
