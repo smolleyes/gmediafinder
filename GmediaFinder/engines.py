@@ -38,10 +38,11 @@ class Engines(object):
 		modstr = "lib.engines.%s.%s" % (engine,engine)
 		module = __import__(modstr, globals(), locals(), ['*'])
 		init = getattr(module, '%s' % engine)
-		try:
-			setattr(self, '%s' % engine, init(self.gui))
-		except:
-			return
+		setattr(self, '%s' % engine, init(self.gui))
+		#try:
+			#setattr(self, '%s' % engine, init(self.gui))
+		#except:
+			#return
 					
 	def load_plugins_conf(self):
 		try:

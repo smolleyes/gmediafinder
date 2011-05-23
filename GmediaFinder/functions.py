@@ -4,6 +4,62 @@ import time
 import re
 import gdata.service,gdata.youtube
 import gdata.youtube.service as yt_service
+import urllib2
+import urllib
+import html5lib
+from html5lib import sanitizer, treebuilders, treewalkers, serializer, treewalkers
+
+import HTMLParser
+
+HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
+
+def get_url_data(url):
+        user_agent = 'Mozilla/5.0 (X11; U; Linux i686; en-US) AppleWebKit/534.15 (KHTML, like Gecko) Ubuntu/10.10 Chromium/10.0.608.0 Chrome/10.0.608.0 Safari/534.15'
+        headers =  { 'User-Agent' : user_agent , 'Accept-Language' : 'fr-FR,fr;q=0.8,en-US;q=0.6,en;q=0.4' }
+        ## start the request
+        try:
+            req = urllib2.Request(url,None,headers)
+        except:
+            return
+        try:
+            code = urllib2.urlopen(req)
+        except:
+            return
+
+        results = code.read()
+        return results
+
+def clean_html(buf):
+	"""Cleans HTML of dangerous tags and content."""
+	buf = buf.strip()
+	if not buf:
+		return buf
+
+	p = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"),
+			tokenizer=sanitizer_factory)
+	dom_tree = p.parseFragment(buf)
+
+	walker = treewalkers.getTreeWalker("dom")
+	stream = walker(dom_tree)
+
+	s = serializer.htmlserializer.HTMLSerializer(
+			omit_optional_tags=False,
+			quote_attr_values=False)
+	return s.render(stream).decode('UTF-8')
+
+def sanitizer_factory(self,*args, **kwargs):
+        san = sanitizer.HTMLSanitizer(*args, **kwargs)
+        # This isn't available yet
+        # san.strip_tokens = True
+        return san
+
+def download_photo(img_url):
+	image_on_web = urllib.urlretrieve(img_url)
+	try:
+		pixb = gtk.gdk.pixbuf_new_from_file_at_size(image_on_web[0],100,100)
+	except gobject.GError, error:
+		return False
+	return pixb
 
 def get_codec(num):
     codec=None
