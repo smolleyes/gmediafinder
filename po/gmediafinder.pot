@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-24 06:09+0200\n"
+"POT-Creation-Date: 2011-05-24 06:28+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,16 +17,16 @@ msgstr ""
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: GmediaFinder/functions.py:109 GmediaFinder/gmediafinder.py:965
+#: GmediaFinder/functions.py:111 GmediaFinder/gmediafinder.py:965
 msgid "Failed..."
 msgstr ""
 
-#: GmediaFinder/functions.py:135
+#: GmediaFinder/functions.py:139
 #, python-format
 msgid "Downloading %-66s"
 msgstr ""
 
-#: GmediaFinder/functions.py:161
+#: GmediaFinder/functions.py:163
 msgid "Download complete"
 msgstr ""
 

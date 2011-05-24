@@ -104,12 +104,16 @@ class Downloader(threading.Thread):
 				self.btnf.show()
 				self.btn_conv.show()
 				self.btn.show()
+				self.btnstop.hide()
 				self.decrease_down_count()
+				self._stopevent.set()
 			except:
 				self.pbar.set_text(_("Failed..."))
 				self.btn.show()
 				self.decrease_down_count()
-			self._stopevent.wait(0.5)
+				self.btnstop.hide()
+				self._stopevent.set()
+			
 
 	
     def stop(self,widget=None):
@@ -136,7 +140,6 @@ class Downloader(threading.Thread):
 			progressbar.set_pulse_step(0.2)
 			progressbar.pulse()
 			gtk.gdk.threads_leave()
-			time.sleep(0.5)
 		else:
 			if numblocks != 0:
 				try:
@@ -156,7 +159,6 @@ class Downloader(threading.Thread):
 					progressbar.set_text("%s %3d%% %s" % (mbs,percent,e))
 					progressbar.set_fraction(percent/100.0)
 					gtk.gdk.threads_leave()
-					time.sleep(0.5)
 				else:
 					progressbar.set_text(_("Download complete"))
 					return

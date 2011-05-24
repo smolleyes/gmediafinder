@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-24 06:09+0200\n"
+"POT-Creation-Date: 2011-05-24 06:28+0200\n"
 "PO-Revision-Date: 2011-05-24 04:07+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -18,16 +18,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
-#: GmediaFinder/functions.py:109 GmediaFinder/gmediafinder.py:965
+#: GmediaFinder/functions.py:111 GmediaFinder/gmediafinder.py:965
 msgid "Failed..."
 msgstr "Erreur..."
 
-#: GmediaFinder/functions.py:135
+#: GmediaFinder/functions.py:139
 #, python-format
 msgid "Downloading %-66s"
 msgstr "Téléchargement %-66s"
 
-#: GmediaFinder/functions.py:161
+#: GmediaFinder/functions.py:163
 msgid "Download complete"
 msgstr "Téléchargement terminé"
 
