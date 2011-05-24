@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-24 00:18+0200\n"
+"POT-Creation-Date: 2011-05-24 06:04+0200\n"
 "PO-Revision-Date: 2011-05-22 13:05+0000\n"
 "Last-Translator: symbianflo <symbianflo@fastwebnet.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,12 +17,16 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: GmediaFinder/functions.py:81
+#: GmediaFinder/functions.py:109 GmediaFinder/gmediafinder.py:965
+msgid "Failed..."
+msgstr "Fallito ..."
+
+#: GmediaFinder/functions.py:135
 #, python-format
 msgid "Downloading %-66s"
 msgstr "Scaricamento %-66s"
 
-#: GmediaFinder/functions.py:107
+#: GmediaFinder/functions.py:161
 msgid "Download complete"
 msgstr "Scaricamento completato"
 
@@ -61,7 +65,7 @@ msgstr "Ricerca per %s su %s"
 msgid "Please select a search engine..."
 msgstr "Si prega di scegliere un motore di ricerca"
 
-#: GmediaFinder/gmediafinder.py:535 GmediaFinder/gmediafinder.py:940
+#: GmediaFinder/gmediafinder.py:535 GmediaFinder/gmediafinder.py:949
 msgid "Stopped"
 msgstr "Fermatto"
 
@@ -84,30 +88,31 @@ msgstr ""
 "\n"
 "esiste già, lo scarico di nuovo?"
 
-#: GmediaFinder/gmediafinder.py:874
+#: GmediaFinder/gmediafinder.py:866
+#, fuzzy
+msgid "Stop Downloading"
+msgstr "Scaricamento %-66s"
+
+#: GmediaFinder/gmediafinder.py:882
 msgid "Convert to mp3"
 msgstr "Convertire in mp3"
 
-#: GmediaFinder/gmediafinder.py:885
+#: GmediaFinder/gmediafinder.py:893
 msgid "Remove"
 msgstr "Elimina"
 
-#: GmediaFinder/gmediafinder.py:918
+#: GmediaFinder/gmediafinder.py:927
 msgid "Converting process started..."
 msgstr "Processo di conversione avviato ..."
 
-#: GmediaFinder/gmediafinder.py:933
+#: GmediaFinder/gmediafinder.py:942
 msgid "Audio file successfully created !"
 msgstr "File audio creato con successso !"
 
-#: GmediaFinder/gmediafinder.py:938
+#: GmediaFinder/gmediafinder.py:947
 #, python-format
 msgid "Playing %s"
 msgstr "Riproduzione %s"
-
-#: GmediaFinder/gmediafinder.py:956
-msgid "Failed..."
-msgstr "Fallito ..."
 
 #: data/glade/mainGui.glade:11
 msgid ""

@@ -857,6 +857,14 @@ class GsongFinder(object):
         vbox.pack_end(pbar, False, False, 5)
         box.pack_start(gtk.image_new_from_pixbuf(self.media_img), False,False, 5)
         box.pack_start(vbox, False, False, 5)
+        ## stop btn
+        btnstop = gtk.Button()
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_BUTTON)
+        btnstop.add(image)
+        box.pack_end(btnstop, False, False, 5)
+        btnstop.set_tooltip_text(_("Stop Downloading"))
+        self.down_container.pack_start(box, False ,False, 5)
         ## show folder button
         btnf = gtk.Button()
         image = gtk.Image()
@@ -883,7 +891,7 @@ class GsongFinder(object):
         btn.add(image)
         box.pack_end(btn, False, False, 5)
         btn.set_tooltip_text(_("Remove"))
-        self.down_container.pack_start(box, False ,False, 5)
+        
         box.show_all()
         btnf.hide()
         if self.engine == "Youtube":
@@ -893,8 +901,9 @@ class GsongFinder(object):
         btn.hide()
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
-        down_thread = thread.start_new_thread(self.start_download,(url, name, pbar, btnf,btn,btn_conv))
-
+        t = Downloader(self,url, name, pbar, btnf,btn,btn_conv,btnstop,name)
+        t.start()
+        
     def show_folder(self,widget,path):
         if sys.platform == "win32":
 	    os.system('explorer %s' % path)

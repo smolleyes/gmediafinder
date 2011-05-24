@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-24 00:18+0200\n"
+"POT-Creation-Date: 2011-05-24 06:04+0200\n"
 "PO-Revision-Date: 2011-05-18 01:22+0200\n"
 "Last-Translator: smo <s.lagui@free.fr>\n"
 "Language-Team: Language EN\n"
@@ -16,12 +16,16 @@ msgstr ""
 "Content-Type: text/plain; charset=ASCII\n"
 "Content-Transfer-Encoding: 8bit\n"
 
-#: GmediaFinder/functions.py:81
+#: GmediaFinder/functions.py:109 GmediaFinder/gmediafinder.py:965
+msgid "Failed..."
+msgstr ""
+
+#: GmediaFinder/functions.py:135
 #, python-format
 msgid "Downloading %-66s"
 msgstr ""
 
-#: GmediaFinder/functions.py:107
+#: GmediaFinder/functions.py:161
 msgid "Download complete"
 msgstr ""
 
@@ -60,7 +64,7 @@ msgstr ""
 msgid "Please select a search engine..."
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:535 GmediaFinder/gmediafinder.py:940
+#: GmediaFinder/gmediafinder.py:535 GmediaFinder/gmediafinder.py:949
 msgid "Stopped"
 msgstr ""
 
@@ -78,29 +82,29 @@ msgid ""
 "already exist, download again ?"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:874
+#: GmediaFinder/gmediafinder.py:866
+msgid "Stop Downloading"
+msgstr ""
+
+#: GmediaFinder/gmediafinder.py:882
 msgid "Convert to mp3"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:885
+#: GmediaFinder/gmediafinder.py:893
 msgid "Remove"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:918
+#: GmediaFinder/gmediafinder.py:927
 msgid "Converting process started..."
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:933
+#: GmediaFinder/gmediafinder.py:942
 msgid "Audio file successfully created !"
 msgstr ""
 
-#: GmediaFinder/gmediafinder.py:938
+#: GmediaFinder/gmediafinder.py:947
 #, python-format
 msgid "Playing %s"
-msgstr ""
-
-#: GmediaFinder/gmediafinder.py:956
-msgid "Failed..."
 msgstr ""
 
 #: data/glade/mainGui.glade:11

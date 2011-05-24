@@ -8,6 +8,8 @@ import urllib2
 import urllib
 import html5lib
 from html5lib import sanitizer, treebuilders, treewalkers, serializer, treewalkers
+import threading
+import time
 
 import HTMLParser
 
@@ -73,39 +75,91 @@ def get_codec(num):
         codec= "3gp"
     return codec
 
-def reporthook(numblocks, blocksize, filesize, start_time, url, name, progressbar):
-        #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
-        #XXX Should handle possible filesize=-1.
-    if filesize == -1:
-        gtk.gdk.threads_enter()
-        progressbar.set_text(_("Downloading %-66s") % name)
-        progressbar.set_pulse_step(0.2)
-        progressbar.pulse()
-        gtk.gdk.threads_leave()
-        time.sleep(0.1)
-    else:
-        if numblocks != 0:
-            try:
-                percent = min((numblocks*blocksize*100)/filesize, 100)
-                currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
-                kbps_speed = numblocks * blocksize / (time.time() - start_time)
-                kbps_speed = kbps_speed / 1024
-                total = float(filesize) / (1024 * 1024)
-                mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total)
-                e = ' at %d Kb/s ' % kbps_speed
-                e += calc_eta(start_time, time.time(), total, currently_downloaded)
-            except:
-                percent = 100
-                return
-            if percent < 100:
-                gtk.gdk.threads_enter()
-                progressbar.set_text("%s %3d%% %s" % (mbs,percent,e))
-                progressbar.set_fraction(percent/100.0)
-                gtk.gdk.threads_leave()
-                time.sleep(0.1)
-            else:
-                progressbar.set_text(_("Download complete"))
-                return
+class Downloader(threading.Thread):
+    def __init__(self,gui,url, name, pbar, btnf, btn,btn_conv,btnstop,nom=''):
+        threading.Thread.__init__(self)
+        self.nom = nom
+        self.gui = gui
+        self._stopevent = threading.Event()
+        print "thread %s" % name
+        self.url = url
+        self.name = name
+        self.pbar = pbar
+        self.btnf = btnf
+        self.btn = btn
+        self.btn_conv = btn_conv
+        self.btnstop = btnstop
+        self.btnstop.connect('clicked', self.stop)
+        
+    def run(self,):
+        i = 0
+        while not self._stopevent.isSet():
+			self.gui.active_downloads += 1
+			self.gui.active_down_label.set_text(str(self.gui.active_downloads))
+			## download...
+			try:
+				start_time = time.time()
+				urllib.urlretrieve(self.url, self.gui.down_dir+"/"+ self.name,
+				lambda nb, bs, fs, url=self.url: self._reporthook(nb,bs,fs,start_time,self.url,self.name,self.pbar))
+				self.btnf.show()
+				self.btn_conv.show()
+				self.btn.show()
+				self.decrease_down_count()
+			except:
+				self.pbar.set_text(_("Failed..."))
+				self.btn.show()
+				self.decrease_down_count()
+			self._stopevent.wait(0.5)
+
+	
+    def stop(self,widget=None):
+		print "thread %s stopped" % self.name
+		self._stopevent.set()
+		self.decrease_down_count()
+		os.remove(self.gui.down_dir+"/"+ self.name)
+		self.gui.remove_download(widget)
+    
+    def decrease_down_count(self):
+		if self.gui.active_downloads > 0:
+			self.gui.active_downloads -= 1
+			self.gui.active_down_label.set_text(str(self.gui.active_downloads))
+	
+    def _reporthook(self, numblocks, blocksize, filesize, start_time, url, name, progressbar):
+		#print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
+		#XXX Should handle possible filesize=-1.
+		if self._stopevent.isSet():
+			return
+			
+		if filesize == -1:
+			gtk.gdk.threads_enter()
+			progressbar.set_text(_("Downloading %-66s") % name)
+			progressbar.set_pulse_step(0.2)
+			progressbar.pulse()
+			gtk.gdk.threads_leave()
+			time.sleep(0.5)
+		else:
+			if numblocks != 0:
+				try:
+					percent = min((numblocks*blocksize*100)/filesize, 100)
+					currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
+					kbps_speed = numblocks * blocksize / (time.time() - start_time)
+					kbps_speed = kbps_speed / 1024
+					total = float(filesize) / (1024 * 1024)
+					mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total)
+					e = ' at %d Kb/s ' % kbps_speed
+					e += calc_eta(start_time, time.time(), total, currently_downloaded)
+				except:
+					percent = 100
+					return
+				if percent < 100:
+					gtk.gdk.threads_enter()
+					progressbar.set_text("%s %3d%% %s" % (mbs,percent,e))
+					progressbar.set_fraction(percent/100.0)
+					gtk.gdk.threads_leave()
+					time.sleep(0.5)
+				else:
+					progressbar.set_text(_("Download complete"))
+					return
 
 def with_lock(func, args):
 		gtk.threads_enter()
