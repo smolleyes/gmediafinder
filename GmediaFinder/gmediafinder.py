@@ -816,6 +816,7 @@ class GsongFinder(object):
     
     def set_max_youtube_res(self, widget):
 		if widget.get_active():
+			print "here"
 			self.youtube_max_res = widget.get_child().get_label()
 			self.config["youtube_max_res"]=self.youtube_max_res
 			## return a dic as conf

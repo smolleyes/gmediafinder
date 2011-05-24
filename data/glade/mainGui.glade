@@ -1595,6 +1595,7 @@ bumpscope</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">res2</property>
+                                        <signal name="toggled" handler="on_res1_toggled" />
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1612,6 +1613,7 @@ bumpscope</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">res3</property>
+                                        <signal name="toggled" handler="on_res2_toggled" />
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1628,6 +1630,7 @@ bumpscope</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">res2</property>
+                                        <signal name="toggled" handler="on_res3_toggled" />
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1644,6 +1647,7 @@ bumpscope</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">res5</property>
+                                        <signal name="toggled" handler="on_res4_toggled" />
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>
@@ -1660,6 +1664,7 @@ bumpscope</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="draw_indicator">True</property>
                                         <property name="group">res1</property>
+                                        <signal name="toggled" handler="on_res5_toggled" />
                                       </widget>
                                       <packing>
                                         <property name="expand">True</property>

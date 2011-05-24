@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-24 06:28+0200\n"
+"POT-Creation-Date: 2011-05-24 06:36+0200\n"
 "PO-Revision-Date: 2011-05-22 13:05+0000\n"
 "Last-Translator: symbianflo <symbianflo@fastwebnet.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -17,7 +17,7 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=2; plural=(n != 1)\n"
 
-#: GmediaFinder/functions.py:111 GmediaFinder/gmediafinder.py:965
+#: GmediaFinder/functions.py:111 GmediaFinder/gmediafinder.py:966
 msgid "Failed..."
 msgstr "Fallito ..."
 
@@ -65,15 +65,15 @@ msgstr "Ricerca per %s su %s"
 msgid "Please select a search engine..."
 msgstr "Si prega di scegliere un motore di ricerca"
 
-#: GmediaFinder/gmediafinder.py:535 GmediaFinder/gmediafinder.py:949
+#: GmediaFinder/gmediafinder.py:535 GmediaFinder/gmediafinder.py:950
 msgid "Stopped"
 msgstr "Fermatto"
 
-#: GmediaFinder/gmediafinder.py:846 data/glade/mainGui.glade:1056
+#: GmediaFinder/gmediafinder.py:847 data/glade/mainGui.glade:1056
 msgid "Download"
 msgstr "Scarica"
 
-#: GmediaFinder/gmediafinder.py:846
+#: GmediaFinder/gmediafinder.py:847
 #, python-format
 msgid ""
 "The file:\n"
@@ -88,28 +88,28 @@ msgstr ""
 "\n"
 "esiste già, lo scarico di nuovo?"
 
-#: GmediaFinder/gmediafinder.py:866
+#: GmediaFinder/gmediafinder.py:867
 #, fuzzy
 msgid "Stop Downloading"
 msgstr "Scaricamento %-66s"
 
-#: GmediaFinder/gmediafinder.py:882
+#: GmediaFinder/gmediafinder.py:883
 msgid "Convert to mp3"
 msgstr "Convertire in mp3"
 
-#: GmediaFinder/gmediafinder.py:893
+#: GmediaFinder/gmediafinder.py:894
 msgid "Remove"
 msgstr "Elimina"
 
-#: GmediaFinder/gmediafinder.py:927
+#: GmediaFinder/gmediafinder.py:928
 msgid "Converting process started..."
 msgstr "Processo di conversione avviato ..."
 
-#: GmediaFinder/gmediafinder.py:942
+#: GmediaFinder/gmediafinder.py:943
 msgid "Audio file successfully created !"
 msgstr "File audio creato con successso !"
 
-#: GmediaFinder/gmediafinder.py:947
+#: GmediaFinder/gmediafinder.py:948
 #, python-format
 msgid "Playing %s"
 msgstr "Riproduzione %s"
@@ -579,35 +579,35 @@ msgstr "Massima risoluzione :  "
 msgid "320x240"
 msgstr "320x240"
 
-#: data/glade/mainGui.glade:1608
+#: data/glade/mainGui.glade:1609
 msgid "640x320"
 msgstr "640x320"
 
-#: data/glade/mainGui.glade:1624
+#: data/glade/mainGui.glade:1626
 msgid "854x480"
 msgstr "845x480"
 
-#: data/glade/mainGui.glade:1640
+#: data/glade/mainGui.glade:1643
 msgid "1280x720"
 msgstr "1280x720"
 
-#: data/glade/mainGui.glade:1656
+#: data/glade/mainGui.glade:1660
 msgid "1920x1080"
 msgstr "1920x1080"
 
-#: data/glade/mainGui.glade:1693
+#: data/glade/mainGui.glade:1698
 msgid "<b>Youtube video options : </b>"
 msgstr "<b>Youtube opzioni video : </b>"
 
-#: data/glade/mainGui.glade:1708
+#: data/glade/mainGui.glade:1713
 msgid "search options"
 msgstr "opzioni di ricerca"
 
-#: data/glade/mainGui.glade:1743
+#: data/glade/mainGui.glade:1748
 msgid "<b>Select your engines : </b>"
 msgstr "<b>Selezionare i motori di ricerca : </b>"
 
-#: data/glade/mainGui.glade:1766
+#: data/glade/mainGui.glade:1771
 msgid "Engines"
 msgstr "Motori"
 
