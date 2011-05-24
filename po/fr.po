@@ -8,8 +8,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-24 06:04+0200\n"
-"PO-Revision-Date: 2011-05-22 11:15+0000\n"
+"POT-Creation-Date: 2011-05-24 06:09+0200\n"
+"PO-Revision-Date: 2011-05-24 04:07+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
@@ -90,9 +90,8 @@ msgstr ""
 "existe déjà, Télécharger à nouveau ?"
 
 #: GmediaFinder/gmediafinder.py:866
-#, fuzzy
 msgid "Stop Downloading"
-msgstr "Téléchargement %-66s"
+msgstr "Arrêter le téléchargement"
 
 #: GmediaFinder/gmediafinder.py:882
 msgid "Convert to mp3"
@@ -464,7 +463,7 @@ msgstr ""
 
 #: data/glade/mainGui.glade:417
 msgid "Playlist"
-msgstr "Recherche"
+msgstr "Accueil"
 
 #: data/glade/mainGui.glade:462
 msgid "Downloads"
@@ -611,33 +610,3 @@ msgstr "<b>Sélectionnez vos moteurs : </b>"
 #: data/glade/mainGui.glade:1766
 msgid "Engines"
 msgstr "Moteurs"
-
-#~ msgid "Searching for %s with %s"
-#~ msgstr "Recherche de %s avec %s"
-
-#~ msgid "no results found for %s..."
-#~ msgstr "Aucun résultat pour : %s"
-
-#~ msgid "%s files found for %s"
-#~ msgstr "%s fichiers trouvés pour %s"
-
-#~ msgid "no more files found for %s..."
-#~ msgstr "Aucun résultat supplémentaire pour %s... "
-
-#~ msgid "Results page %s for %s...(%s results)"
-#~ msgstr "Page de résultat %s pour %s... (%s résultats)"
-
-#~ msgid "no files found for %s..."
-#~ msgstr "Aucun résultat pour : %s"
-
-#~ msgid "Results page %s for %s...(Next page available)"
-#~ msgstr "Page de résultat %s pour %s... (Page suivante disponible)"
-
-#~ msgid "No results found for %s..."
-#~ msgstr "Aucun résultat pour : %s"
-
-#~ msgid "no results for your search : %s "
-#~ msgstr "Aucun résultat pour : %s"
-
-#~ msgid "%s results found for your search : %s "
-#~ msgstr "%s résultats trouvés pour : %s"
