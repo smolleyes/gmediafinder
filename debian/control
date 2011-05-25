@@ -14,5 +14,5 @@ XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
 Description: Gmediafinder, stream/download multimedia files from the web
  Gmediafinder is a web media browser for youtube videos and some mp3 search engines websites for the sounds
- You can stream or download files play in continue or loop mode and download files too directly from the gui.
+ You can stream or download files play in continue or loop mode and download files too directly from the gui
 
