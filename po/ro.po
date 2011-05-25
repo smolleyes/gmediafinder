@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-24 06:36+0200\n"
+"POT-Creation-Date: 2011-05-26 01:24+0200\n"
 "PO-Revision-Date: 2011-05-22 13:02+0000\n"
 "Last-Translator: symbianflo <symbianflo@fastwebnet.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -19,62 +19,81 @@ msgstr ""
 "2:1))\n"
 
 #: GmediaFinder/functions.py:111 GmediaFinder/gmediafinder.py:966
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:982
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:111
 msgid "Failed..."
 msgstr "A eşuat..."
 
 #: GmediaFinder/functions.py:139
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:140
 #, python-format
 msgid "Downloading %-66s"
 msgstr "Descărcarea %-66s"
 
 #: GmediaFinder/functions.py:163
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:164
 msgid "Download complete"
 msgstr "Descărcarea completată"
 
 #: GmediaFinder/gmediafinder.py:142
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:145
 msgid "Quality"
 msgstr "Calitate"
 
 #: GmediaFinder/gmediafinder.py:248
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:255
 msgid " Results : "
 msgstr " Rezultate : "
 
 #: GmediaFinder/gmediafinder.py:350
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:369
 #, python-format
 msgid "%s engine selected"
 msgstr "%s motorul selectat"
 
 #: GmediaFinder/gmediafinder.py:373 GmediaFinder/gmediafinder.py:532
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:392
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:548
 #, python-format
 msgid "Playing : %s"
 msgstr "Redare : %s"
 
 #: GmediaFinder/gmediafinder.py:476
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:500
 msgid "Please enter an artist/album or song name..."
 msgstr "Vă rugăm să introduceţi un artist / album sau numele cântecului..."
 
 #: GmediaFinder/gmediafinder.py:479
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:503
 msgid "Please select an engine..."
 msgstr "Vă rugăm să alegeţi un motor"
 
 #: GmediaFinder/gmediafinder.py:494 GmediaFinder/gmediafinder.py:506
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:518
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:522
 #, python-format
 msgid "Searching for %s with %s "
 msgstr "Căutare pentru %s pe %s"
 
 #: GmediaFinder/gmediafinder.py:497
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:496
 msgid "Please select a search engine..."
 msgstr "Vă rugăm alegeţi un motor de căutare"
 
 #: GmediaFinder/gmediafinder.py:535 GmediaFinder/gmediafinder.py:950
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:551
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:966
 msgid "Stopped"
 msgstr "Oprit"
 
 #: GmediaFinder/gmediafinder.py:847 data/glade/mainGui.glade:1056
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1056
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:863
 msgid "Download"
 msgstr "Descarcare"
 
 #: GmediaFinder/gmediafinder.py:847
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:863
 #, python-format
 msgid ""
 "The file:\n"
@@ -90,32 +109,39 @@ msgstr ""
 "există deja, descărcati din nou "
 
 #: GmediaFinder/gmediafinder.py:867
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:883
 #, fuzzy
 msgid "Stop Downloading"
 msgstr "Descărcarea %-66s"
 
 #: GmediaFinder/gmediafinder.py:883
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:899
 msgid "Convert to mp3"
 msgstr "Conversia la mp3"
 
 #: GmediaFinder/gmediafinder.py:894
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:910
 msgid "Remove"
 msgstr "Şterge"
 
 #: GmediaFinder/gmediafinder.py:928
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:944
 msgid "Converting process started..."
 msgstr "Procesul de conversie a început ..."
 
 #: GmediaFinder/gmediafinder.py:943
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:959
 msgid "Audio file successfully created !"
 msgstr "Fişier audio creat cu succes !"
 
 #: GmediaFinder/gmediafinder.py:948
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:964
 #, python-format
 msgid "Playing %s"
 msgstr "Redarea %s"
 
 #: data/glade/mainGui.glade:11
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
 msgid ""
 "  GNU GENERAL PUBLIC LICENSE\n"
 "\t\t       Version 2, June 1991\n"
@@ -463,70 +489,87 @@ msgid ""
 msgstr ""
 
 #: data/glade/mainGui.glade:417
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:417
 msgid "Playlist"
 msgstr "Playlist"
 
 #: data/glade/mainGui.glade:462
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:462
 msgid "Downloads"
 msgstr "Descărcări"
 
 #: data/glade/mainGui.glade:519
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:519
 msgid "Settings"
 msgstr "Setări"
 
 #: data/glade/mainGui.glade:564
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:564
 msgid "About"
 msgstr "Informaţii"
 
 #: data/glade/mainGui.glade:639
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:639
 msgid "<b>Informations :</b>"
 msgstr "<b>Informaţii :</ b>"
 
 #: data/glade/mainGui.glade:666
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:666
 msgid "Select an engine"
 msgstr "Alegeţi un motor"
 
 #: data/glade/mainGui.glade:689
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:689
 msgid "Search types :"
 msgstr "Tipuri de căutare : "
 
 #: data/glade/mainGui.glade:700
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:700
 msgid "Most relevant"
 msgstr "Cele mai relevante"
 
 #: data/glade/mainGui.glade:717
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:717
 msgid "Most recent"
 msgstr "Cele mai recente"
 
 #: data/glade/mainGui.glade:734
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:734
 msgid "Most viewed"
 msgstr "Cele mai vizionate"
 
 #: data/glade/mainGui.glade:751
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:751
 msgid "Most rated"
 msgstr "Cele mai votate"
 
 #: data/glade/mainGui.glade:913
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:913
 msgid "Show more results"
 msgstr "Arată mai multe rezultate"
 
 #: data/glade/mainGui.glade:1171
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1171
 msgid "<b>Playlist Options : </b>"
 msgstr "<b>Opţiuni Playlist: </b> "
 
 #: data/glade/mainGui.glade:1183
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1183
 msgid "continue"
 msgstr "continuă"
 
 #: data/glade/mainGui.glade:1199
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1199
 msgid "loop"
 msgstr "loop"
 
 #: data/glade/mainGui.glade:1244
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1244
 msgid "<b>Visualisations :</b>"
 msgstr "<b>Vizualizări :</b>"
 
 #: data/glade/mainGui.glade:1257
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1257
 msgid ""
 "jess\n"
 "goom\n"
@@ -549,95 +592,151 @@ msgstr ""
 "bumpscope"
 
 #: data/glade/mainGui.glade:1313
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1313
 msgid "page 1"
 msgstr "pagina 1"
 
 #: data/glade/mainGui.glade:1373
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1373
 msgid "Download path :     "
 msgstr "Parcursul descărcări :       "
 
 #: data/glade/mainGui.glade:1391
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1391
 msgid "Choose a folder"
 msgstr "Alegeţi un dosar"
 
 #: data/glade/mainGui.glade:1422
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1422
 msgid "<b>Downloads  : </b>"
 msgstr "<b>desărcări    :</b>"
 
 #: data/glade/mainGui.glade:1438
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1438
 msgid "page 2"
 msgstr "pagina 2"
 
 #: data/glade/mainGui.glade:1479
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1479
 msgid "Options"
 msgstr "Opţiuni"
 
 #: data/glade/mainGui.glade:1564
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1564
 msgid "Max resolution : "
 msgstr "Rezoluţie maximă : "
 
 #: data/glade/mainGui.glade:1591
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1591
 msgid "320x240"
 msgstr "320x240"
 
 #: data/glade/mainGui.glade:1609
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1609
 msgid "640x320"
 msgstr "640x320"
 
 #: data/glade/mainGui.glade:1626
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1626
 msgid "854x480"
 msgstr "854x480"
 
 #: data/glade/mainGui.glade:1643
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1643
 msgid "1280x720"
 msgstr "1280x720"
 
 #: data/glade/mainGui.glade:1660
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1660
 msgid "1920x1080"
 msgstr "1920x1080"
 
 #: data/glade/mainGui.glade:1698
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1698
 msgid "<b>Youtube video options : </b>"
 msgstr "<b>Opţiuni video Youtube : </b>"
 
 #: data/glade/mainGui.glade:1713
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1713
 msgid "search options"
 msgstr "opţiuni de "
 
 #: data/glade/mainGui.glade:1748
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1748
 msgid "<b>Select your engines : </b>"
 msgstr "<b>Selectaţi motoarele : </b>"
 
 #: data/glade/mainGui.glade:1771
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1771
 msgid "Engines"
 msgstr "Motoare"
 
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Imusicz/Imusicz.py:64
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:49
+#, python-format
+msgid "Results page %s for %s...(Next page available)"
+msgstr "Pagina rezultatelor %s pentru %s...(Pagina următoare disponibilă)"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Imusicz/Imusicz.py:72
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:79
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Skreemr/Skreemr.py:89
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:68
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:59
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:57
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:47
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:70
+#, python-format
+msgid "no more files found for %s..."
+msgstr "nu mai sînt alte fişiere pentru %s"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Imusicz/Imusicz.py:79
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:38
+#, python-format
+msgid "no files found for %s..."
+msgstr "nici un fişier găsit pentru %s"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:50
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Skreemr/Skreemr.py:57
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:38
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:40
+#, python-format
+msgid "No results found for %s..."
+msgstr "Nici un rezultat găsit pentru %s..."
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:56
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Skreemr/Skreemr.py:63
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:42
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:44
+#, python-format
+msgid "no results for your search : %s "
+msgstr "nici un rezultat găsit pentru %s "
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:60
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Skreemr/Skreemr.py:67
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:46
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:48
+#, python-format
+msgid "%s results found for your search : %s "
+msgstr "%s rezultate pentru căutarea voastra : %s"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:73
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Skreemr/Skreemr.py:79
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:60
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:51
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:62
+#, python-format
+msgid "Results page %s for %s...(%s results)"
+msgstr "Pagina rezultatelor %s pentru %s...(%s rezultate)"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:38
+#, python-format
+msgid "no results found for %s..."
+msgstr "nici un rezultat găsit pentru %s..."
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:43
+#, python-format
+msgid "%s files found for %s"
+msgstr "%s fişierele găsite pentru %s"
+
 #~ msgid "Searching for %s with %s"
 #~ msgstr "Căutare pentru %s pe %s"
-
-#~ msgid "no results found for %s..."
-#~ msgstr "nici un rezultat găsit pentru %s..."
-
-#~ msgid "%s files found for %s"
-#~ msgstr "%s fişierele găsite pentru %s"
-
-#~ msgid "no more files found for %s..."
-#~ msgstr "nu mai sînt alte fişiere pentru %s"
-
-#~ msgid "Results page %s for %s...(%s results)"
-#~ msgstr "Pagina rezultatelor %s pentru %s...(%s rezultate)"
-
-#~ msgid "no files found for %s..."
-#~ msgstr "nici un fişier găsit pentru %s"
-
-#~ msgid "Results page %s for %s...(Next page available)"
-#~ msgstr "Pagina rezultatelor %s pentru %s...(Pagina următoare disponibilă)"
-
-#~ msgid "No results found for %s..."
-#~ msgstr "Nici un rezultat găsit pentru %s..."
-
-#~ msgid "no results for your search : %s "
-#~ msgstr "nici un rezultat găsit pentru %s "
-
-#~ msgid "%s results found for your search : %s "
-#~ msgstr "%s rezultate pentru căutarea voastra : %s"
