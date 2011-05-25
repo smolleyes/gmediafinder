@@ -20,7 +20,7 @@ exit 0
 fi
 
 ## cree pot fichier glade et des .py
-xgettext -k_ -kN_ -o $basedir/gmediafinder.pot *.desktop.in GmediaFinder/*.py data/glade/*.glade
+xgettext -k_ -kN_ -o `find /home/smo/Documents/gmediafinder | egrep ".glade|[a-zA-Z].py$|.pot" | xargs`
 
 ## create or update po files
 LANGLIST="en fr it ro"

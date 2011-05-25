@@ -242,38 +242,34 @@ class GsongFinder(object):
         self.window.connect('destroy', self.exit)
 
         ## finally setup the list
-        (COL_PIXBUF, COL_STRING) = range(2)
         self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object)
         self.treeview = gtk.TreeView()
         self.treeview.set_model(self.model)
         
-        column = gtk.TreeViewColumn()
-        column.set_title(_(' Results : '))
-        
-        self.treeview.append_column(column)
-
         rendererp = gtk.CellRendererPixbuf()
-        column.pack_start(rendererp, expand=False)
-        column.add_attribute(rendererp, 'pixbuf', COL_PIXBUF)
+        pixcolumn = gtk.TreeViewColumn("",rendererp,  pixbuf=0)
+        self.treeview.append_column(pixcolumn)
 
-        renderer = gtk.CellRendererText()
-        renderer.set_fixed_size(200,60)
-        column.pack_start(renderer, expand=False)
-        column.add_attribute(renderer, 'text', COL_STRING)
+        rendertxt = gtk.CellRendererText()
+        txtcolumn = gtk.TreeViewColumn("txt",rendertxt, text=1)
+        txtcolumn.set_title(_(' Results : '))
+        self.treeview.append_column(txtcolumn)
         
-        pathColumn = gtk.TreeViewColumn("Link", renderer, text=0)
+        renderer = gtk.CellRendererText()
+        pathColumn = gtk.TreeViewColumn("Link", renderer)
         self.treeview.append_column(pathColumn)
         
-        qualityColumn = gtk.TreeViewColumn("Quality", renderer, text=0)
+        qualityColumn = gtk.TreeViewColumn("Quality", renderer)
         self.treeview.append_column(qualityColumn)
         
         ## setup the scrollview
         self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()
-        self.columns[0].set_sort_column_id(1)
-        self.columns[1].set_visible(0)
+        self.columns[1].set_sort_column_id(1)
         self.columns[2].set_visible(0)
+        self.columns[3].set_visible(0)
         self.results_scroll.add(self.treeview)
+        self.results_scroll.connect_after('size-allocate', self.resize_wrap, self.treeview, self.columns[1], rendertxt)
         ## connect treeview signals
         self.treeview.connect('cursor-changed',self.get_model)
 
@@ -325,6 +321,25 @@ class GsongFinder(object):
         #gtk.gdk.threads_init()
         self.mainloop = gobject.MainLoop(is_running=True)
         self.mainloop.run()
+        
+        
+    def resize_wrap(self, scroll, allocation, treeview, column, cell):
+        otherColumns = (c for c in treeview.get_columns() if c != column)
+        newWidth = allocation.width - sum(c.get_width() for c in otherColumns)
+        newWidth -= treeview.style_get_property("horizontal-separator") * 4
+        if cell.props.wrap_width == newWidth or newWidth <= 0:
+                return
+        if newWidth < 250:
+                newWidth = 225
+        cell.props.wrap_width = newWidth
+        column.set_property('min-width', newWidth + 10)
+        column.set_property('max-width', newWidth + 10)
+        store = treeview.get_model()
+        iter = store.get_iter_first()
+        while iter and store.iter_is_valid(iter):
+                store.row_changed(store.get_path(iter), iter)
+                iter = store.iter_next(iter)
+                treeview.set_size_request(0,-1)
         
     def change_visualisation(self, widget=None):
         vis = self.vis_selector.get_active_text()
@@ -476,13 +491,18 @@ class GsongFinder(object):
 
     def prepare_search(self,widget=None):
         self.user_search = self.search_entry.get_text()
+        self.main_engine = self.engine_selector.getSelectedIndex()
+        if self.main_engine == 0:
+			self.informations_label.set_text(_("Please select a search engine..."))
+			self.search_btn.set_sensitive(1)
+			return
         if not self.user_search:
             self.informations_label.set_text(_("Please enter an artist/album or song name..."))
             return
         if not self.engine:
             self.informations_label.set_text(_("Please select an engine..."))
             return
-        self.main_engine = self.engine_selector.getSelected()
+			
         return self.idle_add_lock(self.search,())
 
     def change_page(self,widget=None):
@@ -496,14 +516,6 @@ class GsongFinder(object):
 
     def search(self,page=None):
 		self.informations_label.set_text(_("Searching for %s with %s ") % (self.user_search,self.engine))
-		## prepare the request
-		if self.engine == None:
-			self.informations_label.set_text(_("Please select a search engine..."))
-			return
-        #elif self.engine == "youtube.com":
-            #url = "http://www.youtube.com/results?search_query=%s&page=%s" % (user_search,self.req_start)
-        #elif self.engine == "YouPorn":
-            #url = "http://youporn.com/search/relevance?query=%s&type=straight&page=%s" % (user_search,self.req_start)
 		self.model.clear()
 		self.search_btn.set_sensitive(0)
 		self.changepage_btn.set_sensitive(0)
