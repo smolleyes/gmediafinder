@@ -165,11 +165,11 @@ class Downloader(threading.Thread):
 					return
 
 def with_lock(func, args):
-		gtk.threads_enter()
+		gtk.gdk.threads_enter()
 		try:
 			return func(*args)
 		finally:
-			gtk.threads_leave()
+			gtk.gdk.threads_leave()
 
 def calc_eta(start, now, total, current):
 		if total is None:
