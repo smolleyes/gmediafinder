@@ -4,6 +4,7 @@
 import sys
 import os
 import thread
+import pango
 import threading
 import time
 import gobject
@@ -100,7 +101,9 @@ class GsongFinder(object):
         self.window = self.gladeGui.get_widget("main_window")
         self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
-        self.window.set_default_size(780, 560)
+        width = gtk.gdk.screen_width()
+        height = gtk.gdk.screen_height()
+        self.window.set_default_size((width - 250), (height - 100))
         self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
         self.img_path = img_path
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
@@ -246,6 +249,7 @@ class GsongFinder(object):
         
         column = gtk.TreeViewColumn()
         column.set_title(_(' Results : '))
+        
         self.treeview.append_column(column)
 
         rendererp = gtk.CellRendererPixbuf()
@@ -254,7 +258,7 @@ class GsongFinder(object):
 
         renderer = gtk.CellRendererText()
         renderer.set_fixed_size(200,60)
-        column.pack_start(renderer, expand=True)
+        column.pack_start(renderer, expand=False)
         column.add_attribute(renderer, 'text', COL_STRING)
         
         pathColumn = gtk.TreeViewColumn("Link", renderer, text=0)
