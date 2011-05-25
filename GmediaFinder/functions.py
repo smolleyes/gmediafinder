@@ -129,7 +129,7 @@ class Downloader(threading.Thread):
 			self.gui.active_down_label.set_text(str(self.gui.active_downloads))
 	
     def _reporthook(self, numblocks, blocksize, filesize, start_time, url, name, progressbar):
-		print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
+		#print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
 		#XXX Should handle possible filesize=-1.
 		if self._stopevent.isSet():
 			self._reporthook(numblocks, blocksize, filesize, start_time, url, name, progressbar)
