@@ -1,3 +1,6 @@
+v0.9.4
+ * begin rewrite of downloading section
+
 v0.9.3.3
  * fix init problems, disable YouPorn by default
 

@@ -997,7 +997,7 @@ class GsongFinder(object):
 			self.res1920.set_active(1)
 		self.dlg.set_position(gtk.WIN_POS_CENTER_ALWAYS)
 		response = self.dlg.run()
-		if response == gtk.FALSE or response == gtk.TRUE or response == gtk.RESPONSE_DELETE_EVENT:
+		if response == False or response == True or response == gtk.RESPONSE_DELETE_EVENT:
 			self.dlg.hide()
 
     def exit(self,widget):

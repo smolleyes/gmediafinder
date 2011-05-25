@@ -49,7 +49,7 @@ class Imusicz(object):
 		if not data:
 			print "timeout..."
 			return
-		soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
+		soup = BeautifulStoneSoup(data.encode('utf-8'),selfClosingTags=['/>'],convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
 		nlist = []
 		link_list = []
 		next_page = 1
@@ -96,5 +96,6 @@ class Imusicz(object):
 			if name and link_list[i]:
 				self.gui.add_sound(name, link_list[i])
 				i += 1
+		self.gui.search_btn.set_sensitive(1)
 
 

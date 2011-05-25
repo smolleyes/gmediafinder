@@ -183,6 +183,7 @@ def calc_eta(start, now, total, current):
 		if eta_mins > 99:
 			return '--:--'
 		return ' Restant : %02d:%02d' % (eta_mins, eta_secs)
+
 		
 def yesno(title,msg):
     dialog = gtk.MessageDialog(parent = None,
