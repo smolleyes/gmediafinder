@@ -31,7 +31,6 @@ from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import HTMLParser
 
 ## custom lib
-
 from constants import *	
 from engines import Engines
 from functions import *
@@ -105,6 +104,7 @@ class GsongFinder(object):
         height = gtk.gdk.screen_height()
         self.window.set_default_size((width - 250), (height - 100))
         self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+        #self.window.set_role("main_window")
         self.img_path = img_path
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
         self.window.connect('key-press-event', self.onKeyPress)

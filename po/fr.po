@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 #   <s.lagui@free.fr>, 2011
 # smo <s.lagui@free.fr>, 2011
 # paokouran <s.lagui@free.fr>, 2011
@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-26 12:29+0200\n"
+"POT-Creation-Date: 2011-05-26 23:31+0200\n"
 "PO-Revision-Date: 2011-05-26 10:44+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: GmediaFinder/functions.py:111 GmediaFinder/gmediafinder.py:966
@@ -282,7 +282,8 @@ msgid ""
 "\n"
 "    a) Accompany it with the complete corresponding machine-readable\n"
 "    source code, which must be distributed under the terms of Sections\n"
-"    1 and 2 above on a medium customarily used for software interchange; or,\n"
+"    1 and 2 above on a medium customarily used for software interchange; "
+"or,\n"
 "\n"
 "    b) Accompany it with a written offer, valid for at least three\n"
 "    years, to give any third party, for a charge no more than your\n"
@@ -389,7 +390,8 @@ msgid ""
 "later version\", you have the option of following the terms and conditions\n"
 "either of that version or of any later version published by the Free\n"
 "Software Foundation.  If the Program does not specify a version number of\n"
-"this License, you may choose any version ever published by the Free Software\n"
+"this License, you may choose any version ever published by the Free "
+"Software\n"
 "Foundation.\n"
 "\n"
 "  10. If you wish to incorporate parts of the Program into other free\n"
@@ -405,7 +407,8 @@ msgid ""
 "  11. BECAUSE THE PROGRAM IS LICENSED FREE OF CHARGE, THERE IS NO WARRANTY\n"
 "FOR THE PROGRAM, TO THE EXTENT PERMITTED BY APPLICABLE LAW.  EXCEPT WHEN\n"
 "OTHERWISE STATED IN WRITING THE COPYRIGHT HOLDERS AND/OR OTHER PARTIES\n"
-"PROVIDE THE PROGRAM \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EITHER EXPRESSED\n"
+"PROVIDE THE PROGRAM \"AS IS\" WITHOUT WARRANTY OF ANY KIND, EITHER "
+"EXPRESSED\n"
 "OR IMPLIED, INCLUDING, BUT NOT LIMITED TO, THE IMPLIED WARRANTIES OF\n"
 "MERCHANTABILITY AND FITNESS FOR A PARTICULAR PURPOSE.  THE ENTIRE RISK AS\n"
 "TO THE QUALITY AND PERFORMANCE OF THE PROGRAM IS WITH YOU.  SHOULD THE\n"
@@ -458,7 +461,8 @@ msgid ""
 "when it starts in an interactive mode:\n"
 "\n"
 "    Gnomovision version 69, Copyright (C) year name of author\n"
-"    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show w'.\n"
+"    Gnomovision comes with ABSOLUTELY NO WARRANTY; for details type `show "
+"w'.\n"
 "    This is free software, and you are welcome to redistribute it\n"
 "    under certain conditions; type `show c' for details.\n"
 "\n"
@@ -739,5 +743,3 @@ msgstr "%s résultats trouvés pour votre recherche : %s"
 #, python-format
 msgid "Results page %s for %s..."
 msgstr "Page de résultat %s pour %s..."
-
-
