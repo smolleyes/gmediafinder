@@ -17,7 +17,7 @@ class Youtube(object):
         self.gui = gui
         self.current_page = 1
         self.main_start_page = 1
-        self.num_start = 1
+        self.num_start = 0
         self.name="Youtube"
         self.search_url = "http://tagoo.ru/en/search.php?for=audio&search=%s&page=%d&sort=date"
         self.youtube = YouTubeClient()
