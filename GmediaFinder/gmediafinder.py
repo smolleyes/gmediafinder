@@ -507,7 +507,7 @@ class GsongFinder(object):
 
     def change_page(self,widget=None):
         user_search = self.search_entry.get_text()
-        engine = self.engine_selector.getSelected()
+        engine = self.engine_selector.getSelectedIndex()
         if not user_search or user_search != self.user_search \
         or not engine or engine != self.main_engine:
             return self.prepare_search()

@@ -17,7 +17,7 @@ class Youtube(object):
         self.gui = gui
         self.current_page = 1
         self.main_start_page = 1
-        self.num_start = 0
+        self.num_start = 1
         self.name="Youtube"
         self.search_url = "http://tagoo.ru/en/search.php?for=audio&search=%s&page=%d&sort=date"
         self.youtube = YouTubeClient()
@@ -46,19 +46,23 @@ class Youtube(object):
 		elif self.gui.youtube_options.rating_opt.get_active():
 			params="&orderby=rating"
 		
-		if self.num_start == 0:
+		if self.current_page == 1:
 			self.num_start = 1
-		elif self.num_start == 1:
-			self.num_start = 26
 		else:
 			self.num_start+=25
 				
 		vquery = self.youtube.search(user_search,self.num_start,params)
 		if len(vquery) == 0:
+			self.num_start = 1
+			self.current_page = 1
+			self.gui.search_btn.set_sensitive(1)
 			self.gui.changepage_btn.hide()
 			self.gui.informations_label.set_text(_("no more files found for %s...") % (user_search))
 			self.gui.search_btn.set_sensitive(1)
 			return
+		self.gui.informations_label.set_text(_("Results page %s for %s...") % (self.current_page,user_search))
+		self.num_start+=25
+		self.current_page += 1
 		
 		for video in vquery:
 			self.make_youtube_entry(video)

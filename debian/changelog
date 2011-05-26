@@ -1,5 +1,5 @@
-gmediafinder (0.9.4-0ppa3~maverick) maverick; urgency=high
+gmediafinder (0.9.4-0ppa4~maverick) maverick; urgency=high
 
-  * fix youtube search
+  * fix pagination system
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
