@@ -213,8 +213,8 @@ except ImportError:
 
 class YouTubeClient:
 
-    users_feed = "http://gdata.youtube.com/feeds/users"
-    std_feeds = "http://gdata.youtube.com/feeds/standardfeeds"
+    users_feed = "http://gdata.youtube.com/feeds/FR/users"
+    std_feeds = "http://gdata.youtube.com/feeds/FR/standardfeeds"
     video_name_re = re.compile(r', "t": "([^"]+)"')
     
     def _request(self, feed, *params):
