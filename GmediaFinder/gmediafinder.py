@@ -56,6 +56,7 @@ class GsongFinder(object):
         self.youtube_max_res = "320x240"
         self.active_downloads = 0
         self.thread_num = 0
+        self.xsink = False
         if sys.platform == "win32":
             from win32com.shell import shell, shellcon
             df = shell.SHGetDesktopFolder()
@@ -597,6 +598,10 @@ class GsongFinder(object):
             self.play_thread_id = None
             self.player.set_state(gst.STATE_NULL)
             self.play_btn.set_label("gtk-media-play")
+            if not sys.platform == "win32" and ('No port available' in debug)and not self.xsink:
+                self.sink = gst.element_factory_make('ximagesink')
+                self.player.set_property("video-sink", self.sink)
+                self.xsink = True
             ## continue if continue option selected...
             if self.play_options == "continue":
                 self.check_play_options()
