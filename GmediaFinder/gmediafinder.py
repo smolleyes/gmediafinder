@@ -894,7 +894,7 @@ class GsongFinder(object):
         image.set_from_stock(gtk.STOCK_FIND, gtk.ICON_SIZE_BUTTON)
         btnf.add(image)
         box.pack_end(btnf, False, False, 5)
-        btnf.set_tooltip_text("Show")
+        btnf.set_tooltip_text(_("Show in folder"))
         ## convert button
         btn_conv = gtk.Button()
         if self.engine == "Youtube":
