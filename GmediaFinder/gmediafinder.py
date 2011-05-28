@@ -601,7 +601,7 @@ class GsongFinder(object):
             if self.play_options == "continue":
                 self.check_play_options()
 
-    def pause_resume(self,widget):
+    def pause_resume(self,widget=None):
         if not self.is_playing:
 			return
         if self.pause_btn.get_label() == "gtk-media-pause":
@@ -818,10 +818,16 @@ class GsongFinder(object):
             self.mini_player = True
     
     def onKeyPress(self, widget, event):
+        if self.search_entry.is_focus():
+			return
         key = gtk.gdk.keyval_name(event.keyval)
-        if key == 'F2':
+        if key == 'f':
             return self.set_fullscreen()
-
+        elif key == 'space':
+            return self.pause_resume()
+        elif key == 's':
+			return self.stop_play()
+			
         # If user press Esc button in fullscreen mode
         if event.keyval == gtk.keysyms.Escape and self.fullscreen:
             return self.set_fullscreen()

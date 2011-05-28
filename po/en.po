@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-26 12:29+0200\n"
+"POT-Creation-Date: 2011-05-28 21:50+0200\n"
 "PO-Revision-Date: 2011-05-18 01:22+0200\n"
 "Last-Translator: smo <s.lagui@free.fr>\n"
 "Language-Team: Language EN\n"
@@ -19,6 +19,7 @@ msgstr ""
 #: GmediaFinder/functions.py:111 GmediaFinder/gmediafinder.py:966
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:982
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:111
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:988
 msgid "Failed..."
 msgstr ""
 
@@ -81,17 +82,20 @@ msgstr ""
 #: GmediaFinder/gmediafinder.py:535 GmediaFinder/gmediafinder.py:950
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:551
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:966
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:972
 msgid "Stopped"
 msgstr ""
 
 #: GmediaFinder/gmediafinder.py:847 data/glade/mainGui.glade:1056
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1056
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:863
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:869
 msgid "Download"
 msgstr ""
 
 #: GmediaFinder/gmediafinder.py:847
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:863
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:869
 #, python-format
 msgid ""
 "The file:\n"
@@ -103,31 +107,37 @@ msgstr ""
 
 #: GmediaFinder/gmediafinder.py:867
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:883
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:889
 msgid "Stop Downloading"
 msgstr ""
 
 #: GmediaFinder/gmediafinder.py:883
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:899
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:905
 msgid "Convert to mp3"
 msgstr ""
 
 #: GmediaFinder/gmediafinder.py:894
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:910
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:916
 msgid "Remove"
 msgstr ""
 
 #: GmediaFinder/gmediafinder.py:928
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:944
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:950
 msgid "Converting process started..."
 msgstr ""
 
 #: GmediaFinder/gmediafinder.py:943
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:959
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:965
 msgid "Audio file successfully created !"
 msgstr ""
 
 #: GmediaFinder/gmediafinder.py:948
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:964
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:970
 #, python-format
 msgid "Playing %s"
 msgstr ""

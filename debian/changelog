@@ -1,5 +1,6 @@
-gmediafinder (0.9.4-0ppa5~natty) natty; urgency=high
+gmediafinder (0.9.4-0ppa6~natty) natty; urgency=high
 
-  * add polish language
+  * add keyboards shortcuts
+  * update translations
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
