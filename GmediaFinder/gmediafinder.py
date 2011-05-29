@@ -57,6 +57,7 @@ class GsongFinder(object):
         self.active_downloads = 0
         self.thread_num = 0
         self.xsink = False
+        self.window_state = (760,560,0,0)
         if sys.platform == "win32":
             from win32com.shell import shell, shellcon
             df = shell.SHGetDesktopFolder()
@@ -75,6 +76,7 @@ class GsongFinder(object):
             fd = os.open(self.conf_file, os.O_RDWR|os.O_CREAT)
             os.write(fd,"youtube_max_res=%s" % self.youtube_max_res)
             os.write(fd,"download_path=%s" % self.down_dir)
+            os.write(fd,"window_state=%s" % self.window_state)
             os.close(fd)
         self.config = ConfigObj(self.conf_file,write_empty_values=True)
         try:
@@ -87,6 +89,12 @@ class GsongFinder(object):
 			self.youtube_max_res = self.config["youtube_max_res"]
         except:
 			self.config["youtube_max_res"] = self.youtube_max_res
+		## get saved window position ans size
+        try:
+			self.window_state = self.config["window_state"]
+        except:
+			self.config["window_state"] = self.window_state
+			self.config.write()
         self.engine_list = {}
         self.engine = None
         ## small config dir for downloads...
@@ -101,10 +109,15 @@ class GsongFinder(object):
         self.window = self.gladeGui.get_widget("main_window")
         self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
-        width = gtk.gdk.screen_width()
-        height = gtk.gdk.screen_height()
-        self.window.set_default_size(760,560)
-        self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+        self.window.set_default_size(int(self.window_state[0]),int(self.window_state[1]))
+        try:
+			x,y = int(self.window_state[2]),int(self.window_state[3])
+			if x == 0 or y == 0:
+				self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+			else:
+				self.window.move(x,y)
+        except:
+			self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
         #self.window.set_role("main_window")
         self.img_path = img_path
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
@@ -235,6 +248,7 @@ class GsongFinder(object):
         "on_res3_toggled" : self.set_max_youtube_res,
         "on_res4_toggled" : self.set_max_youtube_res,
         "on_res5_toggled" : self.set_max_youtube_res,
+        "on_main_window_configure_event" : self.save_position,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -323,7 +337,9 @@ class GsongFinder(object):
         self.mainloop = gobject.MainLoop(is_running=True)
         self.mainloop.run()
         
-        
+    def save_position(self,widget,e):
+		self.x,self.y=self.window.get_position()
+     
     def resize_wrap(self, scroll, allocation, treeview, column, cell):
         otherColumns = (c for c in treeview.get_columns() if c != column)
         newWidth = allocation.width - sum(c.get_width() for c in otherColumns)
@@ -1026,11 +1042,22 @@ class GsongFinder(object):
 		response = self.dlg.run()
 		if response == False or response == True or response == gtk.RESPONSE_DELETE_EVENT:
 			self.dlg.hide()
+	
+    def save_window_state(self):
+        try:
+			r,s,w,h = self.window.get_allocation()
+			self.window.grab_focus()
+			self.config['window_state'] = (w,h,self.x,self.y)
+			self.config.write()
+        except:
+			return
 
     def exit(self,widget):
         """Stop method, sets the event to terminate the thread's main loop"""
         if self.player.set_state(gst.STATE_PLAYING):
             self.player.set_state(gst.STATE_NULL)
+        ## save window state
+        self.save_window_state()
         self.mainloop.quit()
 
 
