@@ -103,7 +103,7 @@ class GsongFinder(object):
         self.window.set_resizable(1)
         width = gtk.gdk.screen_width()
         height = gtk.gdk.screen_height()
-        self.window.set_default_size((width - 250), (height - 100))
+        self.window.set_default_size(760,560)
         self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
         #self.window.set_role("main_window")
         self.img_path = img_path
@@ -205,9 +205,6 @@ class GsongFinder(object):
         self.timerbox = self.gladeGui.get_widget("timer_box")
         self.timerbox.add(self.time_label)
         
-        ## youtube client
-        self.youtube = YouTubeClient()
-        
         ## visualisations
         self.vis_selector = self.gladeGui.get_widget("vis_chooser")
         
@@ -243,7 +240,7 @@ class GsongFinder(object):
         self.window.connect('destroy', self.exit)
 
         ## finally setup the list
-        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object)
+        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object)
         self.treeview = gtk.TreeView()
         self.treeview.set_model(self.model)
         
@@ -252,7 +249,7 @@ class GsongFinder(object):
         self.treeview.append_column(pixcolumn)
 
         rendertxt = gtk.CellRendererText()
-        txtcolumn = gtk.TreeViewColumn("txt",rendertxt, text=1)
+        txtcolumn = gtk.TreeViewColumn("txt",rendertxt, markup=1)
         txtcolumn.set_title(_(' Results : '))
         self.treeview.append_column(txtcolumn)
         
@@ -263,12 +260,16 @@ class GsongFinder(object):
         qualityColumn = gtk.TreeViewColumn("Quality", renderer)
         self.treeview.append_column(qualityColumn)
         
+        nameColumn = gtk.TreeViewColumn("Name", renderer)
+        self.treeview.append_column(nameColumn)
+        
         ## setup the scrollview
         self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()
         self.columns[1].set_sort_column_id(1)
         self.columns[2].set_visible(0)
         self.columns[3].set_visible(0)
+        self.columns[4].set_visible(0)
         self.results_scroll.add(self.treeview)
         self.results_scroll.connect_after('size-allocate', self.resize_wrap, self.treeview, self.columns[1], rendertxt)
         ## connect treeview signals
@@ -309,7 +310,6 @@ class GsongFinder(object):
         ## start engines
         combo = self.gladeGui.get_widget("engine_selector")
         self.engine_selector = ComboBox(combo)
-        self.yt_client = yt_service.YouTubeService()
         self.engines_client = Engines(self)
         
         ## engine selector (engines only with direct links)
@@ -385,7 +385,7 @@ class GsongFinder(object):
         self.iter = selected.get_selected()[1]
         self.path = self.model.get_path(self.iter)
         ## else extract needed metacity's infos
-        self.media_name = self.model.get_value(self.iter, 1)
+        self.media_name = self.model.get_value(self.iter, 4)
         ## return only theme name and description then extract infos from hash
         self.media_link = self.model.get_value(self.iter, 2)
         self.media_img = self.model.get_value(self.iter, 0)
@@ -529,17 +529,21 @@ class GsongFinder(object):
 		thread.start_new_thread(self.search_engine.search,(self.user_search,page))
 
 
-    def add_sound(self, name, media_link, img=None, quality_list=None):
+    def add_sound(self, name, media_link, img=None, quality_list=None,count=None):
         if not img:
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         if not name or not media_link or not img:
             return
+        markup="<b>%s</b>" % name
+        if count:
+			markup = _("<b>%s</b>\n\n<small>view: %s</small>") % (name,count)
         self.iter = self.model.append()
         self.model.set(self.iter,
                         0, img,
-                        1, name,
+                        1, markup,
                         2, media_link,
                         3, quality_list,
+                        4, name,
                         )
 
     def start_stop(self,widget=None):

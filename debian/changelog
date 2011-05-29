@@ -1,5 +1,6 @@
-gmediafinder (0.9.4-0ppa8~maverick) maverick; urgency=high
+gmediafinder (0.9.4-0ppa9~maverick) maverick; urgency=high
 
-  * update translations
+  * fix
+  * gui update
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100

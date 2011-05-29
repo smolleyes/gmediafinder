@@ -2,8 +2,6 @@ import os
 import gtk
 import time
 import re
-import gdata.service,gdata.youtube
-import gdata.youtube.service as yt_service
 import urllib2
 import urllib
 import html5lib
@@ -201,52 +199,6 @@ def yesno(title,msg):
         return "Yes"
     elif result == gtk.RESPONSE_NO:
         return "No"   
-
-try:
-  from xml.etree import cElementTree as ElementTree
-except ImportError:
-  try:
-    import cElementTree as ElementTree
-  except ImportError:
-    from elementtree import ElementTree
-
-
-class YouTubeClient:
-
-    users_feed = "http://gdata.youtube.com/feeds/FR/users"
-    std_feeds = "http://gdata.youtube.com/feeds/FR/standardfeeds"
-    video_name_re = re.compile(r', "t": "([^"]+)"')
-    
-    def _request(self, feed, *params):
-        service = gdata.service.GDataService(server="gdata.youtube.com")
-        return service.Get(feed % params)
-    
-    def search(self, query, page_index, params):
-        url = "http://gdata.youtube.com/feeds/api/videos?q=%s&start-index=%s&max-results=25%s" % (query, page_index, params)
-        return self._request(url).entry
-
-    def get_thumbnails(self, video):
-        doc = video._ToElementTree()
-        urls = {}
-        for c in doc.findall(".//{http://search.yahoo.com/mrss/}group"):
-            for cc in c.findall("{http://search.yahoo.com/mrss/}thumbnail"):
-                width = int(cc.get("width"))
-                height = int(cc.get("height"))
-                size = (width, height)
-                url = cc.get("url")
-                if size not in urls:
-                    urls[size] = [url,]
-                else:
-                    urls[size].append(url)
-        return urls
-
-    def get_largest_thumbnail(self, video):
-        thumbnails = self.get_thumbnails(video)
-        sizes = thumbnails.keys()
-        sizes.sort()
-        return thumbnails[sizes[-1]][0]
-
-
 
 
 class ComboBox(object):
