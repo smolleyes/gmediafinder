@@ -1,6 +1,5 @@
-gmediafinder (0.9.4.1-0ppa1~natty) natty; urgency=high
+gmediafinder (0.9.4.2-0ppa1~maverick) maverick; urgency=high
 
-  * fix
-  * gui update
+  * add window position/size saving/restore system
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
