@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-29 06:12+0200\n"
+"POT-Creation-Date: 2011-05-29 06:52+0200\n"
 "PO-Revision-Date: 2011-05-29 04:11+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -407,6 +407,7 @@ msgstr "page %s pour %s...(Page suivante disponible)"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:70
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:60
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:58
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:56
 #, python-format
 msgid "no more files found for %s..."
 msgstr "plus aucun fichier trouvé pour %s..."
@@ -462,6 +463,7 @@ msgstr "%s résultats trouvés pour votre recherche : %s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:63
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:61
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:59
 #, python-format
 msgid "Results page %s for %s..."
 msgstr "Page de résultat %s pour %s..."

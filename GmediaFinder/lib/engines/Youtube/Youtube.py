@@ -1,15 +1,13 @@
-
 import re
 import urllib
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
+import gdata.youtube.service as yt_service
 
 try:
 	from functions import *
-	from functions import YouTubeClient
 	from functions import download_photo
 except:
 	from GmediaFinder.functions import *
-	from GmediaFinder.functions import YouTubeClient
 	from GmediaFinder.functions import download_photo
 
 class Youtube(object):
@@ -19,7 +17,7 @@ class Youtube(object):
         self.main_start_page = 1
         self.num_start = 1
         self.name="Youtube"
-        self.client = gdata.youtube.service.YouTubeService()
+        self.client = yt_service.YouTubeService()
         self.start_engine()
 
     def start_engine(self):
