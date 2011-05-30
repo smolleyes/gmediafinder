@@ -56,7 +56,7 @@ class Youtube(object):
 			self.gui.informations_label.set_text(_("no more files found for %s ...") % (user_search))
 			self.gui.search_btn.set_sensitive(1)
 			return
-		values = {'page': name, 'query': messages}
+		values = {'page': self.current_page, 'query': user_search}
 		self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s ...") % values)
 		self.num_start+=25
 		self.current_page += 1

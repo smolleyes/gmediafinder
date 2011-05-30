@@ -57,7 +57,7 @@ class YouPorn(object):
 			self.gui.search_btn.set_sensitive(1)
 			return
         else:
-			values = {'page': name, 'query': user_search}
+			values = {'page': self.current_page, 'query': user_search}
 			self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
 
         try:
@@ -71,7 +71,7 @@ class YouPorn(object):
 				if l == "Suivant »":
 					next_page = 1
 			if next_page:
-				values = {'page': name, 'query': user_search, 'total' : results_count}
+				values = {'page': self.current_page, 'query': user_search, 'total' : results_count}
 				self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
 				self.current_page += 1
 				self.gui.changepage_btn.show()

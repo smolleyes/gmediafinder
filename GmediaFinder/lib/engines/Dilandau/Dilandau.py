@@ -46,7 +46,7 @@ class Dilandau(object):
 				if l == "Suivante >>":
 					next_page = 1
 			if next_page:
-				values = {'page': name, 'query': messages}
+				values = {'page': self.current_page, 'query': user_search}
 				self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(Next page available)") % values)
 				self.current_page += 1
 				self.gui.changepage_btn.show()

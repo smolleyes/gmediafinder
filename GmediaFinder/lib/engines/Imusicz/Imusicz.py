@@ -61,7 +61,7 @@ class Imusicz(object):
 				if l == "Next":
 					next_page = 1
 			if next_page:
-				values = {'page': name, 'query': user_search}
+				values = {'page': self.current_page, 'query': user_search}
 				self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(Next page available)") % values)
 				self.current_page += 1
 				self.gui.changepage_btn.show()
@@ -77,7 +77,7 @@ class Imusicz(object):
 		flist = soup.findAll('td',attrs={'width':'75'})
 		if len(flist) == 0:
 			self.gui.changepage_btn.hide()
-			self.gui.informations_label.set_text(_("no files found for %s...") % (self.user_search))
+			self.gui.informations_label.set_text(_("no files found for %s...") % (user_search))
 			self.gui.search_btn.set_sensitive(1)
 			return
 		for link in flist:

@@ -1,4 +1,4 @@
-gmediafinder (0.9.4.3-0ppa1~natty) natty; urgency=high
+gmediafinder (0.9.4.3-0ppa2~natty) natty; urgency=high
 
   * add window position/size saving/restore system
   * fix translations
