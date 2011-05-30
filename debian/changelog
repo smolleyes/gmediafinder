@@ -1,4 +1,4 @@
-gmediafinder (0.9.4.3-0ppa3~lucid) lucid; urgency=high
+gmediafinder (0.9.4.3-0ppa3~maverick) maverick; urgency=high
 
   * add window position/size saving/restore system
   * fix translations
