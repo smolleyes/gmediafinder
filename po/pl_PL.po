@@ -8,16 +8,299 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-30 05:04+0200\n"
+"POT-Creation-Date: 2011-05-30 13:19+0200\n"
 "PO-Revision-Date: 2011-05-26 21:49+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: pl_PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2)\n"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:10
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
+msgid ""
+"    Gmediafinder \n"
+"    Copyright (C) 2011 Laguillaumie Sylvain\n"
+"\n"
+"    This program is free software: you can redistribute it and/or modify\n"
+"    it under the terms of the GNU General Public License as published by\n"
+"    the Free Software Foundation, either version 2 of the License, or\n"
+"    (at your option) any later version.\n"
+"\n"
+"    This program is distributed in the hope that it will be useful,\n"
+"    but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
+"    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
+"    GNU General Public License for more details.\n"
+"\n"
+"    You should have received a copy of the GNU General Public License\n"
+"    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:81
+#: data/glade/mainGui.glade:417
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:417
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:94
+msgid "Playlist"
+msgstr "Lista utworów"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:117
+#: data/glade/mainGui.glade:462
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:462
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:139
+msgid "Downloads"
+msgstr "Pobrane"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:162
+#: data/glade/mainGui.glade:519
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:519
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:196
+msgid "Settings"
+msgstr "Ustawienia"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:198
+#: data/glade/mainGui.glade:564
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:564
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
+msgid "About"
+msgstr "O Programie"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:263
+#: data/glade/mainGui.glade:639
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:639
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:316
+msgid "<b>Informations :</b>"
+msgstr "<b>Informacje :</b>"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:286
+#: data/glade/mainGui.glade:666
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:666
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:343
+msgid "Select an engine"
+msgstr "Wybierz wyszukiwarkę"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:304
+#: data/glade/mainGui.glade:689
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:689
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:366
+msgid "Search types :"
+msgstr "Sposób wyszukiwania :"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:313
+#: data/glade/mainGui.glade:700
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:700
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:377
+msgid "Most relevant"
+msgstr "Nabliższe hasła"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:327
+#: data/glade/mainGui.glade:717
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:717
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:394
+msgid "Most recent"
+msgstr "Ostatnio szukane"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:341
+#: data/glade/mainGui.glade:734
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:734
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:411
+msgid "Most viewed"
+msgstr "Najczęściej oglądane"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:355
+#: data/glade/mainGui.glade:751
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:751
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:428
+msgid "Most rated"
+msgstr "Najwięcej ocenione"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:487
+#: data/glade/mainGui.glade:913
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:913
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:590
+msgid "Show more results"
+msgstr "Pokaż mi rezultat"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:604
+#: GmediaFinder/gmediafinder.py:847 data/glade/mainGui.glade:1056
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1056
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:863
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:869
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:733
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:878
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:894
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:914
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:915
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:918
+msgid "Download"
+msgstr "Pobierz"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:701
+#: data/glade/mainGui.glade:1171
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1171
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:848
+msgid "<b>Playlist Options : </b>"
+msgstr "<b>Opcje odtwarzania : </b>"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:712
+#: data/glade/mainGui.glade:1183
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1183
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:860
+msgid "continue"
+msgstr "kontynuuj "
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:726
+#: data/glade/mainGui.glade:1199
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1199
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:876
+msgid "loop"
+msgstr "pętla"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:763
+#: data/glade/mainGui.glade:1244
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1244
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:921
+msgid "<b>Visualisations :</b>"
+msgstr "<b>Wygląd : </b>"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:774
+#: data/glade/mainGui.glade:1257
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1257
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:934
+msgid ""
+"jess\n"
+"goom\n"
+"oinksie\n"
+"lv_scope\n"
+"lv_analyzer\n"
+"jakdaw\n"
+"infinite\n"
+"corona\n"
+"bumpscope"
+msgstr ""
+"jess\n"
+"goom\n"
+"oinksie\n"
+"lv_scope\n"
+"lv_analyzer\n"
+"jakdaw\n"
+"infinite\n"
+"corona\n"
+"bumpscope"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:816
+#: data/glade/mainGui.glade:1313
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1313
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:990
+msgid "page 1"
+msgstr "Strona 1"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:865
+#: data/glade/mainGui.glade:1373
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1373
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1050
+msgid "Download path :     "
+msgstr "Ścieżka pobierania:"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:880
+#: data/glade/mainGui.glade:1391
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1391
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1068
+msgid "Choose a folder"
+msgstr "Wybierz folder"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:905
+#: data/glade/mainGui.glade:1422
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1422
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1099
+msgid "<b>Downloads  : </b>"
+msgstr "<b>Pobrane   : </b>"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:920
+#: data/glade/mainGui.glade:1438
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1438
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1115
+msgid "page 2"
+msgstr "Strona 2"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:954
+#: data/glade/mainGui.glade:1479
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1479
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1156
+msgid "Options"
+msgstr "Opcje"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:988
+#: data/glade/mainGui.glade:1564
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1564
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1241
+msgid "Max resolution : "
+msgstr "Max. rozdzielczość : "
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1011
+#: data/glade/mainGui.glade:1591
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1591
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1268
+msgid "320x240"
+msgstr "320X240"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1026
+#: data/glade/mainGui.glade:1609
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1609
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1286
+msgid "640x320"
+msgstr "640X320"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1040
+#: data/glade/mainGui.glade:1626
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1626
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1303
+msgid "854x480"
+msgstr "854X480"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1054
+#: data/glade/mainGui.glade:1643
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1643
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1320
+msgid "1280x720"
+msgstr "1280X720"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1068
+#: data/glade/mainGui.glade:1660
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1660
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1337
+msgid "1920x1080"
+msgstr "1920X1080"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1099
+#: data/glade/mainGui.glade:1698
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1698
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1375
+msgid "<b>Youtube video options : </b>"
+msgstr "<b>Opcje video Youtube : </b>"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1113
+#: data/glade/mainGui.glade:1713
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1713
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1390
+msgid "search options"
+msgstr "opcje wyszukiwania"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1143
+#: data/glade/mainGui.glade:1748
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1748
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1425
+msgid "<b>Select your engines : </b>"
+msgstr "<b> Wybierz swoje wyszukiwarki : </b>"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1163
+#: data/glade/mainGui.glade:1771
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1771
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1448
+msgid "Engines"
+msgstr "Wyszukiwarki"
 
 #: GmediaFinder/functions.py:111 GmediaFinder/gmediafinder.py:966
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:982
@@ -139,20 +422,6 @@ msgstr "Wybierz rodzaj wyszukiwarki..."
 msgid "Stopped"
 msgstr "Zatrzymano"
 
-#: GmediaFinder/gmediafinder.py:847 data/glade/mainGui.glade:1056
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1056
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:863
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:869
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:733
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:878
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:604
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:894
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:914
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:915
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:918
-msgid "Download"
-msgstr "Pobierz"
-
 #: GmediaFinder/gmediafinder.py:847
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:863
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:869
@@ -241,255 +510,6 @@ msgstr "Udało się utworzyć plik dźwiękowy !"
 #, python-format
 msgid "Playing %s"
 msgstr "Odtwarzanie %s"
-
-#: data/glade/mainGui.glade:417
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:417
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:94
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:81
-msgid "Playlist"
-msgstr "Lista utworów"
-
-#: data/glade/mainGui.glade:462
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:462
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:139
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:117
-msgid "Downloads"
-msgstr "Pobrane"
-
-#: data/glade/mainGui.glade:519
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:519
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:196
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:162
-msgid "Settings"
-msgstr "Ustawienia"
-
-#: data/glade/mainGui.glade:564
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:564
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:198
-msgid "About"
-msgstr "O Programie"
-
-#: data/glade/mainGui.glade:639
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:639
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:316
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:263
-msgid "<b>Informations :</b>"
-msgstr "<b>Informacje :</b>"
-
-#: data/glade/mainGui.glade:666
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:666
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:343
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:286
-msgid "Select an engine"
-msgstr "Wybierz wyszukiwarkę"
-
-#: data/glade/mainGui.glade:689
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:689
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:366
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:304
-msgid "Search types :"
-msgstr "Sposób wyszukiwania :"
-
-#: data/glade/mainGui.glade:700
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:700
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:377
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:313
-msgid "Most relevant"
-msgstr "Nabliższe hasła"
-
-#: data/glade/mainGui.glade:717
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:717
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:394
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:327
-msgid "Most recent"
-msgstr "Ostatnio szukane"
-
-#: data/glade/mainGui.glade:734
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:734
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:411
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:341
-msgid "Most viewed"
-msgstr "Najczęściej oglądane"
-
-#: data/glade/mainGui.glade:751
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:751
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:428
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:355
-msgid "Most rated"
-msgstr "Najwięcej ocenione"
-
-#: data/glade/mainGui.glade:913
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:913
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:590
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:487
-msgid "Show more results"
-msgstr "Pokaż mi rezultat"
-
-#: data/glade/mainGui.glade:1171
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1171
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:848
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:701
-msgid "<b>Playlist Options : </b>"
-msgstr "<b>Opcje odtwarzania : </b>"
-
-#: data/glade/mainGui.glade:1183
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1183
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:860
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:712
-msgid "continue"
-msgstr "kontynuuj "
-
-#: data/glade/mainGui.glade:1199
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1199
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:876
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:726
-msgid "loop"
-msgstr "pętla"
-
-#: data/glade/mainGui.glade:1244
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1244
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:921
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:763
-msgid "<b>Visualisations :</b>"
-msgstr "<b>Wygląd : </b>"
-
-#: data/glade/mainGui.glade:1257
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1257
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:934
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:774
-msgid ""
-"jess\n"
-"goom\n"
-"oinksie\n"
-"lv_scope\n"
-"lv_analyzer\n"
-"jakdaw\n"
-"infinite\n"
-"corona\n"
-"bumpscope"
-msgstr ""
-"jess\n"
-"goom\n"
-"oinksie\n"
-"lv_scope\n"
-"lv_analyzer\n"
-"jakdaw\n"
-"infinite\n"
-"corona\n"
-"bumpscope"
-
-#: data/glade/mainGui.glade:1313
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1313
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:990
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:816
-msgid "page 1"
-msgstr "Strona 1"
-
-#: data/glade/mainGui.glade:1373
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1373
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1050
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:865
-msgid "Download path :     "
-msgstr "Ścieżka pobierania:"
-
-#: data/glade/mainGui.glade:1391
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1391
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1068
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:880
-msgid "Choose a folder"
-msgstr "Wybierz folder"
-
-#: data/glade/mainGui.glade:1422
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1422
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1099
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:905
-msgid "<b>Downloads  : </b>"
-msgstr "<b>Pobrane   : </b>"
-
-#: data/glade/mainGui.glade:1438
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1438
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1115
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:920
-msgid "page 2"
-msgstr "Strona 2"
-
-#: data/glade/mainGui.glade:1479
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1479
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1156
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:954
-msgid "Options"
-msgstr "Opcje"
-
-#: data/glade/mainGui.glade:1564
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1564
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1241
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:988
-msgid "Max resolution : "
-msgstr "Max. rozdzielczość : "
-
-#: data/glade/mainGui.glade:1591
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1591
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1268
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1011
-msgid "320x240"
-msgstr "320X240"
-
-#: data/glade/mainGui.glade:1609
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1609
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1286
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1026
-msgid "640x320"
-msgstr "640X320"
-
-#: data/glade/mainGui.glade:1626
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1626
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1303
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1040
-msgid "854x480"
-msgstr "854X480"
-
-#: data/glade/mainGui.glade:1643
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1643
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1320
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1054
-msgid "1280x720"
-msgstr "1280X720"
-
-#: data/glade/mainGui.glade:1660
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1660
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1337
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1068
-msgid "1920x1080"
-msgstr "1920X1080"
-
-#: data/glade/mainGui.glade:1698
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1698
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1375
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1099
-msgid "<b>Youtube video options : </b>"
-msgstr "<b>Opcje video Youtube : </b>"
-
-#: data/glade/mainGui.glade:1713
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1713
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1390
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1113
-msgid "search options"
-msgstr "opcje wyszukiwania"
-
-#: data/glade/mainGui.glade:1748
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1748
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1425
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1143
-msgid "<b>Select your engines : </b>"
-msgstr "<b> Wybierz swoje wyszukiwarki : </b>"
-
-#: data/glade/mainGui.glade:1771
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1771
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1448
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1163
-msgid "Engines"
-msgstr "Wyszukiwarki"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Imusicz/Imusicz.py:64
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:49
@@ -587,26 +607,6 @@ msgstr "Wyniki strona %s dla %s"
 #, fuzzy
 msgid "Show in folder"
 msgstr "Wybierz folder"
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:10
-msgid ""
-"    Gmediafinder \n"
-"    Copyright (C) 2011 Laguillaumie Sylvain\n"
-"\n"
-"    This program is free software: you can redistribute it and/or modify\n"
-"    it under the terms of the GNU General Public License as published by\n"
-"    the Free Software Foundation, either version 2 of the License, or\n"
-"    (at your option) any later version.\n"
-"\n"
-"    This program is distributed in the hope that it will be useful,\n"
-"    but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"    GNU General Public License for more details.\n"
-"\n"
-"    You should have received a copy of the GNU General Public License\n"
-"    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
-msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:539
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:555
