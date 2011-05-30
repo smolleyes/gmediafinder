@@ -64,7 +64,8 @@ class Skreemr(object):
 			self.gui.search_btn.set_sensitive(1)
 			return
 		else:
-			self.gui.informations_label.set_text(_("%s results found for your search : %s ") % (results_count, query))
+			values = {'page': name, 'query': user_search}
+			self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
 			self.gui.search_btn.set_sensitive(1)
 			self.gui.changepage_btn.set_sensitive(1)
 		
@@ -76,7 +77,8 @@ class Skreemr(object):
 				if l == "Next>>":
 					next_page = 1
 			if next_page:
-				self.gui.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.current_page, query,results_count))
+				values = {'page': name, 'query': user_search, 'total' : files_count}
+				self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
 				self.num_start += 10
 				self.current_page += 1
 				self.gui.search_btn.set_sensitive(1)

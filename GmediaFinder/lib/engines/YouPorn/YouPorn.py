@@ -57,7 +57,8 @@ class YouPorn(object):
 			self.gui.search_btn.set_sensitive(1)
 			return
         else:
-			self.gui.informations_label.set_text(_("%s results found for your search : %s ") % (results_count, query))
+			values = {'page': name, 'query': user_search}
+			self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
 
         try:
 		    pagination_table = soup.findAll('div',attrs={'id':'pages'})[0]
@@ -70,7 +71,8 @@ class YouPorn(object):
 				if l == "Suivant »":
 					next_page = 1
 			if next_page:
-				self.gui.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.current_page, query,results_count))
+				values = {'page': name, 'query': user_search, 'total' : results_count}
+				self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
 				self.current_page += 1
 				self.gui.changepage_btn.show()
 			else:

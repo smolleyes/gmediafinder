@@ -39,16 +39,19 @@ class Mp3Realm(object):
 			self.gui.search_btn.set_sensitive(1)
 			self.gui.changepage_btn.hide()
 			return
-
-		self.gui.informations_label.set_text(_("%s files found for %s") % (files_count, user_search))
+		
+		values = {'query': user_search, 'total' : files_count}
+		self.gui.informations_label.set_text(_("%(total)s files found for %(query)s...") % values)
 		if re.search(r'(\S*Aucuns resultats)', soup.__str__()):
 			self.gui.changepage_btn.hide()
 			self.current_page = 1
-			self.gui.informations_label.set_text(_("no more files found for %s...") % (user_search))
+			self.gui.informations_label.set_text(_("no results found for %s...") % (user_search))
 			self.gui.search_btn.set_sensitive(1)
 			return
 		else:
-			self.gui.informations_label.set_text(_("Results page %s for %s...(%s results)") % (self.current_page, user_search,files_count))
+			values = {'page': self.current_page, 'query': user_search, 'total' : files_count}
+			self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
+
 			self.current_page += 1
 
 		self.gui.changepage_btn.show()

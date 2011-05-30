@@ -256,6 +256,12 @@ class GsongFinder(object):
         ## finally setup the list
         self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object)
         self.treeview = gtk.TreeView()
+        self.odd = self.treeview.style_get_property("odd-row-color")
+        if not self.odd:
+			self.odd = gtk.gdk.Color(61166, 61166, 61166)
+        self.even = self.treeview.style_get_property("even-row-color")
+        if not self.even:
+			self.even = gtk.gdk.Color(65535, 65535, 65535)
         self.treeview.set_model(self.model)
         
         rendererp = gtk.CellRendererPixbuf()
@@ -264,6 +270,7 @@ class GsongFinder(object):
 
         rendertxt = gtk.CellRendererText()
         txtcolumn = gtk.TreeViewColumn("txt",rendertxt, markup=1)
+        txtcolumn.set_cell_data_func(rendertxt, self.alternate_color)
         txtcolumn.set_title(_(' Results : '))
         self.treeview.append_column(txtcolumn)
         
@@ -336,6 +343,14 @@ class GsongFinder(object):
         #gtk.gdk.threads_init()
         self.mainloop = gobject.MainLoop(is_running=True)
         self.mainloop.run()
+        
+    def alternate_color(self, column, cell, model, iter):
+		if int((model.get_string_from_iter(iter).split(":")[0])) % 2:
+			cell.set_property('background-gdk', self.odd)
+			cell.set_property('cell-background-gdk', self.odd)
+		else:
+			cell.set_property('background-gdk', self.even)
+			cell.set_property('cell-background-gdk', self.even)
         
     def save_position(self,widget,e):
 		self.x,self.y=self.window.get_position()
@@ -532,11 +547,11 @@ class GsongFinder(object):
             return self.idle_add_lock(self.search,(self.search_engine.current_page))
 
     def search(self,page=None):
-		self.informations_label.set_text(_("Searching for %s with %s ") % (self.user_search,self.engine))
+		values = {'engine': self.engine, 'query': self.user_search}
+		self.informations_label.set_text(_("Searching for %(query)s with %(engine)s ") % values)
 		self.model.clear()
 		self.search_btn.set_sensitive(0)
 		self.changepage_btn.set_sensitive(0)
-		self.informations_label.set_text(_("Searching for %s with %s ") % (self.user_search,self.engine))
 		self.search_engine = getattr(self.engines_client,'%s' % self.engine)
 		## send request to the module, can pass type and order too...reset page start to inital state
 		if not page:
@@ -545,14 +560,17 @@ class GsongFinder(object):
 		thread.start_new_thread(self.search_engine.search,(self.user_search,page))
 
 
-    def add_sound(self, name, media_link, img=None, quality_list=None,count=None):
+    def add_sound(self, name, media_link, img=None, quality_list=None,count=None,duration=None):
         if not img:
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         if not name or not media_link or not img:
             return
+        if re.search('&', name):
+			name = re.sub('&','&amp;', name)
         markup="<b>%s</b>" % name
         if count:
-			markup = _("<b>%s</b>\n\n<small>view: %s</small>") % (name,count)
+			values = {'name': name, 'count': count, 'duration': duration}
+			markup = _("<b>%(name)s</b>\n\n<small><b>view:</b> %(count)s		<b>Duration:</b> %(duration)s</small>") % values
         self.iter = self.model.append()
         self.model.set(self.iter,
                         0, img,
@@ -886,7 +904,10 @@ class GsongFinder(object):
         if re.search('\/', name):
 			name = re.sub('\/','-', name)
 			self.media_name = name
-	if re.search('\"', name):
+        if re.search('&', name):
+			name = re.sub('&','&amp;', name)
+			self.media_name = name
+        if re.search('\"', name):
 			name = re.sub('\"','', name)
 			self.media_name = name
         target = os.path.join(self.down_dir,name)
