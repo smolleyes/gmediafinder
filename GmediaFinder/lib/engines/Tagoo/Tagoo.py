@@ -43,7 +43,7 @@ class Tagoo(object):
 			self.gui.search_btn.set_sensitive(1)
 			return
 		else:
-			values = {'page': self.current_page, 'query': user_search}
+			values = {'total': results_count, 'query': user_search}
 			self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
 			self.gui.search_btn.set_sensitive(1)
 			self.gui.changepage_btn.set_sensitive(1)

@@ -147,8 +147,9 @@ class Downloader(threading.Thread):
 					kbps_speed = numblocks * blocksize / (time.time() - start_time)
 					kbps_speed = kbps_speed / 1024
 					total = float(filesize) / (1024 * 1024)
-					mbs = '%.02f MB of %.02f MB' % (currently_downloaded, total)
-					e = ' at %d Kb/s ' % kbps_speed
+					values = {'downloaded': currently_downloaded, 'total': total}
+					mbs = _('%(downloaded).02f MB of %(total).02f MB') % values
+					e = _(' at %d Kb/s ') % kbps_speed
 					e += calc_eta(start_time, time.time(), total, currently_downloaded)
 				except:
 					percent = 100
@@ -180,7 +181,8 @@ def calc_eta(start, now, total, current):
 		(eta_mins, eta_secs) = divmod(eta, 60)
 		if eta_mins > 99:
 			return '--:--'
-		return ' Restant : %02d:%02d' % (eta_mins, eta_secs)
+		values = {'min': eta_mins, 'sec': eta_secs}
+		return _('Remaining : %(min)02d:%(sec)02d') % values
 
 		
 def yesno(title,msg):

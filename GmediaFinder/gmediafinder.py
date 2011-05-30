@@ -565,8 +565,11 @@ class GsongFinder(object):
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         if not name or not media_link or not img:
             return
-        if re.search('&', name):
-			name = re.sub('&','&amp;', name)
+        try:
+            if re.search('&', name):
+			    name = re.sub('&','&amp;', name)
+        except:
+			pass
         markup="<b>%s</b>" % name
         if count:
 			values = {'name': name, 'count': count, 'duration': duration}

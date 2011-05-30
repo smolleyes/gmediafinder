@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-05-30 03:37+0200\n"
+"POT-Creation-Date: 2011-05-30 05:04+0200\n"
 "PO-Revision-Date: 2011-05-28 18:33+0000\n"
 "Last-Translator: symbianflo <symbianflo@fastwebnet.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -27,6 +27,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1013
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1033
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1034
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1037
 msgid "Failed..."
 msgstr "Fallito ..."
 
@@ -40,6 +41,7 @@ msgstr "Scaricamento %-66s"
 #: GmediaFinder/functions.py:163
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:164
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:162
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:163
 msgid "Download complete"
 msgstr "Scaricamento completato"
 
@@ -77,6 +79,7 @@ msgstr "%s motore  scelto"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:424
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:586
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:587
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:590
 #, python-format
 msgid "Playing : %s"
 msgstr "Lettura %s"
@@ -130,6 +133,8 @@ msgstr "Si prega di scegliere un motore di ricerca"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1017
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:590
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1018
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:593
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1021
 msgid "Stopped"
 msgstr "Fermatto"
 
@@ -143,6 +148,7 @@ msgstr "Fermatto"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:894
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:914
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:915
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:918
 msgid "Download"
 msgstr "Scarica"
 
@@ -153,6 +159,7 @@ msgstr "Scarica"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:894
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:914
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:915
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:918
 #, python-format
 msgid ""
 "The file:\n"
@@ -174,6 +181,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:914
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:934
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:935
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:938
 msgid "Stop Downloading"
 msgstr "Arresta il download"
 
@@ -184,6 +192,7 @@ msgstr "Arresta il download"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:930
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:950
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:951
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:954
 msgid "Convert to mp3"
 msgstr "Convertire in mp3"
 
@@ -194,6 +203,7 @@ msgstr "Convertire in mp3"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:941
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:961
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:962
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:965
 msgid "Remove"
 msgstr "Elimina"
 
@@ -204,6 +214,7 @@ msgstr "Elimina"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:975
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:995
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:996
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:999
 msgid "Converting process started..."
 msgstr "Processo di conversione avviato ..."
 
@@ -214,6 +225,7 @@ msgstr "Processo di conversione avviato ..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:990
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1010
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1011
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1014
 msgid "Audio file successfully created !"
 msgstr "File audio creato con successso !"
 
@@ -224,6 +236,7 @@ msgstr "File audio creato con successso !"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:995
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1015
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1016
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1019
 #, python-format
 msgid "Playing %s"
 msgstr "Riproduzione %s"
@@ -569,6 +582,7 @@ msgstr "Pagina dei risultati %s per %s..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:922
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:942
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:943
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:946
 #, fuzzy
 msgid "Show in folder"
 msgstr "Scegliere una cartella"
@@ -665,11 +679,27 @@ msgid "Searching for %(query)s with %(engine)s "
 msgstr "Ricerca per %s su %s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:573
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:576
 #, python-format
 msgid ""
 "<b>%(name)s</b>\n"
 "\n"
 "<small><b>view:</b> %(count)s\t\t<b>Duration:</b> %(duration)s</small>"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:151
+#, python-format
+msgid "%(downloaded).02f MB of %(total).02f MB"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:152
+#, python-format
+msgid " at %d Kb/s "
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:185
+#, python-format
+msgid "Remaining : %(min)02d:%(sec)02d"
 msgstr ""
 
 #~ msgid ""
