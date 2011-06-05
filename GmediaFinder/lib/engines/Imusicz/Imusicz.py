@@ -29,11 +29,15 @@ class Imusicz(object):
 		timeout = 30
 		socket.setdefaulttimeout(timeout)
 		data = get_url_data(self.search_url % (page, urllib.quote(query)))
-		return self.filter(data,query)
+		gtk.gdk.threads_enter()
+		self.filter(data,query)
+		gtk.gdk.threads_leave()
 		
     def filter(self,data,user_search):
 		if not data:
-			print "timeout..."
+			self.gui.changepage_btn.hide()
+			self.gui.info_label.set_text(_("Search timeout...") % (user_search))
+			self.gui.throbber.hide()
 			return
 		soup = BeautifulStoneSoup(data.encode('utf-8'),selfClosingTags=['/>'],convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
 		nlist = []
@@ -50,19 +54,19 @@ class Imusicz(object):
 						self.gui.pageback_btn.show()
 					else:
 						self.gui.pageback_btn.hide()
-			if next_page:		
-				values = {'page': self.current_page, 'query': user_search}
-				#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(Next page available)") % values)
+			if next_page:
 				self.gui.changepage_btn.show()
 			else:
 				self.gui.changepage_btn.hide()
-				#self.gui.informations_label.set_text(_("no more files found for %s...") % (user_search))
+				self.gui.info_label.set_text(_("no more files found for %s...") % (user_search))
+				self.gui.throbber.hide()
 				return
 
 		flist = soup.findAll('td',attrs={'width':'75'})
 		if len(flist) == 0:
 			self.gui.changepage_btn.hide()
-			#self.gui.informations_label.set_text(_("no files found for %s...") % (user_search))
+			self.gui.info_label.set_text(_("no files found for %s...") % (user_search))
+			self.gui.throbber.hide()
 			return
 		for link in flist:
 			try:
@@ -77,10 +81,13 @@ class Imusicz(object):
 				continue
 		## add to the treeview if ok
 		i = 0
+		gtk.gdk.threads_enter()
 		for name in nlist:
 			if name and link_list[i]:
 				markup="<small><b>%s</b></small>" % name
 				self.gui.add_sound(name, markup, link_list[i])
 				i += 1
+		self.gui.info_label.set_text("")
+		self.gui.throbber.hide()
 
 

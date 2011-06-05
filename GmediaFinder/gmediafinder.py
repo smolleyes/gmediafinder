@@ -181,6 +181,8 @@ class GsongFinder(object):
         
         ## statbar
         self.statbar = self.gladeGui.get_widget("statusbar")
+        ## info 
+        self.info_label = self.gladeGui.get_widget("info_label")
         
         ## downloads
         self.down_box = self.gladeGui.get_widget("down_box")
@@ -346,7 +348,7 @@ class GsongFinder(object):
         else:
 			self.engine_selector.select(0)
 			
-        self.search_entry.set_text(_("Search..."))
+        self.search_entry.grab_focus()
         
         ## load icons
         self.load_gui_icons()
@@ -551,13 +553,13 @@ class GsongFinder(object):
         self.user_search = self.search_entry.get_text()
         self.main_engine = self.engine_selector.getSelectedIndex()
         if self.main_engine == 0:
-			#self.informations_label.set_text(_("Please select a search engine..."))
+			self.info_label.set_text(_("Please select a search engine..."))
 			return
         if not self.user_search:
-            #self.informations_label.set_text(_("Please enter an artist/album or song name..."))
+            self.info_label.set_text(_("Please enter an artist/album or song name..."))
             return
         if not self.engine:
-            #self.informations_label.set_text(_("Please select an engine..."))
+            self.info_label.set_text(_("Please select an engine..."))
             return
         self.changepage_btn.hide()
         self.pageback_btn.hide()
@@ -592,9 +594,10 @@ class GsongFinder(object):
 
     def search(self,page=None):
 		values = {'engine': self.engine, 'query': self.user_search}
-		#self.informations_label.set_text(_("Searching for %(query)s with %(engine)s ") % values)
+		self.info_label.set_text(_("Searching for %(query)s with %(engine)s ") % values)
 		self.model.clear()
 		## send request to the module, can pass type and order too...reset page start to inital state
+		self.throbber.show()
 		if not page:
 			page = self.search_engine.main_start_page
 			self.search_engine.current_page = self.search_engine.main_start_page

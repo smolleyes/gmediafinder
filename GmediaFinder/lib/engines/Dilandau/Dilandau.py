@@ -27,7 +27,9 @@ class Dilandau(object):
     
     def search(self, query, page):
         data = get_url_data(self.search_url % (urllib.quote(query), self.current_page))
-        return self.filter(data,query)
+        gtk.gdk.threads_enter()
+        self.filter(data,query)
+        gtk.gdk.threads_leave()
         
     def filter(self,data,user_search):
 		soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
@@ -39,7 +41,7 @@ class Dilandau(object):
 		except:
 			self.gui.changepage_btn.hide()
 			self.current_page = 1
-			#self.gui.informations_label.set_text(_("no files found for %s...") % (user_search))
+			self.gui.info_label.set_text(_("no files found for %s...") % (user_search))
 			return
 		if pagination_table:
 			next_check = pagination_table.findAll('a',attrs={'class':'pages'})
@@ -52,12 +54,12 @@ class Dilandau(object):
 					self.gui.pageback_btn.show()
 				else:
 					self.gui.pageback_btn.hide()
-				values = {'page': self.current_page, 'query': user_search}
-				#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(Next page available)") % values)
+					self.gui.throbber.hide()
 				self.gui.changepage_btn.show()
 			else:
 				self.gui.changepage_btn.hide()
-				#self.gui.informations_label.set_text(_("no more files found for %s...") % (user_search))
+				self.gui.info_label.set_text(_("no more files found for %s...") % (user_search))
+				self.gui.throbber.hide()
 				return
 
 		flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'button download_button'}) ]
@@ -76,5 +78,7 @@ class Dilandau(object):
 				markup="<small><b>%s</b></small>" % name
 				self.gui.add_sound(name, markup, link_list[i])
 				i += 1
+		self.gui.info_label.set_text("")
+		self.gui.throbber.hide()
 
 

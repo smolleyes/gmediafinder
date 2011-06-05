@@ -37,7 +37,9 @@ class Skreemr(object):
         if page == 1:
             self.num_start = 1
         data = get_url_data(self.search_url % (urllib.quote(query), self.num_start))
-        return self.filter(data,query)
+        gtk.gdk.threads_enter()
+        self.filter(data,query)
+        gtk.gdk.threads_leave()
         
     def filter(self,data,query):
 		soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
@@ -49,20 +51,20 @@ class Skreemr(object):
 			results_count = results_div.findAll('b')[1].string
 		except:
 			self.gui.changepage_btn.hide()
-			#self.gui.informations_label.set_text(_("No results found for %s...") % (query))
+			self.gui.info_label.set_text(_("No results found for %s...") % (query))
 			self.num_start = 1
 			self.current_page = 1
+			self.gui.throbber.hide()
 			return
 		if results_count == 0 :
-			#self.gui.informations_label.set_text(_("no results for your search : %s ") % (query))
+			self.gui.info_label.set_text(_("No results found for %s ") % (query))
+			self.gui.throbber.hide()
 			return
 		else:
 			if self.current_page != 1:
 				self.gui.pageback_btn.show()
 			else:
 				self.gui.pageback_btn.hide()
-			values = {'total': results_count, 'query': query}
-			#self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
 			self.gui.changepage_btn.show()
 		
 		pagination_table = soup.find('div',attrs={'class':'previousnext'})
@@ -73,15 +75,13 @@ class Skreemr(object):
 				if l == "Next>>":
 					next_page = 1
 			if next_page:
-				values = {'page': self.current_page, 'query': query, 'total' : results_count}
-				#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
-				self.gui.changepage_btn.set_sensitive(1)
 				self.gui.changepage_btn.show()
 			else:
 				self.gui.changepage_btn.hide()
 				self.num_start = 0
 				self.current_page = 1
-				#self.gui.informations_label.set_text(_("no more files found for %s...") % (query))
+				self.gui.info_label.set_text(_("no more files found for %s...") % (query))
+				self.gui.throbber.hide()
 				return
 
 		flist = soup.findAll('a',href=True)
@@ -101,5 +101,6 @@ class Skreemr(object):
 				markup="<small><b>%s</b></small>" % name
 				self.gui.add_sound(name, markup, link_list[i])
 				i += 1
-
+		self.gui.info_label.set_text("")
+		self.gui.throbber.hide()
 

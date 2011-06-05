@@ -26,7 +26,9 @@ class Tagoo(object):
 
     def search(self, query, page):
         data = get_url_data(self.search_url % (urllib.quote(query), self.current_page))
-        return self.filter(data,query)
+        gtk.gdk.threads_enter()
+        self.filter(data,query)
+        gtk.gdk.threads_leave()
         
     def filter(self,data,user_search):
 		soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
@@ -38,18 +40,18 @@ class Tagoo(object):
 			results_count = re.search('Found about (\d+)', str(results_div)).group(1)
 		except:
 			self.gui.changepage_btn.hide()
-			#self.gui.informations_label.set_text(_("No results found for %s...") % (user_search))
+			self.gui.info_label.set_text(_("No results found for %s...") % (user_search))
 			return
 		if results_count == 0 :
-			#self.gui.informations_label.set_text(_("no results for your search : %s ") % (user_search))
+			self.gui.info.set_text(_("No results found for %s ") % (user_search))
+			self.gui.throbber.hide()
 			return
 		else:
-			values = {'total': results_count, 'query': user_search}
-			#self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
 			self.gui.changepage_btn.set_sensitive(1)
 		try:
 		    pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
 		except:
+			self.gui.throbber.hide()
 			return
 		if pagination_table:
 			next_check = pagination_table.findAll('a')
@@ -58,8 +60,6 @@ class Tagoo(object):
 				if l == "Next":
 					next_page = 1
 			if next_page:
-				values = {'page': self.current_page, 'query': user_search, 'total' : results_count}
-				#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
 				if self.current_page != 1:
 					self.gui.pageback_btn.show()
 				else:
@@ -68,7 +68,8 @@ class Tagoo(object):
 			else:
 				self.gui.changepage_btn.hide()
 				self.current_page = 1
-				#self.gui.informations_label.set_text(_("no more files found for %s...") % (user_search))
+				self.gui.info_label.set_text(_("No more files found for %s...") % (user_search))
+				self.gui.throbber.hide()
 				return
 
 		flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'link'}) ]
@@ -90,4 +91,6 @@ class Tagoo(object):
 					i += 1
 				except:
 					continue
+		self.gui.info_label.set_text("")
+		self.gui.throbber.hide()
 

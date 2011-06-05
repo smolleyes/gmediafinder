@@ -87,19 +87,30 @@ class Youtube(object):
 			self.gui.pageback_btn.show()
 		query.start_index = self.num_start
 		vquery = self.client.YouTubeQuery(query)
+		gtk.gdk.threads_enter()
+		self.filter(vquery,user_search)
+		gtk.gdk.threads_leave()
 		
+    def filter(self,vquery,user_search):
 		if not vquery :
 			self.num_start = 1
 			self.current_page = 1
 			self.gui.changepage_btn.hide()
 			self.pageback_btn.hide()
-			#self.gui.informations_label.set_text(_("no more files found for %s ...") % (user_search))
+			self.gui.info_label.set_text(_("no more files found for %s ...") % (user_search))
+			self.gui.throbber.hide()
 			return
-		values = {'page': self.current_page, 'query': user_search}
-		#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s ...") % values)
+		
+		if len(vquery.entry) == 0:
+			self.gui.info_label.set_text(_("no results for %s ...") % (user_search))
+			self.gui.throbber.hide()
+			return
 		
 		for entry in vquery.entry:
 			self.make_youtube_entry(entry)
+		self.gui.throbber.hide()
+		self.gui.info_label.set_text("")
+		
 
     def make_youtube_entry(self,video):
 		#import pprint
@@ -128,7 +139,6 @@ class Youtube(object):
 		if not title or not url or not vid_pic:
 			return
 		self.gui.add_sound(title, markup, vid_id, vid_pic)
-        
             
 
 

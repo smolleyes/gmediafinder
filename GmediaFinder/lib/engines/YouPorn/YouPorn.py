@@ -50,20 +50,23 @@ class YouPorn(object):
 			results_count = results_div.findAll('span')[1].string
         except:
 			self.gui.changepage_btn.hide()
-			#self.gui.informations_label.set_text(_("No results found for %s...") % (query))
+			self.gui.info_label.set_text(_("No results found for %s...") % (query))
 			self.num_start = 0
 			self.current_page = 1
+			self.gui.changepage_btn.hide()
+			self.gui.throbber.hide()
 			return
         if results_count == 0 :
-			#self.gui.informations_label.set_text(_("no results for your search : %s ") % (query))
+			self.gui.info_label.set_text(_("No results for your search %s ") % (query))
+			self.gui.changepage_btn.hide()
+			self.gui.throbber.hide()
 			return
-        else:
-			values = {'total': results_count, 'query': query}
-			#self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
 
         try:
 		    pagination_table = soup.findAll('div',attrs={'id':'pages'})[0]
         except:
+			self.gui.throbber.hide()
+			self.gui.changepage_btn.hide()
 			return
         if pagination_table:
 			next_check = pagination_table.findAll('a')
@@ -72,8 +75,6 @@ class YouPorn(object):
 				if l == "Suivant »":
 					next_page = 1
 			if next_page:
-				values = {'page': self.current_page, 'query': query, 'total' : results_count}
-				#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
 				if self.current_page != 1:
 					self.gui.pageback_btn.show()
 				else:
@@ -82,7 +83,8 @@ class YouPorn(object):
 			else:
 				self.gui.changepage_btn.hide()
 				self.current_page = 1
-				#self.gui.informations_label.set_text(_("no more files found for %s...") % (query))
+				self.gui.info_label.set_text(_("no more files found for %s...") % (query))
+				self.gui.throbber.hide()
 				return
         
         for l in soup.findAll('a', href=True):
@@ -106,6 +108,8 @@ class YouPorn(object):
 			self.gui.add_sound(link.split('/')[3], markup, self.get_video_url(link), img_list[i])
 			i+=1
         self.gui.changepage_btn.show()
+        self.gui.info_label.set_text("")
+        self.gui.throbber.hide()
 
     def uniq(self,input):
         output = []
@@ -124,8 +128,10 @@ class YouPorn(object):
         return self.filter(MOST_VIEWED_URL % (sort_by, page))
 
     def search(self, query, page=1, sort_by="time", type="straight"):
-        return self.filter(self.search_url % (sort_by, urllib.quote(query), type, page), query)
-          
+        gtk.gdk.threads_enter()
+        self.filter(self.search_url % (sort_by, urllib.quote(query), type, page), query)
+        gtk.gdk.threads_leave()
+        
     def get_video_url(self, url):
         try:
 			download = lambda href: '/download/' in href

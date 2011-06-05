@@ -25,9 +25,10 @@ class Mp3Realm(object):
 		pass
 
     def search(self, query, page):
-        print self.search_url % (urllib.quote(query), self.current_page)
         data = get_url_data(self.search_url % (urllib.quote(query), self.current_page))
-        return self.filter(data,query)
+        gtk.gdk.threads_enter()
+        self.filter(data,query)
+        gtk.gdk.threads_leave()
         
     def filter(self,data,user_search):
 		soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
@@ -43,20 +44,17 @@ class Mp3Realm(object):
 			else:
 				self.gui.pageback_btn.hide()
 		except:
-			#self.gui.informations_label.set_text(_("no results found for %s...") % (user_search))
+			self.gui.info_label.set_text(_("No results found for %s...") % (user_search))
 			self.gui.changepage_btn.hide()
+			self.gui.throbber.hide()
 			return
 		
-		values = {'query': user_search, 'total' : files_count}
-		#self.gui.informations_label.set_text(_("%(total)s files found for %(query)s...") % values)
 		if re.search(r'(\S*Aucuns resultats)', soup.__str__()):
 			self.gui.changepage_btn.hide()
 			self.current_page = 1
-			#self.gui.informations_label.set_text(_("no results found for %s...") % (user_search))
+			self.gui.info_label.set_text(_("No results found for %s...") % (user_search))
+			self.gui.throbber.hide()
 			return
-		else:
-			values = {'page': self.current_page, 'query': user_search, 'total' : files_count}
-			#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
 
 		self.gui.changepage_btn.show()
 		
@@ -78,24 +76,5 @@ class Mp3Realm(object):
 				markup="<small><b>%s</b></small>" % name
 				self.gui.add_sound(name, markup, link_list[i])
 				i += 1
-
-
-		flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'link'}) ]
-		for link in flist:
-			try:
-				link = urllib2.unquote(link)
-				name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
-				nlist.append(name)
-				link_list.append(link)
-			except:
-				continue
-		## add to the treeview if ok
-		i = 0
-		for name in nlist:
-			if name and link_list[i]:
-				try:
-				    self.gui.add_sound(name, link_list[i])
-				    i += 1
-				except:
-					continue
-
+		self.gui.info_label.set_text("")
+		self.gui.throbber.hide()
