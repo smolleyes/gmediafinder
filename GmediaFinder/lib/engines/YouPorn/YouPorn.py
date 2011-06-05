@@ -6,6 +6,7 @@ import mechanize
 import re
 from urlparse import urljoin
 import urllib
+import gtk
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 
 try:

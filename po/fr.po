@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-05 15:38+0200\n"
+"POT-Creation-Date: 2011-06-05 16:06+0200\n"
 "PO-Revision-Date: 2011-06-05 12:54+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -287,6 +287,7 @@ msgstr "Temps d'attente dépassé ..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:86
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Skreemr/Skreemr.py:83
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:61
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:87
 #, python-format
 msgid "no more files found for %s..."
 msgstr "plus aucun résultat pour %s..."
@@ -302,11 +303,13 @@ msgstr "pas de fichier trouvé pour %s..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:43
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:47
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:55
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
 #, python-format
 msgid "No results found for %s..."
 msgstr "Aucun résultat trouvé pour %s..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:60
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:61
 #, python-format
 msgid "No results for your search %s "
 msgstr "Aucun résultat trouvé pour %s..."
