@@ -202,11 +202,26 @@ def yesno(title,msg):
     elif result == gtk.RESPONSE_NO:
         return "No"   
 
+def sortDict(d):
+    """ Returns the keys of dictionary d sorted by their values """
+    items=d.items()
+    backitems=[ [v[1],v[0]] for v in items]
+    backitems.sort()
+    return [ backitems[i][1] for i in range(0,len(backitems))]
+
+def create_comboBox():
+	model = gtk.ListStore(str)
+	combobox = gtk.ComboBox(model)
+	cell = gtk.CellRendererText()
+	combobox.pack_start(cell, True)
+	combobox.add_attribute(cell, 'text', 0)
+	return combobox
+
 
 class ComboBox(object):
     def __init__(self,combobox):
-        self.combobox = combobox
-        self.model = self.combobox.get_model()
+			self.combobox = combobox
+			self.model = self.combobox.get_model()
 
     def append(self,what):
         self.combobox.append_text(what)

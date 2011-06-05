@@ -21,6 +21,9 @@ class Tagoo(object):
     def start_engine(self):
 		self.gui.engine_list[self.name] = ''
 
+    def load_gui(self):
+		pass
+
     def search(self, query, page):
         data = get_url_data(self.search_url % (urllib.quote(query), self.current_page))
         return self.filter(data,query)
@@ -35,17 +38,14 @@ class Tagoo(object):
 			results_count = re.search('Found about (\d+)', str(results_div)).group(1)
 		except:
 			self.gui.changepage_btn.hide()
-			self.gui.informations_label.set_text(_("No results found for %s...") % (user_search))
-			self.gui.search_btn.set_sensitive(1)
+			#self.gui.informations_label.set_text(_("No results found for %s...") % (user_search))
 			return
 		if results_count == 0 :
-			self.gui.informations_label.set_text(_("no results for your search : %s ") % (user_search))
-			self.gui.search_btn.set_sensitive(1)
+			#self.gui.informations_label.set_text(_("no results for your search : %s ") % (user_search))
 			return
 		else:
 			values = {'total': results_count, 'query': user_search}
-			self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
-			self.gui.search_btn.set_sensitive(1)
+			#self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
 			self.gui.changepage_btn.set_sensitive(1)
 		try:
 		    pagination_table = soup.findAll('div',attrs={'class':'pages'})[0]
@@ -59,16 +59,16 @@ class Tagoo(object):
 					next_page = 1
 			if next_page:
 				values = {'page': self.current_page, 'query': user_search, 'total' : results_count}
-				self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
-				self.current_page += 1
+				#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
+				if self.current_page != 1:
+					self.gui.pageback_btn.show()
+				else:
+					self.gui.pageback_btn.hide()
 				self.gui.changepage_btn.show()
-				self.gui.search_btn.set_sensitive(1)
-				self.gui.changepage_btn.set_sensitive(1)
 			else:
 				self.gui.changepage_btn.hide()
 				self.current_page = 1
-				self.gui.informations_label.set_text(_("no more files found for %s...") % (user_search))
-				self.gui.search_btn.set_sensitive(1)
+				#self.gui.informations_label.set_text(_("no more files found for %s...") % (user_search))
 				return
 
 		flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'link'}) ]
@@ -85,8 +85,9 @@ class Tagoo(object):
 		for name in nlist:
 			if name and link_list[i]:
 				try:
-				    self.gui.add_sound(name, link_list[i])
-				    i += 1
+					markup="<small><b>%s</b></small>" % name
+					self.gui.add_sound(name, markup, link_list[i])
+					i += 1
 				except:
 					continue
 

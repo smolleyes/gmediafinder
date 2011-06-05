@@ -6,6 +6,7 @@ import os
 import thread
 import pango
 import threading
+import Queue
 import time
 import gobject
 import pygtk
@@ -39,6 +40,8 @@ class GsongFinder(object):
     def __init__(self):
         ## default search options
         self.is_playing = False
+        self.is_paused = False
+        self.is_stopped = False
         self.duration = None
         self.time_label = gtk.Label("00:00 / 00:00")
         self.media_name = ""
@@ -47,7 +50,6 @@ class GsongFinder(object):
         self.user_search = ""
         self.play_options = None
         self.fullscreen = False
-        self.play_options = None
         self.mini_player = True
         self.timer = 0
         self.settings_folder = None
@@ -57,7 +59,11 @@ class GsongFinder(object):
         self.active_downloads = 0
         self.thread_num = 0
         self.xsink = False
-        self.window_state = (760,560,0,0)
+        self.play_options = "continue"
+        width = gtk.gdk.screen_width()
+        height = gtk.gdk.screen_height()
+        self.window_state = (width-200,height-80,0,0)
+        self.show_thumbs_opt = "True"
         if sys.platform == "win32":
             from win32com.shell import shell, shellcon
             df = shell.SHGetDesktopFolder()
@@ -77,6 +83,7 @@ class GsongFinder(object):
             os.write(fd,"youtube_max_res=%s" % self.youtube_max_res)
             os.write(fd,"download_path=%s" % self.down_dir)
             os.write(fd,"window_state=%s" % self.window_state)
+            os.write(fd,"show_thumbs=%s" % self.show_thumbs_opt)
             os.close(fd)
         self.config = ConfigObj(self.conf_file,write_empty_values=True)
         try:
@@ -94,6 +101,12 @@ class GsongFinder(object):
 			self.window_state = self.config["window_state"]
         except:
 			self.config["window_state"] = self.window_state
+			self.config.write()
+		## gui options
+        try:
+		    self.show_thumbs_opt = self.config["show_thumbs"]
+        except:
+			self.config["show_thumbs"] = True
 			self.config.write()
         self.engine_list = {}
         self.engine = None
@@ -118,17 +131,22 @@ class GsongFinder(object):
 				self.window.move(x,y)
         except:
 			self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-        #self.window.set_role("main_window")
+        self.show_thumbs_opt_toggle = self.gladeGui.get_widget("show_thumbs_opt")
+        if self.show_thumbs_opt == "True" :
+			self.show_thumbs_opt_toggle.set_active(1)
         self.img_path = img_path
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
         self.window.connect('key-press-event', self.onKeyPress)
-        ## informations
-        self.top_infobox = self.gladeGui.get_widget("top_info")
-        self.informations_label = self.gladeGui.get_widget("info_label")
         # options menu
         self.options_bar = self.gladeGui.get_widget("options_bar")
         self.search_box = self.gladeGui.get_widget("search_box")
         self.results_box = self.gladeGui.get_widget("results_box")
+        
+        ## throbber
+        self.throbber = self.gladeGui.get_widget("throbber_img")
+        animation = gtk.gdk.PixbufAnimation(self.img_path+'/throbber.gif')
+        self.throbber.set_from_animation(animation)
+        
         ## notebook
         self.notebook = self.gladeGui.get_widget("notebook")
         
@@ -139,13 +157,6 @@ class GsongFinder(object):
         self.res1280 = self.gladeGui.get_widget("res4")
         self.res1920 = self.gladeGui.get_widget("res5")
         
-        # youtube search options
-        self.youtube_options = self.gladeGui.get_widget("youtube_options")
-        self.youtube_options.relevance_opt = self.gladeGui.get_widget("relevance_opt")
-        self.youtube_options.recent_opt = self.gladeGui.get_widget("most_recent_opt")
-        self.youtube_options.relevance_opt.set_active(True)
-        self.youtube_options.viewed_opt = self.gladeGui.get_widget("most_viewed_opt")
-        self.youtube_options.rating_opt = self.gladeGui.get_widget("rating_opt")
         ## video quality combobox
         youtube_quality_box = self.gladeGui.get_widget("youtube_quality_box")
         self.youtube_quality_model = gtk.ListStore(str)
@@ -160,27 +171,20 @@ class GsongFinder(object):
                                 )
         self.youtube_video_rate.connect('changed', self.on_youtube_video_rate_changed)
         
-        ## control section
-        self.play_btn = self.gladeGui.get_widget("play_btn")
-        self.pause_btn = self.gladeGui.get_widget("pause_btn")
         self.volume_btn = self.gladeGui.get_widget("volume_btn")
-        self.play_btn.connect('clicked', self.start_stop)
         self.down_btn = self.gladeGui.get_widget("down_btn")
 
-        self.continue_checkbox = self.gladeGui.get_widget("continue_checkbox")
-        self.continue_checkbox.set_active(1)
-        self.play_options = "continue"
-        self.loop_checkbox = self.gladeGui.get_widget("loop_checkbox")
-        ## search bar
         self.search_entry = self.gladeGui.get_widget("search_entry")
-        self.search_btn = self.gladeGui.get_widget("search_btn")
-        self.changepage_btn = self.gladeGui.get_widget("changepage_btn")
-
+        
+        ## options box
+        self.search_opt_box = self.gladeGui.get_widget("search_options_box")
+        
         ## statbar
         self.statbar = self.gladeGui.get_widget("statusbar")
         
         ## downloads
         self.down_box = self.gladeGui.get_widget("down_box")
+        self.down_menu_btn = self.gladeGui.get_widget("down_menu_btn")
         self.down_container = gtk.VBox(False, 5)
         self.down_scroll = gtk.ScrolledWindow()
         self.down_scroll.set_policy(gtk.POLICY_AUTOMATIC, gtk.POLICY_AUTOMATIC)
@@ -224,24 +228,21 @@ class GsongFinder(object):
         
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
-        "on_song_radio_toggled" : self.option_changed,
-        "on_video_radio_toggled" :  self.option_changed,
-        "on_img_radio_toggled" :  self.option_changed,
-        "on_search_btn_clicked" : self.prepare_search,
         "on_engine_selector_changed" : self.set_engine,
         "on_quit_menu_activate" : self.exit,
         "on_pause_btn_clicked" : self.pause_resume,
         "on_down_btn_clicked" : self.download_file,
-        "on_changepage_btn_clicked" : self.change_page,
+        "on_nextpage_btn_clicked" : self.change_page,
+        "on_pageback_btn_clicked" : self.change_page,
         "on_search_entry_activate" : self.prepare_search,
-        "on_continue_checkbox_toggled" : self.set_play_options,
-        "on_loop_checkbox_toggled" : self.set_play_options,
+        "on_shuffle_btn_toggled" : self.set_play_options,
+        "on_repeat_btn_toggled" : self.set_play_options,
         "on_vol_btn_value_changed" : self.on_volume_changed,
         "on_vis_chooser_changed" : self.change_visualisation,
         "on_about_menu_clicked" : self.on_about_btn_pressed,
         "on_settings_menu_clicked" : self.on_settings_btn_pressed,
         "on_down_menu_btn_clicked" : self.show_downloads,
-        "on_home_menu_btn_clicked" : self.show_home,
+        "on_backtohome_btn_clicked" : self.show_home,
         "on_select_path_btn_file_set" : self.update_down_path,
         "on_res1_toggled" : self.set_max_youtube_res,
         "on_res2_toggled" : self.set_max_youtube_res,
@@ -249,6 +250,8 @@ class GsongFinder(object):
         "on_res4_toggled" : self.set_max_youtube_res,
         "on_res5_toggled" : self.set_max_youtube_res,
         "on_main_window_configure_event" : self.save_position,
+        "on_search_entry_icon_press" : self.clear_search_entry,
+        "on_show_thumbs_opt_toggled" : self.on_gui_opt_toggled,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -287,6 +290,9 @@ class GsongFinder(object):
         ## setup the scrollview
         self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()
+        print self.show_thumbs_opt
+        if self.show_thumbs_opt == "False":
+			self.columns[0].set_visible(0)
         self.columns[1].set_sort_column_id(1)
         self.columns[2].set_visible(0)
         self.columns[3].set_visible(0)
@@ -323,8 +329,7 @@ class GsongFinder(object):
 
         ## start gui
         self.window.show_all()
-        self.changepage_btn.hide()
-        self.youtube_options.hide()
+        self.throbber.hide()
         self.youtube_video_rate.hide()
         self.youtube_video_rate.set_active(0)
         
@@ -336,7 +341,15 @@ class GsongFinder(object):
         ## engine selector (engines only with direct links)
         for engine in self.engine_list:
             self.engine_selector.append(engine)
-        self.engine_selector.select(0)
+        if ("Youtube" in self.engine_list):
+			self.engine_selector.setIndexFromString("Youtube")
+        else:
+			self.engine_selector.select(0)
+			
+        self.search_entry.set_text(_("Search..."))
+        
+        ## load icons
+        self.load_gui_icons()
         
         ## start main loop
         gobject.threads_init()
@@ -344,6 +357,23 @@ class GsongFinder(object):
         self.mainloop = gobject.MainLoop(is_running=True)
         self.mainloop.run()
         
+    def on_gui_opt_toggled(self,widget):
+		if widget.get_active():
+			self.show_thumbs_opt = "True"
+			self.columns[0].set_visible(1)
+		else:
+			self.show_thumbs_opt = "False"
+			self.columns[0].set_visible(0)
+		self.config["show_thumbs"] = self.show_thumbs_opt
+		self.config.write()
+    
+    def clear_search_entry(self,widget,e,r):
+		if e == gtk.ENTRY_ICON_SECONDARY:
+			self.search_entry.set_text("")
+		elif e == gtk.ENTRY_ICON_PRIMARY:
+			self.prepare_search()
+		self.search_entry.grab_focus()
+    
     def alternate_color(self, column, cell, model, iter):
 		if int((model.get_string_from_iter(iter).split(":")[0])) % 2:
 			cell.set_property('background-gdk', self.odd)
@@ -390,20 +420,18 @@ class GsongFinder(object):
 		self.down_dir = widget.get_current_folder()
 
     def set_engine(self,widget=None):
-        self.youtube_options.hide()
         self.youtube_video_rate.hide()
         self.engine = self.engine_selector.getSelected()
-        self.changepage_btn.hide()
         iter = self.engine_selector.getSelectedIndex()
-        if self.engine_selector.getSelected() == 0:
+        if iter == 0:
             self.engine = None
             return
-        print _("%s engine selected") % self.engine
-        if self.engine == "Youtube":
-            self.youtube_options.show()
-            self.youtube_video_rate.show()
-            self.youtube_options.relevance_opt.set_active(1)
-
+        ## load the plugin
+        self.search_engine = getattr(self.engines_client,'%s' % self.engine)
+        ## clean the gui options box and load the plugin gui
+        for w in self.search_opt_box:
+			self.search_opt_box.remove(w)
+        self.search_engine.load_gui()
             
     def show_downloads(self, widget):
 		self.notebook.set_current_page(1)
@@ -478,8 +506,6 @@ class GsongFinder(object):
 				pass
 			self.start_play(self.media_link[active])
 
-    def option_changed(self,widget):
-        self.search_option = widget.name
         
     def get_quality_list(self,vid_id):
         links_arr = []
@@ -525,55 +551,68 @@ class GsongFinder(object):
         self.user_search = self.search_entry.get_text()
         self.main_engine = self.engine_selector.getSelectedIndex()
         if self.main_engine == 0:
-			self.informations_label.set_text(_("Please select a search engine..."))
-			self.search_btn.set_sensitive(1)
+			#self.informations_label.set_text(_("Please select a search engine..."))
 			return
         if not self.user_search:
-            self.informations_label.set_text(_("Please enter an artist/album or song name..."))
+            #self.informations_label.set_text(_("Please enter an artist/album or song name..."))
             return
         if not self.engine:
-            self.informations_label.set_text(_("Please select an engine..."))
+            #self.informations_label.set_text(_("Please select an engine..."))
             return
-			
+        self.changepage_btn.hide()
+        self.pageback_btn.hide()
         return self.idle_add_lock(self.search,())
 
     def change_page(self,widget=None):
+        try:
+			name = widget.name
+        except:
+			name = ""
         user_search = self.search_entry.get_text()
         engine = self.engine_selector.getSelectedIndex()
         if not user_search or user_search != self.user_search \
         or not engine or engine != self.main_engine:
             return self.prepare_search()
         else:
-            return self.idle_add_lock(self.search,(self.search_engine.current_page))
+			if name == "pageback_btn":
+				if self.search_engine.current_page != 1:
+					try:
+						self.search_engine.num_start = self.search_engine.num_start - self.search_engine.results_by_page
+					except:
+						pass
+					self.search_engine.current_page = self.search_engine.current_page - 1
+				return self.idle_add_lock(self.search,(self.search_engine.current_page))
+			else:
+				self.search_engine.current_page = self.search_engine.current_page + 1
+				try:
+					self.search_engine.num_start = self.search_engine.num_start + self.search_engine.results_by_page
+				except:
+					pass
+				return self.idle_add_lock(self.search,(self.search_engine.current_page))
 
     def search(self,page=None):
 		values = {'engine': self.engine, 'query': self.user_search}
-		self.informations_label.set_text(_("Searching for %(query)s with %(engine)s ") % values)
+		#self.informations_label.set_text(_("Searching for %(query)s with %(engine)s ") % values)
 		self.model.clear()
-		self.search_btn.set_sensitive(0)
-		self.changepage_btn.set_sensitive(0)
-		self.search_engine = getattr(self.engines_client,'%s' % self.engine)
 		## send request to the module, can pass type and order too...reset page start to inital state
 		if not page:
 			page = self.search_engine.main_start_page
 			self.search_engine.current_page = self.search_engine.main_start_page
 		thread.start_new_thread(self.search_engine.search,(self.user_search,page))
 
-
-    def add_sound(self, name, media_link, img=None, quality_list=None,count=None,duration=None):
+    def add_sound(self, name, markup_src, media_link, img=None, quality_list=None):
         if not img:
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         if not name or not media_link or not img:
             return
+        ## clean markup...
         try:
-            if re.search('&', name):
-			    name = re.sub('&','&amp;', name)
+			if re.search('&', markup_src):
+				markup = re.sub('&','&amp;', markup_src)
+			else:
+				markup = markup_src
         except:
 			pass
-        markup="<b>%s</b>" % name
-        if count:
-			values = {'name': name, 'count': count, 'duration': duration}
-			markup = _("<b>%(name)s</b>\n\n<small><b>view:</b> %(count)s		<b>Duration:</b> %(duration)s</small>") % values
         self.iter = self.model.append()
         self.model.set(self.iter,
                         0, img,
@@ -586,12 +625,12 @@ class GsongFinder(object):
     def start_stop(self,widget=None):
         url = self.media_link
         if url:
-            if self.play_btn.get_label() == "gtk-media-play":
+            if self.is_stopped:
                 self.statbar.push(1,_("Playing : %s") % self.media_name)
                 return self.start_play(url)
             else:
                 self.statbar.push(1,_("Stopped"))
-                return self.stop_play(url)
+                return self.stop_play()
 
     def start_play(self,url):
         self.active_link = url
@@ -599,18 +638,21 @@ class GsongFinder(object):
             self.vis = self.change_visualisation()
             self.visual = gst.element_factory_make(self.vis,'visual')
             self.player.set_property('vis-plugin', self.visual)
-        self.play_btn.set_label("gtk-media-stop")
-        self.pause_btn.set_label("gtk-media-pause")
+        self.play_btn_pb.set_from_pixbuf(self.stop_icon)
+        self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
         self.play_thread_id = thread.start_new_thread(self.play_thread, ())
         self.is_playing = True
+        self.is_stopped= False
 
     def stop_play(self,widget=None):
         self.player.set_state(gst.STATE_NULL)
-        self.play_btn.set_label("gtk-media-play")
+        self.play_btn_pb.set_from_pixbuf(self.play_icon)
+        self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
         self.is_playing = False
         self.play_thread_id = None
+        self.is_stopped= True
         self.duration = None
         self.update_time_label()
         self.active_link = None
@@ -625,20 +667,86 @@ class GsongFinder(object):
                     self.update_time_label()
                 gtk.gdk.threads_leave()
             time.sleep(1)
+            
+    def load_gui_icons(self):
+		## try to load and use the current gtk icon theme,
+		## if not possible, use fallback icons
+		default_icon_theme = gtk.icon_theme_get_default()
+		## load desired icons if possible
+		play_icon = default_icon_theme.lookup_icon("player_play",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+		if play_icon:
+			self.play_icon = play_icon.load_icon()
+		
+		stop_icon = default_icon_theme.lookup_icon("player_stop",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+		if stop_icon:
+			self.stop_icon = stop_icon.load_icon()
+		
+		pause_icon = default_icon_theme.lookup_icon("stock_media-pause",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+		if pause_icon:
+			self.pause_icon = pause_icon.load_icon()
+		
+		shuffle_icon = default_icon_theme.lookup_icon("stock_shuffle",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+		if shuffle_icon:
+			self.shuffle_icon = shuffle_icon.load_icon()
+		
+		loop_icon = default_icon_theme.lookup_icon("stock_repeat",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+		if loop_icon:
+			self.loop_icon = loop_icon.load_icon()
+		
+		pagen_icon = default_icon_theme.lookup_icon("stock_media-next",16,gtk.ICON_LOOKUP_USE_BUILTIN)
+		if pagen_icon:
+			self.page_next_icon = pagen_icon.load_icon()
+		
+		pagep_icon = default_icon_theme.lookup_icon("stock_media-prev",16,gtk.ICON_LOOKUP_USE_BUILTIN)
+		if pagep_icon:
+			self.page_prev_icon = pagep_icon.load_icon()
+		
+		## control section
+		
+		## play
+		self.play_btn = self.gladeGui.get_widget("play_btn")
+		self.play_btn_pb = self.gladeGui.get_widget("play_btn_img")
+		self.play_btn_pb.set_from_pixbuf(self.play_icon)
+		self.play_btn.connect('clicked', self.start_stop)
+		## pause
+		self.pause_btn = self.gladeGui.get_widget("pause_btn")
+		self.pause_btn_pb = self.gladeGui.get_widget("pause_btn_img")
+		self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
+		## pages next/back
+		self.changepage_btn = self.gladeGui.get_widget("nextpage_btn")
+		self.changepage_pixb = self.gladeGui.get_widget("nextpage_pixb")
+		self.changepage_pixb.set_from_pixbuf(self.page_next_icon)
+		self.pageback_btn = self.gladeGui.get_widget("pageback_btn")
+		self.pageback_pixb = self.gladeGui.get_widget("backpage_pixb")
+		self.pageback_pixb.set_from_pixbuf(self.page_prev_icon)
+		## loop/shuffle
+		self.shuffle_btn = self.gladeGui.get_widget("shuffle_btn")
+		self.shuffle_pixb = self.gladeGui.get_widget("shuffle_btn_pixb")
+		self.shuffle_pixb.set_from_pixbuf(self.shuffle_icon)
+		self.loop_btn = self.gladeGui.get_widget("repeat_btn")
+		self.loop_pixb = self.gladeGui.get_widget("repeat_btn_pixb")
+		self.loop_pixb.set_from_pixbuf(self.loop_icon)
+		
+		## hide some icons by default
+		self.changepage_btn.hide()
+		self.pageback_btn.hide()
 
     def on_message(self, bus, message):
         t = message.type
         if t == gst.MESSAGE_EOS:
             self.play_thread_id = None
+            self.is_stopped = True
             self.player.set_state(gst.STATE_NULL)
-            self.play_btn.set_label("gtk-media-play")
+            self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
+            self.play_btn_pb.set_from_pixbuf(self.stop_icon)
             self.check_play_options()
         elif t == gst.MESSAGE_ERROR:
             err, debug = message.parse_error()
             print "Error: %s" % err, debug
             self.play_thread_id = None
-            self.player.set_state(gst.STATE_NULL)
-            self.play_btn.set_label("gtk-media-play")
+            self.is_stopped = True
+            self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
+            self.play_btn_pb.set_from_pixbuf(self.stop_icon)
             if not sys.platform == "win32" and ('No port available' in debug)and not self.xsink:
                 self.sink = gst.element_factory_make('ximagesink')
                 self.player.set_property("video-sink", self.sink)
@@ -650,27 +758,33 @@ class GsongFinder(object):
     def pause_resume(self,widget=None):
         if not self.is_playing:
 			return
-        if self.pause_btn.get_label() == "gtk-media-pause":
-            self.pause_btn.set_label("gtk-media-play")
-            self.player.set_state(gst.STATE_PAUSED)
+        if not self.is_paused:
+			self.pause_btn_pb.set_from_pixbuf(self.play_icon)
+			self.player.set_state(gst.STATE_PAUSED)
+			self.is_paused = True
         else:
-            self.pause_btn.set_label("gtk-media-pause")
-            self.player.set_state(gst.STATE_PLAYING)
+			self.player.set_state(gst.STATE_PLAYING)
+			self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
+			self.is_paused = False
 
     def set_play_options(self,widget):
         wname = widget.name
         wstate = widget.get_active()
-        if wname == "continue_checkbox":
+        if wname == "shuffle_btn":
             if wstate:
-                self.play_options = "continue"
-                if self.loop_checkbox.get_active():
-                    self.loop_checkbox.set_active(0)
-        elif wname == "loop_checkbox":
+                self.play_options = "shuffle"
+                if self.shuffle_btn.get_active():
+                    self.shuffle_btn.set_active(1)
+            else:
+				self.play_options = "continue"
+        elif wname == "repeat_btn":
             if wstate:
                 self.play_options = "loop"
-                if self.continue_checkbox.get_active():
-                    self.continue_checkbox.set_active(0)
-
+                if self.loop_btn.get_active():
+                    self.loop_btn.set_active(1)
+            else:
+				self.play_options = "continue"
+				
     def check_play_options(self):
         if self.play_options == "loop":
             path = self.model.get_path(self.iter)
@@ -800,7 +914,6 @@ class GsongFinder(object):
     def set_fullscreen(self,widget=None):
         if self.fullscreen :
             self.fullscreen = False
-            self.top_infobox.show()
             self.search_box.show()
             self.results_box.show()
             self.statbar.show()
@@ -809,7 +922,6 @@ class GsongFinder(object):
             self.window.window.unfullscreen()
             self.window.set_position(gtk.WIN_POS_CENTER)
         else:
-            self.top_infobox.hide()
             self.search_box.hide()
             self.results_box.hide()
             self.options_bar.hide()
@@ -873,6 +985,16 @@ class GsongFinder(object):
             return self.pause_resume()
         elif key == 's':
 			return self.stop_play()
+        elif key == 'BackSpace':
+			self.search_entry.set_text("")
+			return self.search_entry.grab_focus()
+        elif key == 'd':
+			if not self.down_menu_btn.get_active():
+				self.down_menu_btn.set_active(1)
+				self.notebook.set_current_page(1)
+			else:
+				self.down_menu_btn.set_active(0)
+				self.notebook.set_current_page(0)
 			
         # If user press Esc button in fullscreen mode
         if event.keyval == gtk.keysyms.Escape and self.fullscreen:

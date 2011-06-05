@@ -12,6 +12,7 @@ class Skreemr(object):
     def __init__(self,gui):
         self.gui = gui
         self.name="Skreemr"
+        self.results_by_page = 10
         self.main_start_page = 1
         self.current_page = 1
         self.num_start = 1
@@ -22,21 +23,15 @@ class Skreemr(object):
     def start_engine(self):
 		self.gui.engine_list[self.name] = ''
 
+    def load_gui(self):
+		pass
+
     def uniq(self,input):
         output = []
         for x in input:
             if x not in output:
                 output.append(x)
         return output
-
-    def get_newest_videos(self, page=1, sort_by="rating"):
-        return self.filter(BROWSE_URL % (sort_by, page))
-
-    def get_top_rated(self, page=1, sort_by="week"):
-        return self.filter(TOP_RATED_URL % (sort_by, page))
-
-    def get_most_viewed(self, page=1, sort_by="week"):
-        return self.filter(MOST_VIEWED_URL % (sort_by, page))
 
     def search(self, query, page):
         if page == 1:
@@ -54,20 +49,21 @@ class Skreemr(object):
 			results_count = results_div.findAll('b')[1].string
 		except:
 			self.gui.changepage_btn.hide()
-			self.gui.informations_label.set_text(_("No results found for %s...") % (query))
-			self.num_start = 0
+			#self.gui.informations_label.set_text(_("No results found for %s...") % (query))
+			self.num_start = 1
 			self.current_page = 1
-			self.gui.search_btn.set_sensitive(1)
 			return
 		if results_count == 0 :
-			self.gui.informations_label.set_text(_("no results for your search : %s ") % (query))
-			self.gui.search_btn.set_sensitive(1)
+			#self.gui.informations_label.set_text(_("no results for your search : %s ") % (query))
 			return
 		else:
+			if self.current_page != 1:
+				self.gui.pageback_btn.show()
+			else:
+				self.gui.pageback_btn.hide()
 			values = {'total': results_count, 'query': query}
-			self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
-			self.gui.search_btn.set_sensitive(1)
-			self.gui.changepage_btn.set_sensitive(1)
+			#self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
+			self.gui.changepage_btn.show()
 		
 		pagination_table = soup.find('div',attrs={'class':'previousnext'})
 		if pagination_table:
@@ -78,18 +74,14 @@ class Skreemr(object):
 					next_page = 1
 			if next_page:
 				values = {'page': self.current_page, 'query': query, 'total' : results_count}
-				self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
-				self.num_start += 10
-				self.current_page += 1
-				self.gui.search_btn.set_sensitive(1)
+				#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
 				self.gui.changepage_btn.set_sensitive(1)
 				self.gui.changepage_btn.show()
 			else:
 				self.gui.changepage_btn.hide()
 				self.num_start = 0
 				self.current_page = 1
-				self.gui.informations_label.set_text(_("no more files found for %s...") % (query))
-				self.gui.search_btn.set_sensitive(1)
+				#self.gui.informations_label.set_text(_("no more files found for %s...") % (query))
 				return
 
 		flist = soup.findAll('a',href=True)
@@ -106,7 +98,8 @@ class Skreemr(object):
 		i = 0
 		for name in nlist:
 			if name and link_list[i]:
-				self.gui.add_sound(name, link_list[i])
+				markup="<small><b>%s</b></small>" % name
+				self.gui.add_sound(name, markup, link_list[i])
 				i += 1
 
 

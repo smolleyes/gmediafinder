@@ -37,6 +37,9 @@ class YouPorn(object):
     def start_engine(self):
 		self.gui.engine_list[self.name] = ''
 
+    def load_gui(self):
+		pass
+
     def filter(self, url,query):
         soup = self.parser.parse(self.browser.open(url))
         vid_list = []
@@ -47,18 +50,16 @@ class YouPorn(object):
 			results_count = results_div.findAll('span')[1].string
         except:
 			self.gui.changepage_btn.hide()
-			self.gui.informations_label.set_text(_("No results found for %s...") % (query))
+			#self.gui.informations_label.set_text(_("No results found for %s...") % (query))
 			self.num_start = 0
 			self.current_page = 1
-			self.gui.search_btn.set_sensitive(1)
 			return
         if results_count == 0 :
-			self.gui.informations_label.set_text(_("no results for your search : %s ") % (query))
-			self.gui.search_btn.set_sensitive(1)
+			#self.gui.informations_label.set_text(_("no results for your search : %s ") % (query))
 			return
         else:
 			values = {'total': results_count, 'query': query}
-			self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
+			#self.gui.informations_label.set_text(_("%(total)s results found for your search %(query)s") % values)
 
         try:
 		    pagination_table = soup.findAll('div',attrs={'id':'pages'})[0]
@@ -72,14 +73,16 @@ class YouPorn(object):
 					next_page = 1
 			if next_page:
 				values = {'page': self.current_page, 'query': query, 'total' : results_count}
-				self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
-				self.current_page += 1
+				#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(%(total)s results)") % values)
+				if self.current_page != 1:
+					self.gui.pageback_btn.show()
+				else:
+					self.gui.pageback_btn.hide()
 				self.gui.changepage_btn.show()
 			else:
 				self.gui.changepage_btn.hide()
 				self.current_page = 1
-				self.gui.informations_label.set_text(_("no more files found for %s...") % (query))
-				self.gui.search_btn.set_sensitive(1)
+				#self.gui.informations_label.set_text(_("no more files found for %s...") % (query))
 				return
         
         for l in soup.findAll('a', href=True):
@@ -89,7 +92,7 @@ class YouPorn(object):
 			except:
 				continue
 				
-        imglist = soup.findAll('img',attrs={'class': 'video-thumb'})
+        imglist = soup.find('div', {'id': "video-listing"}).findAll('img', {'num': "8"})
         img_list = []
         for t in imglist:
             img_link = t.attrMap['src']
@@ -99,12 +102,10 @@ class YouPorn(object):
         videos = self.uniq(vid_list)
         i=0
         for link in videos:
-			self.gui.add_sound(link.split('/')[3], self.get_video_url(link), img_list[i])
+			markup="<small><b>%s</b></small>" % link.split('/')[3]
+			self.gui.add_sound(link.split('/')[3], markup, self.get_video_url(link), img_list[i])
 			i+=1
-        self.current_page += 1
         self.gui.changepage_btn.show()
-        self.gui.changepage_btn.set_sensitive(1)
-        self.gui.search_btn.set_sensitive(1)
 
     def uniq(self,input):
         output = []
@@ -122,7 +123,7 @@ class YouPorn(object):
     def get_most_viewed(self, page=1, sort_by="week"):
         return self.filter(MOST_VIEWED_URL % (sort_by, page))
 
-    def search(self, query, page=1, sort_by="relevance", type="straight"):
+    def search(self, query, page=1, sort_by="time", type="straight"):
         return self.filter(self.search_url % (sort_by, urllib.quote(query), type, page), query)
           
     def get_video_url(self, url):
@@ -134,6 +135,8 @@ class YouPorn(object):
 			soup = self.parser.parse(self.browser.open(url))
         except:
 			return
-        download_url = soup.find('a', {'href': download})['href']
-        return download_url
-
+        try:
+			down = soup.find('div', {'id': "download"}).findAll('a')[1]['href']
+        except:
+			down = soup.find('div', {'id': "download"}).findAll('a')[0]['href']
+        return down

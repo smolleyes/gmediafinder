@@ -22,22 +22,8 @@ class Imusicz(object):
     def start_engine(self):
 		self.gui.engine_list[self.name] = ''
 
-    def filter(self, url): 
-        soup = self.parser.parse(self.browser.open(url))
-        vid_list = []
-        for l in soup.findAll('a', href=True):
-			try:
-			    u = re.search('/watch/.*"',str(l)).group(0)
-			    vid_list.append(u)
-			except:
-				continue
-				
-        imglist = soup.findAll('img',attrs={'class': 'video-thumb'})
-        img_list = []
-        for t in imglist:
-            img = t.attrMap['src']
-            img_list.append(img)
-        return self.uniq(vid_list), img_list
+    def load_gui(self):
+		pass
         
     def search(self, query, page=1):
 		timeout = 30
@@ -60,25 +46,23 @@ class Imusicz(object):
 				l = str(a.string)
 				if l == "Next":
 					next_page = 1
-			if next_page:
+					if self.current_page != 1:
+						self.gui.pageback_btn.show()
+					else:
+						self.gui.pageback_btn.hide()
+			if next_page:		
 				values = {'page': self.current_page, 'query': user_search}
-				self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(Next page available)") % values)
-				self.current_page += 1
+				#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s...(Next page available)") % values)
 				self.gui.changepage_btn.show()
-				self.gui.search_btn.set_sensitive(1)
-				self.gui.changepage_btn.set_sensitive(1)
 			else:
 				self.gui.changepage_btn.hide()
-				self.current_page = 1
-				self.gui.informations_label.set_text(_("no more files found for %s...") % (user_search))
-				self.gui.search_btn.set_sensitive(1)
+				#self.gui.informations_label.set_text(_("no more files found for %s...") % (user_search))
 				return
 
 		flist = soup.findAll('td',attrs={'width':'75'})
 		if len(flist) == 0:
 			self.gui.changepage_btn.hide()
-			self.gui.informations_label.set_text(_("no files found for %s...") % (user_search))
-			self.gui.search_btn.set_sensitive(1)
+			#self.gui.informations_label.set_text(_("no files found for %s...") % (user_search))
 			return
 		for link in flist:
 			try:
@@ -95,8 +79,8 @@ class Imusicz(object):
 		i = 0
 		for name in nlist:
 			if name and link_list[i]:
-				self.gui.add_sound(name, link_list[i])
+				markup="<small><b>%s</b></small>" % name
+				self.gui.add_sound(name, markup, link_list[i])
 				i += 1
-		self.gui.search_btn.set_sensitive(1)
 
 

@@ -6,9 +6,13 @@ import gdata.youtube.service as yt_service
 try:
 	from functions import *
 	from functions import download_photo
+	from functions import ComboBox
+	from functions import sortDict
 except:
 	from GmediaFinder.functions import *
 	from GmediaFinder.functions import download_photo
+	from GmediaFinder.functions import ComboBox
+	from GmediaFinder.functions import sortDict
 
 class Youtube(object):
     def __init__(self,gui):
@@ -16,12 +20,49 @@ class Youtube(object):
         self.current_page = 1
         self.main_start_page = 1
         self.num_start = 1
+        self.results_by_page = 25
         self.name="Youtube"
         self.client = yt_service.YouTubeService()
         self.start_engine()
+        ## the gui box to show custom filters/options
+        self.opt_box = self.gui.gladeGui.get_widget("search_options_box")
 
     def start_engine(self):
 		self.gui.engine_list[self.name] = ''
+		
+    def load_gui(self):
+        label = gtk.Label(_("options: "))
+        self.gui.search_opt_box.pack_start(label,False,False,5)
+        ## create orderby combobox
+        cb = create_comboBox()
+        self.orderbyOpt = {_("Most relevant"):"relevance",
+        _("Most recent"):"published",_("Most viewed"):"viewCount",
+        _("Most rated"):"rating"
+        }
+        self.orderby = ComboBox(cb)
+        for cat in self.orderbyOpt:
+		    self.orderby.append(cat)
+        self.gui.search_opt_box.add(cb)
+        ## create categories combobox
+        label = gtk.Label(_("Category: "))
+        self.gui.search_opt_box.pack_start(label,False,False,5)
+        cb = create_comboBox()
+        self.category = ComboBox(cb)
+        self.category.append("")
+        self.catlist = {_("Sport"):"Sports",_("Films"):"Film",_("Cars"):"Autos",
+        _("Music"):"Music",_("Technology"):"Tech",_("Animals"):"Animals",
+        _("Travel"):"Travel",_("Games"):"Games",_("Comedy"):"Comedy",
+        _("Peoples"):"People",_("News"):"News",
+        _("Entertainement"):"Entertainment",_("Trailers"):"Trailers"}
+        catlist = sortDict(self.catlist)
+        for cat in catlist:
+			self.category.append(cat)
+        self.gui.search_opt_box.add(cb)
+		
+        self.gui.search_opt_box.show_all()
+        self.gui.youtube_video_rate.show()
+        self.orderby.select(0)
+        self.category.select(0)
 
     def search(self,user_search,page):
 		nlist = []
@@ -32,39 +73,33 @@ class Youtube(object):
 		query = yt_service.YouTubeVideoQuery()
 		query.vq = user_search # the term(s) that you are searching for
 		query.max_results = '25'
-		if self.gui.youtube_options.relevance_opt.get_active():
-			query.orderby = 'relevance'
-		elif self.gui.youtube_options.recent_opt.get_active():
-			query.orderby = 'published'
-		elif self.gui.youtube_options.viewed_opt.get_active():
-			query.orderby = 'viewCount'
-		elif self.gui.youtube_options.rating_opt.get_active():
-			query.orderby = 'rating'
+		#query.lr = 'fr'
+		orderby = self.orderby.getSelected()
+		query.orderby = self.orderbyOpt[orderby]
+		cat = self.category.getSelected()
+		if self.category.getSelectedIndex() != 0:
+			query.categories.append('/%s' % self.catlist[cat])
 		
 		if self.current_page == 1:
+			self.gui.pageback_btn.hide()
 			self.num_start = 1
 		else:
-			self.num_start+=25
+			self.gui.pageback_btn.show()
 		query.start_index = self.num_start
 		vquery = self.client.YouTubeQuery(query)
 		
 		if not vquery :
 			self.num_start = 1
 			self.current_page = 1
-			self.gui.search_btn.set_sensitive(1)
 			self.gui.changepage_btn.hide()
-			self.gui.informations_label.set_text(_("no more files found for %s ...") % (user_search))
-			self.gui.search_btn.set_sensitive(1)
+			self.pageback_btn.hide()
+			#self.gui.informations_label.set_text(_("no more files found for %s ...") % (user_search))
 			return
 		values = {'page': self.current_page, 'query': user_search}
-		self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s ...") % values)
-		self.num_start+=25
-		self.current_page += 1
+		#self.gui.informations_label.set_text(_("Results page %(page)s for %(query)s ...") % values)
 		
 		for entry in vquery.entry:
 			self.make_youtube_entry(entry)
-		self.gui.search_btn.set_sensitive(1)
-		self.gui.changepage_btn.set_sensitive(1)
 
     def make_youtube_entry(self,video):
 		#import pprint
@@ -84,10 +119,15 @@ class Youtube(object):
 			pass
 		vid_id = os.path.basename(os.path.dirname(url))
 		vid_pic = download_photo(thumb)
-		vid_title = video.title.text
-		if not vid_title or not url or not vid_pic:
+		title = video.title.text
+		if not count:
+			count = 0
+		
+		values = {'name': title, 'count': count, 'duration': duration}
+		markup = _("<small><b>%(name)s</b></small>\n<small><b>view:</b> %(count)s		<b>Duration:</b> %(duration)s</small>") % values
+		if not title or not url or not vid_pic:
 			return
-		self.gui.add_sound(vid_title, vid_id, vid_pic,None,count,duration)
+		self.gui.add_sound(title, markup, vid_id, vid_pic)
         
             
 
