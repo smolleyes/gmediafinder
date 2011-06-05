@@ -13,6 +13,7 @@ try:
 	from functions import download_photo
 except:
 	from GmediaFinder.functions import download_photo
+	
 
 URL = "http://youporn.com/"
 ENTER_URL = "%s?user_choice=Enter" % URL
