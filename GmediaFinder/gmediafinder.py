@@ -7,6 +7,7 @@ import thread
 import pango
 import threading
 import Queue
+import random
 import time
 import gobject
 import pygtk
@@ -832,6 +833,11 @@ class GsongFinder(object):
                         else:
                             i += 1
                             time.sleep(1)
+        elif self.play_options == "shuffle":
+			 num = random.randint(0,len(self.model))
+			 self.iter = self.model[num].iter
+			 path = self.model.get_path(self.iter)
+			 self.treeview.set_cursor(path)
     
     def convert_ns(self, t):
         # This method was submitted by Sam Mason.
