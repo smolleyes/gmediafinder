@@ -1,8 +1,5 @@
-<<<<<<< HEAD
-gmediafinder (0.9.5-0ppa5~natty) natty; urgency=high
-=======
-gmediafinder (0.9.4.3-0ppa3~maverick) maverick; urgency=high
->>>>>>> 9f45fb042743349511e04c6d09cf1318579c326b
+
+gmediafinder (0.9.5-0ppa5~maverick) maverick; urgency=high
 
   * add shuffle mode
 
