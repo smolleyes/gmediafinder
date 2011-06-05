@@ -61,6 +61,7 @@ class GsongFinder(object):
         self.thread_num = 0
         self.xsink = False
         self.play_options = "continue"
+        self.vis="jess"
         width = gtk.gdk.screen_width()
         height = gtk.gdk.screen_height()
         self.window_state = (width-200,height-80,0,0)
@@ -85,6 +86,7 @@ class GsongFinder(object):
             os.write(fd,"download_path=%s" % self.down_dir)
             os.write(fd,"window_state=%s" % self.window_state)
             os.write(fd,"show_thumbs=%s" % self.show_thumbs_opt)
+            os.write(fd,"visualisation=%s" % self.vis)
             os.close(fd)
         self.config = ConfigObj(self.conf_file,write_empty_values=True)
         try:
@@ -226,7 +228,14 @@ class GsongFinder(object):
         self.timerbox.add(self.time_label)
         
         ## visualisations
-        self.vis_selector = self.gladeGui.get_widget("vis_chooser")
+        try:
+		    self.vis = self.config["visualisation"]
+        except:
+			self.config["visualisation"] = self.vis
+			self.config.write()
+        combo = self.gladeGui.get_widget("vis_chooser")
+        self.vis_selector = ComboBox(combo)
+        self.vis_selector.setIndexFromString(self.vis)
         
         
         ## SIGNALS
@@ -304,11 +313,14 @@ class GsongFinder(object):
         self.results_scroll.connect_after('size-allocate', self.resize_wrap, self.treeview, self.columns[1], rendertxt)
         ## connect treeview signals
         self.treeview.connect('cursor-changed',self.get_model)
+        
+        ## visualisations
+        
 
         ## create the players
         self.player = gst.element_factory_make("playbin", "player")
         audiosink = gst.element_factory_make("autoaudiosink")
-        self.vis = self.change_visualisation()
+        
         if sys.platform == "win32":
             self.sink = gst.element_factory_make('d3dvideosink')
         else:
@@ -407,14 +419,13 @@ class GsongFinder(object):
                 treeview.set_size_request(0,-1)
         
     def change_visualisation(self, widget=None):
-        vis = self.vis_selector.get_active_text()
-        if vis == "":
-            self.vis_selector.set_active(0)
-            self.vis = "libvisual_jess"
-        elif vis != "goom":
+        vis = self.vis_selector.getSelected()
+        if vis != "goom":
             self.vis = "libvisual_"+vis
         else:
             self.vis = vis
+        self.config["visualisation"] = vis
+        self.config.write()
         return self.vis
         
     def update_down_path(self,widget=None):
