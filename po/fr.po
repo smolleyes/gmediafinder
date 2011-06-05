@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 #   <s.lagui@free.fr>, 2011
 # smo <s.lagui@free.fr>, 2011
 # paokouran <s.lagui@free.fr>, 2011
@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-05 19:00+0200\n"
+"POT-Creation-Date: 2011-06-05 19:11+0200\n"
 "PO-Revision-Date: 2011-06-05 17:04+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
@@ -42,13 +42,17 @@ msgstr ""
 "\n"
 "Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le\n"
 "modifier suivant les termes de la GNU General Public License telle que\n"
-"publiée par la Free Software Foundation , soit la version 2 de la Licence, soit (à votre gré) toute version ultérieure.\n"
+"publiée par la Free Software Foundation , soit la version 2 de la Licence, "
+"soit (à votre gré) toute version ultérieure.\n"
 "\n"
 "Ce programme est distribué dans l’espoir qu’il sera utile, mais SANS\n"
 "AUCUNE GARANTIE : sans même la garantie implicite de COMMERCIALISABILITÉ\n"
-"ni d’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la GNU General Public License pour plus de détails.\n"
+"ni d’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la GNU General Public "
+"License pour plus de détails.\n"
 "\n"
-"Vous devriez avoir reçu une copie de la GNU General Public License avec ce programme ; si ce n’est pas le cas, consultez : <http://www.gnu.org/licenses/>.\n"
+"Vous devriez avoir reçu une copie de la GNU General Public License avec ce "
+"programme ; si ce n’est pas le cas, consultez : <http://www.gnu.org/licenses/"
+">.\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:87
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:88
@@ -435,5 +439,3 @@ msgstr "Téléchargement terminé"
 #, python-format
 msgid "Remaining : %(min)02d:%(sec)02d"
 msgstr "Restant: %(min)02d:%(sec)02d"
-
-

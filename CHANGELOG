@@ -1,3 +1,9 @@
+V 0.9.5
+ * big gui changes
+ * add page back button
+ * add shuffle mode
+ * fix
+
 v0.9.4
  * begin rewrite of downloading section
  * update translations
