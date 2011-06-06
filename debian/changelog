@@ -1,5 +1,4 @@
-
-gmediafinder (0.9.5-0ppa6~natty) natty; urgency=high
+gmediafinder (0.9.5-0ppa6~lucid) lucid; urgency=high
 
   * move visualisation combobox in preferences
 
