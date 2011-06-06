@@ -39,7 +39,8 @@ class Imusicz(object):
 			self.gui.info_label.set_text(_("Search timeout...") % (user_search))
 			self.gui.throbber.hide()
 			return
-		soup = BeautifulStoneSoup(data.encode('utf-8'),selfClosingTags=['/>'],convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
+		d = unicode(data,errors='replace')
+		soup = BeautifulStoneSoup(d.decode('utf-8'),selfClosingTags=['/>'],convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
 		nlist = []
 		link_list = []
 		next_page = 1

@@ -31,7 +31,8 @@ class Mp3Realm(object):
         gtk.gdk.threads_leave()
         
     def filter(self,data,user_search):
-		soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
+		d = unicode(data,errors='replace')
+		soup = BeautifulStoneSoup(d.decode('utf-8'),selfClosingTags=['/>'])
 		## reset the treeview
 		nlist = []
 		link_list = []

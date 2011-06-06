@@ -32,7 +32,8 @@ class Dilandau(object):
         gtk.gdk.threads_leave()
         
     def filter(self,data,user_search):
-		soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
+		d = unicode(data,errors='replace')
+		soup = BeautifulStoneSoup(d.decode('utf-8'),selfClosingTags=['/>'])
 		nlist = []
 		link_list = []
 		next_page = 1
