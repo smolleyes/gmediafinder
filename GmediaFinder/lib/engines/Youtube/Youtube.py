@@ -68,7 +68,9 @@ class Youtube(object):
 		nlist = []
 		link_list = []
 		next_page = 0
+		gtk.gdk.threads_enter()
 		self.gui.changepage_btn.show()
+		gtk.gdk.threads_leave()
 		## prepare query
 		query = yt_service.YouTubeVideoQuery()
 		query.vq = user_search # the term(s) that you are searching for
@@ -81,35 +83,44 @@ class Youtube(object):
 			query.categories.append('/%s' % self.catlist[cat])
 		
 		if self.current_page == 1:
+			gtk.gdk.threads_enter()
 			self.gui.pageback_btn.hide()
+			gtk.gdk.threads_leave()
 			self.num_start = 1
 		else:
+			gtk.gdk.threads_enter()
 			self.gui.pageback_btn.show()
+			gtk.gdk.threads_leave()
 		query.start_index = self.num_start
 		vquery = self.client.YouTubeQuery(query)
-		gtk.gdk.threads_enter()
 		self.filter(vquery,user_search)
-		gtk.gdk.threads_leave()
 		
     def filter(self,vquery,user_search):
 		if not vquery :
 			self.num_start = 1
 			self.current_page = 1
+			gtk.gdk.threads_enter()
 			self.gui.changepage_btn.hide()
 			self.pageback_btn.hide()
 			self.gui.info_label.set_text(_("no more files found for %s ...") % (user_search))
 			self.gui.throbber.hide()
+			gtk.gdk.threads_leave()
 			return
 		
 		if len(vquery.entry) == 0:
+			gtk.gdk.threads_enter()
 			self.gui.info_label.set_text(_("no results for %s ...") % (user_search))
 			self.gui.throbber.hide()
+			gtk.gdk.threads_leave()
 			return
 		
+		gtk.gdk.threads_enter()
 		for entry in vquery.entry:
 			self.make_youtube_entry(entry)
 		self.gui.throbber.hide()
 		self.gui.info_label.set_text("")
+		gtk.gdk.threads_leave()
+		return
 		
 
     def make_youtube_entry(self,video):

@@ -152,7 +152,7 @@ class GsongFinder(object):
         
         ## notebook
         self.notebook = self.gladeGui.get_widget("notebook")
-        
+        self.video_cont = self.gladeGui.get_widget("video_cont")
         ## youtube video quality choices
         self.res320 = self.gladeGui.get_widget("res1")
         self.res640 = self.gladeGui.get_widget("res2")
@@ -557,7 +557,6 @@ class GsongFinder(object):
 					quality_arr.append(quality.split("/")[1] + "|%s" % codec)
 					i+=1
         except:
-		    print "removed %s" % vid_id
 		    return
         return links_arr, quality_arr
 
@@ -1187,7 +1186,7 @@ class GsongFinder(object):
         
     def on_about_btn_pressed(self, widget):
         dlg = self.gladeGui.get_widget("aboutdialog")
-        #dlg.set_version(VERSION)
+        dlg.set_version(VERSION)
         response = dlg.run()
         if response == gtk.RESPONSE_DELETE_EVENT or response == gtk.RESPONSE_CANCEL:
             dlg.hide()

@@ -106,6 +106,10 @@ class YouPorn(object):
         videos = self.uniq(vid_list)
         i=0
         for link in videos:
+			try:
+				url = self.get_video_url(link)
+			except:
+				continue
 			markup="<small><b>%s</b></small>" % link.split('/')[3]
 			self.gui.add_sound(link.split('/')[3], markup, self.get_video_url(link), img_list[i])
 			i+=1

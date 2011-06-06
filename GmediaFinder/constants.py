@@ -3,7 +3,7 @@ import os,sys,gtk
 import gettext
 from Translation import Translation
 
-version = "0.9.1"
+VERSION = "0.9.5"
 APP_NAME = "gmediafinder"
 exec_path =  os.path.dirname(os.path.abspath(__file__))
 
