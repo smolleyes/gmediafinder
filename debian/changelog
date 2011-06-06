@@ -1,5 +1,6 @@
-gmediafinder (0.9.5-0ppa6~lucid) lucid; urgency=high
+gmediafinder (0.9.5.1-0ppa1~natty) natty; urgency=high
 
-  * move visualisation combobox in preferences
+  * add serbian languages
+  * gui fixes
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
