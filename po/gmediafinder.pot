@@ -8,11 +8,10 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-06 23:33+0200\n"
+"POT-Creation-Date: 2011-06-06 23:50+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: \n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=CHARSET\n"
 "Content-Transfer-Encoding: 8bit\n"
@@ -36,10 +35,10 @@ msgid ""
 "    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:87
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:88
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:121
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:122
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:87
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:88
 msgid "Clean"
 msgstr ""
 
@@ -51,97 +50,97 @@ msgstr ""
 msgid " "
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:564
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:560
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1060
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:564
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1059
 msgid "Download"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:718
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:724
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:718
 msgid "page 1"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:790
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:796
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:790
 msgid "Home"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:820
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:826
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:820
 msgid "Download path :     "
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:838
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:844
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:838
 msgid "Choose a folder"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:869
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:875
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:869
 msgid "<b>Downloads  : </b>"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:885
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:891
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:885
 msgid "page 2"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:927
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1277
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:933
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1283
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:927
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1277
 msgid "Options"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1009
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1015
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1009
 msgid "Show preview images"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1022
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1028
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1022
 msgid "<b>Playlist options : </b>"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1058
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1064
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1058
 msgid "Max resolution : "
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1085
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1091
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1085
 msgid "320x240"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1103
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1109
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1103
 msgid "640x320"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1120
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1126
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1120
 msgid "854x480"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1137
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1143
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1137
 msgid "1280x720"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1155
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1161
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1155
 msgid "1920x1080"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1193
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1199
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1193
 msgid "<b>Youtube video options : </b>"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1224
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1230
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1224
 msgid ""
 "jess\n"
 "goom\n"
@@ -154,23 +153,23 @@ msgid ""
 "bumpscope"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1253
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1259
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1253
 msgid "<b>Visualisations :</b>"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1319
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1325
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1319
 msgid "<b>Select your engines : </b>"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1344
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1350
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1344
 msgid "Engines"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1376
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1382
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1376
 msgid ""
 "Play/pause : Space\n"
 "Stop: s\n"
@@ -179,13 +178,13 @@ msgid ""
 "show downloads: d"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1389
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1395
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1389
 msgid "<b>Shortcuts:</b>"
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1407
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1413
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1407
 msgid "Infos"
 msgstr ""
 
