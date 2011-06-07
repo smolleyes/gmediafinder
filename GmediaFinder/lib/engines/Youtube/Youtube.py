@@ -149,7 +149,7 @@ class Youtube(object):
 		markup = _("<small><b>%(name)s</b></small>\n<small><b>view:</b> %(count)s		<b>Duration:</b> %(duration)s</small>") % values
 		if not title or not url or not vid_pic:
 			return
-		self.gui.add_sound(title, markup, vid_id, vid_pic)
+		self.gui.add_sound(title, markup, vid_id, vid_pic,None,self.name)
             
 
 

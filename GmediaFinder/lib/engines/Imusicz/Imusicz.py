@@ -36,7 +36,7 @@ class Imusicz(object):
     def filter(self,data,user_search):
 		if not data:
 			self.gui.changepage_btn.hide()
-			self.gui.info_label.set_text(_("Search timeout...") % (user_search))
+			self.gui.info_label.set_text(_("Search timeout..."))
 			self.gui.throbber.hide()
 			return
 		d = unicode(data,errors='replace')

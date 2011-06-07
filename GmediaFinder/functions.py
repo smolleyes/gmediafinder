@@ -249,3 +249,4 @@ class ComboBox(object):
                 self.select(path[0])
                 break
             self.combobox.set_active(-1)
+            

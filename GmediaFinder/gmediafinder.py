@@ -4,9 +4,7 @@
 import sys
 import os
 import thread
-import pango
 import threading
-import Queue
 import random
 import time
 import gobject
@@ -269,7 +267,7 @@ class GsongFinder(object):
         self.window.connect('destroy', self.exit)
 
         ## finally setup the list
-        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object)
+        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object,object)
         self.treeview = gtk.TreeView()
         self.odd = self.treeview.style_get_property("odd-row-color")
         if not self.odd:
@@ -299,6 +297,9 @@ class GsongFinder(object):
         nameColumn = gtk.TreeViewColumn("Name", renderer)
         self.treeview.append_column(nameColumn)
         
+        plugnameColumn = gtk.TreeViewColumn("Name", renderer)
+        self.treeview.append_column(plugnameColumn)
+        
         ## setup the scrollview
         self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()
@@ -309,6 +310,7 @@ class GsongFinder(object):
         self.columns[2].set_visible(0)
         self.columns[3].set_visible(0)
         self.columns[4].set_visible(0)
+        self.columns[5].set_visible(0)
         self.results_scroll.add(self.treeview)
         self.results_scroll.connect_after('size-allocate', self.resize_wrap, self.treeview, self.columns[1], rendertxt)
         ## connect treeview signals
@@ -360,6 +362,7 @@ class GsongFinder(object):
 			self.engine_selector.setIndexFromString("Youtube")
         else:
 			self.engine_selector.select(0)
+        self.engine_selector.append(_("All"))
 			
         self.search_entry.grab_focus()
         
@@ -440,6 +443,9 @@ class GsongFinder(object):
         if iter == 0:
             self.engine = None
             return
+        ## do not set the engine if global search
+        if self.engine == "All":
+			return
         ## load the plugin
         self.search_engine = getattr(self.engines_client,'%s' % self.engine)
         ## clean the gui options box and load the plugin gui
@@ -455,18 +461,19 @@ class GsongFinder(object):
 	
     def get_model(self,widget):
         selected = self.treeview.get_selection()
-        self.iter = selected.get_selected()[1]
-        self.path = self.model.get_path(self.iter)
+        self.selected_iter = selected.get_selected()[1]
+        self.path = self.model.get_path(self.selected_iter)
         ## else extract needed metacity's infos
-        self.media_name = self.model.get_value(self.iter, 4)
+        self.media_name = self.model.get_value(self.selected_iter, 4)
+        self.media_plugname = self.model.get_value(self.selected_iter, 5)
         ## return only theme name and description then extract infos from hash
-        self.media_link = self.model.get_value(self.iter, 2)
-        self.media_img = self.model.get_value(self.iter, 0)
+        self.media_link = self.model.get_value(self.selected_iter, 2)
+        self.media_img = self.model.get_value(self.selected_iter, 0)
         # print in the gui
         self.statbar.push(1,_("Playing : %s") % self.media_name)
         self.stop_play()
         ## check youtube quality
-        if self.engine == "Youtube":
+        if self.media_plugname == "Youtube":
 			self.load_youtube_res()
         else:
 			self.start_play(self.media_link)
@@ -488,6 +495,7 @@ class GsongFinder(object):
 							0, rate,
 							)
 		self.set_default_youtube_video_rate()
+		self.youtube_video_rate.show()
 		
     def set_default_youtube_video_rate(self,widget=None):
 		active = self.youtube_video_rate.get_active()
@@ -572,41 +580,59 @@ class GsongFinder(object):
         if not self.engine:
             self.info_label.set_text(_("Please select an engine..."))
             return
+        self.model.clear()
         self.changepage_btn.hide()
         self.pageback_btn.hide()
-        return self.idle_add_lock(self.search,())
+        tot = len(self.engine_selector.model)
+        celnum = self.engine_selector.getSelectedIndex()
+        if celnum == tot - 1:
+			for engine in self.engine_list:
+				self.search_engine = getattr(self.engines_client,'%s' % engine)
+				self.search()
+        else:
+			return self.idle_add_lock(self.search,())
 
     def change_page(self,widget=None):
         try:
 			name = widget.name
         except:
 			name = ""
+        self.model.clear()
         user_search = self.search_entry.get_text()
         engine = self.engine_selector.getSelectedIndex()
         if not user_search or user_search != self.user_search \
         or not engine or engine != self.main_engine:
             return self.prepare_search()
         else:
-			if name == "pageback_btn":
+			tot = len(self.engine_selector.model)
+			celnum = self.engine_selector.getSelectedIndex()
+			if celnum == tot - 1:
+				for engine in self.engine_list:
+					self.search_engine = getattr(self.engines_client,'%s' % engine)
+					self.info_label.set_text(_("engine : %s" % engine))
+					self.do_change_page(name)
+			return self.do_change_page(name)
+	
+    def do_change_page(self,name):
+		if name == "pageback_btn":
 				if self.search_engine.current_page != 1:
 					try:
 						self.search_engine.num_start = self.search_engine.num_start - self.search_engine.results_by_page
 					except:
 						pass
 					self.search_engine.current_page = self.search_engine.current_page - 1
-				return self.idle_add_lock(self.search,(self.search_engine.current_page))
-			else:
+				self.search(self.search_engine.current_page)
+		else:
 				self.search_engine.current_page = self.search_engine.current_page + 1
 				try:
 					self.search_engine.num_start = self.search_engine.num_start + self.search_engine.results_by_page
 				except:
 					pass
-				return self.idle_add_lock(self.search,(self.search_engine.current_page))
+				self.search(self.search_engine.current_page)
 
     def search(self,page=None):
 		values = {'engine': self.engine, 'query': self.user_search}
 		self.info_label.set_text(_("Searching for %(query)s with %(engine)s ") % values)
-		self.model.clear()
 		## send request to the module, can pass type and order too...reset page start to inital state
 		self.throbber.show()
 		if not page:
@@ -614,7 +640,7 @@ class GsongFinder(object):
 			self.search_engine.current_page = self.search_engine.main_start_page
 		thread.start_new_thread(self.search_engine.search,(self.user_search,page))
 
-    def add_sound(self, name, markup_src, media_link, img=None, quality_list=None):
+    def add_sound(self, name, markup_src, media_link, img=None, quality_list=None, plugname=None):
         if not img:
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         if not name or not media_link or not img:
@@ -627,13 +653,14 @@ class GsongFinder(object):
 				markup = markup_src
         except:
 			pass
-        self.iter = self.model.append()
-        self.model.set(self.iter,
+        iter = self.model.append()
+        self.model.set(iter,
                         0, img,
                         1, markup,
                         2, media_link,
                         3, quality_list,
                         4, name,
+                        5, plugname,
                         )
 
     def start_stop(self,widget=None):
@@ -789,41 +816,42 @@ class GsongFinder(object):
                 self.play_options = "shuffle"
                 if self.shuffle_btn.get_active():
                     self.shuffle_btn.set_active(1)
-            else:
-				self.play_options = "continue"
+                if self.loop_btn.get_active():
+                    self.loop_btn.set_active(0)
         elif wname == "repeat_btn":
             if wstate:
                 self.play_options = "loop"
                 if self.loop_btn.get_active():
                     self.loop_btn.set_active(1)
-            else:
-				self.play_options = "continue"
+                if self.shuffle_btn.get_active():
+                    self.shuffle_btn.set_active(0)
+        else:
+			self.play_options = "continue"
 				
     def check_play_options(self):
         if self.play_options == "loop":
-            path = self.model.get_path(self.iter)
+            path = self.model.get_path(self.selected_iter)
             if path:
                 self.treeview.set_cursor(path)
         elif self.play_options == "continue":
-            iter = None
             ## first, check if iter is still available (changed search while
             ## continue mode for exemple..)
-            if not self.model.get_path(self.iter) == self.path:
+            if not self.model.get_path(self.selected_iter) == self.path:
                 try:
-                    iter = self.model.get_iter_first()
+                    self.selected_iter = self.model.get_iter_first()
                 except:
                     return
-                if iter:
-                    path = self.model.get_path(iter)
+                if self.selected_iter:
+                    path = self.model.get_path(self.selected_iter)
                     self.treeview.set_cursor(path)
                 return
             ## check for next iter
             try:
-                iter = self.model.iter_next(self.iter)
+                self.selected_iter = self.model.iter_next(self.selected_iter)
             except:
                 return
-            if iter:
-                path = self.model.get_path(iter)
+            if self.selected_iter:
+                path = self.model.get_path(self.selected_iter)
                 self.treeview.set_cursor(path)
             else:
                 if not self.engine == "google.com":
@@ -833,21 +861,21 @@ class GsongFinder(object):
                     i = 0
                     while i < 10:
                         try:
-                            iter = self.model.get_iter_first()
+                            self.selected_iter = self.model.get_iter_first()
                         except:
                             continue
-                        if iter:
-                            path = self.model.get_path(iter)
+                        if self.selected_iter:
+                            path = self.model.get_path(self.selected_iter)
                             self.treeview.set_cursor(path)
                             break
                         else:
                             i += 1
                             time.sleep(1)
         elif self.play_options == "shuffle":
-			 num = random.randint(0,len(self.model))
-			 self.iter = self.model[num].iter
-			 path = self.model.get_path(self.iter)
-			 self.treeview.set_cursor(path)
+			num = random.randint(0,len(self.model))
+			self.selected_iter = self.model[num].iter
+			path = self.model.get_path(self.selected_iter)
+			self.treeview.set_cursor(path)
     
     def convert_ns(self, t):
         # This method was submitted by Sam Mason.
