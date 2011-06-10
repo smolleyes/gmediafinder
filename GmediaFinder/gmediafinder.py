@@ -40,7 +40,6 @@ class GsongFinder(object):
         ## default search options
         self.is_playing = False
         self.is_paused = False
-        self.is_stopped = False
         self.duration = None
         self.time_label = gtk.Label("00:00 / 00:00")
         self.media_name = ""
@@ -54,7 +53,6 @@ class GsongFinder(object):
         self.settings_folder = None
         self.conf_file = None
         self.seeker_move = None
-        self.youtube_max_res = "320x240"
         self.active_downloads = 0
         self.thread_num = 0
         self.xsink = False
@@ -80,9 +78,8 @@ class GsongFinder(object):
         if not os.path.exists(self.settings_folder):
             os.mkdir(self.settings_folder)
             fd = os.open(self.conf_file, os.O_RDWR|os.O_CREAT)
-            os.write(fd,"youtube_max_res=%s" % self.youtube_max_res)
             os.write(fd,"download_path=%s" % self.down_dir)
-            os.write(fd,"window_state=%s" % self.window_state)
+            os.write(fd,"window_state=%s" % str(self.window_state))
             os.write(fd,"show_thumbs=%s" % self.show_thumbs_opt)
             os.write(fd,"visualisation=%s" % self.vis)
             os.close(fd)
@@ -92,11 +89,6 @@ class GsongFinder(object):
         except:
 			self.config["download_path"] = self.down_dir
 			self.config.write()
-        ## get default max_res for youtube videos
-        try:
-			self.youtube_max_res = self.config["youtube_max_res"]
-        except:
-			self.config["youtube_max_res"] = self.youtube_max_res
 		## get saved window position ans size
         try:
 			self.window_state = self.config["window_state"]
@@ -142,6 +134,7 @@ class GsongFinder(object):
         self.options_bar = self.gladeGui.get_widget("options_bar")
         self.search_box = self.gladeGui.get_widget("search_box")
         self.results_box = self.gladeGui.get_widget("results_box")
+        self.quality_box = self.gladeGui.get_widget("quality_box")
         
         ## throbber
         self.throbber = self.gladeGui.get_widget("throbber_img")
@@ -151,26 +144,6 @@ class GsongFinder(object):
         ## notebook
         self.notebook = self.gladeGui.get_widget("notebook")
         self.video_cont = self.gladeGui.get_widget("video_cont")
-        ## youtube video quality choices
-        self.res320 = self.gladeGui.get_widget("res1")
-        self.res640 = self.gladeGui.get_widget("res2")
-        self.res854 = self.gladeGui.get_widget("res3")
-        self.res1280 = self.gladeGui.get_widget("res4")
-        self.res1920 = self.gladeGui.get_widget("res5")
-        
-        ## video quality combobox
-        youtube_quality_box = self.gladeGui.get_widget("youtube_quality_box")
-        self.youtube_quality_model = gtk.ListStore(str)
-        self.youtube_video_rate = gtk.ComboBox(self.youtube_quality_model)
-        cell = gtk.CellRendererText()
-        self.youtube_video_rate.pack_start(cell, True)
-        self.youtube_video_rate.add_attribute(cell, 'text', 0)
-        youtube_quality_box.add(self.youtube_video_rate)
-        new_iter = self.youtube_quality_model.append()
-        self.youtube_quality_model.set(new_iter,
-                                0, _("Quality"),
-                                )
-        self.youtube_video_rate.connect('changed', self.on_youtube_video_rate_changed)
         
         self.volume_btn = self.gladeGui.get_widget("volume_btn")
         self.down_btn = self.gladeGui.get_widget("down_btn")
@@ -254,11 +227,6 @@ class GsongFinder(object):
         "on_down_menu_btn_clicked" : self.show_downloads,
         "on_backtohome_btn_clicked" : self.show_home,
         "on_select_path_btn_file_set" : self.update_down_path,
-        "on_res1_toggled" : self.set_max_youtube_res,
-        "on_res2_toggled" : self.set_max_youtube_res,
-        "on_res3_toggled" : self.set_max_youtube_res,
-        "on_res4_toggled" : self.set_max_youtube_res,
-        "on_res5_toggled" : self.set_max_youtube_res,
         "on_main_window_configure_event" : self.save_position,
         "on_search_entry_icon_press" : self.clear_search_entry,
         "on_show_thumbs_opt_toggled" : self.on_gui_opt_toggled,
@@ -267,7 +235,7 @@ class GsongFinder(object):
         self.window.connect('destroy', self.exit)
 
         ## finally setup the list
-        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object,object)
+        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object,str)
         self.treeview = gtk.TreeView()
         self.odd = self.treeview.style_get_property("odd-row-color")
         if not self.odd:
@@ -303,7 +271,6 @@ class GsongFinder(object):
         ## setup the scrollview
         self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()
-        print self.show_thumbs_opt
         if self.show_thumbs_opt == "False":
 			self.columns[0].set_visible(0)
         self.columns[1].set_sort_column_id(1)
@@ -316,21 +283,16 @@ class GsongFinder(object):
         ## connect treeview signals
         self.treeview.connect('cursor-changed',self.get_model)
         
-        ## visualisations
-        
-
         ## create the players
         self.player = gst.element_factory_make("playbin", "player")
         audiosink = gst.element_factory_make("autoaudiosink")
         
         if sys.platform == "win32":
-            self.sink = gst.element_factory_make('d3dvideosink')
+            self.videosink = gst.element_factory_make('d3dvideosink')
         else:
-            self.sink = gst.element_factory_make('xvimagesink')
-            if self.engine == "Youtube":
-                self.sink.set_property('force-aspect-ratio', True)
+            self.videosink = gst.element_factory_make('xvimagesink')
         self.player.set_property("audio-sink", audiosink)
-        self.player.set_property('video-sink', self.sink)
+        self.player.set_property('video-sink', self.videosink)
         bus = self.player.get_bus()
         bus.add_signal_watch()
         bus.enable_sync_message_emission()
@@ -347,8 +309,6 @@ class GsongFinder(object):
         ## start gui
         self.window.show_all()
         self.throbber.hide()
-        self.youtube_video_rate.hide()
-        self.youtube_video_rate.set_active(0)
         
         ## start engines
         combo = self.gladeGui.get_widget("engine_selector")
@@ -356,14 +316,19 @@ class GsongFinder(object):
         self.engines_client = Engines(self)
         
         ## engine selector (engines only with direct links)
+        self.global_search = _("All")
+        self.global_audio_search = _("All audios")
+        self.global_video_search = _("All videos")
+        
         for engine in self.engine_list:
             self.engine_selector.append(engine)
         if ("Youtube" in self.engine_list):
 			self.engine_selector.setIndexFromString("Youtube")
         else:
 			self.engine_selector.select(0)
-        self.engine_selector.append(_("All"))
-			
+        self.engine_selector.append(self.global_search)
+        self.engine_selector.append(self.global_audio_search)
+        self.engine_selector.append(self.global_video_search)
         self.search_entry.grab_focus()
         
         ## load icons
@@ -423,7 +388,8 @@ class GsongFinder(object):
         
     def change_visualisation(self, widget=None):
         vis = self.vis_selector.getSelected()
-        if vis != "goom":
+        visi = self.vis_selector.getSelectedIndex()
+        if vis != "goom" and visi != 0 :
             self.vis = "libvisual_"+vis
         else:
             self.vis = vis
@@ -436,15 +402,21 @@ class GsongFinder(object):
 		self.config.write()
 		self.down_dir = widget.get_current_folder()
 
-    def set_engine(self,widget=None):
-        self.youtube_video_rate.hide()
-        self.engine = self.engine_selector.getSelected()
+    def set_engine(self,engine=None):
+        self.quality_box.hide()
+        try:
+			engine = engine.name
+			self.engine = self.engine_selector.getSelected()
+        except:
+			self.engine = engine
+			self.engine_selector.setIndexFromString(engine)
+			
         iter = self.engine_selector.getSelectedIndex()
         if iter == 0:
             self.engine = None
             return
         ## do not set the engine if global search
-        if self.engine == "All":
+        if self.engine == self.global_search or self.engine == self.global_video_search or self.engine == self.global_audio_search:
 			return
         ## load the plugin
         self.search_engine = getattr(self.engines_client,'%s' % self.engine)
@@ -466,107 +438,17 @@ class GsongFinder(object):
         ## else extract needed metacity's infos
         self.media_name = self.model.get_value(self.selected_iter, 4)
         self.media_plugname = self.model.get_value(self.selected_iter, 5)
+        ## for global search
+        if not self.engine_selector.getSelected == self.media_plugname:
+			self.set_engine(self.media_plugname)
         ## return only theme name and description then extract infos from hash
         self.media_link = self.model.get_value(self.selected_iter, 2)
         self.media_img = self.model.get_value(self.selected_iter, 0)
         # print in the gui
         self.statbar.push(1,_("Playing : %s") % self.media_name)
         self.stop_play()
-        ## check youtube quality
-        if self.media_plugname == "Youtube":
-			self.load_youtube_res()
-        else:
-			self.start_play(self.media_link)
-
-    def idle_add_lock(self, func, *args):
-       return gobject.idle_add(with_lock, func, args)
-       
-    def timeout_add_lock(millisecs, func, *args):
-       return gobject.timeout_add(millisecs, with_lock, func, args)
-        
-    def load_youtube_res(self,args=None):
-		self.youtube_quality_model.clear()
-		self.media_link,self.quality_list = self.get_quality_list(self.media_link)
-		if not self.quality_list:
-			return
-		for rate in self.quality_list:
-			new_iter = self.youtube_quality_model.append()
-			self.youtube_quality_model.set(new_iter,
-							0, rate,
-							)
-		self.set_default_youtube_video_rate()
-		self.youtube_video_rate.show()
-		
-    def set_default_youtube_video_rate(self,widget=None):
-		active = self.youtube_video_rate.get_active()
-		qn = 0
-		## if there s only one quality available, read it...
-		if active == -1:
-			if len(self.quality_list) == 1:
-				self.youtube_video_rate.set_active(0)
-			for frate in self.quality_list:
-				rate = frate.split('|')[0]
-				h = int(rate.split('x')[0])
-				dh = int(self.youtube_max_res.split('x')[0])
-				if h > dh:
-					qn+=1
-					continue
-				else:
-					self.youtube_video_rate.set_active(qn)
-			active = self.youtube_video_rate.get_active()
-		else:
-			if self.quality_list:
-				active = self.youtube_video_rate.get_active()
-
-    def on_youtube_video_rate_changed(self,widget):
-		active = self.youtube_video_rate.get_active()
-		if self.media_link:
-			self.stop_play()
-			try:
-			    self.media_codec = self.quality_list[active].split('|')[1]
-			except:
-				pass
-			self.start_play(self.media_link[active])
-
-        
-    def get_quality_list(self,vid_id):
-        links_arr = []
-        quality_arr = []
-        try:
-			req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
-			stream = urllib2.urlopen(req)
-			contents = stream.read()
-			## links list
-			regexp1 = re.compile("fmt_stream_map=([^&]+)&")
-			matches = regexp1.search(contents).group(1)
-			fmt_arr = urllib2.unquote(matches).split(',')
-			## quality_list
-			regexp1 = re.compile("fmt_map=([^&]+)&")
-			matches = regexp1.search(contents).group(1)
-			quality_list = urllib2.unquote(matches).split(',')
-			##
-			stream.close()
-			link_list = []
-			for link in fmt_arr:
-				res = link.split('|')[1]
-				link_list.append(res)
-			## remove flv links...
-			i = 0
-			for quality in quality_list:
-				codec = get_codec(quality)
-				if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
-					i+=1
-					continue
-				elif codec == "flv" and quality.split("/")[1] != "320x240":
-					i+=1
-					continue
-				else:
-					links_arr.append(link_list[i])
-					quality_arr.append(quality.split("/")[1] + "|%s" % codec)
-					i+=1
-        except:
-		    return
-        return links_arr, quality_arr
+        ## play in engine
+        self.search_engine.play(self.media_link)
 
     def prepare_search(self,widget=None):
         self.user_search = self.search_entry.get_text()
@@ -583,14 +465,42 @@ class GsongFinder(object):
         self.model.clear()
         self.changepage_btn.hide()
         self.pageback_btn.hide()
-        tot = len(self.engine_selector.model)
-        celnum = self.engine_selector.getSelectedIndex()
-        if celnum == tot - 1:
+        if self.engine_selector.getSelected() == self.global_search:
 			for engine in self.engine_list:
+				self.throbber.show()
+				self.set_engine(engine)
 				self.search_engine = getattr(self.engines_client,'%s' % engine)
-				self.search()
+				try:
+					self.search()
+				except:
+					continue
+			self.engine_selector.setIndexFromString(self.global_search)
+        elif self.engine_selector.getSelected() == self.global_video_search:
+			for engine in self.engine_list:
+				self.throbber.show()
+				self.set_engine(engine)
+				self.search_engine = getattr(self.engines_client,'%s' % engine)
+				if not self.search_engine.type == "video":
+					continue
+				try:
+					self.search()
+				except:
+					continue
+			self.engine_selector.setIndexFromString(self.global_video_search)
+        elif self.engine_selector.getSelected() == self.global_audio_search:
+			for engine in self.engine_list:
+				self.throbber.show()
+				self.set_engine(engine)
+				self.search_engine = getattr(self.engines_client,'%s' % engine)
+				if not self.search_engine.type == "audio":
+					continue
+				try:
+					self.search()
+				except:
+					continue
+			self.engine_selector.setIndexFromString(self.global_search)
         else:
-			return self.idle_add_lock(self.search,())
+			return self.search()
 
     def change_page(self,widget=None):
         try:
@@ -604,13 +514,15 @@ class GsongFinder(object):
         or not engine or engine != self.main_engine:
             return self.prepare_search()
         else:
-			tot = len(self.engine_selector.model)
-			celnum = self.engine_selector.getSelectedIndex()
-			if celnum == tot - 1:
+			if self.engine_selector.getSelected() == _("All"):
 				for engine in self.engine_list:
+					self.set_engine(engine)
 					self.search_engine = getattr(self.engines_client,'%s' % engine)
-					self.info_label.set_text(_("engine : %s" % engine))
-					self.do_change_page(name)
+					try:
+						self.do_change_page(name)
+					except:
+						continue
+				self.engine_selector.setIndexFromString(_("All"))
 			return self.do_change_page(name)
 	
     def do_change_page(self,name):
@@ -632,9 +544,9 @@ class GsongFinder(object):
 
     def search(self,page=None):
 		values = {'engine': self.engine, 'query': self.user_search}
-		self.info_label.set_text(_("Searching for %(query)s with %(engine)s ") % values)
+		gobject.idle_add(self.info_label.set_text,_("Searching for %(query)s with %(engine)s ") % values)
 		## send request to the module, can pass type and order too...reset page start to inital state
-		self.throbber.show()
+		gobject.idle_add(self.throbber.show)
 		if not page:
 			page = self.search_engine.main_start_page
 			self.search_engine.current_page = self.search_engine.main_start_page
@@ -666,7 +578,7 @@ class GsongFinder(object):
     def start_stop(self,widget=None):
         url = self.media_link
         if url:
-            if self.is_stopped:
+            if not self.is_playing:
                 self.statbar.push(1,_("Playing : %s") % self.media_name)
                 return self.start_play(url)
             else:
@@ -676,16 +588,16 @@ class GsongFinder(object):
     def start_play(self,url):
         self.active_link = url
         if not sys.platform == "win32":
-            self.vis = self.change_visualisation()
-            self.visual = gst.element_factory_make(self.vis,'visual')
-            self.player.set_property('vis-plugin', self.visual)
+			if not self.vis_selector.getSelectedIndex() == 0:
+				self.vis = self.change_visualisation()
+				self.visual = gst.element_factory_make(self.vis,'visual')
+				self.player.set_property('vis-plugin', self.visual)
         self.play_btn_pb.set_from_pixbuf(self.stop_icon)
         self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
         self.play_thread_id = thread.start_new_thread(self.play_thread, ())
         self.is_playing = True
-        self.is_stopped= False
 
     def stop_play(self,widget=None):
         self.player.set_state(gst.STATE_NULL)
@@ -693,7 +605,6 @@ class GsongFinder(object):
         self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
         self.is_playing = False
         self.play_thread_id = None
-        self.is_stopped= True
         self.duration = None
         self.update_time_label()
         self.active_link = None
@@ -776,7 +687,7 @@ class GsongFinder(object):
         t = message.type
         if t == gst.MESSAGE_EOS:
             self.play_thread_id = None
-            self.is_stopped = True
+            self.is_playing = False
             self.player.set_state(gst.STATE_NULL)
             self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
             self.play_btn_pb.set_from_pixbuf(self.stop_icon)
@@ -785,12 +696,12 @@ class GsongFinder(object):
             err, debug = message.parse_error()
             print "Error: %s" % err, debug
             self.play_thread_id = None
-            self.is_stopped = True
+            self.is_playing = False
             self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
             self.play_btn_pb.set_from_pixbuf(self.stop_icon)
             if not sys.platform == "win32" and ('No port available' in debug)and not self.xsink:
-                self.sink = gst.element_factory_make('ximagesink')
-                self.player.set_property("video-sink", self.sink)
+                self.videosink = gst.element_factory_make('ximagesink')
+                self.player.set_property("video-sink", self.videosink)
                 self.xsink = True
             ## continue if continue option selected...
             if self.play_options == "continue":
@@ -951,7 +862,7 @@ class GsongFinder(object):
             else:
                 win_id = self.movie_window.window.xid
             gtk.gdk.threads_enter()
-            self.sink.set_xwindow_id(win_id)
+            self.videosink.set_xwindow_id(win_id)
             gtk.gdk.threads_leave()
             
     def on_drawingarea_clicked(self, widget, event):
@@ -981,11 +892,11 @@ class GsongFinder(object):
             window = self.movie_window.get_window()
             window.ensure_native()
             gtk.gdk.threads_enter()
-            self.sink.set_xwindow_id(self.movie_window.window.handle)
+            self.videosink.set_xwindow_id(self.movie_window.window.handle)
             gtk.gdk.threads_leave()
         else:
 			gtk.gdk.threads_enter()
-			self.sink.set_xwindow_id(self.movie_window.window.xid)
+			self.videosink.set_xwindow_id(self.movie_window.window.xid)
 			gtk.gdk.threads_leave()
             
     def on_expose_event(self, widget, event):
@@ -1050,29 +961,17 @@ class GsongFinder(object):
     def on_volume_changed(self, widget, value=10):
         self.player.set_property("volume", float(value)) 
         return True
-    
-    def set_max_youtube_res(self, widget):
-		if widget.get_active():
-			print "here"
-			self.youtube_max_res = widget.get_child().get_label()
-			self.config["youtube_max_res"]=self.youtube_max_res
-			## return a dic as conf
-			try:
-				self.config.write()
-			except:
-				print "Can't write to the %s config file..." % self.conf_file
-		
 
     def download_file(self,widget):
         if self.engine == "Youtube":
-			return self.geturl(self.active_link, self.media_codec)
+			return self.geturl(self.active_link, self.search_engine.media_codec)
         return self.geturl(self.active_link)
 
     def geturl(self, url, codec=None):
         if self.engine == "Youtube":
-            name = self.media_name+".%s" % codec
+            name = str(self.media_name+".%s" % codec)
         else:
-            name = self.media_name
+            name = str(self.media_name)
         if re.search('\/', name):
 			name = re.sub('\/','-', name)
 			self.media_name = name
@@ -1115,7 +1014,7 @@ class GsongFinder(object):
         btnf.set_tooltip_text(_("Show in folder"))
         ## convert button
         btn_conv = gtk.Button()
-        if self.engine == "Youtube":
+        if self.search_engine.type == "video":
             image = gtk.Image()
             image.set_from_stock(gtk.STOCK_CONVERT, gtk.ICON_SIZE_BUTTON)
             btn_conv.add(image)
@@ -1135,7 +1034,7 @@ class GsongFinder(object):
         
         box.show_all()
         btnf.hide()
-        if self.engine == "Youtube":
+        if self.search_engine.type == "video":
 			btn_conv.hide()
 			throbber.hide()
 			btn_conv.connect('clicked', self.extract_audio,self.media_name,codec,btn_conv,throbber)
@@ -1188,29 +1087,6 @@ class GsongFinder(object):
 			self.statbar.push(1,_("Playing %s") % self.media_name)
 		else:
 			self.statbar.push(1,_("Stopped"))
-
-		    
-    def start_download(self, url, name, pbar, btnf, btn,btn_conv):
-        self.active_downloads += 1
-        self.active_down_label.set_text(str(self.active_downloads))
-        ## download...
-        try:
-			start_time = time.time()
-			urllib.urlretrieve(url, self.down_dir+"/"+ name,
-			lambda nb, bs, fs, url=url: reporthook(nb,bs,fs,start_time,url,name,pbar))
-			btnf.show()
-			btn_conv.show()
-			btn.show()
-			return self.decrease_down_count()
-        except:
-			pbar.set_text(_("Failed..."))
-			btn.show()
-			return self.decrease_down_count()
-    
-    def decrease_down_count(self):
-        if self.active_downloads > 0:
-			self.active_downloads -= 1
-			self.active_down_label.set_text(str(self.active_downloads))
         
     def on_about_btn_pressed(self, widget):
         dlg = self.gladeGui.get_widget("aboutdialog")
@@ -1220,17 +1096,6 @@ class GsongFinder(object):
             dlg.hide()
             
     def on_settings_btn_pressed(self, widget):
-		#dlg.set_version(VERSION)
-		if self.youtube_max_res == "320x240":
-			self.res320.set_active(1)
-		elif self.youtube_max_res == "640x320":
-			self.res640.set_active(1)
-		elif self.youtube_max_res == "854x480":
-			self.res854.set_active(1)
-		elif self.youtube_max_res == "1280x720":
-			self.res1280.set_active(1)
-		elif self.youtube_max_res == "1920x1080":
-			self.res1920.set_active(1)
 		self.dlg.set_position(gtk.WIN_POS_CENTER_ALWAYS)
 		response = self.dlg.run()
 		if response == False or response == True or response == gtk.RESPONSE_DELETE_EVENT:

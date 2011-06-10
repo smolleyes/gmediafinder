@@ -12,6 +12,7 @@ class Skreemr(object):
     def __init__(self,gui):
         self.gui = gui
         self.name="Skreemr"
+        self.type = "audio"
         self.results_by_page = 10
         self.main_start_page = 1
         self.current_page = 1
@@ -37,12 +38,13 @@ class Skreemr(object):
         if page == 1:
             self.num_start = 1
         data = get_url_data(self.search_url % (urllib.quote(query), self.num_start))
-        gtk.gdk.threads_enter()
         self.filter(data,query)
-        gtk.gdk.threads_leave()
         
     def filter(self,data,query):
-		soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
+		try:
+			soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
+		except:
+			return
 		nlist = []
 		link_list = []
 		next_page = 1
@@ -50,22 +52,25 @@ class Skreemr(object):
 		try:
 			results_count = results_div.findAll('b')[1].string
 		except:
-			self.gui.changepage_btn.hide()
-			self.gui.info_label.set_text(_("No results found for %s...") % (query))
+			gobject.idle_add(self.gui.changepage_btn.hide)
+			self.print_info(_("Skreemr: No results found for %s...") % query)
 			self.num_start = 1
 			self.current_page = 1
-			self.gui.throbber.hide()
+			gobject.idle_add(self.gui.throbber.hide)
+			time.sleep(5)
+			self.print_info("")	
 			return
 		if results_count == 0 :
-			self.gui.info_label.set_text(_("No results found for %s ") % (query))
-			self.gui.throbber.hide()
+			self.print_info(_("Skreemr: No results found for %s ") % query)
+			gobject.idle_add(self.gui.throbber.hide)
+			time.sleep(5)
+			self.print_info("")	
 			return
 		else:
-			if self.current_page != 1:
-				self.gui.pageback_btn.show()
+			if self.current_page == 1:
+				gobject.idle_add(self.gui.pageback_btn.hide)
 			else:
-				self.gui.pageback_btn.hide()
-			self.gui.changepage_btn.show()
+				gobject.idle_add(elf.gui.pageback_btn.show)
 		
 		pagination_table = soup.find('div',attrs={'class':'previousnext'})
 		if pagination_table:
@@ -75,13 +80,15 @@ class Skreemr(object):
 				if l == "Next>>":
 					next_page = 1
 			if next_page:
-				self.gui.changepage_btn.show()
+				gobject.idle_add(self.gui.changepage_btn.show)
 			else:
-				self.gui.changepage_btn.hide()
+				gobject.idle_add(self.gui.changepage_btn.hide)
 				self.num_start = 0
 				self.current_page = 1
-				self.gui.info_label.set_text(_("no more files found for %s...") % (query))
-				self.gui.throbber.hide()
+				self.print_info(_("Skreemr: No results found for %s...") % query)
+				gobject.idle_add(self.gui.throbber.hide)
+				time.sleep(5)
+				self.print_info("")	
 				return
 
 		flist = soup.findAll('a',href=True)
@@ -90,17 +97,13 @@ class Skreemr(object):
 				url = re.search('a href="(http(\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))"',str(link)).group(1)
 				link = urllib2.unquote(url)
 				name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
-				nlist.append(name)
-				link_list.append(link)
+				markup="<small><b>%s</b></small>" % name
+				gobject.idle_add(self.gui.add_sound,name, markup, link_list, None, None, self.name)
 			except:
 				continue
-		## add to the treeview if ok
-		i = 0
-		for name in nlist:
-			if name and link_list[i]:
-				markup="<small><b>%s</b></small>" % name
-				self.gui.add_sound(name, markup, link_list[i])
-				i += 1
-		self.gui.info_label.set_text("")
-		self.gui.throbber.hide()
+		self.print_info("")
+		gobject.idle_add(self.gui.throbber.hide)
+		
+    def print_info(self,msg):
+		gobject.idle_add(self.gui.info_label.set_text,msg)
 

@@ -1,4 +1,4 @@
-
+import gobject
 import re
 import urllib
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
@@ -11,6 +11,7 @@ except:
 class Mp3Realm(object):
     def __init__(self,gui):
         self.gui = gui
+        self.type = "audio"
         self.name="Mp3Realm"
         self.current_page = 1
         self.main_start_page = 1
@@ -26,12 +27,18 @@ class Mp3Realm(object):
 
     def search(self, query, page):
         data = get_url_data(self.search_url % (urllib.quote(query), self.current_page))
-        gtk.gdk.threads_enter()
         self.filter(data,query)
-        gtk.gdk.threads_leave()
         
     def filter(self,data,user_search):
-		d = unicode(data,errors='replace')
+		try:
+			d = unicode(data,errors='replace')
+		except:
+			gobject.idle_add(self.gui.throbber.hide)
+			self.print_info(_('Mp3realm: Connexion failed...'))
+			self.gui.throbber.hide()
+			time.sleep(5)
+			self.print_info("")
+			return
 		soup = BeautifulStoneSoup(d.decode('utf-8'),selfClosingTags=['/>'])
 		## reset the treeview
 		nlist = []
@@ -41,23 +48,23 @@ class Mp3Realm(object):
 			#search results div
 			files_count = soup.findAll('div',attrs={'id':'searchstat'})[0].findAll('strong')[1].string
 			if self.current_page != 1:
-				self.gui.pageback_btn.show()
+				gobject.idle_add(self.gui.pageback_btn.show)
 			else:
-				self.gui.pageback_btn.hide()
+				gobject.idle_add(self.gui.pageback_btn.hide)
 		except:
-			self.gui.info_label.set_text(_("No results found for %s...") % (user_search))
-			self.gui.changepage_btn.hide()
-			self.gui.throbber.hide()
+			self.print_info(_("Mp3realm: No results found for %s...") % user_search)
+			gobject.idle_add(self.gui.changepage_btn.hide)
+			gobject.idle_add(self.gui.throbber.hide)
 			return
 		
 		if re.search(r'(\S*Aucuns resultats)', soup.__str__()):
-			self.gui.changepage_btn.hide()
+			gobject.idle_add(self.gui.changepage_btn.hide)
 			self.current_page = 1
-			self.gui.info_label.set_text(_("No results found for %s...") % (user_search))
-			self.gui.throbber.hide()
+			self.print_info(_("Mp3realm: No results found for %s...") % user_search)
+			gobject.idle_add(self.gui.throbber.hide)
 			return
 
-		self.gui.changepage_btn.show()
+		gobject.idle_add(self.gui.changepage_btn.show)
 		
 		flist = re.findall('(http://.*\S\.mp3|\.mp4|\.ogg|\.aac|\.wav|\.wma)', data.lower())
 		for link in flist:
@@ -66,16 +73,16 @@ class Mp3Realm(object):
 			try:
 				link = urllib2.unquote(link)
 				name = urllib2.unquote(os.path.basename(link.decode('UTF8')))
-				nlist.append(name)
-				link_list.append(link)
+				markup="<small><b>%s</b></small>" % name
+				gobject.idle_add(self.gui.add_sound,name, markup, link_list,None,None,self.name)
 			except:
 				continue
-		## add to the treeview if ok
-		i = 0
-		for name in nlist:
-			if name and link_list[i]:
-				markup="<small><b>%s</b></small>" % name
-				self.gui.add_sound(name, markup, link_list[i])
-				i += 1
-		self.gui.info_label.set_text("")
-		self.gui.throbber.hide()
+		self.print_info("")
+		gobject.idle_add(self.gui.throbber.hide)
+		
+    def play(self,link):
+		self.gui.media_link = link
+		return self.gui.start_play(link)
+	
+    def print_info(self,msg):
+		gobject.idle_add(self.gui.info_label.set_text,msg)

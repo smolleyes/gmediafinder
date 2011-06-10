@@ -12,6 +12,7 @@ except:
 class Imusicz(object):
     def __init__(self,gui):
         self.gui = gui
+        self.type = "audio"
         self.name="Imusicz"
         self.current_page = 1
         self.main_start_page = 1
@@ -29,15 +30,14 @@ class Imusicz(object):
 		timeout = 30
 		socket.setdefaulttimeout(timeout)
 		data = get_url_data(self.search_url % (page, urllib.quote(query)))
-		gtk.gdk.threads_enter()
 		self.filter(data,query)
-		gtk.gdk.threads_leave()
 		
     def filter(self,data,user_search):
 		if not data:
-			self.gui.changepage_btn.hide()
-			self.gui.info_label.set_text(_("Search timeout..."))
-			self.gui.throbber.hide()
+			self.print_info(_("Imusicz: Connexion failed..."))
+			gobject.idle_add(self.gui.throbber.hide)
+			time.sleep(5)
+			self.gui.info_label.set_text("")
 			return
 		d = unicode(data,errors='replace')
 		soup = BeautifulStoneSoup(d.decode('utf-8'),selfClosingTags=['/>'],convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
@@ -52,22 +52,26 @@ class Imusicz(object):
 				if l == "Next":
 					next_page = 1
 					if self.current_page != 1:
-						self.gui.pageback_btn.show()
+						gobject.idle_add(self.gui.pageback_btn.show)
 					else:
-						self.gui.pageback_btn.hide()
+						gobject.idle_add(self.gui.pageback_btn.hide)
 			if next_page:
-				self.gui.changepage_btn.show()
+				gobject.idle_add(self.gui.changepage_btn.show)
 			else:
-				self.gui.changepage_btn.hide()
-				self.gui.info_label.set_text(_("no more files found for %s...") % (user_search))
-				self.gui.throbber.hide()
+				gobject.idle_add(self.gui.changepage_btn.hide)
+				self.print_info(_("Imusicz: no more files found for %s...") % user_search)
+				object.idle_add(self.gui.throbber.hide)
+				time.sleep(5)
+				self.print_info("")
 				return
 
 		flist = soup.findAll('td',attrs={'width':'75'})
 		if len(flist) == 0:
-			self.gui.changepage_btn.hide()
-			self.gui.info_label.set_text(_("no files found for %s...") % (user_search))
-			self.gui.throbber.hide()
+			gobject.idle_add(self.gui.changepage_btn.hide)
+			self.print_info(_("Imusicz: no files found for %s...") % user_search)
+			gobject.idle_add(self.gui.throbber.hide)
+			time.sleep(5)
+			self.print_info("")
 			return
 		for link in flist:
 			try:
@@ -76,19 +80,16 @@ class Imusicz(object):
 				linkId= re.search('url=(\S.*)&amp',str(furl)).group(1)
 				link = urllib2.unquote('http://imusicz.net/download.php?url='+linkId)
 				name = BeautifulStoneSoup(name, convertEntities=BeautifulStoneSoup.HTML_ENTITIES)
-				nlist.append(name)
-				link_list.append(link)
+				markup="<small><b>%s</b></small>" % name
+				gobject.idle_add(self.gui.add_sound, name, markup, link_list, None, None, self.name)
 			except:
 				continue
-		## add to the treeview if ok
-		i = 0
-		gtk.gdk.threads_enter()
-		for name in nlist:
-			if name and link_list[i]:
-				markup="<small><b>%s</b></small>" % name
-				self.gui.add_sound(name, markup, link_list[i])
-				i += 1
-		self.gui.info_label.set_text("")
-		self.gui.throbber.hide()
+		self.print_info("")
+		gobject.idle_add(self.gui.throbber.hide)
 
-
+    def play(self,link):
+		self.gui.media_link = link
+		return self.gui.start_play(link)
+	
+    def print_info(self,msg):
+		gobject.idle_add(self.gui.info_label.set_text,msg)

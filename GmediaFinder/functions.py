@@ -8,6 +8,7 @@ import html5lib
 from html5lib import sanitizer, treebuilders, treewalkers, serializer, treewalkers
 import threading
 import time
+import gobject
 
 import HTMLParser
 
@@ -52,7 +53,7 @@ def sanitizer_factory(self,*args, **kwargs):
         # This isn't available yet
         # san.strip_tokens = True
         return san
-
+        
 def download_photo(img_url):
 	image_on_web = urllib.urlretrieve(img_url)
 	try:

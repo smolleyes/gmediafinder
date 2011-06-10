@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-06 23:47+0200\n"
+"POT-Creation-Date: 2011-06-07 21:58+0200\n"
 "PO-Revision-Date: 2011-06-06 07:12+0000\n"
 "Last-Translator: nikoola <nrad@eunet.rs>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: sr\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
-"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
+"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
 msgid ""
@@ -69,6 +69,7 @@ msgstr " "
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:560
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1060
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1059
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1087
 msgid "Download"
 msgstr "Преузимање"
 
@@ -218,37 +219,45 @@ msgid "Infos"
 msgstr "Информације"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:173
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:171
 msgid "Quality"
 msgstr "Квалитет"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:289
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:287
 msgid " Results : "
 msgstr " Резултати : "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:466
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:644
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:643
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:473
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:670
 #, python-format
 msgid "Playing : %s"
 msgstr "Пуштам : %s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:568
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:567
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:575
 msgid "Please select a search engine..."
 msgstr "Молимо изаберете механизам претраге ..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:571
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:570
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:578
 msgid "Please enter an artist/album or song name..."
 msgstr "Молимо унесете извођача/албум или име песме ..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:574
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:573
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:581
 msgid "Please select an engine..."
 msgstr "Молимо изаберете механизам ..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:609
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:608
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:635
 #, python-format
 msgid "Searching for %(query)s with %(engine)s "
 msgstr "Тражим %(query)s помоћу %(engine)s "
@@ -257,11 +266,14 @@ msgstr "Тражим %(query)s помоћу %(engine)s "
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1163
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:646
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1162
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:673
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1190
 msgid "Stopped"
 msgstr "Заустављено"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1060
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1059
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1087
 #, python-format
 msgid ""
 "The file:\n"
@@ -278,36 +290,43 @@ msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1080
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1079
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1107
 msgid "Stop Downloading"
 msgstr "Заустави преузимање"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1088
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1087
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1115
 msgid "Show in folder"
 msgstr "Прикажи у директоријуму"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1096
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1095
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1123
 msgid "Convert to mp3"
 msgstr "Претвори у mp3"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1107
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1106
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1134
 msgid "Remove"
 msgstr "Уклони"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1141
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1140
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1168
 msgid "Converting process started..."
 msgstr "Процес претварања је започет..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1156
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1155
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1183
 msgid "Audio file successfully created !"
 msgstr "Аудио датотека је успешно направљена!"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1161
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1160
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1188
 #, python-format
 msgid "Playing %s"
 msgstr "Пуштам %s"
@@ -315,6 +334,7 @@ msgstr "Пуштам %s"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1179
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1178
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1206
 msgid "Failed..."
 msgstr "Није успело ..."
 
@@ -490,3 +510,12 @@ msgstr "Преузмимање је завршено"
 #, python-format
 msgid "Remaining : %(min)02d:%(sec)02d"
 msgstr "Преостаје : %(min)02d:%(sec)02d"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:365
+msgid "All"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:612
+#, fuzzy, python-format
+msgid "engine : %s"
+msgstr "Механизам: "

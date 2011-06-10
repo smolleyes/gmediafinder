@@ -2,6 +2,7 @@ import re
 import urllib
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import gdata.youtube.service as yt_service
+import gobject
 
 try:
 	from functions import *
@@ -19,16 +20,73 @@ class Youtube(object):
         self.gui = gui
         self.current_page = 1
         self.main_start_page = 1
+        self.type = "video"
         self.num_start = 1
         self.results_by_page = 25
         self.name="Youtube"
         self.client = yt_service.YouTubeService()
-        self.start_engine()
+        self.youtube_max_res = "320x240"
+        self.media_codec = None
         ## the gui box to show custom filters/options
         self.opt_box = self.gui.gladeGui.get_widget("search_options_box")
+        
+        ## video quality combobox
+        self.youtube_quality_box = self.gui.gladeGui.get_widget("quality_box")
+        self.youtube_quality_model = gtk.ListStore(str)
+        self.youtube_video_rate = gtk.ComboBox(self.youtube_quality_model)
+        cell = gtk.CellRendererText()
+        self.youtube_video_rate.pack_start(cell, True)
+        self.youtube_video_rate.add_attribute(cell, 'text', 0)
+        self.youtube_quality_box.add(self.youtube_video_rate)
+        new_iter = self.youtube_quality_model.append()
+        self.youtube_quality_model.set(new_iter,
+                                0, _("Quality"),
+                                )
+        self.youtube_video_rate.connect('changed', self.on_youtube_video_rate_changed)
+        
+        ## youtube video quality choices
+        self.res320 = self.gui.gladeGui.get_widget("res1")
+        self.res640 = self.gui.gladeGui.get_widget("res2")
+        self.res854 = self.gui.gladeGui.get_widget("res3")
+        self.res1280 = self.gui.gladeGui.get_widget("res4")
+        self.res1920 = self.gui.gladeGui.get_widget("res5")
+        
+        ## SIGNALS
+        dic = {
+        "on_res1_toggled" : self.set_max_youtube_res,
+        "on_res2_toggled" : self.set_max_youtube_res,
+        "on_res3_toggled" : self.set_max_youtube_res,
+        "on_res4_toggled" : self.set_max_youtube_res,
+        "on_res5_toggled" : self.set_max_youtube_res,
+         }
+        self.gui.gladeGui.signal_autoconnect(dic)
+        ## start
+        self.start_engine()
+
+    def print_info(self,msg):
+		gobject.idle_add(self.gui.info_label.set_text,msg) 
 
     def start_engine(self):
-		self.gui.engine_list[self.name] = ''
+        self.gui.engine_list[self.name] = ''
+	    ## get default max_res for youtube videos
+        try:
+			self.youtube_max_res = self.gui.config["youtube_max_res"]
+        except:
+			self.gui.config["youtube_max_res"] = self.youtube_max_res
+		
+        if self.youtube_max_res == "320x240":
+			self.res320.set_active(1)
+        elif self.youtube_max_res == "640x320":
+			self.res640.set_active(1)
+        elif self.youtube_max_res == "854x480":
+			self.res854.set_active(1)
+        elif self.youtube_max_res == "1280x720":
+			self.res1280.set_active(1)
+        elif self.youtube_max_res == "1920x1080":
+			self.res1920.set_active(1)
+			
+        self.youtube_video_rate.hide()
+        self.youtube_video_rate.set_active(0)
 		
     def load_gui(self):
         label = gtk.Label(_("options: "))
@@ -58,19 +116,27 @@ class Youtube(object):
         for cat in catlist:
 			self.category.append(cat)
         self.gui.search_opt_box.add(cb)
-		
         self.gui.search_opt_box.show_all()
-        self.gui.youtube_video_rate.show()
+        self.youtube_video_rate.show()
         self.orderby.select(0)
         self.category.select(0)
+        self.youtube_quality_box.show_all()
+        
+    def set_max_youtube_res(self, widget):
+		if widget.get_active():
+			self.youtube_max_res = widget.get_child().get_label()
+			self.gui.config["youtube_max_res"] = self.youtube_max_res
+			## return a dic as conf
+			try:
+				self.gui.config.write()
+			except:
+				print "Can't write to the %s config file..." % self.gui.conf_file
 
     def search(self,user_search,page):
 		nlist = []
 		link_list = []
 		next_page = 0
-		gtk.gdk.threads_enter()
-		self.gui.changepage_btn.show()
-		gtk.gdk.threads_leave()
+		gobject.idle_add(self.gui.changepage_btn.show)
 		## prepare query
 		query = yt_service.YouTubeVideoQuery()
 		query.vq = user_search # the term(s) that you are searching for
@@ -83,14 +149,10 @@ class Youtube(object):
 			query.categories.append('/%s' % self.catlist[cat])
 		
 		if self.current_page == 1:
-			gtk.gdk.threads_enter()
-			self.gui.pageback_btn.hide()
-			gtk.gdk.threads_leave()
+			gobject.idle_add(self.gui.pageback_btn.hide)
 			self.num_start = 1
 		else:
-			gtk.gdk.threads_enter()
-			self.gui.pageback_btn.show()
-			gtk.gdk.threads_leave()
+			gobject.idle_add(self.gui.pageback_btn.show)
 		query.start_index = self.num_start
 		vquery = self.client.YouTubeQuery(query)
 		self.filter(vquery,user_search)
@@ -99,33 +161,32 @@ class Youtube(object):
 		if not vquery :
 			self.num_start = 1
 			self.current_page = 1
-			gtk.gdk.threads_enter()
-			self.gui.changepage_btn.hide()
-			self.pageback_btn.hide()
-			self.gui.info_label.set_text(_("no more files found for %s ...") % (user_search))
-			self.gui.throbber.hide()
-			gtk.gdk.threads_leave()
+			gobject.idle_add(self.gui.changepage_btn.hide)
+			self.print_info(_("Youtube: No results for %s ...") % user_search)
+			gobject.idle_add(self.gui.throbber.hide)
+			time.sleep(5)
+			self.print_info('')
 			return
 		
 		if len(vquery.entry) == 0:
-			gtk.gdk.threads_enter()
-			self.gui.info_label.set_text(_("no results for %s ...") % (user_search))
-			self.gui.throbber.hide()
-			gtk.gdk.threads_leave()
+			self.print_info(_("Youtube: No results for %s ...") % user_search)
+			gobject.idle_add(self.gui.throbber.hide)
+			time.sleep(5)
+			self.print_info('')
 			return
 		
-		gtk.gdk.threads_enter()
 		for entry in vquery.entry:
 			self.make_youtube_entry(entry)
-		self.gui.throbber.hide()
-		self.gui.info_label.set_text("")
-		gtk.gdk.threads_leave()
-		return
+		self.print_info('')
+		gobject.idle_add(self.gui.throbber.hide)
 		
+    def play(self,link):
+		self.load_youtube_res(link)
+		active = self.youtube_video_rate.get_active()
+		self.media_codec = self.quality_list[active].split('|')[1]
+		return self.gui.start_play(self.media_link[active])
 
     def make_youtube_entry(self,video):
-		#import pprint
-		#pprint.pprint(video.__dict__)
 		duration = video.media.duration.seconds
 		calc = divmod(int(duration),60)
 		seconds = int(calc[1])
@@ -149,7 +210,93 @@ class Youtube(object):
 		markup = _("<small><b>%(name)s</b></small>\n<small><b>view:</b> %(count)s		<b>Duration:</b> %(duration)s</small>") % values
 		if not title or not url or not vid_pic:
 			return
-		self.gui.add_sound(title, markup, vid_id, vid_pic,None,self.name)
+		gobject.idle_add(self.gui.add_sound,title, markup, vid_id, vid_pic,None,self.name)
+		
+		
+    def load_youtube_res(self,link):
+		self.youtube_quality_model.clear()
+		self.media_link,self.quality_list = self.get_quality_list(link)
+		if not self.quality_list:
+			return
+		for rate in self.quality_list:
+			new_iter = self.youtube_quality_model.append()
+			self.youtube_quality_model.set(new_iter,
+							0, rate,
+							)
+		self.set_default_youtube_video_rate()
+		gobject.idle_add(self.youtube_video_rate.show)
+		
+    def set_default_youtube_video_rate(self,widget=None):
+		active = self.youtube_video_rate.get_active()
+		qn = 0
+		## if there s only one quality available, read it...
+		if active == -1:
+			if len(self.quality_list) == 1:
+				self.youtube_video_rate.set_active(0)
+			for frate in self.quality_list:
+				rate = frate.split('|')[0]
+				h = int(rate.split('x')[0])
+				dh = int(self.youtube_max_res.split('x')[0])
+				if h > dh:
+					qn+=1
+					continue
+				else:
+					self.youtube_video_rate.set_active(qn)
+			active = self.youtube_video_rate.get_active()
+		else:
+			if self.quality_list:
+				active = self.youtube_video_rate.get_active()
+
+    def on_youtube_video_rate_changed(self,widget):
+		active = self.youtube_video_rate.get_active()
+		if self.gui.is_playing:
+			self.gui.stop_play()
+			try:
+			    self.media_codec = self.quality_list[active].split('|')[1]
+			except:
+				pass
+			self.gui.videosink.set_property('force-aspect-ratio', True)
+			return self.gui.start_play(self.media_link[active])
+
+        
+    def get_quality_list(self,vid_id):
+        links_arr = []
+        quality_arr = []
+        try:
+			req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
+			stream = urllib2.urlopen(req)
+			contents = stream.read()
+			## links list
+			regexp1 = re.compile("fmt_stream_map=([^&]+)&")
+			matches = regexp1.search(contents).group(1)
+			fmt_arr = urllib2.unquote(matches).split(',')
+			## quality_list
+			regexp1 = re.compile("fmt_map=([^&]+)&")
+			matches = regexp1.search(contents).group(1)
+			quality_list = urllib2.unquote(matches).split(',')
+			##
+			stream.close()
+			link_list = []
+			for link in fmt_arr:
+				res = link.split('|')[1]
+				link_list.append(res)
+			## remove flv links...
+			i = 0
+			for quality in quality_list:
+				codec = get_codec(quality)
+				if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
+					i+=1
+					continue
+				elif codec == "flv" and quality.split("/")[1] != "320x240":
+					i+=1
+					continue
+				else:
+					links_arr.append(link_list[i])
+					quality_arr.append(quality.split("/")[1] + "|%s" % codec)
+					i+=1
+        except:
+		    return
+        return links_arr, quality_arr
             
 
 

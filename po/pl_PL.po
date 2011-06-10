@@ -8,14 +8,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-06 23:47+0200\n"
+"POT-Creation-Date: 2011-06-07 21:58+0200\n"
 "PO-Revision-Date: 2011-05-26 21:49+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
+"Language: pl_PL\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: pl_PL\n"
 "Plural-Forms: nplurals=3; plural=(n==1 ? 0 : n%10>=2 && n%10<=4 && (n%100<10 "
 "|| n%100>=20) ? 1 : 2)\n"
 
@@ -58,6 +58,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:560
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1060
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1059
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1087
 msgid "Download"
 msgstr "Pobierz"
 
@@ -204,37 +205,45 @@ msgid "Infos"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:173
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:171
 msgid "Quality"
 msgstr "Jakość"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:289
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:287
 msgid " Results : "
 msgstr " Wyniki :"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:466
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:644
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:643
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:473
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:670
 #, python-format
 msgid "Playing : %s"
 msgstr "Odtworzono : %s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:568
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:567
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:575
 msgid "Please select a search engine..."
 msgstr "Wybierz rodzaj wyszukiwarki..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:571
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:570
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:578
 msgid "Please enter an artist/album or song name..."
 msgstr "Wprowadź artystę/album albo nazwę utworu..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:574
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:573
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:581
 msgid "Please select an engine..."
 msgstr "Wybierz wyszukiwarkę..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:609
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:608
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:635
 #, fuzzy, python-format
 msgid "Searching for %(query)s with %(engine)s "
 msgstr "Poszukuję %s w %s"
@@ -243,11 +252,14 @@ msgstr "Poszukuję %s w %s"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1163
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:646
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1162
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:673
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1190
 msgid "Stopped"
 msgstr "Zatrzymano"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1060
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1059
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1087
 #, python-format
 msgid ""
 "The file:\n"
@@ -264,37 +276,44 @@ msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1080
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1079
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1107
 msgid "Stop Downloading"
 msgstr "Zatrzymaj pobieranie"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1088
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1087
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1115
 #, fuzzy
 msgid "Show in folder"
 msgstr "Wybierz folder"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1096
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1095
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1123
 msgid "Convert to mp3"
 msgstr "Przetwórz na mp3"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1107
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1106
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1134
 msgid "Remove"
 msgstr "Usuń"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1141
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1140
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1168
 msgid "Converting process started..."
 msgstr "Proces przetwarzania rozpoczęty..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1156
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1155
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1183
 msgid "Audio file successfully created !"
 msgstr "Udało się utworzyć plik dźwiękowy !"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1161
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1160
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1188
 #, python-format
 msgid "Playing %s"
 msgstr "Odtwarzanie %s"
@@ -302,6 +321,7 @@ msgstr "Odtwarzanie %s"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1179
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1178
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1206
 msgid "Failed..."
 msgstr "Nie udało się..."
 
@@ -474,6 +494,15 @@ msgstr "Pobieranie zakończone"
 #, python-format
 msgid "Remaining : %(min)02d:%(sec)02d"
 msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:365
+msgid "All"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:612
+#, fuzzy, python-format
+msgid "engine : %s"
+msgstr "Wyszukiwarki"
 
 #~ msgid "search options"
 #~ msgstr "opcje wyszukiwania"
