@@ -60,7 +60,7 @@ class GsongFinder(object):
         self.vis="jess"
         width = gtk.gdk.screen_width()
         height = gtk.gdk.screen_height()
-        self.window_state = (width-200,height-80,0,0)
+        self.window_state = "%s,%s,%s,%s" % (width-200,height-80,0,0)
         self.show_thumbs_opt = "True"
         if sys.platform == "win32":
             from win32com.shell import shell, shellcon
@@ -78,10 +78,10 @@ class GsongFinder(object):
         if not os.path.exists(self.settings_folder):
             os.mkdir(self.settings_folder)
             fd = os.open(self.conf_file, os.O_RDWR|os.O_CREAT)
-            os.write(fd,"download_path=%s" % self.down_dir)
-            os.write(fd,"window_state=%s" % str(self.window_state))
-            os.write(fd,"show_thumbs=%s" % self.show_thumbs_opt)
-            os.write(fd,"visualisation=%s" % self.vis)
+            os.write(fd,"download_path=%s\n" % self.down_dir)
+            os.write(fd,"window_state=%s\n" % self.window_state)
+            os.write(fd,"show_thumbs=%s\n" % self.show_thumbs_opt)
+            os.write(fd,"visualisation=%s\n" % self.vis)
             os.close(fd)
         self.config = ConfigObj(self.conf_file,write_empty_values=True)
         try:

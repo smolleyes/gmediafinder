@@ -53,8 +53,9 @@ class Engines(object):
             ## add new engines key in the config file if not present
             ## disable YouPorn by default
             self.gui.config["engines"] = self.local_engines_list
-            if ('YouPorn' in self.local_engines_list):
+            if ('YouPorn' or 'Redtube' in self.local_engines_list):
 				self.gui.config["engines"].remove('YouPorn')
+				self.gui.config["engines"].remove('Redtube')
             self.gui.config.write()
             self.engines_list = self.local_engines_list
             
