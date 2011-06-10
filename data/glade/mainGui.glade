@@ -171,6 +171,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip" translatable="yes">Previous page</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
                     <signal name="clicked" handler="on_pageback_btn_clicked" swapped="no"/>
@@ -194,6 +195,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
+                    <property name="tooltip" translatable="yes">Next page</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
                     <signal name="clicked" handler="on_nextpage_btn_clicked" swapped="no"/>
@@ -594,6 +596,7 @@
                                     <property name="visible">True</property>
                                     <property name="can_focus">True</property>
                                     <property name="receives_default">True</property>
+                                    <property name="tooltip" translatable="yes">Downloads manager</property>
                                     <property name="use_action_appearance">False</property>
                                     <signal name="clicked" handler="on_down_menu_btn_clicked" swapped="no"/>
                                     <child>
