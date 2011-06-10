@@ -72,9 +72,9 @@ class Mp3Realm(object):
 				continue
 			try:
 				link = urllib2.unquote(link)
-				name = urllib2.unquote(os.path.basename(link.decode('UTF8')))
+				name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
 				markup="<small><b>%s</b></small>" % name
-				gobject.idle_add(self.gui.add_sound,name, markup, link_list,None,None,self.name)
+				gobject.idle_add(self.gui.add_sound,name, markup, link,None,None,self.name)
 			except:
 				continue
 		self.print_info("")
