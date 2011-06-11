@@ -58,6 +58,7 @@ class GsongFinder(object):
         self.xsink = False
         self.play_options = "continue"
         self.vis="jess"
+        self.file_tags = {}
         width = gtk.gdk.screen_width()
         height = gtk.gdk.screen_height()
         self.window_state = "%s,%s,%s,%s" % (width-200,height-80,0,0)
@@ -298,6 +299,7 @@ class GsongFinder(object):
         bus.enable_sync_message_emission()
         bus.connect("message", self.on_message)
         bus.connect("sync-message::element", self.on_sync_message)
+        bus.connect("message::tag", self.bus_message_tag)
         
         ## engines
         self.dlg = self.gladeGui.get_widget("settings_dialog")
@@ -436,7 +438,9 @@ class GsongFinder(object):
         self.selected_iter = selected.get_selected()[1]
         self.path = self.model.get_path(self.selected_iter)
         ## else extract needed metacity's infos
+        self.media_thumb = self.model.get_value(self.selected_iter, 0)
         self.media_name = self.model.get_value(self.selected_iter, 4)
+        self.media_markup = self.model.get_value(self.selected_iter, 1)
         self.media_plugname = self.model.get_value(self.selected_iter, 5)
         ## for global search
         if not self.engine_selector.getSelected == self.media_plugname:
@@ -448,6 +452,7 @@ class GsongFinder(object):
         self.statbar.push(1,_("Playing : %s") % self.media_name)
         self.stop_play()
         ## play in engine
+        self.media_tagged = False
         self.search_engine.play(self.media_link)
 
     def prepare_search(self,widget=None):
@@ -699,7 +704,7 @@ class GsongFinder(object):
             self.is_playing = False
             self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
             self.play_btn_pb.set_from_pixbuf(self.stop_icon)
-            if not sys.platform == "win32" and ('No port available' in debug)and not self.xsink:
+            if not sys.platform == "win32" and ('No port available' in debug) and not self.xsink:
                 self.videosink = gst.element_factory_make('ximagesink')
                 self.player.set_property("video-sink", self.videosink)
                 self.xsink = True
@@ -995,7 +1000,7 @@ class GsongFinder(object):
         pbar = gtk.ProgressBar()
         pbar.set_size_request(400, 25)
         vbox.pack_end(pbar, False, False, 5)
-        box.pack_start(gtk.image_new_from_pixbuf(self.media_img), False,False, 5)
+        box.pack_start(gtk.image_new_from_pixbuf(self.media_thumb), False,False, 5)
         box.pack_start(vbox, False, False, 5)
         ## stop btn
         btnstop = gtk.Button()
@@ -1044,6 +1049,43 @@ class GsongFinder(object):
         t = Downloader(self,url, name, pbar, btnf,btn,btn_conv,btnstop,name)
         t.start()
         
+    def bus_message_tag(self, bus, message):
+		self.audio_codec= None
+		self.bitrate = None
+		self.mode = None
+		#we received a tag message
+		taglist = message.parse_tag()
+		#put the keys in the dictionary
+		for key in taglist.keys():
+			if key == "preview-image" or key == "image":
+				ipath="/tmp/temp.png"
+				img = open(ipath, 'w')
+				img.write(taglist[key])
+				img.close()
+				self.media_thumb = gtk.gdk.pixbuf_new_from_file_at_scale(ipath, 64,64, 1)
+				self.model.set_value(self.selected_iter, 0, self.media_thumb)
+			elif key == "bitrate":
+				r = int(taglist[key]) / 1000
+				self.file_tags[key] = "%sk" % r
+			elif key == "channel-mode":
+				self.file_tags[key] = taglist[key]
+			elif key == "audio-codec":
+				k = str(taglist[key])
+				self.file_tags[key] = re.search('\((.*?)\)',k).group(1).lower()
+		
+		try:
+			self.audio_codec = self.file_tags['audio-codec']
+			self.bitrate = self.file_tags['bitrate']
+			self.mode = self.file_tags['channel-mode']
+			if self.media_tagged:
+				return
+			self.media_markup = '%s\n <small>Bitrate: %s     Encoding: %s / %s</small>' % (self.media_markup,self.bitrate,self.audio_codec,self.mode)
+			self.model.set_value(self.selected_iter, 1, self.media_markup)
+			self.media_tagged = True
+		except:
+			return
+			
+    
     def show_folder(self,widget,path):
         if sys.platform == "win32":
 	    os.system('explorer %s' % path)
