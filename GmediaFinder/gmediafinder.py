@@ -734,6 +734,8 @@ class GsongFinder(object):
                     self.shuffle_btn.set_active(1)
                 if self.loop_btn.get_active():
                     self.loop_btn.set_active(0)
+            else:
+				self.play_options = "continue"
         elif wname == "repeat_btn":
             if wstate:
                 self.play_options = "loop"
@@ -741,6 +743,8 @@ class GsongFinder(object):
                     self.loop_btn.set_active(1)
                 if self.shuffle_btn.get_active():
                     self.shuffle_btn.set_active(0)
+            else:
+				self.play_options = "continue"
         else:
 			self.play_options = "continue"
 				
@@ -750,48 +754,50 @@ class GsongFinder(object):
             if path:
                 self.treeview.set_cursor(path)
         elif self.play_options == "continue":
-            ## first, check if iter is still available (changed search while
-            ## continue mode for exemple..)
-            if not self.model.get_path(self.selected_iter) == self.path:
-                try:
-                    self.selected_iter = self.model.get_iter_first()
-                except:
-                    return
-                if self.selected_iter:
-                    path = self.model.get_path(self.selected_iter)
-                    self.treeview.set_cursor(path)
-                return
-            ## check for next iter
-            try:
-                self.selected_iter = self.model.iter_next(self.selected_iter)
-            except:
-                return
-            if self.selected_iter:
-                path = self.model.get_path(self.selected_iter)
-                self.treeview.set_cursor(path)
-            else:
-                if not self.engine == "google.com":
-                    ## try changing page
-                    self.change_page()
-                    ## wait for 10 seconds or exit
-                    i = 0
-                    while i < 10:
-                        try:
-                            self.selected_iter = self.model.get_iter_first()
-                        except:
-                            continue
-                        if self.selected_iter:
-                            path = self.model.get_path(self.selected_iter)
-                            self.treeview.set_cursor(path)
-                            break
-                        else:
-                            i += 1
-                            time.sleep(1)
+			## first, check if iter is still available (changed search while
+			## continue mode for exemple..)
+			## check for next iter
+			try:
+				if not self.model.get_path(self.selected_iter) == self.path:
+					try:
+						self.selected_iter = self.model.get_iter_first()
+						if self.selected_iter:
+							path = self.model.get_path(self.selected_iter)
+							self.treeview.set_cursor(path)
+					except:
+						return
+				else:
+					try:
+						self.selected_iter = self.model.iter_next(self.selected_iter)
+						path = self.model.get_path(self.selected_iter)
+						self.treeview.set_cursor(path)
+					except:
+						self.load_new_page()
+			except:
+				 self.load_new_page()
+
         elif self.play_options == "shuffle":
 			num = random.randint(0,len(self.model))
 			self.selected_iter = self.model[num].iter
 			path = self.model.get_path(self.selected_iter)
 			self.treeview.set_cursor(path)
+    
+    def load_new_page(self):
+		self.change_page()
+		## wait for 10 seconds or exit
+		i=0
+		while i < 10:
+			try:
+				self.selected_iter = self.model.get_iter_first()
+				path = self.model.get_path(self.selected_iter)
+				self.treeview.set_cursor(path)
+				break
+			except:
+				i+=1
+				time.sleep(1)
+				gtk.main_iteration()
+				continue
+    
     
     def convert_ns(self, t):
         # This method was submitted by Sam Mason.
@@ -1077,9 +1083,9 @@ class GsongFinder(object):
 			self.audio_codec = self.file_tags['audio-codec']
 			self.bitrate = self.file_tags['bitrate']
 			self.mode = self.file_tags['channel-mode']
-			if self.media_tagged:
+			if self.media_tagged or (self.bitrate in self.media_markup):
 				return
-			self.media_markup = '%s\n <small>Bitrate: %s     Encoding: %s / %s</small>' % (self.media_markup,self.bitrate,self.audio_codec,self.mode)
+			self.media_markup = '<small><b>%s</b>\nBitrate: %s     Encoding: %s / %s</small>' % (self.media_name,self.bitrate,self.audio_codec,self.mode)
 			self.model.set_value(self.selected_iter, 1, self.media_markup)
 			self.media_tagged = True
 		except:
