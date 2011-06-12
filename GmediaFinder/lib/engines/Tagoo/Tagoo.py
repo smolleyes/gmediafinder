@@ -58,7 +58,7 @@ class Tagoo(object):
                 gobject.idle_add(self.gui.pageback_btn.hide)
         else:
             gobject.idle_add(self.gui.changepage_btn.hide)
-            self.print_info(_("mp3Realm: no results found for %s...") % user_search)
+            self.print_info(_("Tagoo: no results found for %s...") % user_search)
             gobject.idle_add(self.gui.throbber.hide)
             time.sleep(5)
             self.print_info('')
