@@ -1,6 +1,5 @@
 import re
 import urllib
-from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import gobject
 
 try:
@@ -51,68 +50,53 @@ class Redtube(object):
         
     def play(self,link):
 		data = get_url_data(link)
-		soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
-		data = soup.findAll('div',attrs={'id':'redtube_flv_player'})
-		d = urllib2.unquote(str(data))
-		try:
-			link = re.search('mp4_url=(.*)&amp;',d).group(1)
-			self.gui.media_link = link
-			return self.gui.start_play(link)
-		except:
-			return
+		for line in data.readlines():
+			if 'mp4_url=' in line:
+				link = urllib.unquote(re.search('mp4_url=(.*)&',line).group(1))
+				self.gui.media_link = link
+				break
+		return self.gui.start_play(link)
 		
     def filter(self,data,user_search):
-		d = unicode(data,errors='replace')
-		soup = BeautifulStoneSoup(d.decode('utf-8'),selfClosingTags=['/>'])
-		## reset the treeview
-		nlist = []
-		link_list = []
-		img_list = []
-		files_count = None
-		try:
-			#search results div
-			count = soup.findAll('div',attrs={'class':'videosTable'})[0].findAll('h1')[0].string
-			results_count = re.search('\((.*?)\)',count).group(1).replace(',','')
+		flag_found = False
+		end_flag=True
+		title=""
+		markup=""
+		link=""
+		for line in data.readlines():
+			## search link
+			if 'class="s"' in line:
+				flag_found = True
+				l = re.search('href=\"(.*?)\"',line).group(1)
+				link = "http://www.redtube.com%s" % l
+				title = re.search('title=\"(.*?)\"',line).group(1)
+				markup="<small><b>%s</b></small>" % title
+			elif 'class="t"' in line:
+				img_link = re.search('src=\"(.*?)\"',line).group(1)
+				img = download_photo(img_link)
+				gobject.idle_add(self.gui.add_sound, title, markup, link, img, None, self.name)
+			## check for next page
+			elif 'id="navNext"' in line:
+				end_flag=False
+			continue
+			
+		if flag_found:
+			if end_flag:
+				gobject.idle_add(self.gui.changepage_btn.hide)
+			else:
+				gobject.idle_add(self.gui.changepage_btn.show)
 			if self.current_page != 1:
 				gobject.idle_add(self.gui.pageback_btn.show)
 			else:
 				gobject.idle_add(self.gui.pageback_btn.hide)
-		except:
-			self.print_info(_("Redtube: No results for %s...") % user_search)
+		else:
 			gobject.idle_add(self.gui.changepage_btn.hide)
+			self.print_info(_("mp3Realm: no results found for %s...") % user_search)
 			gobject.idle_add(self.gui.throbber.hide)
-			return
-		
-		if int(results_count) == 0:
-			gobject.idle_add(self.gui.changepage_btn.hide)
-			self.current_page = 1
-			self.print_info(_("Redtube: No results for %s...") % user_search)
-			gobject.idle_add(self.gui.throbber.hide)
-			return
-		
-		flist = soup.findAll('div',attrs={'class':'video'})
-		for video in flist:
-			try:
-				link = re.search('href="(.*?)"',str(video)).group(1)
-				name = re.search('title="(.*?)"',str(video)).group(1).decode('UTF8')
-				img_link = urllib2.unquote(re.search('src="(.*?)"',str(video)).group(1))
-				img = download_photo(img_link)
-				nlist.append(name)
-				link_list.append(link)
-				img_list.append(img)
-			except:
-				continue
-		## add to the treeview if ok
-		i = 0
-		for name in nlist:
-			if name and link_list[i]:
-				markup="<small><b>%s</b></small>" % name
-				gobject.idle_add(self.gui.add_sound,name, markup, 'http://www.redtube.com'+link_list[i], img_list[i],None,'Redtube')
-				i += 1
-				time.sleep(0.1)
-		gobject.idle_add(self.gui.changepage_btn.show)
-		self.print_info("")
+			time.sleep(5)
+			self.print_info('')
 		gobject.idle_add(self.gui.throbber.hide)
+		self.print_info('')
 
     def print_info(self,msg):
 		gobject.idle_add(self.gui.info_label.set_text,msg)

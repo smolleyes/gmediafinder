@@ -23,12 +23,11 @@ def get_url_data(url):
         except:
             return
         try:
-            code = urllib2.urlopen(req)
+            data = urllib2.urlopen(req)
         except:
             return
 
-        results = code.read()
-        return results
+        return data
 
 def clean_html(buf):
 	"""Cleans HTML of dangerous tags and content."""

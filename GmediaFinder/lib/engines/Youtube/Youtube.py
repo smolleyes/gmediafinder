@@ -1,6 +1,5 @@
 import re
 import urllib
-from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import gdata.youtube.service as yt_service
 import gobject
 

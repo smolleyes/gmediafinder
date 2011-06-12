@@ -508,6 +508,8 @@ class GsongFinder(object):
 			return self.search()
 
     def change_page(self,widget=None):
+        if not self.changepage_btn.get_property("visible"):
+			return
         try:
 			name = widget.name
         except:
@@ -785,19 +787,12 @@ class GsongFinder(object):
     def load_new_page(self):
 		self.change_page()
 		## wait for 10 seconds or exit
-		i=0
-		while i < 10:
-			try:
-				self.selected_iter = self.model.get_iter_first()
-				path = self.model.get_path(self.selected_iter)
-				self.treeview.set_cursor(path)
-				break
-			except:
-				i+=1
-				time.sleep(1)
-				gtk.main_iteration()
-				continue
-    
+		try:
+			self.selected_iter = self.model.get_iter_first()
+			path = self.model.get_path(self.selected_iter)
+			self.treeview.set_cursor(path)
+		except:
+			return
     
     def convert_ns(self, t):
         # This method was submitted by Sam Mason.
@@ -1056,6 +1051,8 @@ class GsongFinder(object):
         t.start()
         
     def bus_message_tag(self, bus, message):
+		if self.search_engine.type == "video":
+			return
 		self.audio_codec= None
 		self.bitrate = None
 		self.mode = None
@@ -1085,7 +1082,11 @@ class GsongFinder(object):
 			self.mode = self.file_tags['channel-mode']
 			if self.media_tagged or (self.bitrate in self.media_markup):
 				return
-			self.media_markup = '<small><b>%s</b>\nBitrate: %s     Encoding: %s / %s</small>' % (self.media_name,self.bitrate,self.audio_codec,self.mode)
+			if re.search('&', self.media_name):
+				name = re.sub('&','&amp;', self.media_name)
+			else:
+				name = self.media_name
+			self.media_markup = '<small><b>%s</b>\nBitrate: %s     Encoding: %s / %s</small>' % (name,self.bitrate,self.audio_codec,self.mode)
 			self.model.set_value(self.selected_iter, 1, self.media_markup)
 			self.media_tagged = True
 		except:

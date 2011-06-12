@@ -1,7 +1,6 @@
 import gobject
 import re
 import urllib
-from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 
 try:
 	from functions import *
@@ -30,53 +29,41 @@ class Tagoo(object):
         self.filter(data,query)
         
     def filter(self,data,user_search):
-		try:
-			soup = BeautifulStoneSoup(data.decode('utf-8'),selfClosingTags=['/>'])
-		except:
-			self.print_info(_("Tagoo: Connexion failed..."))
-			gobject.idle_add(self.gui.throbber.hide)
-			time.sleep(5)
-			self.gui.info_label.set_text("")
-			return
-		next_page = 1
-		results_div = soup.find('div',attrs={'class':'resultinfo'})
-		try:
-			results_count = re.search('Found about (\d+)', str(results_div)).group(1)
-		except:
-			gobject.idle_add(self.gui.changepage_btn.hide)
-			self.print_info(_("Tagoo: No results for %s...") % user_search)
-			gobject.idle_add(self.gui.throbber.hide)
-			time.sleep(5)
-			self.print_info("")
-			return
-		if results_count == 0 :
-			self.print_info(_("Tagoo: No results for %s ") % user_search)
-			gobject.idle_add(self.gui.throbber.hide)
-			time.sleep(5)
-			self.print_info("")
-			return
-
-		gobject.idle_add(self.gui.changepage_btn.show)
-		if self.current_page != 1:
-			gobject.idle_add(self.gui.pageback_btn.show)
-		else:
-			gobject.idle_add(self.gui.pageback_btn.hide)
+        flag_found = False
+        end_flag=False
+        for line in data.readlines():
+            ## search link
+            if 'class="notfound_taggy searchstring' in line:
+				end_flag=True
+            elif 'href="' in line:
+                try:
+                    link = re.search('href="(((\S.*))(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))"',line).group(1)
+                    t = urllib.unquote(re.search('href="(((\S.*))(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))"',line).group(3).split('/')[-1])
+                    title = re.sub('_',' ',t)
+                    markup = "<small><b>%s</b></small>" % title
+                    flag_found = True
+                    gobject.idle_add(self.gui.add_sound, title, markup, link, None, None, self.name)
+                except:
+                   continue
+            continue
 			
-		flist = [ each.get('href') for each in soup.findAll('a',attrs={'class':'link'}) ]
-		for link in flist:
-			try:
-				link = urllib2.unquote(link)
-				name = urllib2.unquote(os.path.basename(link.decode('utf-8')))
-				try:
-					markup="<small><b>%s</b></small>" % name
-					gobject.idle_add(self.gui.add_sound,name, markup, link, None, None, self.name)
-					i += 1
-				except:
-					continue
-			except:
-				continue
-		self.print_info("")
-		gobject.idle_add(self.gui.throbber.hide)
+        if flag_found:
+            if end_flag:
+                gobject.idle_add(self.gui.changepage_btn.hide)
+            else:
+                gobject.idle_add(self.gui.changepage_btn.show)
+            if self.current_page != 1:
+                gobject.idle_add(self.gui.pageback_btn.show)
+            else:
+                gobject.idle_add(self.gui.pageback_btn.hide)
+        else:
+            gobject.idle_add(self.gui.changepage_btn.hide)
+            self.print_info(_("mp3Realm: no results found for %s...") % user_search)
+            gobject.idle_add(self.gui.throbber.hide)
+            time.sleep(5)
+            self.print_info('')
+        gobject.idle_add(self.gui.throbber.hide)
+        self.print_info('')
 
     def play(self,link):
 		self.gui.media_link = link
