@@ -59,6 +59,7 @@ class GsongFinder(object):
         self.engine_list = {}
         self.engine = None
         self.conf=conf
+        self.latest_engine = ""
         
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
@@ -407,8 +408,8 @@ class GsongFinder(object):
 
     def prepare_search(self,widget=None):
         self.user_search = self.search_entry.get_text()
-        self.main_engine = self.engine_selector.getSelectedIndex()
-        if self.main_engine == 0:
+        self.latest_engine = self.engine_selector.getSelectedIndex()
+        if self.latest_engine == 0:
             self.info_label.set_text(_("Please select a search engine..."))
             return
         if not self.user_search:
@@ -429,7 +430,6 @@ class GsongFinder(object):
                     self.search()
                 except:
                     continue
-            self.engine_selector.setIndexFromString(self.global_search)
         elif self.engine_selector.getSelected() == self.global_video_search:
             for engine in self.engine_list:
                 self.set_engine(engine)
@@ -440,7 +440,6 @@ class GsongFinder(object):
                     self.search()
                 except:
                     continue
-            self.engine_selector.setIndexFromString(self.global_video_search)
         elif self.engine_selector.getSelected() == self.global_audio_search:
             for engine in self.engine_list:
                 self.search_engine = getattr(self.engines_client,'%s' % engine)
@@ -450,35 +449,52 @@ class GsongFinder(object):
                     self.search()
                 except:
                     continue
-            self.engine_selector.setIndexFromString(self.global_search)
         else:
             return self.search()
     
     def change_page(self,widget=None):
         if not self.changepage_btn.get_property("visible"):
-			return
+            return
         try:
-			name = widget.name
+            name = widget.name
         except:
-			name = ""
+            name = ""
         self.model.clear()
         user_search = self.search_entry.get_text()
-        engine = self.engine_selector.getSelectedIndex()
-        if not user_search or user_search != self.user_search \
-        or not engine or engine != self.main_engine:
+        engine = self.latest_engine
+        if not user_search or user_search != self.user_search or not engine or engine != self.latest_engine:
             return self.prepare_search()
         else:
-			if self.engine_selector.getSelected() == _("All"):
-				for engine in self.engine_list:
-					self.set_engine(engine)
-					self.search_engine = getattr(self.engines_client,'%s' % engine)
-					try:
-						self.do_change_page(name)
-					except:
-						continue
-				self.engine_selector.setIndexFromString(_("All"))
-			return self.do_change_page(name)
-	
+            self.engine_selector.select(self.latest_engine)
+            if self.engine_selector.getSelected() == self.global_search:
+                for engine in self.engine_list:
+                    self.set_engine(engine)
+                    self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    try:
+                        self.do_change_page(name)
+                    except:
+                        continue
+            elif self.engine_selector.getSelected() == self.global_video_search:
+                for engine in self.engine_list:
+                    self.set_engine(engine)
+                    self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    if not self.search_engine.type == "video":
+                        continue
+                    try:
+                        self.do_change_page(name)
+                    except:
+                        continue
+            elif self.engine_selector.getSelected() == self.global_audio_search:
+                for engine in self.engine_list:
+                    self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    if not self.search_engine.type == "audio":
+                        continue
+                    try:
+                        self.do_change_page(name)
+                    except:
+                        continue
+            return self.do_change_page(name)
+        
     def do_change_page(self,name):
 		if name == "pageback_btn":
 				if self.search_engine.current_page != 1:
@@ -1135,6 +1151,7 @@ class GsongFinder(object):
                 self.changepage_btn.hide()
             else:
                 self.changepage_btn.show()
+        self.engine_selector.select(self.latest_engine)
 
     def thread_progress(self, thread):
         self.throbber.show()
