@@ -59,7 +59,6 @@ class GsongFinder(object):
         self.engine_list = {}
         self.engine = None
         self.conf=conf
-        print self.conf
         
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
@@ -76,7 +75,6 @@ class GsongFinder(object):
         except:
 			self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
         self.show_thumbs_opt_toggle = self.gladeGui.get_widget("show_thumbs_opt")
-        print self.conf
         if self.conf['show_thumbs'] == "True" :
 			self.show_thumbs_opt_toggle.set_active(1)
         self.img_path = img_path
@@ -731,7 +729,6 @@ class GsongFinder(object):
 			self.treeview.set_cursor(path)
     
     def load_new_page(self):
-        print self.manager.running
         self.change_page()
         ## wait for 10 seconds or exit
         try:
@@ -1140,7 +1137,6 @@ class GsongFinder(object):
                 self.changepage_btn.show()
 
     def thread_progress(self, thread):
-        print "progressss"
         self.throbber.show()
 
 
