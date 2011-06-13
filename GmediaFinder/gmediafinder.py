@@ -404,7 +404,6 @@ class GsongFinder(object):
         self.statbar.push(1,_("Playing : %s") % self.media_name)
         self.stop_play()
         ## play in engine
-        self.media_tagged = False
         self.search_engine.play(self.media_link)
 
     def prepare_search(self,widget=None):
@@ -1039,9 +1038,10 @@ class GsongFinder(object):
                 name = re.sub('&','&amp;', self.media_name)
             else:
                 name = self.media_name
-            self.media_markup = '<small><b>%s</b>\nBitrate: %s     Encoding: %s / %s</small>' % (name,self.bitrate,self.audio_codec,self.mode)
+            bit=_('Bitrate:')
+            enc=_('Encoding:')
+            self.media_markup = '<small><b>%s</b>\n%s %s     %s %s / %s</small>' % (name,bit,self.bitrate,enc,self.audio_codec,self.mode)
             self.model.set_value(self.selected_iter, 1, self.media_markup)
-            self.media_tagged = True
         except:
             return
 			
