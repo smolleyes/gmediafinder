@@ -96,7 +96,7 @@ class YouPorn(object):
                 gobject.idle_add(self.gui.pageback_btn.hide)
         else:
             gobject.idle_add(self.gui.changepage_btn.hide)
-            self.print_info(_("Youporn: no results found for %s...") % query)
+            self.print_info(_("%s: No results for %s...") % (self.name,query))
             gobject.idle_add(self.gui.throbber.hide)
             time.sleep(5)
         self.thread_stop=True
@@ -109,7 +109,7 @@ class YouPorn(object):
         try:
             self.filter(self.search_url % (orderby, urllib.quote(query), type, page), query)
         except:
-            self.print_info(_("Redtube: no results found for %s...") % user_search)
+            self.print_info(_("%s: Connexion failed...") % self.name)
             time.sleep(5)
             self.thread_stop=True
             

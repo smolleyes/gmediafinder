@@ -26,7 +26,7 @@ class Mp3Fusion(object):
             data = urllib2.urlopen(self.search_url % (urllib.quote(query), self.current_page))
             self.filter(data, query)
         except:
-            self.print_info(_('Mp3Fusion: Connexion failed...'))
+            self.print_info(_('%s: Connexion failed...') % self.name)
             time.sleep(5)
         
     def filter(self, data, user_search):
@@ -47,7 +47,7 @@ class Mp3Fusion(object):
                 continue
             if '>Next Result' in line and line.split('"')[1] == 'http://www.mp3fusion.net/music/.html':
                 gobject.idle_add(self.gui.changepage_btn.hide)
-                self.print_info(_("Mp3Fusion: no more results found for %s...") % user_search)
+                self.print_info(_("%s: No results for %s...") % (self.name,user_search))
                 time.sleep(5)
                 break
         if flag_found:
@@ -57,7 +57,7 @@ class Mp3Fusion(object):
                 gobject.idle_add(self.gui.pageback_btn.hide)
         else:
             gobject.idle_add(self.gui.changepage_btn.hide)
-            self.print_info(_("Mp3Fusion: no results found for %s...") % user_search)
+            self.print_info(_("%s: No results for %s...") % (self.name,user_search))
             time.sleep(5)
         self.thread_stop=True
         

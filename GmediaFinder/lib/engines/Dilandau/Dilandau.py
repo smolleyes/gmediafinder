@@ -26,7 +26,7 @@ class Dilandau(object):
             data = urllib2.urlopen(self.search_url % (query.replace(' ','-'), self.current_page))
             self.filter(data, query)
         except:
-            self.print_info(_('Dilandau: Connexion failed...'))
+            self.print_info(_('%s: Connexion failed...') % self.name)
             gobject.idle_add(self.gui.throbber.hide)
             time.sleep(5)
             self.thread_stop=True
@@ -53,7 +53,7 @@ class Dilandau(object):
             if 'class="next_page inactive"' in line:
                 gobject.idle_add(self.gui.changepage_btn.hide)
                 gobject.idle_add(self.gui.throbber.hide)
-                self.print_info(_("Dilandau: no more results found for %s...") % user_search)
+                self.print_info(_("%s: No results for %s...") % (self.name,user_search))
                 time.sleep(5)
                 self.print_info('')
         if flag_found:
@@ -63,7 +63,7 @@ class Dilandau(object):
                 gobject.idle_add(self.gui.pageback_btn.hide)
         else:
             gobject.idle_add(self.gui.changepage_btn.hide)
-            self.print_info(_("Dilandau: no results found for %s...") % user_search)
+            self.print_info(_("%s: No results for %s...") % (self.name,user_search))
             gobject.idle_add(self.gui.throbber.hide)
             time.sleep(5)
         self.thread_stop=True
