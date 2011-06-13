@@ -14,26 +14,16 @@ class Engines(object):
     def __init__(self,gui):
         self.gui = gui
         self.engines_list = []
+        self.local_engines_list = []
         self.load_engines()
     
     def load_engines(self):
         # local engines
-        self.local_engines_list = []
         for engine in os.listdir(config.exec_path+'/lib/engines'):
             if os.path.isdir(os.path.join(config.exec_path+'/lib/engines', engine)):
                 self.local_engines_list.append(engine)
         # activated plugins list in the gmf config file
         self.load_plugins_conf()
-        # create checkbtn of enabled plugins in the gui
-        for engine in self.local_engines_list:
-            checkbox = gtk.CheckButton(engine)
-            checkbox.set_alignment(0, 0.5)
-            self.gui.engines_box.pack_start(checkbox,False,False,5)
-            checkbox.connect('toggled', self.change_engine_state)
-            if any(x in engine for x in self.engines_list):
-                checkbox.set_active(True)
-                self.init_engine(engine)
-            self.gui.engines_box.show_all()
         
     def init_engine(self,engine):
         modstr = "lib.engines.%s.%s" % (engine,engine)
@@ -49,12 +39,30 @@ class Engines(object):
         try:
             for eng in self.gui.conf["engines"]:
                 self.engines_list.append(eng)
+                ## clean locally removed plugins
+                for eng in self.engines_list:
+                    if (eng not in self.local_engines_list):
+                        self.engines.remove(eng)
+                self.gui.conf["engines"] = self.engines_list
         except:
             ## add new engines key in the config file if not present
             ## disable YouPorn by default
-            self.gui.conf["engines"] = self.local_engines_list
+            for eng in self.local_engines_list:
+                if not ('Redtube' in eng or 'YouPorn' in eng):
+                    self.engines_list.append(eng)
+            self.gui.conf["engines"] = self.engines_list
             self.gui.conf.write()
-            self.engines_list = self.local_engines_list
+        
+        # create checkbtn of enabled plugins in the gui
+        for engine in self.local_engines_list:
+            checkbox = gtk.CheckButton(engine)
+            checkbox.set_alignment(0, 0.5)
+            self.gui.engines_box.pack_start(checkbox,False,False,5)
+            checkbox.connect('toggled', self.change_engine_state)
+            if any(x in engine for x in self.engines_list):
+                checkbox.set_active(True)
+                self.init_engine(engine)
+            self.gui.engines_box.show_all()
             
             
     def change_engine_state(self,widget):
