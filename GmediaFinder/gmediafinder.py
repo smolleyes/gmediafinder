@@ -60,7 +60,7 @@ class GsongFinder(object):
         self.engine = None
         self.conf=conf
         self.latest_engine = ""
-        self.change_page_req = False
+        self.change_page_request = False
         
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)

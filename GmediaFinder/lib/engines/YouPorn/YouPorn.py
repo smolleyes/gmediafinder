@@ -74,7 +74,7 @@ class YouPorn(object):
                 flag_found = True
                 l = re.search('href=\"(.*?)\"',line).group(1)
                 link = "http://www.youporn.com%s" % l
-            elif '/thumbnail' in line:
+            elif 'extra_large.jpg' in line:
                 title = re.search('alt=\"(.*?)\"',line).group(1)
                 markup="<small><b>%s</b></small>" % title
                 img_link = re.search('src=\"(.*?)\"',line).group(1)
