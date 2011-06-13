@@ -1149,16 +1149,17 @@ class GsongFinder(object):
         self.engine_selector.select(self.latest_engine)
         
         ## check automatic page change
-        if self.change_page_request:
-            ## wait for 10 seconds or exit
-            try:
-                self.selected_iter = self.model.get_iter_first()
-                path = self.model.get_path(self.selected_iter)
-                self.treeview.set_cursor(path)
-                self.change_page_request=False
-            except:
-                self.change_page_request=False
-                return
+        if len(self.model) > 0:
+            if self.change_page_request:
+                ## wait for 10 seconds or exit
+                try:
+                    self.selected_iter = self.model.get_iter_first()
+                    path = self.model.get_path(self.selected_iter)
+                    self.treeview.set_cursor(path)
+                    self.change_page_request=False
+                except:
+                    self.change_page_request=False
+                    return
 
     def thread_progress(self, thread):
         self.throbber.show()
