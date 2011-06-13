@@ -23,32 +23,48 @@ class Redtube(object):
         self.gui.engine_list[self.name] = ''
     
     def load_gui(self):
-        ## create categories combobox
-        label = gtk.Label(_("Category: "))
+        ### create categories combobox
+        #label = gtk.Label(_("Category: "))
+        #self.gui.search_opt_box.pack_start(label,False,False,5)
+        #cb = create_comboBox()
+        #self.category = ComboBox(cb)
+        #self.category.append("")
+        #self.catlist = {_("Amateur"):"amateur",_("Anal"):"anal",_("Asian"):"asian",
+        #_("Big tits"):"bigtits",_("Blowjob"):"blowjob",_("Cumshot"):"cumshot",
+        #_("Ebony"):"ebony",_("Facials"):"facials",_("Fetish"):"fetish",
+        #_("Gang bang"):"gangbang",_("Gay"):"gay",
+        #_("Group"):"group",_("Hentai"):"hentai",_("Interracial"):"interracial",
+        #_("Japanese"):"japanese",_("Latina"):"latina",
+        #_("Lesbian"):"lesbian",_("Masturbation"):"masturbation",_("Milf"):"milf",
+        #_("Mature"):"mature",_("Public"):"public",_("Squirting"):"squirting",
+        #_("Teens"):"teens",_("Wild & Crazy"):"wildcrazy"}
+        #catlist = sortDict(self.catlist)
+        #for cat in catlist:
+            #self.category.append(cat)
+        #self.gui.search_opt_box.add(cb)
+        #self.gui.search_opt_box.show_all()
+        #self.category.select(0)
+        
+        label = gtk.Label(_("Order by: "))
         self.gui.search_opt_box.pack_start(label,False,False,5)
+        ## create orderby combobox
         cb = create_comboBox()
-        self.category = ComboBox(cb)
-        self.category.append("")
-        self.catlist = {_("Amateur"):"amateur",_("Anal"):"anal",_("Asian"):"asian",
-        _("Big tits"):"bigtits",_("Blowjob"):"blowjob",_("Cumshot"):"cumshot",
-        _("Ebony"):"ebony",_("Facials"):"facials",_("Fetish"):"fetish",
-        _("Gang bang"):"gangbang",_("Gay"):"gay",
-        _("Group"):"group",_("Hentai"):"hentai",_("Interracial"):"interracial",
-        _("Japanese"):"japanese",_("Latina"):"latina",
-        _("Lesbian"):"lesbian",_("Masturbation"):"masturbation",_("Milf"):"milf",
-        _("Mature"):"mature",_("Public"):"public",_("Squirting"):"squirting",
-        _("Teens"):"teens",_("Wild & Crazy"):"wildcrazy"}
-        catlist = sortDict(self.catlist)
-        for cat in catlist:
-            self.category.append(cat)
+        self.orderbyOpt = {_("Most recent"):"new",_("Most viewed"):"mostviewed",
+        _("Most rated"):"top",_("Most relevant"):"",
+        }
+        self.orderby = ComboBox(cb)
+        for cat in self.orderbyOpt:
+            self.orderby.append(cat)
         self.gui.search_opt_box.add(cb)
         self.gui.search_opt_box.show_all()
-        self.category.select(0)
+        self.orderby.select(0)
     
     def search(self, query, page):
         self.thread_stop=False
+        choice = self.orderby.getSelected()
+        orderby = self.orderbyOpt[choice]
         try:
-            data = get_url_data(self.search_url % ('new', urllib.quote(query), self.current_page))
+            data = get_url_data(self.search_url % (orderby, urllib.quote(query), self.current_page))
             self.filter(data,query)
         except:
             self.print_info(_("%s: connexion failed...") %  self.name)

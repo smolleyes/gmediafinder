@@ -51,7 +51,7 @@ class YouPorn(object):
         cb = create_comboBox()
         self.orderbyOpt = {_("Most recent"):"time",_("Most viewed"):"views",
         _("Most rated"):"rating",_("Duration"):"duration",
-        _("Most relevant"):"Relevance",
+        _("Most relevant"):"relevance",
         }
         self.orderby = ComboBox(cb)
         for cat in self.orderbyOpt:

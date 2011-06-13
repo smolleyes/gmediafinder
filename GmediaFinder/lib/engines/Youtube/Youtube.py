@@ -89,7 +89,7 @@ class Youtube(object):
         self.youtube_video_rate.set_active(0)
 		
     def load_gui(self):
-        label = gtk.Label(_("options: "))
+        label = gtk.Label(_("Order by: "))
         self.gui.search_opt_box.pack_start(label,False,False,5)
         ## create orderby combobox
         cb = create_comboBox()

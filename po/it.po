@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-13 20:54+0200\n"
+"POT-Creation-Date: 2011-06-13 22:40+0200\n"
 "PO-Revision-Date: 2011-05-28 18:33+0000\n"
 "Last-Translator: symbianflo <symbianflo@fastwebnet.it>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -286,113 +286,41 @@ msgstr "Riproduzione %s"
 msgid "Searching for %(query)s with %(engine)s "
 msgstr "Ricerca per %s su %s"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:27
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:105
-msgid "Category: "
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:48
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:48
+msgid "Order by: "
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:32
-msgid "Amateur"
-msgstr ""
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:52
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:97
+msgid "Most recent"
+msgstr "Più recenti"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:32
-msgid "Anal"
-msgstr ""
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:52
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:97
+msgid "Most viewed"
+msgstr "Più visti"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:32
-msgid "Asian"
-msgstr ""
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:98
+msgid "Most rated"
+msgstr "Più votati"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:33
-msgid "Big tits"
-msgstr ""
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:96
+msgid "Most relevant"
+msgstr "Più rilevanti"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:33
-msgid "Blowjob"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:33
-msgid "Cumshot"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:34
-msgid "Ebony"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:34
-msgid "Facials"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:34
-msgid "Fetish"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:35
-msgid "Gang bang"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:35
-msgid "Gay"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:36
-msgid "Group"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:36
-msgid "Hentai"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:36
-msgid "Interracial"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:37
-msgid "Japanese"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:37
-msgid "Latina"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:38
-msgid "Lesbian"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:38
-msgid "Masturbation"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:38
-msgid "Milf"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:39
-msgid "Mature"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:39
-msgid "Public"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:39
-msgid "Squirting"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:40
-msgid "Teens"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:40
-msgid "Wild & Crazy"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:54
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:70
 #, python-format
 msgid "%s: connexion failed..."
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:103
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:119
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:50
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:60
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:99
@@ -413,33 +341,9 @@ msgstr "nessun risultato trovato per %s..."
 msgid "%s: Connexion failed..."
 msgstr ""
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:48
-msgid "Order by: "
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:97
-msgid "Most recent"
-msgstr "Più recenti"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:97
-msgid "Most viewed"
-msgstr "Più visti"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:98
-msgid "Most rated"
-msgstr "Più votati"
-
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
 msgid "Duration"
 msgstr ""
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:96
-msgid "Most relevant"
-msgstr "Più rilevanti"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:43
 msgid "Quality"
@@ -449,6 +353,10 @@ msgstr "Qualità"
 #, fuzzy
 msgid "options: "
 msgstr "Opzioni"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:105
+msgid "Category: "
+msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 msgid "Sport"

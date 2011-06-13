@@ -358,9 +358,6 @@ class GsongFinder(object):
 
     def set_engine(self,engine=None):
         self.quality_box.hide()
-        ## clean the gui options box and load the plugin gui
-        for w in self.search_opt_box:
-			self.search_opt_box.remove(w)
         try:
 			engine = engine.name
 			self.engine = self.engine_selector.getSelected()
@@ -376,6 +373,9 @@ class GsongFinder(object):
         if self.engine == self.global_search or self.engine == self.global_video_search or self.engine == self.global_audio_search:
 			return
         ## load the plugin
+        ## clean the gui options box and load the plugin gui
+        for w in self.search_opt_box:
+			self.search_opt_box.remove(w)
         self.search_engine = getattr(self.engines_client,'%s' % self.engine)
         self.search_engine.load_gui()
             
@@ -1006,46 +1006,44 @@ class GsongFinder(object):
         t.start()
         
     def bus_message_tag(self, bus, message):
-		if self.search_engine.type == "video":
-			return
-		self.audio_codec= None
-		self.bitrate = None
-		self.mode = None
-		#we received a tag message
-		taglist = message.parse_tag()
-		#put the keys in the dictionary
-		for key in taglist.keys():
-			if key == "preview-image" or key == "image":
-				ipath="/tmp/temp.png"
-				img = open(ipath, 'w')
-				img.write(taglist[key])
-				img.close()
-				self.media_thumb = gtk.gdk.pixbuf_new_from_file_at_scale(ipath, 64,64, 1)
-				self.model.set_value(self.selected_iter, 0, self.media_thumb)
-			elif key == "bitrate":
-				r = int(taglist[key]) / 1000
-				self.file_tags[key] = "%sk" % r
-			elif key == "channel-mode":
-				self.file_tags[key] = taglist[key]
-			elif key == "audio-codec":
-				k = str(taglist[key])
-				self.file_tags[key] = re.search('\((.*?)\)',k).group(1).lower()
-		
-		try:
-			self.audio_codec = self.file_tags['audio-codec']
-			self.bitrate = self.file_tags['bitrate']
-			self.mode = self.file_tags['channel-mode']
-			if self.media_tagged or (self.bitrate in self.media_markup):
-				return
-			if re.search('&', self.media_name):
-				name = re.sub('&','&amp;', self.media_name)
-			else:
-				name = self.media_name
-			self.media_markup = '<small><b>%s</b>\nBitrate: %s     Encoding: %s / %s</small>' % (name,self.bitrate,self.audio_codec,self.mode)
-			self.model.set_value(self.selected_iter, 1, self.media_markup)
-			self.media_tagged = True
-		except:
-			return
+        if self.search_engine.type == "video":
+            return
+        self.audio_codec= None
+        self.bitrate = None
+        self.mode = None
+        #we received a tag message
+        taglist = message.parse_tag()
+        #put the keys in the dictionary
+        for key in taglist.keys():
+            if key == "preview-image" or key == "image":
+                ipath="/tmp/temp.png"
+                img = open(ipath, 'w')
+                img.write(taglist[key])
+                img.close()
+                self.media_thumb = gtk.gdk.pixbuf_new_from_file_at_scale(ipath, 64,64, 1)
+                self.model.set_value(self.selected_iter, 0, self.media_thumb)
+            elif key == "bitrate":
+                r = int(taglist[key]) / 1000
+                self.file_tags[key] = "%sk" % r
+            elif key == "channel-mode":
+                self.file_tags[key] = taglist[key]
+            elif key == "audio-codec":
+                k = str(taglist[key])
+                self.file_tags[key] = re.search('\((.*?)\)',k).group(1).lower()
+        
+        try:
+            self.audio_codec = self.file_tags['audio-codec']
+            self.bitrate = self.file_tags['bitrate']
+            self.mode = self.file_tags['channel-mode']
+            if re.search('&', self.media_name):
+                name = re.sub('&','&amp;', self.media_name)
+            else:
+                name = self.media_name
+            self.media_markup = '<small><b>%s</b>\nBitrate: %s     Encoding: %s / %s</small>' % (name,self.bitrate,self.audio_codec,self.mode)
+            self.model.set_value(self.selected_iter, 1, self.media_markup)
+            self.media_tagged = True
+        except:
+            return
 			
     
     def show_folder(self,widget,path):
@@ -1086,7 +1084,7 @@ class GsongFinder(object):
 		self.statbar.push(1,_("Audio file successfully created !"))
 		while gtk.events_pending():
 			gtk.main_iteration()
-		time.sleep(5)
+		time.sleep(3)
 		if self.is_playing:
 			self.statbar.push(1,_("Playing %s") % self.media_name)
 		else:
@@ -1127,10 +1125,10 @@ class GsongFinder(object):
         #THE ACTUAL THREAD BIT
         self.manager.stop_all_threads()
 
-    def add_thread(self, *args):
+    def add_thread(self, engine, query, page):
         #make a thread and start it
-        name = "Thread #%s" % random.randint(0,1000)
-        args = (name,self.info_label,args[0],args[1],args[2],self.throbber)
+        thread_name = "Search thread %s,%s,%s" % (engine.name, query, page)
+        args = (thread_name,self.info_label,engine,query,page,self.throbber)
         #THE ACTUAL THREAD BIT
         self.manager.make_thread(
                         self.thread_finished,
@@ -1217,7 +1215,9 @@ class _FooThread(threading.Thread, _IdleObject):
                 self.info.set_text(_("Searching for %(query)s with %(engine)s ") % values)
                 self.throbber.show()
                 self.emit("progress")
-            break
+            else:
+                self.engine.thread_stop = True
+                break
         self.emit("completed")
 
 class FooThreadManager:
@@ -1250,7 +1250,6 @@ class FooThreadManager:
                 args = self.pendingFooThreadArgs.pop()
                 print "Starting pending %s" % self.fooThreads[args]
                 self.fooThreads[args].start()
-                throbber.show()
             except IndexError: pass
         if self.running == 0:
             throbber.hide()
@@ -1291,6 +1290,7 @@ class FooThreadManager:
             if block:
                 if thread.isAlive():
                     thread.join()
+
 
 
 
