@@ -895,25 +895,23 @@ class GsongFinder(object):
     
     def onKeyPress(self, widget, event):
         if self.search_entry.is_focus():
-			return
+            return
         key = gtk.gdk.keyval_name(event.keyval)
         if key == 'f':
             return self.set_fullscreen()
         elif key == 'space':
             return self.pause_resume()
         elif key == 's':
-			return self.stop_play()
+            return self.stop_play()
         elif key == 'BackSpace':
-			self.search_entry.set_text("")
-			return self.search_entry.grab_focus()
+            self.search_entry.set_text("")
+            return self.search_entry.grab_focus()
         elif key == 'd':
-			if not self.down_menu_btn.get_active():
-				self.down_menu_btn.set_active(1)
-				self.notebook.set_current_page(1)
-			else:
-				self.down_menu_btn.set_active(0)
-				self.notebook.set_current_page(0)
-			
+            if self.notebook.get_current_page() == 0:
+                self.notebook.set_current_page(1)
+            else:
+                self.notebook.set_current_page(0)
+            
         # If user press Esc button in fullscreen mode
         if event.keyval == gtk.keysyms.Escape and self.fullscreen:
             return self.set_fullscreen()
