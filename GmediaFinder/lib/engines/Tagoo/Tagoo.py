@@ -14,6 +14,7 @@ class Tagoo(object):
         self.current_page = 1
         self.main_start_page = 1
         self.name="Tagoo"
+        self.thread_stop=False
         self.search_url = "http://tagoo.ru/en/search.php?for=audio&search=%s&page=%d&sort=date"
         self.start_engine()
 
@@ -25,16 +26,25 @@ class Tagoo(object):
 		pass
 
     def search(self, query, page):
-        data = get_url_data(self.search_url % (urllib.quote(query), self.current_page))
-        self.filter(data,query)
+        self.thread_stop=False
+        try:
+            data = get_url_data(self.search_url % (urllib.quote(query), self.current_page))
+            self.filter(data,query)
+        except:
+            self.print_info(_('Tagoo: Connexion failed...'))
+            gobject.idle_add(self.gui.throbber.hide)
+            time.sleep(5)
+            self.thread_stop=True
         
     def filter(self,data,user_search):
         flag_found = False
         end_flag=False
         for line in data.readlines():
+            if self.thread_stop == True:
+                break
             ## search link
             if 'class="notfound_taggy searchstring' in line:
-				end_flag=True
+                end_flag=True
             elif 'href="' in line:
                 try:
                     link = re.search('href="(((\S.*))(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))"',line).group(1)
@@ -46,7 +56,7 @@ class Tagoo(object):
                 except:
                    continue
             continue
-			
+            
         if flag_found:
             if end_flag:
                 gobject.idle_add(self.gui.changepage_btn.hide)
@@ -59,11 +69,8 @@ class Tagoo(object):
         else:
             gobject.idle_add(self.gui.changepage_btn.hide)
             self.print_info(_("Tagoo: no results found for %s...") % user_search)
-            gobject.idle_add(self.gui.throbber.hide)
             time.sleep(5)
-            self.print_info('')
-        gobject.idle_add(self.gui.throbber.hide)
-        self.print_info('')
+        self.thread_stop=True
 
     def play(self,link):
 		self.gui.media_link = link

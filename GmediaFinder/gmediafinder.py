@@ -338,7 +338,8 @@ class GsongFinder(object):
         
         ## start main loop
         gobject.threads_init()
-        #gtk.gdk.threads_init()
+        #THE ACTUAL THREAD BIT
+        self.manager = FooThreadManager(20)
         self.mainloop = gobject.MainLoop(is_running=True)
         self.mainloop.run()
         
@@ -459,54 +460,51 @@ class GsongFinder(object):
         self.user_search = self.search_entry.get_text()
         self.main_engine = self.engine_selector.getSelectedIndex()
         if self.main_engine == 0:
-			self.info_label.set_text(_("Please select a search engine..."))
-			return
+            self.info_label.set_text(_("Please select a search engine..."))
+            return
         if not self.user_search:
             self.info_label.set_text(_("Please enter an artist/album or song name..."))
             return
         if not self.engine:
             self.info_label.set_text(_("Please select an engine..."))
             return
+        self.stop_threads()
         self.model.clear()
         self.changepage_btn.hide()
         self.pageback_btn.hide()
         if self.engine_selector.getSelected() == self.global_search:
-			for engine in self.engine_list:
-				self.throbber.show()
-				self.set_engine(engine)
-				self.search_engine = getattr(self.engines_client,'%s' % engine)
-				try:
-					self.search()
-				except:
-					continue
-			self.engine_selector.setIndexFromString(self.global_search)
+            for engine in self.engine_list:
+                self.set_engine(engine)
+                self.search_engine = getattr(self.engines_client,'%s' % engine)
+                try:
+                    self.search()
+                except:
+                    continue
+            self.engine_selector.setIndexFromString(self.global_search)
         elif self.engine_selector.getSelected() == self.global_video_search:
-			for engine in self.engine_list:
-				self.throbber.show()
-				self.set_engine(engine)
-				self.search_engine = getattr(self.engines_client,'%s' % engine)
-				if not self.search_engine.type == "video":
-					continue
-				try:
-					self.search()
-				except:
-					continue
-			self.engine_selector.setIndexFromString(self.global_video_search)
+            for engine in self.engine_list:
+                self.set_engine(engine)
+                self.search_engine = getattr(self.engines_client,'%s' % engine)
+                if not self.search_engine.type == "video":
+                    continue
+                try:
+                    self.search()
+                except:
+                    continue
+            self.engine_selector.setIndexFromString(self.global_video_search)
         elif self.engine_selector.getSelected() == self.global_audio_search:
-			for engine in self.engine_list:
-				self.throbber.show()
-				self.set_engine(engine)
-				self.search_engine = getattr(self.engines_client,'%s' % engine)
-				if not self.search_engine.type == "audio":
-					continue
-				try:
-					self.search()
-				except:
-					continue
-			self.engine_selector.setIndexFromString(self.global_search)
+            for engine in self.engine_list:
+                self.search_engine = getattr(self.engines_client,'%s' % engine)
+                if not self.search_engine.type == "audio":
+                    continue
+                try:
+                    self.search()
+                except:
+                    continue
+            self.engine_selector.setIndexFromString(self.global_search)
         else:
-			return self.search()
-
+            return self.search()
+    
     def change_page(self,widget=None):
         if not self.changepage_btn.get_property("visible"):
 			return
@@ -550,14 +548,12 @@ class GsongFinder(object):
 				self.search(self.search_engine.current_page)
 
     def search(self,page=None):
-		values = {'engine': self.engine, 'query': self.user_search}
-		gobject.idle_add(self.info_label.set_text,_("Searching for %(query)s with %(engine)s ") % values)
-		## send request to the module, can pass type and order too...reset page start to inital state
-		gobject.idle_add(self.throbber.show)
-		if not page:
+        ## send request to the module, can pass type and order too...reset page start to inital state
+        if not page:
 			page = self.search_engine.main_start_page
 			self.search_engine.current_page = self.search_engine.main_start_page
-		thread.start_new_thread(self.search_engine.search,(self.user_search,page))
+            #thread.start_new_thread(self.search_engine.search,(self.user_search,page))
+        self.add_thread(self.search_engine,self.user_search,page)
 
     def add_sound(self, name, markup_src, media_link, img=None, quality_list=None, plugname=None):
         if not img:
@@ -618,7 +614,6 @@ class GsongFinder(object):
 
     def play_thread(self):
         play_thread_id = self.play_thread_id
-
         while play_thread_id == self.play_thread_id:
             if play_thread_id == self.play_thread_id:
                 gtk.gdk.threads_enter()
@@ -785,14 +780,15 @@ class GsongFinder(object):
 			self.treeview.set_cursor(path)
     
     def load_new_page(self):
-		self.change_page()
-		## wait for 10 seconds or exit
-		try:
-			self.selected_iter = self.model.get_iter_first()
-			path = self.model.get_path(self.selected_iter)
-			self.treeview.set_cursor(path)
-		except:
-			return
+        print self.manager.running
+        self.change_page()
+        ## wait for 10 seconds or exit
+        try:
+            self.selected_iter = self.model.get_iter_first()
+            path = self.model.get_path(self.selected_iter)
+            self.treeview.set_cursor(path)
+        except:
+            return
     
     def convert_ns(self, t):
         # This method was submitted by Sam Mason.
@@ -1165,7 +1161,160 @@ class GsongFinder(object):
             self.player.set_state(gst.STATE_NULL)
         ## save window state
         self.save_window_state()
+        self.manager.stop_all_threads(block=True)
         self.mainloop.quit()
+        
+    def stop_threads(self, *args):
+        #THE ACTUAL THREAD BIT
+        self.manager.stop_all_threads()
+
+    def add_thread(self, *args):
+        #make a thread and start it
+        name = "Thread #%s" % random.randint(0,1000)
+        args = (name,self.info_label,args[0],args[1],args[2],self.throbber)
+        #THE ACTUAL THREAD BIT
+        self.manager.make_thread(
+                        self.thread_finished,
+                        self.thread_progress,
+                        *args)
+
+    def thread_finished(self, thread):
+        if self.manager.running != 0:
+            self.throbber.show()
+        self.info_label.set_text("")
+
+    def thread_progress(self, thread):
+        print "progressss"
+        self.throbber.show()
+
+
+class _IdleObject(gobject.GObject):
+    """
+    Override gobject.GObject to always emit signals in the main thread
+    by emmitting on an idle handler
+    """
+    def __init__(self):
+        gobject.GObject.__init__(self)
+
+    def emit(self, *args):
+        gobject.idle_add(gobject.GObject.emit,self,*args)
+
+class _FooThread(threading.Thread, _IdleObject):
+    """
+    Cancellable thread which uses gobject signals to return information
+    to the GUI.
+    """
+    __gsignals__ =  { 
+            "completed": (
+                gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, []),
+            "progress": (
+                gobject.SIGNAL_RUN_LAST, gobject.TYPE_NONE, [])        #percent complete
+            }
+
+    def __init__(self, *args):
+        threading.Thread.__init__(self)
+        _IdleObject.__init__(self)
+        self.cancelled = False
+        self.engine = args[2]
+        self.query = args[3]
+        self.page = args[4]
+        self.name = args[0]
+        self.info = args[1]
+        self.throbber = args[5]
+        self.setName("%s" % self.name)
+
+    def cancel(self):
+        """
+        Threads in python are not cancellable, so we implement our own
+        cancellation logic
+        """
+        self.cancelled = True
+
+    def run(self):
+        print "Running %s" % str(self)
+        self.engine.search(self.query,self.page)
+        while 1:
+            if self.engine.thread_stop == False and not self.cancelled:
+                time.sleep(0.1)
+                values = {'engine': self.engine.name, 'query': self.query}
+                self.info.set_text(_("Searching for %(query)s with %(engine)s ") % values)
+                self.throbber.show()
+                self.emit("progress")
+            break
+        self.emit("completed")
+
+class FooThreadManager:
+    """
+    Manages many FooThreads. This involves starting and stopping
+    said threads, and respecting a maximum num of concurrent threads limit
+    """
+    def __init__(self, maxConcurrentThreads):
+        self.maxConcurrentThreads = maxConcurrentThreads
+        #stores all threads, running or stopped
+        self.fooThreads = {}
+        #the pending thread args are used as an index for the stopped threads
+        self.pendingFooThreadArgs = []
+        self.running = 0
+
+    def _register_thread_completed(self, thread, *args):
+        """
+        Decrements the count of concurrent threads and starts any 
+        pending threads if there is space
+        """
+        throbber = args[5]
+        del(self.fooThreads[args])
+        self.running = len(self.fooThreads) - len(self.pendingFooThreadArgs)
+
+        print "%s completed. %s running, %s pending" % (
+                            thread, self.running, len(self.pendingFooThreadArgs))
+
+        if self.running < self.maxConcurrentThreads:
+            try:
+                args = self.pendingFooThreadArgs.pop()
+                print "Starting pending %s" % self.fooThreads[args]
+                self.fooThreads[args].start()
+                throbber.show()
+            except IndexError: pass
+        if self.running == 0:
+            throbber.hide()
+
+    def make_thread(self, completedCb, progressCb, *args):
+        """
+        Makes a thread with args. The thread will be started when there is
+        a free slot
+        """
+        self.throbber = args[5]
+        self.running = len(self.fooThreads) - len(self.pendingFooThreadArgs)
+        if args not in self.fooThreads:
+            thread = _FooThread(*args)
+            #signals run in the order connected. Connect the user completed
+            #callback first incase they wish to do something 
+            #before we delete the thread
+            thread.connect("completed", completedCb)
+            thread.connect("completed", self._register_thread_completed, *args)
+            thread.connect("progress", progressCb)
+            #This is why we use args, not kwargs, because args are hashable
+            self.fooThreads[args] = thread
+            
+            if self.running < self.maxConcurrentThreads:
+                print "Starting %s" % thread
+                self.throbber.show()
+                self.fooThreads[args].start()
+            else:
+                print "Queing %s" % thread
+                self.pendingFooThreadArgs.append(args)
+
+    def stop_all_threads(self, block=False):
+        """
+        Stops all threads. If block is True then actually wait for the thread
+        to finish (may block the UI) 
+        """
+        for thread in self.fooThreads.values():
+            thread.cancel()
+            if block:
+                if thread.isAlive():
+                    thread.join()
+
 
 
 if __name__ == "__main__":

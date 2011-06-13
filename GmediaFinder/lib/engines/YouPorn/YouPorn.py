@@ -8,16 +8,16 @@ import time
 import gobject
 
 try:
-	from functions import create_comboBox
-	from functions import download_photo
-	from functions import get_url_data
-	from functions import ComboBox
+    from functions import create_comboBox
+    from functions import download_photo
+    from functions import get_url_data
+    from functions import ComboBox
 except:
-	from GmediaFinder.functions import create_comboBox
-	from GmediaFinder.functions import download_photo
-	from GmediaFinder.functions import get_url_data
-	from GmediaFinder.functions import ComboBox
-	
+    from GmediaFinder.functions import create_comboBox
+    from GmediaFinder.functions import download_photo
+    from GmediaFinder.functions import get_url_data
+    from GmediaFinder.functions import ComboBox
+
 
 URL = "http://youporn.com/"
 ENTER_URL = "%s?user_choice=Enter" % URL
@@ -33,16 +33,17 @@ class YouPorn(object):
         self.type = "video"
         self.current_page = 1
         self.main_start_page = 1
+        self.thread_stop=False
         self.search_url = "http://www.youporn.com/search/%s?query=%s&type=%s&page=%s"
         self.browser = mechanize.Browser()
         self.browser.addheaders = []
         self.browser.open(ENTER_URL)
         self.start_engine()
-
-
+    
+    
     def start_engine(self):
-		self.gui.engine_list[self.name] = ''
-
+        self.gui.engine_list[self.name] = ''
+    
     def load_gui(self):
         label = gtk.Label(_("Order by: "))
         self.gui.search_opt_box.pack_start(label,False,False,5)
@@ -54,11 +55,11 @@ class YouPorn(object):
         }
         self.orderby = ComboBox(cb)
         for cat in self.orderbyOpt:
-		    self.orderby.append(cat)
+            self.orderby.append(cat)
         self.gui.search_opt_box.add(cb)
         self.gui.search_opt_box.show_all()
         self.orderby.select(0)
-
+    
     def filter(self, url,query):
         data = self.browser.open(url)
         flag_found = False
@@ -66,6 +67,8 @@ class YouPorn(object):
         markup=""
         link=""
         for line in data.readlines():
+            if self.thread_stop == True:
+                break
             ## search link
             if 'href="/watch' in line:
                 flag_found = True
@@ -96,16 +99,20 @@ class YouPorn(object):
             self.print_info(_("Youporn: no results found for %s...") % query)
             gobject.idle_add(self.gui.throbber.hide)
             time.sleep(5)
-            self.print_info('')
-        gobject.idle_add(self.gui.throbber.hide)
-        self.print_info('')
+        self.thread_stop=True
         
-
+    
     def search(self, query, page=1, sort_by="time", type="straight"):
-		choice = self.orderby.getSelected()
-		orderby = self.orderbyOpt[choice]
-		self.filter(self.search_url % (orderby, urllib.quote(query), type, page), query)
-        
+        self.thread_stop=False
+        choice = self.orderby.getSelected()
+        orderby = self.orderbyOpt[choice]
+        try:
+            self.filter(self.search_url % (orderby, urllib.quote(query), type, page), query)
+        except:
+            self.print_info(_("Redtube: no results found for %s...") % user_search)
+            time.sleep(5)
+            self.thread_stop=True
+            
     def play(self,link):
         data = self.browser.open(link)
         for line in data.readlines():
@@ -114,6 +121,7 @@ class YouPorn(object):
                 self.gui.media_link = link
                 break
         return self.gui.start_play(link)
-			
+            
     def print_info(self,msg):
-		gobject.idle_add(self.gui.info_label.set_text,msg)
+        gobject.idle_add(self.gui.info_label.set_text,msg)
+    

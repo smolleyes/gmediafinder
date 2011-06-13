@@ -26,6 +26,7 @@ class Youtube(object):
         self.client = yt_service.YouTubeService()
         self.youtube_max_res = "320x240"
         self.media_codec = None
+        self.thread_stop=False
         ## the gui box to show custom filters/options
         self.opt_box = self.gui.gladeGui.get_widget("search_options_box")
         
@@ -132,52 +133,49 @@ class Youtube(object):
 				print "Can't write to the %s config file..." % self.gui.conf_file
 
     def search(self,user_search,page):
-		nlist = []
-		link_list = []
-		next_page = 0
-		gobject.idle_add(self.gui.changepage_btn.show)
-		## prepare query
-		query = yt_service.YouTubeVideoQuery()
-		query.vq = user_search # the term(s) that you are searching for
-		query.max_results = '25'
-		#query.lr = 'fr'
-		orderby = self.orderby.getSelected()
-		query.orderby = self.orderbyOpt[orderby]
-		cat = self.category.getSelected()
-		if self.category.getSelectedIndex() != 0:
-			query.categories.append('/%s' % self.catlist[cat])
-		
-		if self.current_page == 1:
-			gobject.idle_add(self.gui.pageback_btn.hide)
-			self.num_start = 1
-		else:
-			gobject.idle_add(self.gui.pageback_btn.show)
-		query.start_index = self.num_start
-		vquery = self.client.YouTubeQuery(query)
-		self.filter(vquery,user_search)
+        self.thread_stop=False
+        nlist = []
+        link_list = []
+        next_page = 0
+        gobject.idle_add(self.gui.changepage_btn.show)
+        ## prepare query
+        query = yt_service.YouTubeVideoQuery()
+        query.vq = user_search # the term(s) that you are searching for
+        query.max_results = '25'
+        #query.lr = 'fr'
+        orderby = self.orderby.getSelected()
+        query.orderby = self.orderbyOpt[orderby]
+        cat = self.category.getSelected()
+        if self.category.getSelectedIndex() != 0:
+            query.categories.append('/%s' % self.catlist[cat])
+        
+        if self.current_page == 1:
+            self.num_start = 1
+        else:
+            gobject.idle_add(self.gui.pageback_btn.show)
+        query.start_index = self.num_start
+        vquery = self.client.YouTubeQuery(query)
+        self.filter(vquery,user_search)
 		
     def filter(self,vquery,user_search):
-		if not vquery :
-			self.num_start = 1
-			self.current_page = 1
-			gobject.idle_add(self.gui.changepage_btn.hide)
-			self.print_info(_("Youtube: No results for %s ...") % user_search)
-			gobject.idle_add(self.gui.throbber.hide)
-			time.sleep(5)
-			self.print_info('')
-			return
-		
-		if len(vquery.entry) == 0:
-			self.print_info(_("Youtube: No results for %s ...") % user_search)
-			gobject.idle_add(self.gui.throbber.hide)
-			time.sleep(5)
-			self.print_info('')
-			return
-		
-		for entry in vquery.entry:
-			self.make_youtube_entry(entry)
-		self.print_info('')
-		gobject.idle_add(self.gui.throbber.hide)
+        if not vquery :
+            self.num_start = 1
+            self.current_page = 1
+            self.print_info(_("Youtube: No results for %s ...") % user_search)
+            time.sleep(5)
+            self.thread_stop=True
+        
+        if len(vquery.entry) == 0:
+            self.print_info(_("Youtube: No results for %s ...") % user_search)
+            time.sleep(5)
+            self.thread_stop=True
+        
+        for entry in vquery.entry:
+            if not self.thread_stop:
+                self.make_youtube_entry(entry)
+            else:
+                return
+        self.thread_stop=True
 		
     def play(self,link):
 		self.load_youtube_res(link)
@@ -186,30 +184,30 @@ class Youtube(object):
 		return self.gui.start_play(self.media_link[active])
 
     def make_youtube_entry(self,video):
-		duration = video.media.duration.seconds
-		calc = divmod(int(duration),60)
-		seconds = int(calc[1])
-		if seconds < 10:
-			seconds = "0%d" % seconds
-		duration = "%d:%s" % (calc[0],seconds)
-		url = video.link[1].href
-		thumb = video.media.thumbnail[-1].url
-		count = 0
-		try:
-			count = video.statistics.view_count
-		except:
-			pass
-		vid_id = os.path.basename(os.path.dirname(url))
-		vid_pic = download_photo(thumb)
-		title = video.title.text
-		if not count:
-			count = 0
-		
-		values = {'name': title, 'count': count, 'duration': duration}
-		markup = _("<small><b>%(name)s</b></small>\n<small><b>view:</b> %(count)s		<b>Duration:</b> %(duration)s</small>") % values
-		if not title or not url or not vid_pic:
-			return
-		gobject.idle_add(self.gui.add_sound,title, markup, vid_id, vid_pic,None,self.name)
+        duration = video.media.duration.seconds
+        calc = divmod(int(duration),60)
+        seconds = int(calc[1])
+        if seconds < 10:
+            seconds = "0%d" % seconds
+        duration = "%d:%s" % (calc[0],seconds)
+        url = video.link[1].href
+        thumb = video.media.thumbnail[-1].url
+        count = 0
+        try:
+            count = video.statistics.view_count
+        except:
+            pass
+        vid_id = os.path.basename(os.path.dirname(url))
+        vid_pic = download_photo(thumb)
+        title = video.title.text
+        if not count:
+            count = 0
+        
+        values = {'name': title, 'count': count, 'duration': duration}
+        markup = _("<small><b>%(name)s</b></small>\n<small><b>view:</b> %(count)s		<b>Duration:</b> %(duration)s</small>") % values
+        if not title or not url or not vid_pic:
+            return
+        gobject.idle_add(self.gui.add_sound,title, markup, vid_id, vid_pic,None,self.name)
 		
 		
     def load_youtube_res(self,link):
