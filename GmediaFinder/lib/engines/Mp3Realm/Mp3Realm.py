@@ -45,7 +45,7 @@ class Mp3Realm(object):
             ## search link
             if 'loadAndPlay' in line:
                 flag_found = True
-                link = re.search('loadAndPlay\(\'(.*?)\'\)',line).group(1)
+                link = re.search('loadAndPlay\(\'((\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))',line).group(1)
             ## search title
             elif 'search?q=lyrics:' in line:
                 title = re.search('lyrics:(.*?)\'>',line).group(1)
