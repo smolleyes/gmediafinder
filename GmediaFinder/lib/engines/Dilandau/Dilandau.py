@@ -34,7 +34,7 @@ class Dilandau(object):
     def filter(self, data, user_search):
         flag = False
         flag_found = False
-        gobject.idle_add(self.gui.changepage_btn.show)      
+        gobject.idle_add(self.gui.changepage_btn.show)
         for line in data.readlines():
             if self.thread_stop == True:
                 break

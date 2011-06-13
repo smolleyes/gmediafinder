@@ -70,9 +70,9 @@ class Youtube(object):
         self.gui.engine_list[self.name] = ''
 	    ## get default max_res for youtube videos
         try:
-			self.youtube_max_res = self.gui.config["youtube_max_res"]
+			self.youtube_max_res = self.gui.conf["youtube_max_res"]
         except:
-			self.gui.config["youtube_max_res"] = self.youtube_max_res
+			self.gui.conf["youtube_max_res"] = self.youtube_max_res
 		
         if self.youtube_max_res == "320x240":
 			self.res320.set_active(1)
@@ -125,10 +125,10 @@ class Youtube(object):
     def set_max_youtube_res(self, widget):
 		if widget.get_active():
 			self.youtube_max_res = widget.get_child().get_label()
-			self.gui.config["youtube_max_res"] = self.youtube_max_res
+			self.gui.conf["youtube_max_res"] = self.youtube_max_res
 			## return a dic as conf
 			try:
-				self.gui.config.write()
+				self.gui.conf.write()
 			except:
 				print "Can't write to the %s config file..." % self.gui.conf_file
 

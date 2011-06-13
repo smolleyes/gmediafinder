@@ -25,13 +25,12 @@ import tempfile
 import time
 from html5lib import sanitizer, treebuilders, treewalkers, serializer, treewalkers
 import traceback
-from configobj import ConfigObj
 
 from BeautifulSoup import BeautifulSoup, NavigableString, BeautifulStoneSoup
 import HTMLParser
 
 ## custom lib
-from constants import *	
+from config import *	
 from engines import Engines
 from functions import *
 
@@ -44,9 +43,9 @@ class GsongFinder(object):
         self.time_label = gtk.Label("00:00 / 00:00")
         self.media_name = ""
         self.media_link = ""
+        self.play_options = "continue"
         self.nbresults = 100
         self.user_search = ""
-        self.play_options = None
         self.fullscreen = False
         self.mini_player = True
         self.timer = 0
@@ -56,69 +55,20 @@ class GsongFinder(object):
         self.active_downloads = 0
         self.thread_num = 0
         self.xsink = False
-        self.play_options = "continue"
-        self.vis="jess"
         self.file_tags = {}
-        width = gtk.gdk.screen_width()
-        height = gtk.gdk.screen_height()
-        self.window_state = "%s,%s,%s,%s" % (width-200,height-80,0,0)
-        self.show_thumbs_opt = "True"
-        if sys.platform == "win32":
-            from win32com.shell import shell, shellcon
-            df = shell.SHGetDesktopFolder()
-            pidl = df.ParseDisplayName(0, None,"::{450d8fba-ad25-11d0-98a8-0800361b1103}")[1]
-            mydocs = shell.SHGetPathFromIDList(pidl)
-            self.down_dir = os.path.join(mydocs,"gmediafinder-downloads")
-            self.settings_folder = os.path.join(shell.SHGetFolderPath(0, shellcon.CSIDL_APPDATA, 0, 0),"gmediafinder")
-        else:
-            self.down_dir = os.path.join(os.getenv('HOME'),"gmediafinder-downloads")
-            self.settings_folder = os.path.join(os.getenv('HOME'),".config/gmediafinder")
-
-        ## conf file
-        self.conf_file = os.path.join(self.settings_folder, 'gmediafinder_config')
-        if not os.path.exists(self.settings_folder):
-            os.mkdir(self.settings_folder)
-            fd = os.open(self.conf_file, os.O_RDWR|os.O_CREAT)
-            os.write(fd,"download_path=%s\n" % self.down_dir)
-            os.write(fd,"window_state=%s\n" % self.window_state)
-            os.write(fd,"show_thumbs=%s\n" % self.show_thumbs_opt)
-            os.write(fd,"visualisation=%s\n" % self.vis)
-            os.close(fd)
-        self.config = ConfigObj(self.conf_file,write_empty_values=True)
-        try:
-		    self.down_dir = self.config["download_path"]
-        except:
-			self.config["download_path"] = self.down_dir
-			self.config.write()
-		## get saved window position ans size
-        try:
-			self.window_state = self.config["window_state"]
-        except:
-			self.config["window_state"] = self.window_state
-			self.config.write()
-		## gui options
-        try:
-		    self.show_thumbs_opt = self.config["show_thumbs"]
-        except:
-			self.config["show_thumbs"] = True
-			self.config.write()
         self.engine_list = {}
         self.engine = None
-        ## small config dir for downloads...
-        if not os.path.exists(self.down_dir):
-            os.mkdir(self.down_dir)
-        ## Get Icons shown on buttons
-        settings = gtk.settings_get_default()
-        gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
+        self.conf=conf
+        print self.conf
         
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
         self.window = self.gladeGui.get_widget("main_window")
         self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
-        self.window.set_default_size(int(self.window_state[0]),int(self.window_state[1]))
+        self.window.set_default_size(int(self.conf['window_state'][0]),int(self.conf['window_state'][1]))
         try:
-			x,y = int(self.window_state[2]),int(self.window_state[3])
+			x,y = int(self.conf['window_state'][2]),int(self.conf['window_state'][3])
 			if x == 0 or y == 0:
 				self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
 			else:
@@ -126,7 +76,8 @@ class GsongFinder(object):
         except:
 			self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
         self.show_thumbs_opt_toggle = self.gladeGui.get_widget("show_thumbs_opt")
-        if self.show_thumbs_opt == "True" :
+        print self.conf
+        if self.conf['show_thumbs'] == "True" :
 			self.show_thumbs_opt_toggle.set_active(1)
         self.img_path = img_path
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
@@ -169,7 +120,7 @@ class GsongFinder(object):
         self.down_box.add(self.down_scroll)
         self.active_down_label = self.gladeGui.get_widget("active_down_label")
         self.path_btn = self.gladeGui.get_widget("select_path_btn")
-        self.path_btn.set_current_folder(self.down_dir)
+        self.path_btn.set_current_folder(down_dir)
         self.path_btn.connect('current-folder-changed',self.update_down_path)
          
         # video drawing
@@ -201,10 +152,10 @@ class GsongFinder(object):
         
         ## visualisations
         try:
-		    self.vis = self.config["visualisation"]
+		    self.vis = self.conf["visualisation"]
         except:
-			self.config["visualisation"] = self.vis
-			self.config.write()
+			self.conf["visualisation"] = self.vis
+			self.conf.write()
         combo = self.gladeGui.get_widget("vis_chooser")
         self.vis_selector = ComboBox(combo)
         self.vis_selector.setIndexFromString(self.vis)
@@ -272,7 +223,7 @@ class GsongFinder(object):
         ## setup the scrollview
         self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()
-        if self.show_thumbs_opt == "False":
+        if self.conf['show_thumbs'] == "False":
 			self.columns[0].set_visible(0)
         self.columns[1].set_sort_column_id(1)
         self.columns[2].set_visible(0)
@@ -350,8 +301,8 @@ class GsongFinder(object):
 		else:
 			self.show_thumbs_opt = "False"
 			self.columns[0].set_visible(0)
-		self.config["show_thumbs"] = self.show_thumbs_opt
-		self.config.write()
+		self.conf["show_thumbs"] = self.show_thumbs_opt
+		self.conf.write()
     
     def clear_search_entry(self,widget,e,r):
 		if e == gtk.ENTRY_ICON_SECONDARY:
@@ -396,13 +347,13 @@ class GsongFinder(object):
             self.vis = "libvisual_"+vis
         else:
             self.vis = vis
-        self.config["visualisation"] = vis
-        self.config.write()
+        self.conf["visualisation"] = vis
+        self.conf.write()
         return self.vis
         
     def update_down_path(self,widget=None):
-		self.config["download_path"] = widget.get_current_folder()
-		self.config.write()
+		self.conf["download_path"] = widget.get_current_folder()
+		self.conf.write()
 		self.down_dir = widget.get_current_folder()
 
     def set_engine(self,engine=None):
@@ -1150,8 +1101,8 @@ class GsongFinder(object):
         try:
 			r,s,w,h = self.window.get_allocation()
 			self.window.grab_focus()
-			self.config['window_state'] = (w,h,self.x,self.y)
-			self.config.write()
+			self.conf['window_state'] = (w,h,self.x,self.y)
+			self.conf.write()
         except:
 			return
 
@@ -1182,6 +1133,11 @@ class GsongFinder(object):
         if self.manager.running != 0:
             self.throbber.show()
         self.info_label.set_text("")
+        if self.engine == self.global_search or self.engine == self.global_video_search or self.engine == self.global_audio_search:
+            if len(self.model) == 0:
+                self.changepage_btn.hide()
+            else:
+                self.changepage_btn.show()
 
     def thread_progress(self, thread):
         print "progressss"
