@@ -60,6 +60,7 @@ class GsongFinder(object):
         self.engine = None
         self.conf=conf
         self.latest_engine = ""
+        self.change_page_req = False
         
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
@@ -357,6 +358,9 @@ class GsongFinder(object):
 
     def set_engine(self,engine=None):
         self.quality_box.hide()
+        ## clean the gui options box and load the plugin gui
+        for w in self.search_opt_box:
+			self.search_opt_box.remove(w)
         try:
 			engine = engine.name
 			self.engine = self.engine_selector.getSelected()
@@ -373,9 +377,6 @@ class GsongFinder(object):
 			return
         ## load the plugin
         self.search_engine = getattr(self.engines_client,'%s' % self.engine)
-        ## clean the gui options box and load the plugin gui
-        for w in self.search_opt_box:
-			self.search_opt_box.remove(w)
         self.search_engine.load_gui()
             
     def show_downloads(self, widget):
@@ -745,14 +746,8 @@ class GsongFinder(object):
 			self.treeview.set_cursor(path)
     
     def load_new_page(self):
+        self.change_page_request=True
         self.change_page()
-        ## wait for 10 seconds or exit
-        try:
-            self.selected_iter = self.model.get_iter_first()
-            path = self.model.get_path(self.selected_iter)
-            self.treeview.set_cursor(path)
-        except:
-            return
     
     def convert_ns(self, t):
         # This method was submitted by Sam Mason.
@@ -1152,6 +1147,18 @@ class GsongFinder(object):
             else:
                 self.changepage_btn.show()
         self.engine_selector.select(self.latest_engine)
+        
+        ## check automatic page change
+        if self.change_page_request:
+            ## wait for 10 seconds or exit
+            try:
+                self.selected_iter = self.model.get_iter_first()
+                path = self.model.get_path(self.selected_iter)
+                self.treeview.set_cursor(path)
+                self.change_page_request=False
+            except:
+                self.change_page_request=False
+                return
 
     def thread_progress(self, thread):
         self.throbber.show()
