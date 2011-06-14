@@ -210,21 +210,26 @@ def sortDict(d):
     return [ backitems[i][1] for i in range(0,len(backitems))]
 
 def create_comboBox():
-	model = gtk.ListStore(str)
-	combobox = gtk.ComboBox(model)
-	cell = gtk.CellRendererText()
-	combobox.pack_start(cell, True)
-	combobox.add_attribute(cell, 'text', 0)
-	return combobox
+    model = gtk.ListStore(str,gtk.gdk.Color)
+    combobox = gtk.ComboBox(model)
+    cell = gtk.CellRendererText()
+    combobox.pack_start(cell, True)
+    combobox.add_attribute(cell, 'text', 0)
+    combobox.add_attribute(cell, 'foreground-gdk', 1)
+    return combobox
 
 
 class ComboBox(object):
     def __init__(self,combobox):
-			self.combobox = combobox
-			self.model = self.combobox.get_model()
+        self.combobox = combobox
+        self.model = self.combobox.get_model()
 
-    def append(self,what):
-        self.combobox.append_text(what)
+    def append(self,what,warn=False):
+        if warn:
+            color = gtk.gdk.color_parse("red")
+            self.model.append([what, color])
+        else:
+            self.combobox.append_text(what)
 
     def remove(self,what):
         self.combobox.remove_text(what)

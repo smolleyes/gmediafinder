@@ -69,16 +69,16 @@ class GsongFinder(object):
         self.window.set_resizable(1)
         self.window.set_default_size(int(self.conf['window_state'][0]),int(self.conf['window_state'][1]))
         try:
-			x,y = int(self.conf['window_state'][2]),int(self.conf['window_state'][3])
-			if x == 0 or y == 0:
-				self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-			else:
-				self.window.move(x,y)
+            x,y = int(self.conf['window_state'][2]),int(self.conf['window_state'][3])
+            if x == 0 or y == 0:
+                self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+            else:
+                self.window.move(x,y)
         except:
-			self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+            self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
         self.show_thumbs_opt_toggle = self.gladeGui.get_widget("show_thumbs_opt")
         if self.conf['show_thumbs'] == "True" :
-			self.show_thumbs_opt_toggle.set_active(1)
+            self.show_thumbs_opt_toggle.set_active(1)
         self.img_path = img_path
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
         self.window.connect('key-press-event', self.onKeyPress)
@@ -99,7 +99,7 @@ class GsongFinder(object):
         
         self.volume_btn = self.gladeGui.get_widget("volume_btn")
         self.down_btn = self.gladeGui.get_widget("down_btn")
-
+        
         self.search_entry = self.gladeGui.get_widget("search_entry")
         
         ## options box
@@ -152,10 +152,10 @@ class GsongFinder(object):
         
         ## visualisations
         try:
-		    self.vis = self.conf["visualisation"]
+            self.vis = self.conf["visualisation"]
         except:
-			self.conf["visualisation"] = self.vis
-			self.conf.write()
+            self.conf["visualisation"] = self.vis
+            self.conf.write()
         combo = self.gladeGui.get_widget("vis_chooser")
         self.vis_selector = ComboBox(combo)
         self.vis_selector.setIndexFromString(self.vis)
@@ -163,7 +163,6 @@ class GsongFinder(object):
         
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
-        "on_engine_selector_changed" : self.set_engine,
         "on_quit_menu_activate" : self.exit,
         "on_pause_btn_clicked" : self.pause_resume,
         "on_down_btn_clicked" : self.download_file,
@@ -185,22 +184,22 @@ class GsongFinder(object):
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
-
+        
         ## finally setup the list
         self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object,str)
         self.treeview = gtk.TreeView()
         self.odd = self.treeview.style_get_property("odd-row-color")
         if not self.odd:
-			self.odd = gtk.gdk.Color(61166, 61166, 61166)
+            self.odd = gtk.gdk.Color(61166, 61166, 61166)
         self.even = self.treeview.style_get_property("even-row-color")
         if not self.even:
-			self.even = gtk.gdk.Color(65535, 65535, 65535)
+            self.even = gtk.gdk.Color(65535, 65535, 65535)
         self.treeview.set_model(self.model)
         
         rendererp = gtk.CellRendererPixbuf()
         pixcolumn = gtk.TreeViewColumn("",rendererp,  pixbuf=0)
         self.treeview.append_column(pixcolumn)
-
+        
         rendertxt = gtk.CellRendererText()
         txtcolumn = gtk.TreeViewColumn("txt",rendertxt, markup=1)
         txtcolumn.set_cell_data_func(rendertxt, self.alternate_color)
@@ -224,7 +223,7 @@ class GsongFinder(object):
         self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()
         if self.conf['show_thumbs'] == "False":
-			self.columns[0].set_visible(0)
+            self.columns[0].set_visible(0)
         self.columns[1].set_sort_column_id(1)
         self.columns[2].set_visible(0)
         self.columns[3].set_visible(0)
@@ -255,17 +254,23 @@ class GsongFinder(object):
         ## engines
         self.dlg = self.gladeGui.get_widget("settings_dialog")
         self.engines_box = self.gladeGui.get_widget("engines_box")
-
+        
         ## time
         self.timeFormat = gst.Format(gst.FORMAT_TIME)
-
+        
+        ## create engines selector combobox
+        box = self.gladeGui.get_widget("engine_selector_box")
+        combo = create_comboBox()
+        combo.connect("changed", self.set_engine)
+        box.pack_start(combo, False,False,5)
+        self.engine_selector = ComboBox(combo)
+        self.engine_selector.append("")
+        
         ## start gui
         self.window.show_all()
         self.throbber.hide()
         
         ## start engines
-        combo = self.gladeGui.get_widget("engine_selector")
-        self.engine_selector = ComboBox(combo)
         self.engines_client = Engines(self)
         
         ## engine selector (engines only with direct links)
@@ -274,11 +279,16 @@ class GsongFinder(object):
         self.global_video_search = _("All videos")
         
         for engine in self.engine_list:
-            self.engine_selector.append(engine)
+            try:
+                if getattr(self.engines_client, '%s' % engine).warn:
+                    self.engine_selector.append(engine,True)
+            except:
+                self.engine_selector.append(engine)
+                
         if ("Youtube" in self.engine_list):
-			self.engine_selector.setIndexFromString("Youtube")
+            self.engine_selector.setIndexFromString("Youtube")
         else:
-			self.engine_selector.select(0)
+            self.engine_selector.select(0)
         self.engine_selector.append(self.global_search)
         self.engine_selector.append(self.global_audio_search)
         self.engine_selector.append(self.global_video_search)

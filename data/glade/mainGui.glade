@@ -304,16 +304,16 @@
                                           </packing>
                                         </child>
                                         <child>
-                                          <widget class="GtkComboBox" id="engine_selector">
+                                          <widget class="GtkHBox" id="engine_selector_box">
                                             <property name="visible">True</property>
                                             <property name="can_focus">False</property>
-                                            <property name="items" translatable="yes"> </property>
-                                            <signal name="changed" handler="on_engine_selector_changed" swapped="no"/>
+                                            <child>
+                                              <placeholder/>
+                                            </child>
                                           </widget>
                                           <packing>
                                             <property name="expand">False</property>
                                             <property name="fill">True</property>
-                                            <property name="padding">2</property>
                                             <property name="position">1</property>
                                           </packing>
                                         </child>

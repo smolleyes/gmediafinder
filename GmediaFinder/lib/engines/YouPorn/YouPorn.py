@@ -34,6 +34,7 @@ class YouPorn(object):
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
+        self.warn=True
         self.search_url = "http://www.youporn.com/search/%s?query=%s&type=%s&page=%s"
         self.browser = mechanize.Browser()
         self.browser.addheaders = []

@@ -75,7 +75,11 @@ class Engines(object):
                 self.gui.conf["engines"] = self.engines_list
                 self.gui.conf.write()
                 self.init_engine(name)
-                self.gui.engine_selector.append(name)
+                if getattr(self, '%s' % name).warn:
+                    print "oui"
+                    self.gui.engine_selector.append(name,True)
+                else:
+                    self.gui.engine_selector.append(name)
                 self.gui.engine_selector.setIndexFromString(name)
         else:
             if any(x in name for x in self.engines_list):
