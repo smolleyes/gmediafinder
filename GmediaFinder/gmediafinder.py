@@ -420,8 +420,8 @@ class GsongFinder(object):
             return
         self.stop_threads()
         self.model.clear()
-        self.changepage_btn.hide()
-        self.pageback_btn.hide()
+        self.changepage_btn.set_sensitive(0)
+        self.pageback_btn.set_sensitive(0)
         if self.engine_selector.getSelected() == self.global_search:
             for engine in self.engine_list:
                 self.set_engine(engine)
@@ -496,27 +496,31 @@ class GsongFinder(object):
             return self.do_change_page(name)
         
     def do_change_page(self,name):
-		if name == "pageback_btn":
-				if self.search_engine.current_page != 1:
-					try:
-						self.search_engine.num_start = self.search_engine.num_start - self.search_engine.results_by_page
-					except:
-						pass
-					self.search_engine.current_page = self.search_engine.current_page - 1
-				self.search(self.search_engine.current_page)
-		else:
-				self.search_engine.current_page = self.search_engine.current_page + 1
-				try:
-					self.search_engine.num_start = self.search_engine.num_start + self.search_engine.results_by_page
-				except:
-					pass
-				self.search(self.search_engine.current_page)
+        if name == "pageback_btn":
+            if self.search_engine.current_page != 1:
+                try:
+                    self.search_engine.num_start = self.search_engine.num_start - self.search_engine.results_by_page
+                except:
+                    pass
+                self.search_engine.current_page = self.search_engine.current_page - 1
+        else:
+            try:
+                self.search_engine.num_start = self.search_engine.num_start + self.search_engine.results_by_page
+            except:
+                pass
+            self.search_engine.current_page = self.search_engine.current_page + 1
+        self.search(self.search_engine.current_page)
 
     def search(self,page=None):
         ## send request to the module, can pass type and order too...reset page start to inital state
         if not page:
 			page = self.search_engine.main_start_page
 			self.search_engine.current_page = self.search_engine.main_start_page
+        ## check if first page then desactivate back page
+        if page > 1:
+            self.pageback_btn.set_sensitive(1)
+        else:
+            self.pageback_btn.set_sensitive(0)
             #thread.start_new_thread(self.search_engine.search,(self.user_search,page))
         self.add_thread(self.search_engine,self.user_search,page)
 
@@ -612,11 +616,11 @@ class GsongFinder(object):
 		if loop_icon:
 			self.loop_icon = loop_icon.load_icon()
 		
-		pagen_icon = default_icon_theme.lookup_icon("stock_media-next",16,gtk.ICON_LOOKUP_USE_BUILTIN)
+		pagen_icon = default_icon_theme.lookup_icon("next",24,gtk.ICON_LOOKUP_USE_BUILTIN)
 		if pagen_icon:
 			self.page_next_icon = pagen_icon.load_icon()
 		
-		pagep_icon = default_icon_theme.lookup_icon("stock_media-prev",16,gtk.ICON_LOOKUP_USE_BUILTIN)
+		pagep_icon = default_icon_theme.lookup_icon("previous",24,gtk.ICON_LOOKUP_USE_BUILTIN)
 		if pagep_icon:
 			self.page_prev_icon = pagep_icon.load_icon()
 		
@@ -647,8 +651,8 @@ class GsongFinder(object):
 		self.loop_pixb.set_from_pixbuf(self.loop_icon)
 		
 		## hide some icons by default
-		self.changepage_btn.hide()
-		self.pageback_btn.hide()
+		self.changepage_btn.set_sensitive(0)
+		self.pageback_btn.set_sensitive(0)
 
     def on_message(self, bus, message):
         t = message.type
@@ -1137,15 +1141,12 @@ class GsongFinder(object):
         if self.manager.running != 0:
             self.throbber.show()
         self.info_label.set_text("")
-        if self.engine == self.global_search or self.engine == self.global_video_search or self.engine == self.global_audio_search:
-            if len(self.model) == 0:
-                self.changepage_btn.hide()
-            else:
-                self.changepage_btn.show()
+        #if self.engine == self.global_search or self.engine == self.global_video_search or self.engine == self.global_audio_search:
         self.engine_selector.select(self.latest_engine)
         
         ## check automatic page change
         if len(self.model) > 0:
+            self.changepage_btn.set_sensitive(1)
             if self.change_page_request:
                 ## wait for 10 seconds or exit
                 try:
@@ -1156,6 +1157,9 @@ class GsongFinder(object):
                 except:
                     self.change_page_request=False
                     return
+        else:
+            self.changepage_btn.set_sensitive(0)
+            
 
     def thread_progress(self, thread):
         self.throbber.show()

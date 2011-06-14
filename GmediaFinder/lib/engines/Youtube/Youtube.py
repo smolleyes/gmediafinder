@@ -137,7 +137,6 @@ class Youtube(object):
         nlist = []
         link_list = []
         next_page = 0
-        gobject.idle_add(self.gui.changepage_btn.show)
         ## prepare query
         query = yt_service.YouTubeVideoQuery()
         query.vq = user_search # the term(s) that you are searching for
@@ -151,8 +150,6 @@ class Youtube(object):
         
         if self.current_page == 1:
             self.num_start = 1
-        else:
-            gobject.idle_add(self.gui.pageback_btn.show)
         query.start_index = self.num_start
         vquery = self.client.YouTubeQuery(query)
         self.filter(vquery,user_search)

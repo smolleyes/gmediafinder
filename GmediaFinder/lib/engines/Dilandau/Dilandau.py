@@ -27,14 +27,12 @@ class Dilandau(object):
             self.filter(data, query)
         except:
             self.print_info(_('%s: Connexion failed...') % self.name)
-            gobject.idle_add(self.gui.throbber.hide)
             time.sleep(5)
             self.thread_stop=True
         
     def filter(self, data, user_search):
         flag = False
         flag_found = False
-        gobject.idle_add(self.gui.changepage_btn.show)
         for line in data.readlines():
             if self.thread_stop == True:
                 break
@@ -51,20 +49,11 @@ class Dilandau(object):
                     gobject.idle_add(self.gui.add_sound, titre, markup, url, None, None, self.name)
                 continue
             if 'class="next_page inactive"' in line:
-                gobject.idle_add(self.gui.changepage_btn.hide)
-                gobject.idle_add(self.gui.throbber.hide)
                 self.print_info(_("%s: No results for %s...") % (self.name,user_search))
                 time.sleep(5)
                 self.print_info('')
-        if flag_found:
-            if self.current_page != 1:
-                gobject.idle_add(self.gui.pageback_btn.show)
-            else:
-                gobject.idle_add(self.gui.pageback_btn.hide)
-        else:
-            gobject.idle_add(self.gui.changepage_btn.hide)
+        if not flag_found:
             self.print_info(_("%s: No results for %s...") % (self.name,user_search))
-            gobject.idle_add(self.gui.throbber.hide)
             time.sleep(5)
         self.thread_stop=True
         

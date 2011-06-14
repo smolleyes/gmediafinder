@@ -98,24 +98,17 @@ class Redtube(object):
                 markup="<small><b>%s</b></small>" % title
             elif 'class="t"' in line:
                 img_link = re.search('src=\"(.*?)\"',line).group(1)
-                img = download_photo(img_link)
+                try:
+                    img = download_photo(img_link)
+                except:
+                    continue
                 gobject.idle_add(self.gui.add_sound, title, markup, link, img, None, self.name)
             ## check for next page
             elif 'id="navNext"' in line:
                 end_flag=False
             continue
             
-        if flag_found:
-            if end_flag:
-                gobject.idle_add(self.gui.changepage_btn.hide)
-            else:
-                gobject.idle_add(self.gui.changepage_btn.show)
-            if self.current_page != 1:
-                gobject.idle_add(self.gui.pageback_btn.show)
-            else:
-                gobject.idle_add(self.gui.pageback_btn.hide)
-        else:
-            gobject.idle_add(self.gui.changepage_btn.hide)
+        if not flag_found:
             self.print_info(_("%s: No results for %s...") % (self.name,user_search))
             time.sleep(5)
         self.thread_stop=True

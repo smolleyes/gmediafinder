@@ -30,8 +30,7 @@ class Mp3Fusion(object):
             time.sleep(5)
         
     def filter(self, data, user_search):
-        flag_found = False
-        gobject.idle_add(self.gui.changepage_btn.show)      
+        flag_found = False     
         for line in data.readlines():
             if self.thread_stop == True:
                 break
@@ -46,17 +45,10 @@ class Mp3Fusion(object):
                 gobject.idle_add(self.gui.add_sound, titre, markup, url, None, None, self.name)
                 continue
             if '>Next Result' in line and line.split('"')[1] == 'http://www.mp3fusion.net/music/.html':
-                gobject.idle_add(self.gui.changepage_btn.hide)
                 self.print_info(_("%s: No results for %s...") % (self.name,user_search))
                 time.sleep(5)
                 break
-        if flag_found:
-            if self.current_page != 1:
-                gobject.idle_add(self.gui.pageback_btn.show)
-            else:
-                gobject.idle_add(self.gui.pageback_btn.hide)
-        else:
-            gobject.idle_add(self.gui.changepage_btn.hide)
+        if not flag_found:
             self.print_info(_("%s: No results for %s...") % (self.name,user_search))
             time.sleep(5)
         self.thread_stop=True
