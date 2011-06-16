@@ -19,15 +19,9 @@ class Mp3Fusion(object):
     
     def load_gui(self):
         pass
-    
-    def search(self, query, page):
-        self.thread_stop = False
-        try:
-            data = urllib2.urlopen(self.search_url % (urllib.quote(query), self.current_page))
-            self.filter(data, query)
-        except:
-            self.print_info(_('%s: Connexion failed...') % self.name)
-            time.sleep(5)
+        
+    def get_search_url(self,query,page):
+        return self.search_url % (query,page)
         
     def filter(self, data, user_search):
         flag_found = False     

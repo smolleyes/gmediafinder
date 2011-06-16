@@ -15,7 +15,7 @@ class Redtube(object):
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
-        self.warn=True
+        self.adult_content=True
         self.search_url = "http://www.redtube.com/%s?search=%s&page=%s"
         self.category_url = "http://www.redtube.com/redtube/%s?sorting=%s&page=%s"
         self.start_engine()
@@ -60,17 +60,10 @@ class Redtube(object):
         self.gui.search_opt_box.show_all()
         self.orderby.select(0)
     
-    def search(self, query, page):
-        self.thread_stop=False
+    def get_search_url(self,query,page):
         choice = self.orderby.getSelected()
         orderby = self.orderbyOpt[choice]
-        try:
-            data = get_url_data(self.search_url % (orderby, urllib.quote(query), self.current_page))
-            self.filter(data,query)
-        except:
-            self.print_info(_("%s: connexion failed...") %  self.name)
-            time.sleep(5)
-            self.thread_stop=True
+        return self.search_url % (orderby,query,page)
     
     def play(self,link):
         data = get_url_data(link)
@@ -98,8 +91,8 @@ class Redtube(object):
                 title = re.search('title=\"(.*?)\"',line).group(1)
                 markup="<small><b>%s</b></small>" % title
             elif 'class="t"' in line:
-                img_link = re.search('src=\"(.*?)\"',line).group(1)
                 try:
+                    img_link = re.search('src=\"(.*?)\"',line).group(1)
                     img = download_photo(img_link)
                 except:
                     continue

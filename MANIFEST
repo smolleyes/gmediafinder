@@ -17,7 +17,7 @@ gmediafinder
 GmediaFinder
 GmediaFinder/engines.py
 GmediaFinder/gmediafinder.py
-GmediaFinder/constants.py
+GmediaFinder/config.py
 GmediaFinder/lib
 GmediaFinder/lib/engines
 GmediaFinder/lib/engines/__init__.py

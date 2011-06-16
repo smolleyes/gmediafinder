@@ -95,6 +95,53 @@
                   </packing>
                 </child>
                 <child>
+                  <widget class="GtkButton" id="nextpage_btn">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="tooltip" translatable="yes">Next page</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="relief">none</property>
+                    <signal name="clicked" handler="on_nextpage_btn_clicked" swapped="no"/>
+                    <child>
+                      <widget class="GtkImage" id="nextpage_pixb">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="stock">gtk-missing-image</property>
+                        <property name="icon-size">2</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">1</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkButton" id="stop_search_btn">
+                    <property name="visible">True</property>
+                    <property name="can_focus">True</property>
+                    <property name="receives_default">True</property>
+                    <property name="tooltip" translatable="yes">Stop</property>
+                    <property name="use_action_appearance">False</property>
+                    <property name="relief">none</property>
+                    <signal name="clicked" handler="on_stop_search_btn_clicked" swapped="no"/>
+                    <child>
+                      <widget class="GtkImage" id="image5">
+                        <property name="visible">True</property>
+                        <property name="can_focus">False</property>
+                        <property name="stock">gtk-stop</property>
+                      </widget>
+                    </child>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="position">2</property>
+                  </packing>
+                </child>
+                <child>
                   <widget class="GtkButton" id="about_menu">
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
@@ -126,57 +173,20 @@
                     <property name="expand">False</property>
                     <property name="fill">True</property>
                     <property name="pack_type">end</property>
-                    <property name="position">1</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkButton" id="nextpage_btn">
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="receives_default">True</property>
-                    <property name="tooltip" translatable="yes">Next page</property>
-                    <property name="use_action_appearance">False</property>
-                    <property name="relief">none</property>
-                    <signal name="clicked" handler="on_nextpage_btn_clicked" swapped="no"/>
-                    <child>
-                      <widget class="GtkImage" id="nextpage_pixb">
-                        <property name="visible">True</property>
-                        <property name="can_focus">False</property>
-                        <property name="stock">gtk-missing-image</property>
-                        <property name="icon-size">2</property>
-                      </widget>
-                    </child>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="position">2</property>
-                  </packing>
-                </child>
-                <child>
-                  <widget class="GtkEntry" id="search_entry">
-                    <property name="width_request">400</property>
-                    <property name="visible">True</property>
-                    <property name="can_focus">True</property>
-                    <property name="max_length">300</property>
-                    <property name="invisible_char">•</property>
-                    <property name="invisible_char_set">True</property>
-                    <property name="primary_icon_stock">gtk-find</property>
-                    <property name="secondary_icon_stock">gtk-clear</property>
-                    <property name="primary_icon_activatable">True</property>
-                    <property name="secondary_icon_activatable">True</property>
-                    <property name="primary_icon_sensitive">True</property>
-                    <property name="secondary_icon_sensitive">True</property>
-                    <property name="secondary_icon_tooltip_text" translatable="yes">Clean</property>
-                    <property name="secondary_icon_tooltip_markup" translatable="yes">Clean</property>
-                    <signal name="activate" handler="on_search_entry_activate" swapped="no"/>
-                    <signal name="icon_press" handler="on_search_entry_icon_press" swapped="no"/>
-                  </widget>
-                  <packing>
-                    <property name="expand">False</property>
-                    <property name="fill">True</property>
-                    <property name="padding">2</property>
                     <property name="position">3</property>
+                  </packing>
+                </child>
+                <child>
+                  <widget class="GtkImage" id="throbber_img">
+                    <property name="visible">True</property>
+                    <property name="can_focus">False</property>
+                    <property name="stock">gtk-missing-image</property>
+                  </widget>
+                  <packing>
+                    <property name="expand">False</property>
+                    <property name="fill">True</property>
+                    <property name="padding">10</property>
+                    <property name="position">4</property>
                   </packing>
                 </child>
                 <child>
@@ -215,15 +225,28 @@
                   </packing>
                 </child>
                 <child>
-                  <widget class="GtkImage" id="throbber_img">
+                  <widget class="GtkEntry" id="search_entry">
+                    <property name="width_request">400</property>
                     <property name="visible">True</property>
-                    <property name="can_focus">False</property>
-                    <property name="stock">gtk-missing-image</property>
+                    <property name="can_focus">True</property>
+                    <property name="max_length">300</property>
+                    <property name="invisible_char">•</property>
+                    <property name="invisible_char_set">True</property>
+                    <property name="primary_icon_stock">gtk-find</property>
+                    <property name="secondary_icon_stock">gtk-clear</property>
+                    <property name="primary_icon_activatable">True</property>
+                    <property name="secondary_icon_activatable">True</property>
+                    <property name="primary_icon_sensitive">True</property>
+                    <property name="secondary_icon_sensitive">True</property>
+                    <property name="secondary_icon_tooltip_text" translatable="yes">Clean</property>
+                    <property name="secondary_icon_tooltip_markup" translatable="yes">Clean</property>
+                    <signal name="activate" handler="on_search_entry_activate" swapped="no"/>
+                    <signal name="icon_press" handler="on_search_entry_icon_press" swapped="no"/>
                   </widget>
                   <packing>
                     <property name="expand">False</property>
                     <property name="fill">True</property>
-                    <property name="padding">10</property>
+                    <property name="padding">2</property>
                     <property name="position">5</property>
                   </packing>
                 </child>

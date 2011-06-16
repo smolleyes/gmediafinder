@@ -1,3 +1,4 @@
+#-*- coding: UTF-8 -*-
 import os
 import gtk
 import time
@@ -9,6 +10,12 @@ from html5lib import sanitizer, treebuilders, treewalkers, serializer, treewalke
 import threading
 import time
 import gobject
+import tempfile
+
+import sys
+from time import sleep
+from threading import Thread
+from urllib import urlretrieve
 
 import HTMLParser
 
@@ -254,4 +261,38 @@ class ComboBox(object):
                 self.select(path[0])
                 break
             self.combobox.set_active(-1)
-            
+
+
+# self._hook est appelé à chaque requete urllib
+class Abort(Exception):
+    pass
+
+class urlFetch(Thread):
+    def __init__(self, engine, url, query, page, local=tempfile.NamedTemporaryFile().name):
+        Thread.__init__(self)
+        self.url = url
+        self.stop = False
+        self.local = local
+        self.engine = engine
+        self.query = query
+        self.page = page
+
+    def _hook(self, *args):
+        if self.stop:
+            raise Abort
+        #sys.stdout.write('search request stopped: %s,%s' % (self.engine,self.query))
+        sys.stdout.flush()
+
+    def run(self):
+        try:
+            t = urlretrieve(self.url, self.local, self._hook)
+            f = open(self.local)
+            self.engine.filter(f,self.query)
+        except Abort, KeyBoardInterrupt:
+            print 'Aborted'
+        except:
+            self.stop = True
+            raise
+
+    def abort(self):
+        self.stop = True

@@ -24,28 +24,27 @@ class Mp3Realm(object):
     
     def load_gui(self):
         pass
-    
-    def search(self, query, page):
-        self.thread_stop=False
-        try:
-            q = re.sub(' ','+',query)
-            data = get_url_data(self.search_url % (urllib.quote(q), self.current_page))
-            self.filter(data,query)
-        except:
-            self.print_info(_('%s: Connexion failed...') % self.name)
-            time.sleep(5)
-            self.thread_stop=True
+        
+    def get_search_url(self,query,page):
+        q = re.sub(' ','+',query)
+        return self.search_url % (q,page)
               
     def filter(self,data,user_search):
         flag_found = False
         end_flag=True
+        title=""
+        markup=""
+        link=""
         for line in data.readlines():
             if self.thread_stop == True:
                 break
             ## search link
             if 'loadAndPlay' in line:
                 flag_found = True
-                link = re.search('loadAndPlay\(\'((\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))',line).group(1)
+                try:
+                    link = re.search('loadAndPlay\(\'((\S.*)(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))',line).group(1)
+                except:
+                    continue
             ## search title
             elif 'search?q=lyrics:' in line:
                 title = re.search('lyrics:(.*?)\'>',line).group(1)

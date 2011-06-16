@@ -24,7 +24,7 @@ ENTER_URL = "%s?user_choice=Enter" % URL
 BROWSE_URL = "%sbrowse/%s?page=%s" % (URL, "%s", "%d")
 TOP_RATED_URL = "%stop_rated/%s?page=%s" % (URL, "%s", "%d")
 MOST_VIEWED_URL = "%smost_viewed/%s?page=%s" % (URL, "%s", "%d")
-SEARCH_URL = "%ssearch/%s?query=%s&type=%s&page=%s" % (URL, "%s", "%s", "%s", "%d")
+SEARCH_URL = "%ssearch/%s?query=%s&type=straight&page=%s" % (URL, "%s", "%s", "%s")
 
 class YouPorn(object):
     def __init__(self,gui):
@@ -34,7 +34,7 @@ class YouPorn(object):
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
-        self.warn=True
+        self.adult_content=True
         self.search_url = "http://www.youporn.com/search/%s?query=%s&type=%s&page=%s"
         self.browser = mechanize.Browser()
         self.browser.addheaders = []
@@ -61,8 +61,7 @@ class YouPorn(object):
         self.gui.search_opt_box.show_all()
         self.orderby.select(0)
     
-    def filter(self, url,query):
-        data = self.browser.open(url)
+    def filter(self, data, query):
         flag_found = False
         title=""
         markup=""
@@ -75,14 +74,11 @@ class YouPorn(object):
                 flag_found = True
                 l = re.search('href=\"(.*?)\"',line).group(1)
                 link = "http://www.youporn.com%s" % l
-            elif 'extra_large.jpg' in line:
+            elif 'id="thumb' in line:
                 title = re.search('alt=\"(.*?)\"',line).group(1)
                 markup="<small><b>%s</b></small>" % title
                 img_link = re.search('src=\"(.*?)\"',line).group(1)
-                try:
-                    img = download_photo(img_link)
-                except:
-                    continue
+                img = download_photo(img_link)
                 gobject.idle_add(self.gui.add_sound, title, markup, link, img, None, self.name)
             ## check for next page
             #elif 'id="navNext"' in line:
@@ -93,14 +89,16 @@ class YouPorn(object):
             self.print_info(_("%s: No results for %s...") % (self.name,query))
             time.sleep(5)
         self.thread_stop=True
-        
     
-    def search(self, query, page=1, sort_by="time", type="straight"):
-        self.thread_stop=False
+    def get_search_url(self,query,page):
         choice = self.orderby.getSelected()
         orderby = self.orderbyOpt[choice]
+        return SEARCH_URL % (orderby,query,page)
+    
+    def search(self, data, query, page):
         try:
-            self.filter(self.search_url % (orderby, urllib.quote(query), type, page), query)
+            print data
+            self.filter(data, query)
         except:
             self.print_info(_("%s: Connexion failed...") % self.name)
             time.sleep(5)

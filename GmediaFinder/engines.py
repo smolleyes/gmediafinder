@@ -75,10 +75,10 @@ class Engines(object):
                 self.gui.conf["engines"] = self.engines_list
                 self.gui.conf.write()
                 self.init_engine(name)
-                if getattr(self, '%s' % name).warn:
-                    print "oui"
-                    self.gui.engine_selector.append(name,True)
-                else:
+                try:
+                    if getattr(self, '%s' % name).adult_content:
+                        self.gui.engine_selector.append(name,True)
+                except:
                     self.gui.engine_selector.append(name)
                 self.gui.engine_selector.setIndexFromString(name)
         else:

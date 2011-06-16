@@ -2,6 +2,8 @@ import urllib2
 import gtk
 import gobject
 import time
+
+from functions import urlFetch
     
 class Dilandau(object):
     def __init__(self, gui):    
@@ -19,16 +21,9 @@ class Dilandau(object):
     
     def load_gui(self):
         pass
-    
-    def search(self, query, page):
-        self.thread_stop=False
-        try:
-            data = urllib2.urlopen(self.search_url % (query.replace(' ','-'), self.current_page))
-            self.filter(data, query)
-        except:
-            self.print_info(_('%s: Connexion failed...') % self.name)
-            time.sleep(5)
-            self.thread_stop=True
+        
+    def get_search_url(self,query,page):
+        return self.search_url % (query,page)
         
     def filter(self, data, user_search):
         flag = False

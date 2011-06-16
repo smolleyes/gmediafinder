@@ -101,7 +101,7 @@ class GsongFinder(object):
         self.down_btn = self.gladeGui.get_widget("down_btn")
         
         self.search_entry = self.gladeGui.get_widget("search_entry")
-        
+        self.stop_search_btn = self.gladeGui.get_widget("stop_search_btn")
         ## options box
         self.search_opt_box = self.gladeGui.get_widget("search_options_box")
         
@@ -181,6 +181,7 @@ class GsongFinder(object):
         "on_main_window_configure_event" : self.save_position,
         "on_search_entry_icon_press" : self.clear_search_entry,
         "on_show_thumbs_opt_toggled" : self.on_gui_opt_toggled,
+        "on_stop_search_btn_clicked": self.stop_threads,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -280,7 +281,7 @@ class GsongFinder(object):
         
         for engine in self.engine_list:
             try:
-                if getattr(self.engines_client, '%s' % engine).warn:
+                if getattr(self.engines_client, '%s' % engine).adult_content:
                     self.engine_selector.append(engine,True)
             except:
                 self.engine_selector.append(engine)
@@ -428,6 +429,7 @@ class GsongFinder(object):
         if not self.engine:
             self.info_label.set_text(_("Please select an engine..."))
             return
+        self.change_page_request =False
         self.stop_threads()
         self.model.clear()
         self.changepage_btn.set_sensitive(0)
@@ -522,6 +524,7 @@ class GsongFinder(object):
         self.search(self.search_engine.current_page)
 
     def search(self,page=None):
+        self.engine_selector.select(self.latest_engine)
         ## send request to the module, can pass type and order too...reset page start to inital state
         if not page:
 			page = self.search_engine.main_start_page
@@ -602,67 +605,68 @@ class GsongFinder(object):
             time.sleep(1)
             
     def load_gui_icons(self):
-		## try to load and use the current gtk icon theme,
-		## if not possible, use fallback icons
-		default_icon_theme = gtk.icon_theme_get_default()
-		## load desired icons if possible
-		play_icon = default_icon_theme.lookup_icon("player_play",24,gtk.ICON_LOOKUP_USE_BUILTIN)
-		if play_icon:
-			self.play_icon = play_icon.load_icon()
-		
-		stop_icon = default_icon_theme.lookup_icon("player_stop",24,gtk.ICON_LOOKUP_USE_BUILTIN)
-		if stop_icon:
-			self.stop_icon = stop_icon.load_icon()
-		
-		pause_icon = default_icon_theme.lookup_icon("stock_media-pause",24,gtk.ICON_LOOKUP_USE_BUILTIN)
-		if pause_icon:
-			self.pause_icon = pause_icon.load_icon()
-		
-		shuffle_icon = default_icon_theme.lookup_icon("stock_shuffle",24,gtk.ICON_LOOKUP_USE_BUILTIN)
-		if shuffle_icon:
-			self.shuffle_icon = shuffle_icon.load_icon()
-		
-		loop_icon = default_icon_theme.lookup_icon("stock_repeat",24,gtk.ICON_LOOKUP_USE_BUILTIN)
-		if loop_icon:
-			self.loop_icon = loop_icon.load_icon()
-		
-		pagen_icon = default_icon_theme.lookup_icon("next",24,gtk.ICON_LOOKUP_USE_BUILTIN)
-		if pagen_icon:
-			self.page_next_icon = pagen_icon.load_icon()
-		
-		pagep_icon = default_icon_theme.lookup_icon("previous",24,gtk.ICON_LOOKUP_USE_BUILTIN)
-		if pagep_icon:
-			self.page_prev_icon = pagep_icon.load_icon()
-		
-		## control section
-		
-		## play
-		self.play_btn = self.gladeGui.get_widget("play_btn")
-		self.play_btn_pb = self.gladeGui.get_widget("play_btn_img")
-		self.play_btn_pb.set_from_pixbuf(self.play_icon)
-		self.play_btn.connect('clicked', self.start_stop)
-		## pause
-		self.pause_btn = self.gladeGui.get_widget("pause_btn")
-		self.pause_btn_pb = self.gladeGui.get_widget("pause_btn_img")
-		self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
-		## pages next/back
-		self.changepage_btn = self.gladeGui.get_widget("nextpage_btn")
-		self.changepage_pixb = self.gladeGui.get_widget("nextpage_pixb")
-		self.changepage_pixb.set_from_pixbuf(self.page_next_icon)
-		self.pageback_btn = self.gladeGui.get_widget("pageback_btn")
-		self.pageback_pixb = self.gladeGui.get_widget("backpage_pixb")
-		self.pageback_pixb.set_from_pixbuf(self.page_prev_icon)
-		## loop/shuffle
-		self.shuffle_btn = self.gladeGui.get_widget("shuffle_btn")
-		self.shuffle_pixb = self.gladeGui.get_widget("shuffle_btn_pixb")
-		self.shuffle_pixb.set_from_pixbuf(self.shuffle_icon)
-		self.loop_btn = self.gladeGui.get_widget("repeat_btn")
-		self.loop_pixb = self.gladeGui.get_widget("repeat_btn_pixb")
-		self.loop_pixb.set_from_pixbuf(self.loop_icon)
-		
-		## hide some icons by default
-		self.changepage_btn.set_sensitive(0)
-		self.pageback_btn.set_sensitive(0)
+        ## try to load and use the current gtk icon theme,
+        ## if not possible, use fallback icons
+        default_icon_theme = gtk.icon_theme_get_default()
+        ## load desired icons if possible
+        play_icon = default_icon_theme.lookup_icon("player_play",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        if play_icon:
+            self.play_icon = play_icon.load_icon()
+        
+        stop_icon = default_icon_theme.lookup_icon("player_stop",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        if stop_icon:
+            self.stop_icon = stop_icon.load_icon()
+        
+        pause_icon = default_icon_theme.lookup_icon("stock_media-pause",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        if pause_icon:
+            self.pause_icon = pause_icon.load_icon()
+        
+        shuffle_icon = default_icon_theme.lookup_icon("stock_shuffle",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        if shuffle_icon:
+            self.shuffle_icon = shuffle_icon.load_icon()
+        
+        loop_icon = default_icon_theme.lookup_icon("stock_repeat",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        if loop_icon:
+            self.loop_icon = loop_icon.load_icon()
+        
+        pagen_icon = default_icon_theme.lookup_icon("next",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        if pagen_icon:
+            self.page_next_icon = pagen_icon.load_icon()
+        
+        pagep_icon = default_icon_theme.lookup_icon("previous",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        if pagep_icon:
+            self.page_prev_icon = pagep_icon.load_icon()
+        
+        ## control section
+        
+        ## play
+        self.play_btn = self.gladeGui.get_widget("play_btn")
+        self.play_btn_pb = self.gladeGui.get_widget("play_btn_img")
+        self.play_btn_pb.set_from_pixbuf(self.play_icon)
+        self.play_btn.connect('clicked', self.start_stop)
+        ## pause
+        self.pause_btn = self.gladeGui.get_widget("pause_btn")
+        self.pause_btn_pb = self.gladeGui.get_widget("pause_btn_img")
+        self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
+        ## pages next/back
+        self.changepage_btn = self.gladeGui.get_widget("nextpage_btn")
+        self.changepage_pixb = self.gladeGui.get_widget("nextpage_pixb")
+        self.changepage_pixb.set_from_pixbuf(self.page_next_icon)
+        self.pageback_btn = self.gladeGui.get_widget("pageback_btn")
+        self.pageback_pixb = self.gladeGui.get_widget("backpage_pixb")
+        self.pageback_pixb.set_from_pixbuf(self.page_prev_icon)
+        ## loop/shuffle
+        self.shuffle_btn = self.gladeGui.get_widget("shuffle_btn")
+        self.shuffle_pixb = self.gladeGui.get_widget("shuffle_btn_pixb")
+        self.shuffle_pixb.set_from_pixbuf(self.shuffle_icon)
+        self.loop_btn = self.gladeGui.get_widget("repeat_btn")
+        self.loop_pixb = self.gladeGui.get_widget("repeat_btn_pixb")
+        self.loop_pixb.set_from_pixbuf(self.loop_icon)
+        
+        ## hide some icons by default
+        self.changepage_btn.set_sensitive(0)
+        self.pageback_btn.set_sensitive(0)
+        self.stop_search_btn.set_sensitive(0)
 
     def on_message(self, bus, message):
         t = message.type
@@ -958,7 +962,7 @@ class GsongFinder(object):
 			ret = yesno(_("Download"),_("The file:\n\n%s \n\nalready exist, download again ?") % target)
 			if ret == "No":
 				return
-        self.notebook.set_current_page(1)
+        #self.notebook.set_current_page(1)
         box = gtk.HBox(False, 5)
         vbox = gtk.VBox(False, 5)
         label = gtk.Label(name)
@@ -1140,7 +1144,7 @@ class GsongFinder(object):
     def add_thread(self, engine, query, page):
         #make a thread and start it
         thread_name = "Search thread %s,%s,%s" % (engine.name, query, page)
-        args = (thread_name,self.info_label,engine,query,page,self.throbber)
+        args = (thread_name,self.info_label,engine,query,page,self.throbber,self.stop_search_btn)
         #THE ACTUAL THREAD BIT
         self.manager.make_thread(
                         self.thread_finished,
@@ -1148,13 +1152,8 @@ class GsongFinder(object):
                         *args)
 
     def thread_finished(self, thread):
-        if self.manager.running != 0:
-            self.throbber.show()
-        self.info_label.set_text("")
-        #if self.engine == self.global_search or self.engine == self.global_video_search or self.engine == self.global_audio_search:
-        self.engine_selector.select(self.latest_engine)
-        
         ## check automatic page change
+        self.stop_search_btn.set_sensitive(0)
         if len(self.model) > 0:
             self.changepage_btn.set_sensitive(1)
             if self.change_page_request:
@@ -1169,10 +1168,12 @@ class GsongFinder(object):
                     return
         else:
             self.changepage_btn.set_sensitive(0)
-            
+        self.info_label.set_text("")
+        
 
     def thread_progress(self, thread):
-        self.throbber.show()
+        #print "progress"
+        pass
 
 
 class _IdleObject(gobject.GObject):
@@ -1208,6 +1209,7 @@ class _FooThread(threading.Thread, _IdleObject):
         self.name = args[0]
         self.info = args[1]
         self.throbber = args[5]
+        self.stop_btn = args[6]
         self.setName("%s" % self.name)
 
     def cancel(self):
@@ -1219,15 +1221,26 @@ class _FooThread(threading.Thread, _IdleObject):
 
     def run(self):
         print "Running %s" % str(self)
-        self.engine.search(self.query,self.page)
+        self.info.set_text('')
+        self.engine.thread_stop = False
+        self.cancelled = False
+        if not self.engine.name == 'Youtube':
+            url = self.engine.get_search_url(self.query, self.engine.current_page)
+            query = urlFetch(self.engine, url, self.query, self.engine.current_page)
+            query.start()
+        else:
+            self.engine.search(self.query, self.engine.current_page)
         while 1:
             if self.engine.thread_stop == False and not self.cancelled:
-                time.sleep(0.1)
-                values = {'engine': self.engine.name, 'query': self.query}
-                self.info.set_text(_("Searching for %(query)s with %(engine)s ") % values)
+                time.sleep(1)
+                values = {'engine': self.engine.name, 'query': self.query, 'page' : self.page}
+                gobject.idle_add(self.info.set_text,_("Searching for %(query)s with %(engine)s (page: %(page)s)") % values)
                 self.throbber.show()
+                self.stop_btn.set_sensitive(1)
                 self.emit("progress")
             else:
+                if not self.engine.name == 'Youtube':
+                    query.abort()
                 self.engine.thread_stop = True
                 break
         self.emit("completed")
@@ -1272,6 +1285,7 @@ class FooThreadManager:
         a free slot
         """
         self.throbber = args[5]
+        self.stop_btn = args[6]
         self.running = len(self.fooThreads) - len(self.pendingFooThreadArgs)
         if args not in self.fooThreads:
             thread = _FooThread(*args)
@@ -1287,6 +1301,7 @@ class FooThreadManager:
             if self.running < self.maxConcurrentThreads:
                 print "Starting %s" % thread
                 self.throbber.show()
+                self.stop_btn.set_sensitive(1)
                 self.fooThreads[args].start()
             else:
                 print "Queing %s" % thread
