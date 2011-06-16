@@ -36,7 +36,7 @@ class Mp3Realm(object):
         markup=""
         link=""
         for line in data.readlines():
-            if self.thread_stop == True:
+            if self.thread_stop:
                 break
             ## search link
             if 'loadAndPlay' in line:

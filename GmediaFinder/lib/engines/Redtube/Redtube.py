@@ -58,7 +58,7 @@ class Redtube(object):
             self.orderby.append(cat)
         self.gui.search_opt_box.add(cb)
         self.gui.search_opt_box.show_all()
-        self.orderby.select(0)
+        self.orderby.select(1)
     
     def get_search_url(self,query,page):
         choice = self.orderby.getSelected()

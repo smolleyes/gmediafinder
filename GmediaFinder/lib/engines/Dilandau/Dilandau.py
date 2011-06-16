@@ -2,8 +2,6 @@ import urllib2
 import gtk
 import gobject
 import time
-
-from functions import urlFetch
     
 class Dilandau(object):
     def __init__(self, gui):    
