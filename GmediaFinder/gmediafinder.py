@@ -380,13 +380,13 @@ class GsongFinder(object):
         if iter == 0:
             self.engine = None
             return
+        ## clean the gui options box and load the plugin gui
+        for w in self.search_opt_box:
+			self.search_opt_box.remove(w)
         ## do not set the engine if global search
         if self.engine == self.global_search or self.engine == self.global_video_search or self.engine == self.global_audio_search:
 			return
         ## load the plugin
-        ## clean the gui options box and load the plugin gui
-        for w in self.search_opt_box:
-			self.search_opt_box.remove(w)
         self.search_engine = getattr(self.engines_client,'%s' % self.engine)
         self.search_engine.load_gui()
             
