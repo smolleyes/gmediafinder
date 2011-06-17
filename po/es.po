@@ -2,14 +2,15 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
+#   <rquesadaj@gmail.com>, 2011.
 # Bernardo Miguel Savone <bmsavone@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-13 23:43+0200\n"
-"PO-Revision-Date: 2011-06-11 19:41+0000\n"
-"Last-Translator: bersil <bmsavone@gmail.com>\n"
+"POT-Creation-Date: 2011-06-17 23:32+0200\n"
+"PO-Revision-Date: 2011-06-16 02:03+0000\n"
+"Last-Translator: rquesadaj <rquesadaj@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -36,43 +37,50 @@ msgid ""
 "    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 msgstr ""
 "    Gmediafinder \n"
-"    Copyright (C) 2011 Laguillaumie Sylvain\n"
+"    Derechos Reservados (C) 2011 Laguillaumie Sylvain\n"
 "\n"
-"    This program is free software: you can redistribute it and/or modify\n"
-"    it under the terms of the GNU General Public License as published by\n"
-"    the Free Software Foundation, either version 2 of the License, or\n"
-"    (at your option) any later version.\n"
+"    Este programa es un software libre: puede redistribuirlo y/o modificarlo "
+"bajo los términos de la Licencia General Pública de la  GNU así como por la "
+"Free Software Foundation, sea por la version 2 de la Licencia, o (en su "
+"opción) cualquier versión posterior.\n"
+"    Este programa es distribuido con la esperanza de que sea útil, pero SIN "
+"GARANTÍA ALGUNA; sin la garantía implicita de COMERCIALIZACIÓN o "
+"CONVENIENCIA PARA UN PROPOSITO PARTICULAR.\n"
+"Revise la Licencia General Pública de GNU para más detalles.\n"
+"    Usted debería haber recibido una copia de la Licencia General Públida de "
+"GNU con este programa.  Si no es así, Mire en <http://www.gnu.org/licenses/"
+">.\n"
 "\n"
-"    This program is distributed in the hope that it will be useful,\n"
-"    but WITHOUT ANY WARRANTY; without even the implied warranty of\n"
-"    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\n"
-"    GNU General Public License for more details.\n"
-"\n"
-"    You should have received a copy of the GNU General Public License\n"
-"    along with this program.  If not, see <http://www.gnu.org/licenses/>.\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:78
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:149
 msgid "About"
-msgstr ""
+msgstr "Sobre"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:122
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:123
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:242
 msgid "Clean"
 msgstr "Limpiar"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:150
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:208
 msgid "Preferences"
-msgstr ""
+msgstr "Preferencias"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:174
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:78
 msgid "Previous page"
-msgstr ""
+msgstr "Página previa"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:198
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:102
 msgid "Next page"
-msgstr ""
+msgstr "Próxima página"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:298
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:321
 msgid "Engine: "
 msgstr "Motor:"
 
@@ -82,81 +90,100 @@ msgstr " "
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:568
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:946
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:591
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:962
 msgid "Download"
 msgstr "Descargar"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:599
-#, fuzzy
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:622
 msgid "Downloads manager"
-msgstr "Descarga completa"
+msgstr "Administrador de descargas"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:729
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:752
 msgid "page 1"
 msgstr "página 1"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:801
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:824
 msgid "Home"
 msgstr "Inicio"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:831
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:854
 msgid "Download path :     "
 msgstr "Ruta de descargas :     "
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:849
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:872
 msgid "Choose a folder"
 msgstr "Elija una carpeta"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:880
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:903
 msgid "<b>Downloads  : </b>"
 msgstr "<b>Descargas  : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:896
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:919
 msgid "page 2"
 msgstr "página 2"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:938
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1278
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:961
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1300
 msgid "Options"
 msgstr "Opciones"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1020
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1043
 msgid "Show preview images"
 msgstr "Mostrar imágenes miniatura"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1033
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1056
 msgid "<b>Playlist options : </b>"
 msgstr "<b>Opciones de playlist : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1066
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1089
 msgid "Max resolution : "
-msgstr "Máximo resolución :  "
+msgstr "Máxima resolución :  "
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1093
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1116
 msgid "320x240"
 msgstr "320x240"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1111
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1134
 msgid "640x320"
 msgstr "640x320"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1128
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1151
 msgid "854x480"
 msgstr "854x480"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1145
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1168
 msgid "1280x720"
 msgstr "1280x720"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1163
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1185
 msgid "1920x1080"
 msgstr "1920x1080"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1193
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1215
 msgid "<b>Youtube video options : </b>"
 msgstr "<b>Youtube opciones de video : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1224
-#, fuzzy
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1246
 msgid ""
 "disabled\n"
 "jess\n"
@@ -169,6 +196,7 @@ msgid ""
 "corona\n"
 "bumpscope"
 msgstr ""
+"deshabilitado\n"
 "jess\n"
 "goom\n"
 "oinksie\n"
@@ -180,18 +208,22 @@ msgstr ""
 "bumpscope"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1254
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1276
 msgid "<b>Visualisations :</b>"
-msgstr "<b>Visualisations :</b>"
+msgstr "<b>Visualizaciones :</b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1320
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1342
 msgid "<b>Select your engines : </b>"
-msgstr "<b>Seleccione sus motores de busqueda : </b>"
+msgstr "<b>Seleccione sus motores de búsqueda : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1345
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1367
 msgid "Engines"
 msgstr "Motores"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1377
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1399
 msgid ""
 "Play/pause : Space\n"
 "Stop: s\n"
@@ -199,17 +231,19 @@ msgid ""
 "enter search box: BackSpace\n"
 "show downloads: d"
 msgstr ""
-"Play/pausa : Espacio\n"
-"Stop: s\n"
+"Reproducir/pausar : Espacio\n"
+"Detener: s\n"
 "Pantalla completa : f\n"
 "Ir al campo de búsqueda: Barra espaciadora\n"
 "Ver descargas: d"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1390
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1412
 msgid "<b>Shortcuts:</b>"
 msgstr "<b>Atajos:</b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1408
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1430
 msgid "Infos"
 msgstr "Info"
 
@@ -218,41 +252,52 @@ msgid " Results : "
 msgstr " Resultados: "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:272
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:278
 msgid "All"
 msgstr "Todo"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:273
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:279
 msgid "All audios"
-msgstr ""
+msgstr "Todos los audios"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:274
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:280
 msgid "All videos"
-msgstr ""
+msgstr "Todos los videos"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:404
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:550
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:415
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:567
 #, python-format
 msgid "Playing : %s"
 msgstr "Reproduciendo : %s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:413
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:424
 msgid "Please select a search engine..."
 msgstr "Por favor, seleccione un motor de búsqueda ..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:416
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:427
 msgid "Please enter an artist/album or song name..."
 msgstr "Por favor, introduzca un artista / álbum o nombre de la canción ..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:419
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:430
 msgid "Please select an engine..."
 msgstr "Por favor seleccione un motor ..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:553
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1091
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:570
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1107
 msgid "Stopped"
 msgstr "Detenido"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:946
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:962
 #, python-format
 msgid ""
 "The file:\n"
@@ -268,38 +313,47 @@ msgstr ""
 "ya existe, descargar nuevamente ?"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:966
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:982
 msgid "Stop Downloading"
 msgstr "Detener la descarga"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:974
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:990
 msgid "Show in folder"
 msgstr "Mostrar en la carpeta"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:982
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:998
 msgid "Convert to mp3"
 msgstr "Convertir a MP3"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:993
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1009
 msgid "Remove"
-msgstr "Eliminar"
+msgstr "Remover"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1041
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1057
 msgid "Bitrate:"
-msgstr ""
+msgstr "Tasa de bits"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1042
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1058
 msgid "Encoding:"
-msgstr ""
+msgstr "Codificando:"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1085
 msgid "Converting process started..."
-msgstr "proceso de conversión iniciado..."
+msgstr "Proceso de conversión iniciado..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1084
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1100
 msgid "Audio file successfully created !"
 msgstr "Archivo de audio creado con éxito!"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1089
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1105
 #, python-format
 msgid "Playing %s"
 msgstr "Reproduciendo %s"
@@ -312,37 +366,47 @@ msgstr "Búsqueda de %(query)s con %(engine)s  "
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:48
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:48
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:92
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:49
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:49
 msgid "Order by: "
-msgstr ""
+msgstr "Ordenar por: "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:52
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:97
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
 msgid "Most recent"
 msgstr "Más recientes"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:52
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:97
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
 msgid "Most viewed"
 msgstr "Más vistos"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:98
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:54
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
 msgid "Most rated"
 msgstr "Más valorados"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:96
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:54
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:55
 msgid "Most relevant"
 msgstr "Más relevantes"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:70
 #, python-format
 msgid "%s: connexion failed..."
-msgstr ""
+msgstr "%s: conexión fallida..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:119
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:50
@@ -352,22 +416,35 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:56
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:66
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:70
-#, fuzzy, python-format
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:106
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:42
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:46
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:42
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:46
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:89
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/BurningCamel/BurningCamel.py:74
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:45
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:49
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:59
+#, python-format
 msgid "%s: No results for %s..."
-msgstr "no hay resultados para %s ..."
+msgstr "%s: Sin resultados para %s..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:29
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:34
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:29
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:35
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:106
 #, python-format
 msgid "%s: Connexion failed..."
-msgstr ""
+msgstr "%s: Conexión fallida..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
 msgid "Duration"
-msgstr ""
+msgstr "Duración"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:43
 msgid "Quality"
@@ -431,11 +508,14 @@ msgstr "Trailers"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:164
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:169
-#, fuzzy, python-format
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:161
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:166
+#, python-format
 msgid "%s: No results for %s ..."
-msgstr "no hay resultados para %s ..."
+msgstr "%s: Sin resultados para %s ..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:207
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:204
 #, python-format
 msgid ""
 "<small><b>%(name)s</b></small>\n"
@@ -445,59 +525,55 @@ msgstr ""
 "<small><b>vista:</b>%(count)s<b>Duración:</b> %(duration)s</small>"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:109
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:116
 msgid "Failed..."
-msgstr "Fallo ..."
+msgstr "Fallido ..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:138
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:145
 #, python-format
 msgid "Downloading %-66s"
 msgstr "Descargando %-66s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:151
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:158
 #, python-format
 msgid "%(downloaded).02f MB of %(total).02f MB"
-msgstr "%(downloaded).02f MB de %(total).02f MB"
+msgstr "%(downloaded).02f MB of %(total).02f MB"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:152
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:159
 #, python-format
 msgid " at %d Kb/s "
 msgstr " con %d Kb/s "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:163
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:170
 msgid "Download complete"
 msgstr "Descarga completa"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:185
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:192
 #, python-format
 msgid "Remaining : %(min)02d:%(sec)02d"
 msgstr "Remaining : %(min)02d:%(sec)02d"
 
-#~ msgid "options: "
-#~ msgstr "opciones:  "
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
+#, fuzzy
+msgid "Stop"
+msgstr "Detenido"
 
-#~ msgid "Search timeout..."
-#~ msgstr "tiempo de espera de búsqueda ..."
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1237
+#, fuzzy, python-format
+msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
+msgstr "Búsqueda de %(query)s con %(engine)s  "
 
-#~ msgid "no more files found for %s..."
-#~ msgstr "no se encontraron mas archivos de %s..."
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:24
+#, python-format
+msgid "%s: Please wait, it can take longtime ..."
+msgstr ""
 
-#~ msgid "no files found for %s..."
-#~ msgstr "no se encontraron archivos de %s..."
-
-#~ msgid "No results found for %s..."
-#~ msgstr "No hay resultados para %s..."
-
-#~ msgid "No results for your search %s "
-#~ msgstr "No hay resultados para su  %s "
-
-#~ msgid "No results found for %s "
-#~ msgstr "No hay resultados para %s "
-
-#~ msgid "No more files found for %s..."
-#~ msgstr "No se encontraron más archivos de %s..."
-
-#~ msgid "no more files found for %s ..."
-#~ msgstr "no se encontraron más archivos de %s..."
-
-#~ msgid "engine : %s"
-#~ msgstr "motor : %s"
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/BurningCamel/BurningCamel.py:69
+#, fuzzy, python-format
+msgid "%s: No more results for %s..."
+msgstr "%s: Sin resultados para %s..."

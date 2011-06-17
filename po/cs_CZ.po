@@ -2,21 +2,19 @@
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
 #
-# Nikola Radovanović <nrad@eunet.rs>, 2011
 msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-06-17 23:32+0200\n"
-"PO-Revision-Date: 2011-06-06 07:12+0000\n"
-"Last-Translator: nikoola <nrad@eunet.rs>\n"
+"PO-Revision-Date: 2011-06-17 19:11+0000\n"
+"Last-Translator: LukynZ <suchoi@centrum.cz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: sr\n"
+"Language: cs_CZ\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
 msgid ""
@@ -39,48 +37,52 @@ msgstr ""
 "    Gmediafinder \n"
 "    Copyright (C) 2011 Laguillaumie Sylvain\n"
 "\n"
-"    Ово је бесплатан програм: можете га умножавати и/или мењати\n"
-"    под условима GNU General Public License објављене од стране\n"
-"    Free Software Foundation, у верзији 2 или (уколико желите) новијој.\n"
+"   Tento program je svobodný software: můžete jej šířit a upravovat\n"
+"   podle ustanovení Obecné veřejné licence GNU (GNU General Public "
+"Licence),\n"
+"   vydávané Free Software Foundation a to buď podle 2. verze této Licence,\n"
+"   nebo (podle vašeho uvážení) kterékoli pozdější verze.\n"
 "\n"
-"    Програм је прављен у нади да буде користан,\n"
-"    али БЕЗ ИКАКВЕ ГАРАНЦИЈЕ.  Погледајте\n"
-"    GNU General Public License за више детаља.\n"
+"   Tento program je rozšiřován v naději, že bude užitečný, avšak BEZ "
+"JAKÉKOLIV\n"
+"   ZÁRUKY. Neposkytují se ani odvozené záruky PRODEJNOSTI anebo VHODNOSTI\n"
+"   PRO URČITÝ ÚČEL. Další podrobnosti hledejte v Obecné veřejné licenci "
+"GNU.\n"
 "\n"
-"    Требало би уз програм да сте добили копију GNU General Public License.  "
-"У противном, погледајте је на <http://www.gnu.org/licenses/>.\n"
+"   Kopie Obecné veřejné licence GNU je ke stažení spolu s tímto programem.\n"
+"   Pokud se tak nestalo, najdete ji zde: http://www.gnu.org/licenses/.\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:78
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:149
 msgid "About"
-msgstr ""
+msgstr "O programu"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:122
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:123
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:242
 msgid "Clean"
-msgstr "Очисти"
+msgstr "Smazat"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:150
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:208
 msgid "Preferences"
-msgstr ""
+msgstr "Předvolby"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:174
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:78
 msgid "Previous page"
-msgstr ""
+msgstr "Předchozí stránka"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:198
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:102
 msgid "Next page"
-msgstr ""
+msgstr "Další stránka"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:298
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:321
 msgid "Engine: "
-msgstr "Механизам: "
+msgstr "Zdroj"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:310
 msgid " "
@@ -91,65 +93,64 @@ msgstr " "
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:591
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:962
 msgid "Download"
-msgstr "Преузимање"
+msgstr "Stáhnout"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:599
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:622
-#, fuzzy
 msgid "Downloads manager"
-msgstr "Преузмимање је завршено"
+msgstr "Manažer stahování"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:729
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:752
 msgid "page 1"
-msgstr "страна 1"
+msgstr "stránka 1"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:801
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:824
 msgid "Home"
-msgstr "Почетак"
+msgstr "Domů"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:831
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:854
 msgid "Download path :     "
-msgstr "Путања за преузимање :     "
+msgstr "Stáhnout do:"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:849
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:872
 msgid "Choose a folder"
-msgstr "Изаберите директоријум"
+msgstr "Vyberte složku"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:880
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:903
 msgid "<b>Downloads  : </b>"
-msgstr "<b>Преузимања  :</b>"
+msgstr "<b>Stahování : <b/>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:896
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:919
 msgid "page 2"
-msgstr "страна 2"
+msgstr "stránka 2"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:938
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1278
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:961
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1300
 msgid "Options"
-msgstr "Опције"
+msgstr "Volby"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1020
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1043
 msgid "Show preview images"
-msgstr "Прикажи преглед слика"
+msgstr "Zobrazit obrázky náhledu"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1033
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1056
 msgid "<b>Playlist options : </b>"
-msgstr "<b>Опције листе пуштања:</b>"
+msgstr "<b>Volby seznamu : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1066
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1089
 msgid "Max resolution : "
-msgstr "Максимална резолуција: "
+msgstr "Maximální rozlišení :"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1093
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1116
@@ -179,11 +180,10 @@ msgstr "1920x1080"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1193
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1215
 msgid "<b>Youtube video options : </b>"
-msgstr "<b>Опције Youtube видеа:</b>"
+msgstr "<b>Volby youtube videa : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1224
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1246
-#, fuzzy
 msgid ""
 "disabled\n"
 "jess\n"
@@ -196,6 +196,7 @@ msgid ""
 "corona\n"
 "bumpscope"
 msgstr ""
+"zakázány\n"
 "jess\n"
 "goom\n"
 "oinksie\n"
@@ -209,17 +210,17 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1254
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1276
 msgid "<b>Visualisations :</b>"
-msgstr "<b>Визуализације:</b>"
+msgstr "<b>Vizualizace :</b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1320
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1342
 msgid "<b>Select your engines : </b>"
-msgstr "<b>Изаберите механизам:</b>"
+msgstr "<b>Vyberte zdroje : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1345
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1367
 msgid "Engines"
-msgstr "Механизми"
+msgstr "Zdroje"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1377
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1399
@@ -230,40 +231,39 @@ msgid ""
 "enter search box: BackSpace\n"
 "show downloads: d"
 msgstr ""
-"Пусти/паузирај : Space\n"
-"Заустави: s\n"
-"Цео екран: f\n"
-"поље претраге: BackSpace\n"
-"приказ преузимања: d"
+"Přehrát/pozastavit : Mezerník\n"
+"Stop : s\n"
+"Celá obrazovka : f\n"
+"aktivovat vyhledávácí pole : BackSpacezobrazit stahování : d"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1390
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1412
 msgid "<b>Shortcuts:</b>"
-msgstr "<b>Пречице:</b>"
+msgstr "<b>Zkratky:</b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1408
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1430
 msgid "Infos"
-msgstr "Информације"
+msgstr "Informace"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:207
 msgid " Results : "
-msgstr " Резултати : "
+msgstr " Výsledky :"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:272
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:278
 msgid "All"
-msgstr ""
+msgstr "Vše"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:273
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:279
 msgid "All audios"
-msgstr ""
+msgstr "Všechno audio"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:274
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:280
 msgid "All videos"
-msgstr ""
+msgstr "Všechna videa"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:404
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:550
@@ -271,29 +271,29 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:567
 #, python-format
 msgid "Playing : %s"
-msgstr "Пуштам : %s"
+msgstr "Přehrávám : %s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:413
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:424
 msgid "Please select a search engine..."
-msgstr "Молимо изаберете механизам претраге ..."
+msgstr "Prosím vyberte zdroj pro vyhledávání..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:416
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:427
 msgid "Please enter an artist/album or song name..."
-msgstr "Молимо унесете извођача/албум или име песме ..."
+msgstr "Prosím zadejte umělce/album nebo název písničky"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:419
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:430
 msgid "Please select an engine..."
-msgstr "Молимо изаберете механизам ..."
+msgstr "Prosím zvolte zdroj..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:553
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1091
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:570
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1107
 msgid "Stopped"
-msgstr "Заустављено"
+msgstr "Zastaveno"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:946
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:962
@@ -305,62 +305,61 @@ msgid ""
 "\n"
 "already exist, download again ?"
 msgstr ""
-"Ова датотека:\n"
+"Soubor:\n"
 "\n"
 "%s \n"
-"\n"
-"већ постоји, да ли да је поново преузмем?"
+"již existuje, stáhnout znovu?"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:966
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:982
 msgid "Stop Downloading"
-msgstr "Заустави преузимање"
+msgstr "Zastavit Stahování"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:974
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:990
 msgid "Show in folder"
-msgstr "Прикажи у директоријуму"
+msgstr "Zobrazit ve složce"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:982
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:998
 msgid "Convert to mp3"
-msgstr "Претвори у mp3"
+msgstr "Převést na mp3"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:993
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1009
 msgid "Remove"
-msgstr "Уклони"
+msgstr "Ostranit"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1041
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1057
 msgid "Bitrate:"
-msgstr ""
+msgstr "Bitrate:"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1042
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1058
 msgid "Encoding:"
-msgstr ""
+msgstr "Kódování:"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1085
 msgid "Converting process started..."
-msgstr "Процес претварања је започет..."
+msgstr "Proces kódování začal..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1084
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1100
 msgid "Audio file successfully created !"
-msgstr "Аудио датотека је успешно направљена!"
+msgstr "Hudební soubor úspěšně vytvořen !"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1089
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1105
 #, python-format
 msgid "Playing %s"
-msgstr "Пуштам %s"
+msgstr "Přehrávám %s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1215
 #, python-format
 msgid "Searching for %(query)s with %(engine)s "
-msgstr "Тражим %(query)s помоћу %(engine)s "
+msgstr "Vyhledávám %(query)s s pomocí %(engine)s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:48
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:48
@@ -368,7 +367,7 @@ msgstr "Тражим %(query)s помоћу %(engine)s "
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:49
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:49
 msgid "Order by: "
-msgstr ""
+msgstr "Řazeno podle:"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:52
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
@@ -376,7 +375,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
 msgid "Most recent"
-msgstr "Најновије"
+msgstr "Nejčastějších"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:52
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
@@ -384,7 +383,7 @@ msgstr "Најновије"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
 msgid "Most viewed"
-msgstr "Најгледаније"
+msgstr "Nejprohlíženějších"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
@@ -392,7 +391,7 @@ msgstr "Најгледаније"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:54
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
 msgid "Most rated"
-msgstr "Најбоље оцењено"
+msgstr "Nejvíce hodnocených"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
@@ -400,12 +399,12 @@ msgstr "Најбоље оцењено"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:54
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:55
 msgid "Most relevant"
-msgstr "Најрелевантније"
+msgstr "Nejvíce souvisejících"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:70
 #, python-format
 msgid "%s: connexion failed..."
-msgstr ""
+msgstr "%s: spojení selhalo..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:119
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:50
@@ -426,9 +425,9 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:45
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:49
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:59
-#, fuzzy, python-format
+#, python-format
 msgid "%s: No results for %s..."
-msgstr "претрага за %s нема резултата ..."
+msgstr "%s: Žádné výsledky pro %s..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:29
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:112
@@ -438,80 +437,80 @@ msgstr "претрага за %s нема резултата ..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:106
 #, python-format
 msgid "%s: Connexion failed..."
-msgstr ""
+msgstr "%s: spojení selhalo..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
 msgid "Duration"
-msgstr ""
+msgstr "Trvání"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:43
 msgid "Quality"
-msgstr "Квалитет"
+msgstr "Kvalita"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:105
 msgid "Category: "
-msgstr "Категорије: "
+msgstr "Kategorie:"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 msgid "Sport"
-msgstr "Спорт"
+msgstr "Sport"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 msgid "Films"
-msgstr "Филмови"
+msgstr "Filmy"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 msgid "Cars"
-msgstr "Аутомобили"
+msgstr "Auta"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 msgid "Music"
-msgstr "Музика"
+msgstr "Hudba"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 msgid "Technology"
-msgstr "Технологија"
+msgstr "Technologie"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 msgid "Animals"
-msgstr "Животиње"
+msgstr "Zvířata"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 msgid "Travel"
-msgstr "Путовања"
+msgstr "Cestování"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 msgid "Games"
-msgstr "Игре"
+msgstr "Hry"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 msgid "Comedy"
-msgstr "Комедија"
+msgstr "Komedie"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:113
 msgid "Peoples"
-msgstr "Људи"
+msgstr "Lidé"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:113
 msgid "News"
-msgstr "Вести"
+msgstr "Zprávy"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:114
 msgid "Entertainement"
-msgstr "Забава"
+msgstr "Zábava"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:114
 msgid "Trailers"
-msgstr "Рекламе"
+msgstr "Ukázky"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:164
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:169
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:161
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:166
-#, fuzzy, python-format
+#, python-format
 msgid "%s: No results for %s ..."
-msgstr "претрага за %s нема резултата ..."
+msgstr "%s: Žádné výsledky pro %s..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:207
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:204
@@ -521,53 +520,51 @@ msgid ""
 "<small><b>view:</b> %(count)s\t\t<b>Duration:</b> %(duration)s</small>"
 msgstr ""
 "<small><b>%(name)s</b></small>\n"
-"<small><b>прегед:</b> %(count)s<span class=\"whitespace other\" title=\"Tab"
-"\">»</span><span class=\"whitespace other\" title=\"Tab\">»</span><b>Трајање:"
-"</b> %(duration)s</small>"
+"<small><b>zobrazeno:</b> %(count)s\t\t<b>Trvání:</b> %(duration)s</small>"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:116
 msgid "Failed..."
-msgstr "Није успело ..."
+msgstr "Selhalo..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:138
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:145
 #, python-format
 msgid "Downloading %-66s"
-msgstr "Преузимам %-66s"
+msgstr "Stahuji %-66s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:151
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:158
 #, python-format
 msgid "%(downloaded).02f MB of %(total).02f MB"
-msgstr "%(downloaded).02f MB од %(total).02f MB"
+msgstr "%(downloaded).02f MB z %(total).02f MB"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:152
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:159
 #, python-format
 msgid " at %d Kb/s "
-msgstr " на %d Kb/s "
+msgstr " rychlostí %d Kb/s "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:163
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:170
 msgid "Download complete"
-msgstr "Преузмимање је завршено"
+msgstr "Stahování dokončeno"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:185
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:192
 #, python-format
 msgid "Remaining : %(min)02d:%(sec)02d"
-msgstr "Преостаје : %(min)02d:%(sec)02d"
+msgstr "Zbývá : %(min)02d:%(sec)02d"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
 #, fuzzy
 msgid "Stop"
-msgstr "Заустављено"
+msgstr "Zastaveno"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1237
 #, fuzzy, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
-msgstr "Тражим %(query)s помоћу %(engine)s "
+msgstr "Vyhledávám %(query)s s pomocí %(engine)s"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:24
 #, python-format
@@ -577,35 +574,4 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/BurningCamel/BurningCamel.py:69
 #, fuzzy, python-format
 msgid "%s: No more results for %s..."
-msgstr "претрага за %s нема резултата ..."
-
-#~ msgid "options: "
-#~ msgstr "опције: "
-
-#~ msgid "Search timeout..."
-#~ msgstr "Време претраге је истекло ..."
-
-#~ msgid "no more files found for %s..."
-#~ msgstr "нема више пронађених датотека за %s ..."
-
-#~ msgid "no files found for %s..."
-#~ msgstr "нема пронађених датотека за %s ..."
-
-#~ msgid "No results found for %s..."
-#~ msgstr "Нема више резултата за %s ..."
-
-#~ msgid "No results for your search %s "
-#~ msgstr "Ваша претрага за %s нема резултата ..."
-
-#~ msgid "No results found for %s "
-#~ msgstr "Претрага за %s нема резултата ..."
-
-#~ msgid "No more files found for %s..."
-#~ msgstr "Нема више пронађених датотека за %s ..."
-
-#~ msgid "no more files found for %s ..."
-#~ msgstr "нема више пронађених датотека за %s ..."
-
-#, fuzzy
-#~ msgid "engine : %s"
-#~ msgstr "Механизам: "
+msgstr "%s: Žádné výsledky pro %s..."
