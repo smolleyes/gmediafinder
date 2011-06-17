@@ -36,9 +36,9 @@ class YouPorn(object):
         self.thread_stop=False
         self.adult_content=True
         self.search_url = "http://www.youporn.com/search/%s?query=%s&type=%s&page=%s"
+        self.initialized=False
         self.browser = mechanize.Browser()
         self.browser.addheaders = []
-        self.browser.open(ENTER_URL)
         self.start_engine()
     
     
@@ -91,6 +91,9 @@ class YouPorn(object):
         self.thread_stop=True
     
     def get_search_url(self,query,page):
+        if not self.initialized:
+            self.browser.open(ENTER_URL)
+            self.initialized = True
         choice = self.orderby.getSelected()
         orderby = self.orderbyOpt[choice]
         return SEARCH_URL % (orderby,query,page)

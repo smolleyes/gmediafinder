@@ -1221,7 +1221,7 @@ class _FooThread(threading.Thread, _IdleObject):
 
     def run(self):
         print "Running %s" % str(self)
-        self.info.set_text('')
+        gobject.idle_add(self.info.set_text,'')
         self.engine.thread_stop = False
         self.cancelled = False
         if not self.engine.name == 'Youtube':
@@ -1235,8 +1235,8 @@ class _FooThread(threading.Thread, _IdleObject):
                 time.sleep(1)
                 values = {'engine': self.engine.name, 'query': self.query, 'page' : self.page}
                 gobject.idle_add(self.info.set_text,_("Searching for %(query)s with %(engine)s (page: %(page)s)") % values)
-                self.throbber.show()
-                self.stop_btn.set_sensitive(1)
+                gobject.idle_add(self.throbber.show)
+                gobject.idle_add(self.stop_btn.set_sensitive,1)
                 self.emit("progress")
             else:
                 if not self.engine.name == 'Youtube':
@@ -1277,7 +1277,7 @@ class FooThreadManager:
                 self.fooThreads[args].start()
             except IndexError: pass
         if self.running == 0:
-            throbber.hide()
+            gobject.idle_add(throbber.hide)
 
     def make_thread(self, completedCb, progressCb, *args):
         """
@@ -1300,8 +1300,8 @@ class FooThreadManager:
             
             if self.running < self.maxConcurrentThreads:
                 print "Starting %s" % thread
-                self.throbber.show()
-                self.stop_btn.set_sensitive(1)
+                gobject.idle_add(self.throbber.show)
+                gobject.idle_add(self.stop_btn.set_sensitive,1)
                 self.fooThreads[args].start()
             else:
                 print "Queing %s" % thread

@@ -42,8 +42,9 @@ class Engines(object):
                 ## clean locally removed plugins
                 for eng in self.engines_list:
                     if (eng not in self.local_engines_list):
-                        self.engines.remove(eng)
+                        self.engines_list.remove(eng)
                 self.gui.conf["engines"] = self.engines_list
+                self.gui.conf.write()
         except:
             ## add new engines key in the config file if not present
             ## disable YouPorn by default

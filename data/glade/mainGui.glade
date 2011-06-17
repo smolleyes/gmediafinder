@@ -1119,7 +1119,7 @@ audio-volume-medium</property>
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
-                                            <property name="group">res2</property>
+                                            <property name="group"></property>
                                             <signal name="toggled" handler="on_res1_toggled" swapped="no"/>
                                           </widget>
                                           <packing>
@@ -1137,7 +1137,7 @@ audio-volume-medium</property>
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
-                                            <property name="group">res3</property>
+                                            <property name="group">res1</property>
                                             <signal name="toggled" handler="on_res2_toggled" swapped="no"/>
                                           </widget>
                                           <packing>
@@ -1154,7 +1154,7 @@ audio-volume-medium</property>
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
-                                            <property name="group">res2</property>
+                                            <property name="group">res1</property>
                                             <signal name="toggled" handler="on_res3_toggled" swapped="no"/>
                                           </widget>
                                           <packing>
@@ -1170,9 +1170,8 @@ audio-volume-medium</property>
                                             <property name="can_focus">True</property>
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
-                                            <property name="active">True</property>
                                             <property name="draw_indicator">True</property>
-                                            <property name="group">res5</property>
+                                            <property name="group">res1</property>
                                             <signal name="toggled" handler="on_res4_toggled" swapped="no"/>
                                           </widget>
                                           <packing>
