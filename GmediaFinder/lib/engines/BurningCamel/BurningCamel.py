@@ -51,10 +51,10 @@ class BurningCamel(object):
                 if 'vid_dur' in line: vid_dur = line.split('>')[1].split('<')[0]
                 if 'exbtn' in line: suffixe = line.split('_')[1]
                 if '<img ' in line:
-                    split_line = line.split('"')
-                    title = split_line[3]
-                    thumb = split_line[5]
                     try:
+                        split_line = line.split('"')
+                        title = split_line[3]
+                        thumb = split_line[5]
                         link = thumb.replace('_thumb.jpg','%slq.flv' % suffixe)
                         img = download_photo(thumb)
                     except:

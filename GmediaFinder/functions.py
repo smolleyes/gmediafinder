@@ -287,7 +287,7 @@ class urlFetch(Thread):
         try:
             t = urlretrieve(self.url, self.local, self._hook)
             f = open(self.local)
-            self.engine.filter(f,self.query)
+            return self.engine.filter(f,self.query)
         except Abort, KeyBoardInterrupt:
             print 'Aborted'
         except:

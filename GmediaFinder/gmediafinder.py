@@ -2,6 +2,8 @@
 #-*- coding: UTF-8 -*-
 
 import sys
+import glib
+import pango
 import os
 import thread
 import threading
@@ -149,6 +151,11 @@ class GsongFinder(object):
         #timer
         self.timerbox = self.gladeGui.get_widget("timer_box")
         self.timerbox.add(self.time_label)
+        ## seekbar infos
+        self.media_name_label = self.gladeGui.get_widget("media_name")
+        self.media_name_label.set_property('ellipsize', pango.ELLIPSIZE_END)
+        self.media_codec_label = self.gladeGui.get_widget("media_codec")
+        self.media_bitrate_label = self.gladeGui.get_widget("media_bitrate")
         
         ## visualisations
         try:
@@ -298,6 +305,7 @@ class GsongFinder(object):
         ## load icons
         self.load_gui_icons()
         
+        self.statbar.hide()
         ## start main loop
         gobject.threads_init()
         #THE ACTUAL THREAD BIT
@@ -411,8 +419,8 @@ class GsongFinder(object):
         ## return only theme name and description then extract infos from hash
         self.media_link = self.model.get_value(self.selected_iter, 2)
         self.media_img = self.model.get_value(self.selected_iter, 0)
-        # print in the gui
-        self.statbar.push(1,_("Playing : %s") % self.media_name)
+        self.media_bitrate = ""
+        self.media_codec = ""
         self.stop_play()
         ## play in engine
         self.search_engine.play(self.media_link)
@@ -543,11 +551,15 @@ class GsongFinder(object):
         if not name or not media_link or not img:
             return
         ## clean markup...
+        #markup = glib.markup_escape_text(markup_src)
+        #print markup
+        markup = ""
         try:
 			if re.search('&', markup_src):
 				markup = re.sub('&','&amp;', markup_src)
 			else:
 				markup = markup_src
+            #markup = glib.markup_escape_text(markup_src)
         except:
 			pass
         iter = self.model.append()
@@ -564,7 +576,6 @@ class GsongFinder(object):
         url = self.media_link
         if url:
             if not self.is_playing:
-                self.statbar.push(1,_("Playing : %s") % self.media_name)
                 return self.start_play(url)
             else:
                 self.statbar.push(1,_("Stopped"))
@@ -799,6 +810,17 @@ class GsongFinder(object):
           self.time_label.set_text("00:00 / 00:00")
           return False
         
+        ## update labels
+        #if not self.search_engine.type == "audio":
+            #gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b></small>' % self.media_name)
+        #else:
+        bit=_('Bitrate:')
+        enc=_('Encoding:')
+        play=_('Playing:')
+        name = glib.markup_escape_text(self.media_name) 
+        gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s </b> %s</small>' % (play,name))
+        gobject.idle_add(self.media_bitrate_label.set_markup,'<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
+        gobject.idle_add(self.media_codec_label.set_markup,'<small><b>%s </b> %s</small>' % (enc,self.media_codec))
         ## update timer for mini_player and hide it if more than 5 sec 
         ## without mouse movements
         self.timer += 1
@@ -944,19 +966,15 @@ class GsongFinder(object):
         return self.geturl(self.active_link)
 
     def geturl(self, url, codec=None):
-        if self.engine == "Youtube":
-            name = str(self.media_name+".%s" % codec)
-        else:
-            name = str(self.media_name)
+        name = str(self.media_name+".%s" % self.media_codec)
+        
         if re.search('\/', name):
 			name = re.sub('\/','-', name)
-			self.media_name = name
         if re.search('&', name):
 			name = re.sub('&','&amp;', name)
-			self.media_name = name
         if re.search('\"', name):
 			name = re.sub('\"','', name)
-			self.media_name = name
+
         target = os.path.join(self.down_dir,name)
         if os.path.exists(target):
 			ret = yesno(_("Download"),_("The file:\n\n%s \n\nalready exist, download again ?") % target)
@@ -1021,13 +1039,15 @@ class GsongFinder(object):
         t.start()
         
     def bus_message_tag(self, bus, message):
-        if self.search_engine.type == "video":
-            return
+        codec = None
         self.audio_codec= None
-        self.bitrate = None
+        self.media_bitrate = None
         self.mode = None
         #we received a tag message
         taglist = message.parse_tag()
+        self.file_tags['audio-codec'] = ""
+        self.file_tags['video-codec'] = ""
+        self.file_tags['container-format'] = ""
         #put the keys in the dictionary
         for key in taglist.keys():
             if key == "preview-image" or key == "image":
@@ -1044,19 +1064,33 @@ class GsongFinder(object):
                 self.file_tags[key] = taglist[key]
             elif key == "audio-codec":
                 k = str(taglist[key])
-                self.file_tags[key] = re.search('\((.*?)\)',k).group(1).lower()
+                self.file_tags[key] = k
+            elif key == "video-codec":
+                self.file_tags[key] = taglist[key]
+            elif key == "container-format":
+                self.file_tags[key] = taglist[key]
         
         try:
-            self.audio_codec = self.file_tags['audio-codec']
-            self.bitrate = self.file_tags['bitrate']
-            self.mode = self.file_tags['channel-mode']
-            if re.search('&', self.media_name):
-                name = re.sub('&','&amp;', self.media_name)
+            if self.file_tags['video-codec'] != "":
+                codec = self.file_tags['video-codec']
             else:
-                name = self.media_name
-            bit=_('Bitrate:')
-            enc=_('Encoding:')
-            self.media_markup = '<small><b>%s</b>\n%s %s     %s %s / %s</small>' % (name,bit,self.bitrate,enc,self.audio_codec,self.mode)
+                codec = self.file_tags['audio-codec']
+            if codec == "" and self.file_tags['container-format']:
+                codec = self.file_tags['container-format']
+            if ('MP3' in codec or 'ID3' in codec):
+                    self.media_codec = 'mp3'
+            elif ('MPEG-4' in codec or 'H.264' in codec or 'MP4' in codec):
+                    self.media_codec = 'mp4'
+            elif ('WMA' in codec or 'ASF' in codec or 'Microsoft Windows Media 9' in codec):
+                    self.media_codec = 'wma'
+            elif ('Quicktime' in codec):
+                    self.media_codec = 'mov'
+            elif ('Vorbis' in codec or 'Ogg' in codec):
+                    self.media_codec = 'ogg'
+            elif ('Sorenson Spark Video' in codec):
+                    self.media_codec = 'flv'
+            self.media_bitrate = self.file_tags['bitrate']
+            self.mode = self.file_tags['channel-mode']
             self.model.set_value(self.selected_iter, 1, self.media_markup)
         except:
             return
@@ -1078,7 +1112,7 @@ class GsongFinder(object):
 		self.loader_pixbuf = throbber.get_pixbuf() # save the Image contents so we can set it back later
 		throbber.set_from_animation(self.animation)
 		throbber.show()
-		src = os.path.join(self.down_dir,name+'.'+codec)
+		src = os.path.join(self.down_dir,name+'.'+self.media_codec)
 		target = os.path.join(self.down_dir,name+'.mp3')
 		if os.path.exists(target):
 			os.remove(target)
@@ -1102,7 +1136,7 @@ class GsongFinder(object):
 			gtk.main_iteration()
 		time.sleep(3)
 		if self.is_playing:
-			self.statbar.push(1,_("Playing %s") % self.media_name)
+			self.media_name_label.set_text('<small><b>%s</b></small>' % self.media_name)
 		else:
 			self.statbar.push(1,_("Stopped"))
         
@@ -1172,7 +1206,6 @@ class GsongFinder(object):
         
 
     def thread_progress(self, thread):
-        #print "progress"
         pass
 
 
@@ -1233,10 +1266,10 @@ class _FooThread(threading.Thread, _IdleObject):
         while 1:
             if self.engine.thread_stop == False and not self.cancelled:
                 time.sleep(1)
-                values = {'engine': self.engine.name, 'query': self.query, 'page' : self.page}
-                gobject.idle_add(self.info.set_text,_("Searching for %(query)s with %(engine)s (page: %(page)s)") % values)
                 gobject.idle_add(self.throbber.show)
                 gobject.idle_add(self.stop_btn.set_sensitive,1)
+                values = {'engine': self.engine.name, 'query': self.query, 'page' : self.page}
+                gobject.idle_add(self.info.set_text,_("Searching for %(query)s with %(engine)s (page: %(page)s)") % values)
                 self.emit("progress")
             else:
                 if not self.engine.name == 'Youtube':
@@ -1284,6 +1317,10 @@ class FooThreadManager:
         Makes a thread with args. The thread will be started when there is
         a free slot
         """
+        self.info = args[1]
+        self.engine = args[2]
+        self.query = args[3]
+        self.page = args[4]
         self.throbber = args[5]
         self.stop_btn = args[6]
         self.running = len(self.fooThreads) - len(self.pendingFooThreadArgs)
@@ -1303,6 +1340,8 @@ class FooThreadManager:
                 gobject.idle_add(self.throbber.show)
                 gobject.idle_add(self.stop_btn.set_sensitive,1)
                 self.fooThreads[args].start()
+                values = {'engine': self.engine.name, 'query': self.query, 'page' : self.page}
+                gobject.idle_add(self.info.set_text,_("Searching for %(query)s with %(engine)s (page: %(page)s)") % values)
             else:
                 print "Queing %s" % thread
                 self.pendingFooThreadArgs.append(args)
