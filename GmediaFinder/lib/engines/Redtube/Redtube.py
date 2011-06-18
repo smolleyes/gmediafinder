@@ -84,24 +84,23 @@ class Redtube(object):
             if self.thread_stop == True:
                 break
             ## search link
-            if 'class="s"' in line:
-                flag_found = True
-                l = re.search('href=\"(.*?)\"',line).group(1)
-                link = "http://www.redtube.com%s" % l
-                title = re.search('title=\"(.*?)\"',line).group(1)
-                markup="<small><b>%s</b></small>" % title
-            elif 'class="t"' in line:
-                try:
+            try:
+                if 'class="t"' in line:
                     img_link = re.search('src=\"(.*?)\"',line).group(1)
                     img = download_photo(img_link)
-                except:
-                    continue
-                gobject.idle_add(self.gui.add_sound, title, markup, link, img, None, self.name)
-            ## check for next page
-            elif 'id="navNext"' in line:
-                end_flag=False
-            continue
-            
+                elif 'class="s"' in line:
+                    flag_found = True
+                    l = re.search('href=\"(.*?)\"',line).group(1)
+                    link = "http://www.redtube.com%s" % l
+                    title = re.search('title=\"(.*?)\"',line).group(1)
+                    markup="<small><b>%s</b></small>" % title
+                    gobject.idle_add(self.gui.add_sound, title, markup, link, img, None, self.name)
+                ## check for next page
+                elif 'id="navNext"' in line:
+                    end_flag=False
+                continue
+            except:
+                continue
         if not flag_found:
             self.print_info(_("%s: No results for %s...") % (self.name,user_search))
             time.sleep(5)

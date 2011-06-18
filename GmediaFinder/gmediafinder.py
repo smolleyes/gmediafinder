@@ -874,7 +874,6 @@ class GsongFinder(object):
             self.fullscreen = False
             self.search_box.show()
             self.results_box.show()
-            self.statbar.show()
             self.control_box.show()
             self.options_bar.show()
             self.window.window.unfullscreen()
@@ -916,20 +915,18 @@ class GsongFinder(object):
           return True
         
     def on_motion_notify(self, widget, event):
-        h=gtk.gdk.screen_height()
+        #h=gtk.gdk.screen_height()
         self.timer = 0
-        if self.fullscreen and event.y >= h - 10:
+        if self.fullscreen and not self.mini_player:
             self.show_mini_player()
             time.sleep(0.5)
             
     def show_mini_player(self):
         if self.mini_player == True:
-            self.statbar.hide()
             self.control_box.hide()
             self.options_bar.hide()
             self.mini_player = False
         else:
-            self.statbar.show()
             self.control_box.show()
             self.mini_player = True
     
