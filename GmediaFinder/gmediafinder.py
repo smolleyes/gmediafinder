@@ -250,6 +250,7 @@ class GsongFinder(object):
             self.videosink = gst.element_factory_make('d3dvideosink')
         else:
             self.videosink = gst.element_factory_make('xvimagesink')
+            self.videosink.set_property('force-aspect-ratio', True)
         self.player.set_property("audio-sink", audiosink)
         self.player.set_property('video-sink', self.videosink)
         bus = self.player.get_bus()
