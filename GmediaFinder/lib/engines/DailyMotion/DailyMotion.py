@@ -59,7 +59,6 @@ class DailyMotion(object):
     def filter(self,data,user_search):
         js = json.load(data)
         l = js['list']
-        print l
         for dic in l:
             #print dic
             if self.thread_stop == True:
