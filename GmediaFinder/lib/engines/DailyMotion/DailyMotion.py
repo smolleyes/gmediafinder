@@ -20,7 +20,7 @@ class DailyMotion(object):
         ## options labels
         self.order_label = _("Order by: ")
         self.filters_label = _("Filters: ")
-        self.search_url = 'https://api.dailymotion.com/videos?sort=%s&page=%s&limit=25&search=%s&fields=embed_url,thumbnail_medium_url,title'
+        self.search_url = 'https://api.dailymotion.com/videos?%ssort=%s&page=%s&limit=25&search=%s&fields=embed_url,thumbnail_medium_url,title'
         
         self.start_engine()
     
@@ -30,13 +30,19 @@ class DailyMotion(object):
     def load_gui(self):
         self.order_list = {self.order_label:{_("Most relevant"):"relevance",_("Most recent"):"recent",_("Most viewed"):"visited",_("Most rated"):"rated"}}
         self.orderby = create_comboBox(self.gui, self.order_list)
-        self.filters_list = {self.filters_label:{_("HD"):"hd"}}
+        self.filters_list = {self.filters_label:{"":"",_("HD"):"hd"}}
         self.filters = create_comboBox(self.gui, self.filters_list)
         
     def get_search_url(self,query,page):
         choice = self.orderby.getSelected()
         orderby = self.order_list[self.order_label][choice]
-        return self.search_url % (orderby,page,query)
+        choice = self.filters.getSelected()
+        f=''
+        if choice != "":
+            filters = self.filters_list[self.filters_label][choice]
+            f = 'filters=%s&' % filters
+        print self.search_url % (f,orderby,page,query)
+        return self.search_url % (f,orderby,page,query)
     
     def play(self,link):
         try:
