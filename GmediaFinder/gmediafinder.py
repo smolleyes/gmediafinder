@@ -551,9 +551,12 @@ class GsongFinder(object):
         if not name or not media_link or not img:
             return
         ## clean markup...
-        n = decode_htmlentities(name).decode('utf-8')
-        m = glib.markup_escape_text(n)
-        markup = '<small><b>%s</b></small>' % m
+        try:
+            n = decode_htmlentities(name)
+            m = glib.markup_escape_text(n)
+            markup = '<small><b>%s</b></small>' % m
+        except:
+            return
         if markup_src:
             markup = markup + markup_src
         iter = self.model.append()
