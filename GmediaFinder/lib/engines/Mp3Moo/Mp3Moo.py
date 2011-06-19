@@ -34,8 +34,7 @@ class Mp3Moo(object):
                 url = 'http://mp3moo.com/download.php?url=%s' % base_cut.split('"')[0]
                 titre = base_cut.split('>')[1].split('<')[0]
                 serveur = base_cut.split('>')[-1].rstrip()
-                markup="<small>%s<b>%s</b></small>" % (serveur, titre)
-                gobject.idle_add(self.gui.add_sound, titre, markup, url, None, None, self.name)
+                gobject.idle_add(self.gui.add_sound, titre, url, None, None, self.name)
                 flag_found = True
                 continue
             if '>Next<' in line and self.search_url in line:

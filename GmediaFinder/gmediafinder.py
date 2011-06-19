@@ -250,7 +250,6 @@ class GsongFinder(object):
             self.videosink = gst.element_factory_make('d3dvideosink')
         else:
             self.videosink = gst.element_factory_make('xvimagesink')
-            self.videosink.set_property('force-aspect-ratio', True)
         self.player.set_property("audio-sink", audiosink)
         self.player.set_property('video-sink', self.videosink)
         bus = self.player.get_bus()
@@ -411,7 +410,8 @@ class GsongFinder(object):
         self.path = self.model.get_path(self.selected_iter)
         ## else extract needed metacity's infos
         self.media_thumb = self.model.get_value(self.selected_iter, 0)
-        self.media_name = self.model.get_value(self.selected_iter, 4)
+        name = self.model.get_value(self.selected_iter, 4)
+        self.media_name = decode_htmlentities(name)
         self.media_markup = self.model.get_value(self.selected_iter, 1)
         self.media_plugname = self.model.get_value(self.selected_iter, 5)
         ## for global search
@@ -546,23 +546,17 @@ class GsongFinder(object):
             #thread.start_new_thread(self.search_engine.search,(self.user_search,page))
         self.add_thread(self.search_engine,self.user_search,page)
 
-    def add_sound(self, name, markup_src, media_link, img=None, quality_list=None, plugname=None):
+    def add_sound(self, name, media_link, img=None, quality_list=None, plugname=None,markup_src=None):
         if not img:
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         if not name or not media_link or not img:
             return
         ## clean markup...
-        #markup = glib.markup_escape_text(markup_src)
-        #print markup
-        markup = decode_htmlentities(markup_src)
-        #try:
-			#if re.search('&', markup_src):
-				#markup = re.sub('&','&amp;', markup_src)
-			#else:
-				#markup = markup_src
-            ##markup = glib.markup_escape_text(markup_src)
-        #except:
-			#pass
+        n = decode_htmlentities(name)
+        m = glib.markup_escape_text(n)
+        markup = '<small><b>%s</b></small>' % m
+        if markup_src:
+            markup = markup + markup_src
         iter = self.model.append()
         self.model.set(iter,
                         0, img,
@@ -591,6 +585,12 @@ class GsongFinder(object):
 				self.player.set_property('vis-plugin', self.visual)
         self.play_btn_pb.set_from_pixbuf(self.stop_icon)
         self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
+        if self.search_engine.type == "video":
+            if not sys.platform == "win32":
+                self.videosink.set_property('force-aspect-ratio', True)
+        else:
+            if not sys.platform == "win32":
+                self.videosink.set_property('force-aspect-ratio', False)
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
         self.play_thread_id = thread.start_new_thread(self.play_thread, ())
@@ -818,8 +818,8 @@ class GsongFinder(object):
         bit=_('Bitrate:')
         enc=_('Encoding:')
         play=_('Playing:')
-        #name = glib.markup_escape_text(self.media_name) 
-        gobject.idle_add(self.media_name_label.set_markup,'%s %s' % (play,self.media_markup))
+        name = glib.markup_escape_text(self.media_name)
+        gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s</small>' % (play,name))
         gobject.idle_add(self.media_bitrate_label.set_markup,'<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
         gobject.idle_add(self.media_codec_label.set_markup,'<small><b>%s </b> %s</small>' % (enc,self.media_codec))
         ## update timer for mini_player and hide it if more than 5 sec 
@@ -841,13 +841,13 @@ class GsongFinder(object):
             except gst.QueryError:
                 return 0
             current_position_formated = self.convert_ns(self.current_position)
-            self.time_label.set_text(current_position_formated + "/" + self.duration)
+            gobject.idle_add(self.time_label.set_text,current_position_formated + "/" + self.duration)
       
             # Update the seek bar
             # gtk.Adjustment(value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0)
             percent = (float(self.current_position)/float(self.length))*100.0
             adjustment = gtk.Adjustment(percent, 0.00, 100.0, 0.1, 1.0, 1.0)
-            self.seeker.set_adjustment(adjustment)
+            gobject.idle_add(self.seeker.set_adjustment,adjustment)
       
         return True
     
@@ -964,15 +964,7 @@ class GsongFinder(object):
         return self.geturl(self.active_link)
 
     def geturl(self, url, codec=None):
-        name = str(self.media_name+".%s" % self.media_codec)
-        
-        if re.search('\/', name):
-			name = re.sub('\/','-', name)
-        if re.search('&', name):
-			name = re.sub('&','&amp;', name)
-        if re.search('\"', name):
-			name = re.sub('\"','', name)
-
+        name = urllib.quote(self.media_name+".%s" % self.media_codec)
         target = os.path.join(self.down_dir,name)
         if os.path.exists(target):
 			ret = yesno(_("Download"),_("The file:\n\n%s \n\nalready exist, download again ?") % target)
@@ -981,7 +973,7 @@ class GsongFinder(object):
         #self.notebook.set_current_page(1)
         box = gtk.HBox(False, 5)
         vbox = gtk.VBox(False, 5)
-        label = gtk.Label(name)
+        label = gtk.Label(self.media_name+".%s" % self.media_codec)
         label.set_alignment(0, 0.5)
         vbox.pack_start(label, False, False, 5)
         pbar = gtk.ProgressBar()
@@ -1033,7 +1025,7 @@ class GsongFinder(object):
         btn.hide()
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
-        t = Downloader(self,url, name, pbar, btnf,btn,btn_conv,btnstop,name)
+        t = Downloader(self,url, name, pbar, btnf,btn,btn_conv,btnstop,self.media_name+".%s" % self.media_codec)
         t.start()
         
     def bus_message_tag(self, bus, message):

@@ -93,8 +93,7 @@ class Redtube(object):
                     l = re.search('href=\"(.*?)\"',line).group(1)
                     link = "http://www.redtube.com%s" % l
                     title = re.search('title=\"(.*?)\"',line).group(1)
-                    markup="<small><b>%s</b></small>" % title
-                    gobject.idle_add(self.gui.add_sound, title, markup, link, img, None, self.name)
+                    gobject.idle_add(self.gui.add_sound, title, link, img, None, self.name)
                 ## check for next page
                 elif 'id="navNext"' in line:
                     end_flag=False

@@ -76,10 +76,9 @@ class YouPorn(object):
                 link = "http://www.youporn.com%s" % l
             elif 'id="thumb' in line:
                 title = re.search('alt=\"(.*?)\"',line).group(1)
-                markup="<small><b>%s</b></small>" % title
                 img_link = re.search('src=\"(.*?)\"',line).group(1)
                 img = download_photo(img_link)
-                gobject.idle_add(self.gui.add_sound, title, markup, link, img, None, self.name)
+                gobject.idle_add(self.gui.add_sound, title, link, img, None, self.name)
             ## check for next page
             #elif 'id="navNext"' in line:
                 #end_flag=False

@@ -18,6 +18,8 @@ from threading import Thread
 from urllib import urlretrieve
 
 import HTMLParser
+import htmlentitydefs
+import htmllib
 
 HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
 
@@ -81,9 +83,9 @@ def get_codec(num):
     return codec
 
 class Downloader(threading.Thread):
-    def __init__(self,gui,url, name, pbar, btnf, btn,btn_conv,btnstop,nom=''):
+    def __init__(self,gui,url, name, pbar, btnf, btn,btn_conv,btnstop,label=''):
         threading.Thread.__init__(self)
-        self.nom = nom
+        self.label = label
         self.gui = gui
         self._stopevent = threading.Event()
         print "thread %s" % name
@@ -99,25 +101,26 @@ class Downloader(threading.Thread):
     def run(self,):
         i = 0
         while not self._stopevent.isSet():
-			self.gui.active_downloads += 1
-			self.gui.active_down_label.set_text(str(self.gui.active_downloads))
-			## download...
-			try:
-				start_time = time.time()
-				urllib.urlretrieve(self.url, self.gui.down_dir+"/"+ self.name,
-				lambda nb, bs, fs, url=self.url: self._reporthook(nb,bs,fs,start_time,self.url,self.name,self.pbar))
-				self.btnf.show()
-				self.btn_conv.show()
-				self.btn.show()
-				self.btnstop.hide()
-				self.decrease_down_count()
-				self._stopevent.set()
-			except:
-				self.pbar.set_text(_("Failed..."))
-				self.btn.show()
-				self.decrease_down_count()
-				self.btnstop.hide()
-				self._stopevent.set()
+            self.gui.active_downloads += 1
+            self.gui.active_down_label.set_text(str(self.gui.active_downloads))
+            ## download...
+            try:
+                start_time = time.time()
+                urllib.urlretrieve(self.url, self.gui.down_dir+"/"+ self.name,
+                lambda nb, bs, fs, url=self.url: self._reporthook(nb,bs,fs,start_time,self.url,self.name,self.pbar))
+                self.btnf.show()
+                self.btn_conv.show()
+                self.btn.show()
+                self.btnstop.hide()
+                self.decrease_down_count()
+                self._stopevent.set()
+                os.rename(self.gui.down_dir+"/"+ self.name,self.gui.down_dir+"/"+ self.label)
+            except:
+                self.pbar.set_text(_("Failed..."))
+                self.btn.show()
+                self.decrease_down_count()
+                self.btnstop.hide()
+                self._stopevent.set()
 			
 
 	
@@ -276,9 +279,11 @@ class ComboBox(object):
                 break
             self.combobox.set_active(-1)
 
-def decode_htmlentities(string):
-    h = HTMLParser.HTMLParser()
-    return h.unescape(string)
+def decode_htmlentities(text):
+    p = htmllib.HTMLParser(None)
+    p.save_bgn()
+    p.feed(text)
+    return p.save_end()
 
 # self._hook est appelé à chaque requete urllib
 class Abort(Exception):

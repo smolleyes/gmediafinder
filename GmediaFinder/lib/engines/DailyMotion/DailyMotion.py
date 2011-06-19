@@ -68,8 +68,7 @@ class DailyMotion(object):
             img_link = dic['thumbnail_medium_url']
             img = download_photo(img_link)
             title = glib.markup_escape_text(title)
-            markup = "<small><b>%s</b></small>" % title
-            gobject.idle_add(self.gui.add_sound, title, markup, link, img, None, self.name)
+            gobject.idle_add(self.gui.add_sound, title, None, link, img, None, self.name)
         if js['has_more'] != 'true':
             self.print_info(_("%s: No more results for %s...") % (self.name,user_search))
             time.sleep(5)

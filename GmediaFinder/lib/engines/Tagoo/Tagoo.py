@@ -42,9 +42,8 @@ class Tagoo(object):
                     link = re.search('href="(((\S.*))(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))"',line).group(1)
                     t = urllib.unquote(re.search('href="(((\S.*))(.mp3|.mp4|.ogg|.aac|.wav|.wma|.wmv|.avi|.mpeg|.mpg|.ogv))"',line).group(3).split('/')[-1])
                     title = re.sub('_',' ',t)
-                    markup = "<small><b>%s</b></small>" % title
                     flag_found = True
-                    gobject.idle_add(self.gui.add_sound, title, markup, link, None, None, self.name)
+                    gobject.idle_add(self.gui.add_sound, title, link, None, None, self.name)
                 except:
                    continue
             continue

@@ -59,8 +59,8 @@ class BurningCamel(object):
                         img = download_photo(thumb)
                     except:
                         continue
-                    markup = "<small><b>%s</b> (%s)</small>" % (title, vid_dur)
-                    gobject.idle_add(self.gui.add_sound, title, markup, link, img, None, self.name)
+                    markup = "<small> (%s)</small>" % vid_dur
+                    gobject.idle_add(self.gui.add_sound, title, link, img, None, self.name, markup)
                     flag_found = True
                 if '...' in line:
                     nb_page = line.split('...')[1].split('<')[0]
