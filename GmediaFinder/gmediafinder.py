@@ -196,12 +196,9 @@ class GsongFinder(object):
         ## finally setup the list
         self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object,str)
         self.treeview = gtk.TreeView()
-        self.odd = self.treeview.style_get_property("odd-row-color")
-        if not self.odd:
-            self.odd = gtk.gdk.Color(61166, 61166, 61166)
-        self.even = self.treeview.style_get_property("even-row-color")
-        if not self.even:
-            self.even = gtk.gdk.Color(65535, 65535, 65535)
+        self.window.realize()
+        self.odd = gtk.gdk.color_parse(str(self.window.style.bg[gtk.STATE_NORMAL]))
+        self.even = gtk.gdk.color_parse(str(self.window.style.fg[gtk.STATE_NORMAL]))
         self.treeview.set_model(self.model)
         
         rendererp = gtk.CellRendererPixbuf()
