@@ -288,17 +288,7 @@ def decode_htmlentities(text):
     text = re.sub('&amp;','&',text)
     text = re.sub('_',' ',text)
     return text
-    
 
-def second_pass(text):
-    p = htmllib.HTMLParser(None)
-    p.save_bgn()
-    p.feed(text)
-    text = p.save_end()
-    text = re.sub('&#_;','\'',text)
-    text = re.sub('&amp;','&',text)
-    text = re.sub('_',' ',text)
-    return text
 
 # self._hook est appelé à chaque requete urllib
 class Abort(Exception):
