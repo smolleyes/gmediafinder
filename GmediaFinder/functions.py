@@ -216,13 +216,27 @@ def sortDict(d):
     backitems.sort()
     return [ backitems[i][1] for i in range(0,len(backitems))]
 
-def create_comboBox():
+def create_comboBox(gui=None,dic=None):
     model = gtk.ListStore(str,gtk.gdk.Color)
     combobox = gtk.ComboBox(model)
     cell = gtk.CellRendererText()
     combobox.pack_start(cell, True)
     combobox.add_attribute(cell, 'text', 0)
     combobox.add_attribute(cell, 'foreground-gdk', 1)
+    cb=None
+    
+    if dic:
+        target = gui.search_opt_box
+        for key,values in dic.items():
+            label = gtk.Label(key)
+            target.pack_start(label,False,False,5)
+            cb = ComboBox(combobox)
+            for val in values:
+                cb.append(val)
+            target.add(combobox)
+            cb.select(0)
+            target.show_all()
+        return cb
     return combobox
 
 

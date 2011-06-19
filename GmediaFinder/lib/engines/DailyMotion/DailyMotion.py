@@ -13,6 +13,7 @@ class DailyMotion(object):
         self.gui = gui
         self.name = 'DailyMotion'
         self.type = "video"
+        self.options_dic = {}
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
@@ -23,20 +24,10 @@ class DailyMotion(object):
         self.gui.engine_list[self.name] = ''
     
     def load_gui(self):
-        label = gtk.Label(_("Order by: "))
-        self.gui.search_opt_box.pack_start(label,False,False,5)
-        ## create orderby combobox
-        cb = create_comboBox()
-        self.orderbyOpt = {_("Most relevant"):"relevance",
-        _("Most recent"):"recent",_("Most viewed"):"visited",
-        _("Most rated"):"rated"
-        }
-        self.orderby = ComboBox(cb)
-        for cat in self.orderbyOpt:
-		    self.orderby.append(cat)
-        self.gui.search_opt_box.add(cb)
-        self.orderby.select(0)
-        self.gui.search_opt_box.show_all()
+        options = {_("Order by: "):{_("Most relevant"):"relevance",_("Most recent"):"recent",_("Most viewed"):"visited",_("Most rated"):"rated"}}
+        self.orderby = create_comboBox(self.gui, options)
+        filters = {_("Filters: "):{_("HD"):"hd"}}
+        self.filters = create_comboBox(self.gui, filters)
         
     def get_search_url(self,query,page):
         choice = self.orderby.getSelected()
