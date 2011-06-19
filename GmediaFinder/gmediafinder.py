@@ -198,7 +198,7 @@ class GsongFinder(object):
         self.treeview = gtk.TreeView()
         self.window.realize()
         self.odd = gtk.gdk.color_parse(str(self.window.style.bg[gtk.STATE_NORMAL]))
-        self.even = gtk.gdk.color_parse(str(self.window.style.fg[gtk.STATE_NORMAL]))
+        self.even = gtk.gdk.color_parse(str(self.window.style.base[gtk.STATE_NORMAL]))
         self.treeview.set_model(self.model)
         
         rendererp = gtk.CellRendererPixbuf()
@@ -331,11 +331,11 @@ class GsongFinder(object):
         if int((model.get_string_from_iter(iter).split(":")[0])) % 2:
             cell.set_property('background-gdk', self.odd)
             cell.set_property('cell-background-gdk', self.odd)
-            cell.set_property('foreground-gdk', gtk.gdk.color_parse(str(self.window.style.text[gtk.STATE_SELECTED])))
+            cell.set_property('foreground-gdk', gtk.gdk.color_parse(str(self.window.style.fg[gtk.STATE_NORMAL])))
         else:
             cell.set_property('background-gdk', self.even)
             cell.set_property('cell-background-gdk', self.even)
-            cell.set_property('foreground-gdk', gtk.gdk.color_parse(str(self.window.style.text[gtk.STATE_INSENSITIVE])))
+            cell.set_property('foreground-gdk', gtk.gdk.color_parse(str(self.window.style.text[gtk.STATE_NORMAL])))
         
     def save_position(self,widget,e):
 		self.x,self.y=self.window.get_position()
