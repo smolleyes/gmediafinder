@@ -59,6 +59,7 @@ class DailyMotion(object):
     def filter(self,data,user_search):
         js = json.load(data)
         l = js['list']
+        print l
         for dic in l:
             #print dic
             if self.thread_stop == True:
@@ -68,7 +69,7 @@ class DailyMotion(object):
             img_link = dic['thumbnail_medium_url']
             img = download_photo(img_link)
             title = glib.markup_escape_text(title)
-            gobject.idle_add(self.gui.add_sound, title, None, link, img, None, self.name)
+            gobject.idle_add(self.gui.add_sound, title, link, img, None, self.name)
         if js['has_more'] != 'true':
             self.print_info(_("%s: No more results for %s...") % (self.name,user_search))
             time.sleep(5)
