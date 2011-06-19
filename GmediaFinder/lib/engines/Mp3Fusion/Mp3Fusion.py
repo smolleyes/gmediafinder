@@ -1,7 +1,10 @@
+#-*- coding: UTF-8 -*-
 import gobject
 import urllib2
 import urllib
 import time
+
+from functions import *
 
 class Mp3Fusion(object):
     def __init__(self,gui):
@@ -31,7 +34,7 @@ class Mp3Fusion(object):
             if 'line1' in line:
                 flag_found = True
                 url = line.split('"')[3]
-                titre = line.split('>')[2].split('<')[0]
+                titre = re.search('name=(.*)&url=',line).group(1)
                 if not titre: titre = url.split('/')[-1]
                 if self.thread_stop:
                     break
