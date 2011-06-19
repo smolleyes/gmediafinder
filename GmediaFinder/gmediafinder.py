@@ -554,15 +554,15 @@ class GsongFinder(object):
         ## clean markup...
         #markup = glib.markup_escape_text(markup_src)
         #print markup
-        markup = ""
-        try:
-			if re.search('&', markup_src):
-				markup = re.sub('&','&amp;', markup_src)
-			else:
-				markup = markup_src
-            #markup = glib.markup_escape_text(markup_src)
-        except:
-			pass
+        markup = decode_htmlentities(markup_src)
+        #try:
+			#if re.search('&', markup_src):
+				#markup = re.sub('&','&amp;', markup_src)
+			#else:
+				#markup = markup_src
+            ##markup = glib.markup_escape_text(markup_src)
+        #except:
+			#pass
         iter = self.model.append()
         self.model.set(iter,
                         0, img,
@@ -818,8 +818,8 @@ class GsongFinder(object):
         bit=_('Bitrate:')
         enc=_('Encoding:')
         play=_('Playing:')
-        name = glib.markup_escape_text(self.media_name) 
-        gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s </b> %s</small>' % (play,name))
+        #name = glib.markup_escape_text(self.media_name) 
+        gobject.idle_add(self.media_name_label.set_markup,'%s %s' % (play,self.media_markup))
         gobject.idle_add(self.media_bitrate_label.set_markup,'<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
         gobject.idle_add(self.media_codec_label.set_markup,'<small><b>%s </b> %s</small>' % (enc,self.media_codec))
         ## update timer for mini_player and hide it if more than 5 sec 

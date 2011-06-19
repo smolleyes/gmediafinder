@@ -276,6 +276,9 @@ class ComboBox(object):
                 break
             self.combobox.set_active(-1)
 
+def decode_htmlentities(string):
+    h = HTMLParser.HTMLParser()
+    return h.unescape(string)
 
 # self._hook est appelé à chaque requete urllib
 class Abort(Exception):
