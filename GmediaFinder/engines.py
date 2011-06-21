@@ -30,10 +30,7 @@ class Engines(object):
         module = __import__(modstr, globals(), locals(), ['*'])
         init = getattr(module, '%s' % engine)
         setattr(self, '%s' % engine, init(self.gui))
-        #try:
-            #setattr(self, '%s' % engine, init(self.gui))
-        #except:
-            #return
+
                     
     def load_plugins_conf(self):
         try:
@@ -49,7 +46,7 @@ class Engines(object):
             ## add new engines key in the config file if not present
             ## disable YouPorn by default
             for eng in self.local_engines_list:
-                if not ('Redtube' in eng or 'YouPorn' in eng):
+                if not ('Redtube' in eng or 'YouPorn' in eng or 'BurningCamel' in eng):
                     self.engines_list.append(eng)
             self.gui.conf["engines"] = self.engines_list
             self.gui.conf.write()

@@ -16,6 +16,9 @@ class NuttyMp3(object):
         self.main_start_page = 1
         self.thread_stop=False
         self.order_label = _("Order by: ")
+        self.duration_label = _("Duration: ")
+        self.size_label = _("Size: ")
+        self.bitrate_label = _("Bitrate: ")
         self.search_url = "http://www.nuttymp3.com/%s/%s/%s"
         self.browser = mechanize.Browser()
         self.browser.addheaders = []
@@ -70,7 +73,7 @@ class NuttyMp3(object):
                 continue
             if '>Bitrate:' in line:
                 bit = line.split('>')[3].split('<')[0]
-                mark = '\n<span size="x-small"> <b>Duration</b> %s   <b>Bitrate</b> %s<b>   Size:</b> %s</span>' % (dur, bit, size)
+                mark = '\n<span size="x-small"> <b>%s</b> %s   <b>%s</b> %s<b>   %s</b> %s</span>' % (self.duration_label, dur, self.bitrate_label, bit, self.size_label, size)
                 gobject.idle_add(self.gui.add_sound, titre, url, None, None, self.name, mark)               
         if not flag_found:
             self.print_info(_("%s: No results for %s...") % (self.name,user_search))

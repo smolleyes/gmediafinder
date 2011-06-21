@@ -83,7 +83,7 @@ def get_codec(num):
     return codec
 
 class Downloader(threading.Thread):
-    def __init__(self,gui,url, name, pbar, btnf, btn,btn_conv,btnstop,label=''):
+    def __init__(self,gui,url, name, pbar, btnf, btn,btn_conv,btnstop,convert,label=''):
         threading.Thread.__init__(self)
         self.label = label
         self.gui = gui
@@ -96,6 +96,7 @@ class Downloader(threading.Thread):
         self.btn = btn
         self.btn_conv = btn_conv
         self.btnstop = btnstop
+        self.convert_check = convert
         self.btnstop.connect('clicked', self.stop)
         
     def run(self,):
@@ -109,7 +110,8 @@ class Downloader(threading.Thread):
                 urllib.urlretrieve(self.url, self.gui.down_dir+"/"+ self.name,
                 lambda nb, bs, fs, url=self.url: self._reporthook(nb,bs,fs,start_time,self.url,self.name,self.pbar))
                 self.btnf.show()
-                self.btn_conv.show()
+                if self.convert_check == 'True':
+                    self.btn_conv.show()
                 self.btn.show()
                 self.btnstop.hide()
                 self.decrease_down_count()
@@ -285,6 +287,7 @@ def decode_htmlentities(text):
     p.feed(text)
     text = p.save_end()
     text = re.sub('&#_;','\'',text)
+    text = re.sub('&# ;','\'',text)
     text = re.sub('&amp;','&',text)
     text = re.sub('_',' ',text)
     return text
@@ -330,3 +333,9 @@ class urlFetch(Thread):
 
     def abort(self):
         self.stop = True
+
+
+def warn_dialog(dialog):
+    result = dialog.run()
+    dialog.hide()
+    return result

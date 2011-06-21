@@ -155,6 +155,14 @@ class GsongFinder(object):
         self.vis_selector = ComboBox(combo)
         self.vis_selector.setIndexFromString(self.vis)
 
+        ##extras options
+        self.downloads_check = self.gladeGui.get_widget("downloads_enabled")
+        self.convert_check = self.gladeGui.get_widget("convert_enabled")
+        self.warn_dialog = self.gladeGui.get_widget("warn_dialog")
+        if downloads == 'True':
+            self.downloads_check.set_active(1)
+        if convert == 'True':
+            self.convert_check.set_active(1)
 
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
@@ -177,6 +185,8 @@ class GsongFinder(object):
         "on_search_entry_icon_press" : self.clear_search_entry,
         "on_show_thumbs_opt_toggled" : self.on_gui_opt_toggled,
         "on_stop_search_btn_clicked": self.stop_threads,
+        "on_downloads_enabled_toggled" : self.set_extras_options,
+        "on_convert_enabled_toggled" : self.set_extras_options,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -289,8 +299,13 @@ class GsongFinder(object):
 
         ## load icons
         self.load_gui_icons()
-
         self.statbar.hide()
+        
+        ## check extra options
+        if downloads == 'False':            
+            self.down_btn.hide()
+            self.down_menu_btn.hide()
+            
         ## start main loop
         gobject.threads_init()
         #THE ACTUAL THREAD BIT
@@ -298,7 +313,35 @@ class GsongFinder(object):
         self.mainloop = gobject.MainLoop(is_running=True)
         self.mainloop.run()
 
-    def on_gui_opt_toggled(self,widget):
+    def set_extras_options(self, widget):
+        if ('convert' in widget.name):
+            if widget.get_active():
+                accept = warn_dialog(self.warn_dialog)
+                if accept == 0:
+                    convert = 'True'
+                    self.conf['convert'] = True
+                else:
+                    widget.set_active(0)
+            else:
+                convert = 'False'
+                self.conf['convert'] = False
+        else:
+            if widget.get_active():
+                accept = warn_dialog(self.warn_dialog)
+                if accept == 0:
+                    self.down_btn.show()
+                    self.down_menu_btn.show()
+                    self.conf['downloads'] = True
+                else:
+                    widget.set_active(0)
+            else:
+                self.down_btn.hide()
+                self.down_menu_btn.hide()
+                self.conf['downloads'] = False
+        ## save config
+        self.conf.write()
+    
+    def on_gui_opt_toggled(self, widget):
         if widget.get_active():
             self.show_thumbs_opt = "True"
             self.columns[0].set_visible(1)
@@ -1015,7 +1058,8 @@ class GsongFinder(object):
         btn.hide()
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
-        t = Downloader(self,url, name, pbar, btnf,btn,btn_conv,btnstop,self.media_name+".%s" % self.media_codec)
+        t = Downloader(self,url, name, pbar, btnf, btn, btn_conv,
+        btnstop, convert, self.media_name+".%s" % self.media_codec)
         t.start()
 
     def bus_message_tag(self, bus, message):

@@ -40,6 +40,8 @@ width = gtk.gdk.screen_width()
 height = gtk.gdk.screen_height()
 window_state = "%s,%s,%s,%s" % (width-200,height-80,0,0)
 show_thumbs_opt = "True"
+downloads = False
+convert = False
 if sys.platform == "win32":
     from win32com.shell import shell, shellcon
     df = shell.SHGetDesktopFolder()
@@ -66,6 +68,8 @@ if not os.path.exists(settings_folder):
     os.write(fd,"window_state=%s\n" % window_state)
     os.write(fd,"show_thumbs=%s\n" % show_thumbs_opt)
     os.write(fd,"visualisation=%s\n" % vis)
+    os.write(fd,"downloads=%s\n" % downloads)
+    os.write(fd,"convert=%s\n" % downloads)
     os.close(fd)
 conf = ConfigObj(conf_file,write_empty_values=True)
 try:
@@ -84,4 +88,16 @@ try:
     show_thumbs_opt = conf["show_thumbs"]
 except:
     conf["show_thumbs"] = True
+    conf.write()
+
+## extras options
+try:
+    downloads = conf["downloads"]
+except:
+    conf["downloads"] = downloads
+    conf.write()
+try:
+    convert = conf["convert"]
+except:
+    conf["convert"] = convert
     conf.write()
