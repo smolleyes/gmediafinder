@@ -317,11 +317,16 @@ class urlFetch(Thread):
             self.engine.filter(f,self.query)
         except Abort, KeyBoardInterrupt:
             e = sys.exc_info()[1]
-            print "<p>Error: %s</p>" % e 
+            print "<p>Error: %s</p>" % e
             print 'Aborted'
         except:
-            self.stop = True
-            raise
+            try:
+                t = urllib2.urlopen(self.url)
+                self.engine.filter(t, self.query)
+            except:
+                self.stop = True
+                raise
+
 
     def abort(self):
         self.stop = True
