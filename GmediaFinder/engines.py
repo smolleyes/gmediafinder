@@ -46,7 +46,7 @@ class Engines(object):
             ## add new engines key in the config file if not present
             ## disable YouPorn by default
             for eng in self.local_engines_list:
-                if not ('Redtube' in eng or 'YouPorn' in eng or 'BurningCamel' in eng):
+                if ('Jamendo' in eng or 'Youtube' in eng or 'DailyMotion' in eng):
                     self.engines_list.append(eng)
             self.gui.conf["engines"] = self.engines_list
             self.gui.conf.write()
