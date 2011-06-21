@@ -335,6 +335,12 @@ class urlFetch(Thread):
         self.stop = True
 
 
+def get_redirect_link(link):
+    request = urllib2.Request(link)
+    opener = urllib2.build_opener()
+    f = opener.open(request)
+    return f.url
+
 def warn_dialog(dialog):
     result = dialog.run()
     dialog.hide()

@@ -21,6 +21,7 @@ class Jamendo(object):
         self.order_label = _("Order by: ")
         self.tag_label = _("Tag: ")
         self.search_url = 'http://api.jamendo.com/get2/name+stream+album_name+artist_name+album_id+duration/track/json/track_album+album_artist/?n=20&pn=%s&order=%s_desc&tag_idstr=%s'       
+        self.thumb_url = 'http://api.jamendo.com/get2/image/album/redirect/?id=%s&imagesize=200'
         self.start_engine()
     
     def start_engine(self):
@@ -64,9 +65,12 @@ class Jamendo(object):
             link = i["stream"]
             album = i['album_name']
             title = '%s - %s' % (artist, name)
+            pic = self.thumb_url % i[u'album_id']
+            tmp = get_redirect_link(pic)
+            img = download_photo(tmp)
             mark = '\n<span size="x-small"><b>Duration: </b>%s  <b>Album: </b>%s</span>' % (str(datetime.timedelta(seconds=duration)),
                                                                                             album)
-            gobject.idle_add(self.gui.add_sound, title, link, None, None, self.name, mark)
+            gobject.idle_add(self.gui.add_sound, title, link, img, None, self.name, mark)
         self.thread_stop=True
         
     
