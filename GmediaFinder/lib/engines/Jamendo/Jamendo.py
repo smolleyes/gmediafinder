@@ -21,7 +21,7 @@ class Jamendo(object):
         self.order_label = _("Order by: ")
         self.tag_label = _("Tag: ")
         self.search_url = 'http://api.jamendo.com/get2/name+stream+album_name+artist_name+album_id+duration/track/json/track_album+album_artist/?n=20&pn=%s&order=%s_desc&tag_idstr=%s'       
-        self.thumb_url = 'http://api.jamendo.com/get2/image/album/redirect/?id=%s&imagesize=200'
+        self.thumb_url = 'http://api.jamendo.com/get2/image/album/redirect/?id=%s&imagesize=100'
         self.start_engine()
     
     def start_engine(self):
