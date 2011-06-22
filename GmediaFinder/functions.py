@@ -284,7 +284,7 @@ def decode_htmlentities(text):
     p = htmllib.HTMLParser(None)
     p.save_bgn()
     p.feed(text)
-    text = p.save_end()
+    text = p.save_end().decode('iso-8859-1').encode('utf-8')
     text = re.sub('&#_;','\'',text)
     text = re.sub('&# ;','\'',text)
     text = re.sub('&amp;','&',text)
