@@ -88,7 +88,6 @@ class Downloader(threading.Thread):
         self.label = label
         self.gui = gui
         self._stopevent = threading.Event()
-        print "thread %s" % name
         self.url = url
         self.name = name
         self.pbar = pbar
@@ -127,7 +126,6 @@ class Downloader(threading.Thread):
 
 	
     def stop(self,widget=None):
-		print "thread %s stopped" % self.name
 		self._stopevent.set()
 		self.decrease_down_count()
 		os.remove(self.gui.down_dir+"/"+ self.name)
@@ -236,7 +234,8 @@ def create_comboBox(gui=None,dic=None):
             label = gtk.Label(key)
             target.pack_start(label,False,False,5)
             cb = ComboBox(combobox)
-            for val in values:
+            dr = sorted(values.keys())
+            for val in dr:
                 cb.append(val)
             target.add(combobox)
             cb.select(0)
@@ -320,7 +319,8 @@ class urlFetch(Thread):
             self.engine.filter(f,self.query)
         except Abort, KeyBoardInterrupt:
             e = sys.exc_info()[1]
-            print "<p>Error: %s</p>" % e
+            if e != "":
+                print "<p>Error: %s</p>" % e
             print 'Aborted'
         except:
             try:

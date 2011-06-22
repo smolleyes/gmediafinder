@@ -26,10 +26,13 @@ class Youtube(object):
         self.client = yt_service.YouTubeService()
         self.youtube_max_res = "320x240"
         self.media_codec = None
-        self.thread_stop=False
+        self.thread_stop= False
         ## the gui box to show custom filters/options
         self.opt_box = self.gui.gladeGui.get_widget("search_options_box")
-
+        
+        ## options labels
+        self.order_label = _("Order by: ")
+        self.category_label = _("Category: ")
         ## video quality combobox
         self.youtube_quality_box = self.gui.gladeGui.get_widget("quality_box")
         self.youtube_quality_model = gtk.ListStore(str)
@@ -89,38 +92,27 @@ class Youtube(object):
         self.youtube_video_rate.set_active(0)
 
     def load_gui(self):
-        label = gtk.Label(_("Order by: "))
-        self.gui.search_opt_box.pack_start(label,False,False,5)
         ## create orderby combobox
         cb = create_comboBox()
-        self.orderbyOpt = {_("Most relevant"):"relevance",
-        _("Most recent"):"published",_("Most viewed"):"viewCount",
-        _("Most rated"):"rating"
+        self.orderbyOpt = {self.order_label:{_("Most relevant"):"relevance",
+                                             _("Most recent"):"published",_("Most viewed"):"viewCount",
+                                             _("Most rated"):"rating",
+            },
         }
-        self.orderby = ComboBox(cb)
-        for cat in self.orderbyOpt:
-            self.orderby.append(cat)
-        self.gui.search_opt_box.add(cb)
+        self.orderby = create_comboBox(self.gui, self.orderbyOpt)
+        
         ## create categories combobox
-        label = gtk.Label(_("Category: "))
-        self.gui.search_opt_box.pack_start(label,False,False,5)
-        cb = create_comboBox()
         self.category = ComboBox(cb)
-        self.category.append("")
-        self.catlist = {_("Sport"):"Sports",_("Films"):"Film",_("Cars"):"Autos",
-        _("Music"):"Music",_("Technology"):"Tech",_("Animals"):"Animals",
-        _("Travel"):"Travel",_("Games"):"Games",_("Comedy"):"Comedy",
-        _("Peoples"):"People",_("News"):"News",
-        _("Entertainement"):"Entertainment",_("Trailers"):"Trailers"}
-        catlist = sortDict(self.catlist)
-        for cat in catlist:
-            self.category.append(cat)
-        self.gui.search_opt_box.add(cb)
-        self.gui.search_opt_box.show_all()
-        self.youtube_video_rate.show()
-        self.orderby.select(0)
-        self.category.select(0)
-        self.youtube_quality_box.show_all()
+        self.catlist = {self.category_label:{"":"",_("Sport"):"Sports",
+                                             _("Films"):"Film",_("Cars"):"Autos",
+                                             _("Music"):"Music",_("Technology"):"Tech",_("Animals"):"Animals",
+                                             _("Travel"):"Travel",_("Games"):"Games",_("Comedy"):"Comedy",
+                                             _("Peoples"):"People",_("News"):"News",
+                                             _("Entertainement"):"Entertainment",_("Trailers"):"Trailers",
+            },
+        }
+        self.category = create_comboBox(self.gui, self.catlist)
+        self.orderby.setIndexFromString(_("Most relevant"))
 
     def set_max_youtube_res(self, widget):
         if widget.get_active():
@@ -143,10 +135,10 @@ class Youtube(object):
         query.max_results = '25'
         #query.lr = 'fr'
         orderby = self.orderby.getSelected()
-        query.orderby = self.orderbyOpt[orderby]
+        query.orderby = self.orderbyOpt[self.order_label][orderby]
         cat = self.category.getSelected()
         if self.category.getSelectedIndex() != 0:
-            query.categories.append('/%s' % self.catlist[cat])
+            query.categories.append('/%s' % self.catlist[self.category_label][cat])
 
         if self.current_page == 1:
             self.num_start = 1

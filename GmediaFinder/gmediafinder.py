@@ -281,7 +281,7 @@ class GsongFinder(object):
         self.global_audio_search = _("All audios")
         self.global_video_search = _("All videos")
 
-        for engine in self.engine_list:
+        for engine in sorted(self.engine_list):
             try:
                 if getattr(self.engines_client, '%s' % engine).adult_content:
                     self.engine_selector.append(engine,True)
@@ -1161,13 +1161,6 @@ class GsongFinder(object):
         throbber.hide()
         convbtn.show()
         self.statbar.push(1,_("Audio file successfully created !"))
-        while gtk.events_pending():
-            gtk.main_iteration()
-        time.sleep(3)
-        if self.is_playing:
-            self.media_name_label.set_text('<small><b>%s</b></small>' % self.media_name)
-        else:
-            self.statbar.push(1,_("Stopped"))
 
     def on_about_btn_pressed(self, widget):
         dlg = self.gladeGui.get_widget("aboutdialog")

@@ -37,6 +37,8 @@ class YouPorn(object):
         self.adult_content=True
         self.search_url = "http://www.youporn.com/search/%s?query=%s&type=%s&page=%s"
         self.initialized=False
+        ## options labels
+        self.order_label = _("Order by: ")
         self.browser = mechanize.Browser()
         self.browser.addheaders = []
         self.start_engine()
@@ -46,20 +48,14 @@ class YouPorn(object):
         self.gui.engine_list[self.name] = ''
     
     def load_gui(self):
-        label = gtk.Label(_("Order by: "))
-        self.gui.search_opt_box.pack_start(label,False,False,5)
         ## create orderby combobox
-        cb = create_comboBox()
-        self.orderbyOpt = {_("Most recent"):"time",_("Most viewed"):"views",
-        _("Most rated"):"rating",_("Duration"):"duration",
-        _("Most relevant"):"relevance",
+        self.orderbyOpt = {self.order_label:{_("Most recent"):"time",_("Most viewed"):"views",
+                           _("Most rated"):"rating",_("Duration"):"duration",
+                           _("Most relevant"):"relevance",
+            },
         }
-        self.orderby = ComboBox(cb)
-        for cat in self.orderbyOpt:
-            self.orderby.append(cat)
-        self.gui.search_opt_box.add(cb)
-        self.gui.search_opt_box.show_all()
-        self.orderby.select(0)
+        self.orderby = create_comboBox(self.gui, self.orderbyOpt)
+        self.orderby.setIndexFromString(_("Most relevant"))
     
     def filter(self, data, query):
         flag_found = False
