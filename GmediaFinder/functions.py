@@ -289,6 +289,7 @@ def decode_htmlentities(text):
     text = re.sub('&# ;','\'',text)
     text = re.sub('&amp;','&',text)
     text = re.sub('_',' ',text)
+    text = re.sub('&#.*;',' ',text)
     return text
 
 

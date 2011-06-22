@@ -309,7 +309,7 @@ class GsongFinder(object):
         ## start main loop
         gobject.threads_init()
         #THE ACTUAL THREAD BIT
-        self.manager = FooThreadManager(20)
+        self.manager = FooThreadManager(1)
         self.mainloop = gobject.MainLoop(is_running=True)
         self.mainloop.run()
 
@@ -456,8 +456,9 @@ class GsongFinder(object):
         self.media_codec = ""
         self.stop_play()
         ## play in engine
-        thread.start_new_thread(self.search_engine.play,(self.media_link,))
-
+        #thread.start_new_thread(self.search_engine.play,(self.media_link,))
+        self.search_engine.play(self.media_link)
+        
     def prepare_search(self,widget=None):
         self.user_search = self.search_entry.get_text()
         self.latest_engine = self.engine_selector.getSelectedIndex()

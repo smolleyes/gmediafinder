@@ -37,7 +37,10 @@ class Mp3Fusion(object):
                 if not titre: titre = url.split('/')[-1]
                 if self.thread_stop:
                     break
-                gobject.idle_add(self.gui.add_sound, titre, url, None, None, self.name)
+                try:
+                    gobject.idle_add(self.gui.add_sound, titre, url, None, None, self.name)
+                except:
+                    continue
                 continue
             if '>Next Result' in line and line.split('"')[1] == 'http://www.mp3fusion.net/music/.html':
                 self.print_info(_("%s: No results for %s...") % (self.name,user_search))
