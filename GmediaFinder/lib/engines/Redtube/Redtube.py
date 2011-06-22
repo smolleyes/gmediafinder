@@ -37,7 +37,7 @@ class Redtube(object):
     
     def get_search_url(self,query,page):
         choice = self.orderby.getSelected()
-        orderby = self.orderbyOpt[choice]
+        orderby = self.orderbyOpt[self.order_label][choice]
         return self.search_url % (orderby,query,page)
     
     def play(self,link):

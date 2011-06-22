@@ -29,15 +29,18 @@ class Mp3Moo(object):
         for line in data.readlines():
             if self.thread_stop:
                 break
-            if 'prod_details' in line:
-                base_cut = line.split('url=')[1]
-                url = 'http://mp3moo.com/download.php?url=%s' % base_cut.split('"')[0]
-                titre = base_cut.split('>')[1].split('<')[0]
-                serveur = base_cut.split('>')[-1].rstrip()
-                e= _('Engine: ')
-                markup = '\n<small><b>%s</b>%s</small>' % (e,serveur.split('|')[0])
-                gobject.idle_add(self.gui.add_sound, titre, url, None, None, self.name,markup)
-                flag_found = True
+            try:
+                if 'prod_details' in line:
+                    base_cut = line.split('url=')[1]
+                    url = 'http://mp3moo.com/download.php?url=%s' % base_cut.split('"')[0]
+                    titre = base_cut.split('>')[1].split('<')[0]
+                    serveur = base_cut.split('>')[-1].rstrip()
+                    eng= _('Engine: ')
+                    markup = '\n<small><b>%s</b>%s</small>' % (eng,serveur.split('|')[0])
+                    gobject.idle_add(self.gui.add_sound, titre, url, None, None, self.name,markup)
+                    flag_found = True
+                    continue
+            except:
                 continue
             if '>Next<' in line and self.search_url in line:
                 self.print_info(_("%s: No results for %s...") % (self.name,user_search))

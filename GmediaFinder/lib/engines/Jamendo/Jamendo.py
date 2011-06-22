@@ -69,7 +69,7 @@ class Jamendo(object):
             pic = self.thumb_url % i[u'album_id']
             tmp = get_redirect_link(pic)
             img = download_photo(tmp)
-            mark = '\n<span size="x-small"><b>Duration: </b>%s  <b>Album: </b>%s</span>' % (str(datetime.timedelta(seconds=duration)),
+            mark = '\n<small><b>Duration: </b>%s  <b>Album: </b>%s</small>' % (str(datetime.timedelta(seconds=duration)),
                                                                                             album)
             gobject.idle_add(self.gui.add_sound, title, link, img, None, self.name, mark)
         self.thread_stop=True

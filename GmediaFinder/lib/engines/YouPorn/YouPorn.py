@@ -90,7 +90,7 @@ class YouPorn(object):
             self.browser.open(ENTER_URL)
             self.initialized = True
         choice = self.orderby.getSelected()
-        orderby = self.orderbyOpt[choice]
+        orderby = self.orderbyOpt[self.order_label][choice]
         return SEARCH_URL % (orderby,query,page)
     
     def search(self, data, query, page):

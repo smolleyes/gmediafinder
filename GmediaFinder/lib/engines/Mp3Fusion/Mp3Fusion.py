@@ -3,6 +3,7 @@ import gobject
 import urllib2
 import urllib
 import time
+import re
 
 class Mp3Fusion(object):
     def __init__(self,gui):
