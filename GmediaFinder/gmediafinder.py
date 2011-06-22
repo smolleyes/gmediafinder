@@ -309,7 +309,7 @@ class GsongFinder(object):
         ## start main loop
         gobject.threads_init()
         #THE ACTUAL THREAD BIT
-        self.manager = FooThreadManager(1)
+        self.manager = FooThreadManager(20)
         self.mainloop = gobject.MainLoop(is_running=True)
         self.mainloop.run()
 
