@@ -103,25 +103,25 @@ class Downloader(threading.Thread):
         i = 0
         while not self._stopevent.isSet():
             self.gui.active_downloads += 1
-            self.gui.active_down_label.set_text(str(self.gui.active_downloads))
+            gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
             ## download...
             try:
                 start_time = time.time()
                 urllib.urlretrieve(self.url, self.gui.down_dir+"/"+ self.name,
                 lambda nb, bs, fs, url=self.url: self._reporthook(nb,bs,fs,start_time,self.url,self.name,self.pbar))
-                self.btnf.show()
+                gobject.idle_add(self.btnf.show)
                 if self.convert_check == 'True':
-                    self.btn_conv.show()
-                self.btn.show()
-                self.btnstop.hide()
+                    gobject.idle_add(self.btn_conv.show)
+                gobject.idle_add(self.btn.show)
+                gobject.idle_add(self.btnstop.hide)
                 self.decrease_down_count()
                 self._stopevent.set()
                 os.rename(self.gui.down_dir+"/"+ self.name,self.gui.down_dir+"/"+ self.label)
             except:
-                self.pbar.set_text(_("Failed..."))
-                self.btn.show()
+                gobject.idle_add(self.pbar.set_text,_("Failed..."))
+                gobject.idle_add(self.btn.show)
                 self.decrease_down_count()
-                self.btnstop.hide()
+                gobject.idle_add(self.btnstop.hide)
                 self._stopevent.set()
 			
 
@@ -136,7 +136,7 @@ class Downloader(threading.Thread):
     def decrease_down_count(self):
 		if self.gui.active_downloads > 0:
 			self.gui.active_downloads -= 1
-			self.gui.active_down_label.set_text(str(self.gui.active_downloads))
+			gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
 	
     def _reporthook(self, numblocks, blocksize, filesize, start_time, url, name, progressbar):
 		#print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)

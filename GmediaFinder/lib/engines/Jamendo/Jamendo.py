@@ -47,7 +47,6 @@ class Jamendo(object):
         choice = self.orderby.getSelected()
         orderby = self.order_list[self.order_label][choice]
         tag = self.ordertag.getSelected()     
-        print self.search_url % (page, orderby, tag)
         return self.search_url % (page, orderby, tag)
     
     def play(self, link):      

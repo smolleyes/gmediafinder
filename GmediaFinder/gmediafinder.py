@@ -1000,16 +1000,18 @@ class GsongFinder(object):
         return self.geturl(self.active_link)
 
     def geturl(self, url, codec=None):
-        name = urllib.quote(self.media_name+".%s" % self.media_codec)
+        oname = self.media_name+".%s" % self.media_codec
+        name = urllib.quote(oname)
         target = os.path.join(self.down_dir,name)
-        if os.path.exists(target):
-            ret = yesno(_("Download"),_("The file:\n\n%s \n\nalready exist, download again ?") % target)
+        otarget = os.path.join(self.down_dir,oname)
+        if os.path.exists(otarget):
+            ret = yesno(_("Download"),_("The file:\n\n%s \n\nalready exist, download again ?") % oname)
             if ret == "No":
                 return
         #self.notebook.set_current_page(1)
         box = gtk.HBox(False, 5)
         vbox = gtk.VBox(False, 5)
-        label = gtk.Label(self.media_name+".%s" % self.media_codec)
+        label = gtk.Label(oname)
         label.set_alignment(0, 0.5)
         vbox.pack_start(label, False, False, 5)
         pbar = gtk.ProgressBar()
@@ -1062,7 +1064,7 @@ class GsongFinder(object):
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
         t = Downloader(self,url, name, pbar, btnf, btn, btn_conv,
-        btnstop, convert, self.media_name+".%s" % self.media_codec)
+        btnstop, convert, oname)
         t.start()
 
     def bus_message_tag(self, bus, message):
