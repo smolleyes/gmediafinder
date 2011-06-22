@@ -35,13 +35,15 @@ class Jamendo(object):
                            }
         self.orderby = create_comboBox(self.gui, self.order_list)
         data = urllib2.urlopen('http://www.jamendo.com/fr/tags')
-        self.order_tag = {self.tag_label: {}, }
+        self.order_tag = {self.tag_label: {"":""}, }
         for line in data.readlines():
             if 'g_tag_name' in line:
         	    l = re.findall('chargement de musique libre : ([^"]*)',line)
         	    for i in l:
         	    	self.order_tag[self.tag_label][i] = i
-        self.ordertag = create_comboBox(self.gui, self.order_tag) 
+        self.ordertag = create_comboBox(self.gui, self.order_tag)
+        self.orderby.setIndexFromString(_("Date of release"))
+        self.ordertag.setIndexFromString(_("music"))
                
     def get_search_url(self,query,page):
         choice = self.orderby.getSelected()
