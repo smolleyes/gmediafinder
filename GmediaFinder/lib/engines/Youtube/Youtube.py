@@ -201,7 +201,7 @@ class Youtube(object):
 
 
     def load_youtube_res(self,link):
-        gobject.idle_add(self.youtube_quality_model.clear)
+        self.youtube_quality_model.clear()
         self.media_link,self.quality_list = self.get_quality_list(link)
         if not self.quality_list:
             return
@@ -228,7 +228,7 @@ class Youtube(object):
                     qn+=1
                     continue
                 else:
-                    gobject.idle_add(self.youtube_video_rate.set_active,qn)
+                    self.youtube_video_rate.set_active(qn)
             active = self.youtube_video_rate.get_active()
         else:
             if self.quality_list:
