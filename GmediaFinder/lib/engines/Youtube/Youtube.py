@@ -167,7 +167,7 @@ class Youtube(object):
         self.thread_stop=True
 
     def play(self,link):
-        gobject.idle_add(self.youtube_video_rate.show)
+        gobject.idle_add(self.gui.quality_box.show)
         self.load_youtube_res(link)
         active = self.youtube_video_rate.get_active()
         self.media_codec = self.quality_list[active].split('|')[1]
