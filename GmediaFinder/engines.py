@@ -30,7 +30,7 @@ class Engines(object):
         module = __import__(modstr, globals(), locals(), ['*'])
         init = getattr(module, '%s' % engine)
         setattr(self, '%s' % engine, init(self.gui))
-
+        getattr(self, '%s' % engine).load_gui()
                     
     def load_plugins_conf(self):
         try:

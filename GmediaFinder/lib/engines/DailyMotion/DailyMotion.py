@@ -41,7 +41,6 @@ class DailyMotion(object):
         if choice != "":
             filters = self.filters_list[self.filters_label][choice]
             f = 'filters=%s&' % filters
-        print self.search_url % (f,orderby,page,query)
         return self.search_url % (f,orderby,page,query)
     
     def play(self,link):

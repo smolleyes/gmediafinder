@@ -407,13 +407,14 @@ class GsongFinder(object):
 
     def set_engine(self,engine=None):
         self.quality_box.hide()
+        global_search = False
         try:
             engine = engine.name
             self.engine = self.engine_selector.getSelected()
         except:
             self.engine = engine
             self.engine_selector.setIndexFromString(engine)
-
+            global_search = True
         iter = self.engine_selector.getSelectedIndex()
         if iter == 0:
             self.engine = None
@@ -426,7 +427,8 @@ class GsongFinder(object):
             return
         ## load the plugin
         self.search_engine = getattr(self.engines_client,'%s' % self.engine)
-        self.search_engine.load_gui()
+        if not global_search:
+            self.search_engine.load_gui()
 
     def show_downloads(self, widget):
         self.notebook.set_current_page(1)
@@ -454,7 +456,7 @@ class GsongFinder(object):
         self.media_codec = ""
         self.stop_play()
         ## play in engine
-        self.search_engine.play(self.media_link)
+        thread.start_new_thread(self.search_engine.play,(self.media_link,))
 
     def prepare_search(self,widget=None):
         self.user_search = self.search_entry.get_text()
@@ -468,38 +470,39 @@ class GsongFinder(object):
         if not self.engine:
             self.info_label.set_text(_("Please select an engine..."))
             return
-        self.change_page_request =False
+        self.change_page_request = False
         self.stop_threads()
         self.model.clear()
         self.changepage_btn.set_sensitive(0)
         self.pageback_btn.set_sensitive(0)
         if self.engine_selector.getSelected() == self.global_search:
             for engine in self.engine_list:
-                self.set_engine(engine)
-                self.search_engine = getattr(self.engines_client,'%s' % engine)
                 try:
+                    self.set_engine(engine)
                     self.search()
                 except:
                     continue
+            self.engine_selector.setIndexFromString(self.global_video_search)
         elif self.engine_selector.getSelected() == self.global_video_search:
             for engine in self.engine_list:
                 self.set_engine(engine)
-                self.search_engine = getattr(self.engines_client,'%s' % engine)
                 if not self.search_engine.type == "video":
                     continue
                 try:
                     self.search()
                 except:
                     continue
+            self.engine_selector.setIndexFromString(self.global_video_search)
         elif self.engine_selector.getSelected() == self.global_audio_search:
             for engine in self.engine_list:
-                self.search_engine = getattr(self.engines_client,'%s' % engine)
+                self.set_engine(engine)
                 if not self.search_engine.type == "audio":
                     continue
                 try:
                     self.search()
                 except:
                     continue
+            self.engine_selector.setIndexFromString(self.global_audio_search)
         else:
             return self.search()
 
@@ -1277,7 +1280,7 @@ class _FooThread(threading.Thread, _IdleObject):
         self.cancelled = True
 
     def run(self):
-        print "Running %s" % str(self)
+        #print "Running %s" % str(self)
         gobject.idle_add(self.info.set_text,'')
         self.engine.thread_stop = False
         self.cancelled = False
@@ -1324,13 +1327,12 @@ class FooThreadManager:
         del(self.fooThreads[args])
         self.running = len(self.fooThreads) - len(self.pendingFooThreadArgs)
 
-        print "%s completed. %s running, %s pending" % (
-                            thread, self.running, len(self.pendingFooThreadArgs))
+        #print "%s completed. %s running, %s pending" % (thread, self.running, len(self.pendingFooThreadArgs))
 
         if self.running < self.maxConcurrentThreads:
             try:
                 args = self.pendingFooThreadArgs.pop()
-                print "Starting pending %s" % self.fooThreads[args]
+                #print "Starting pending %s" % self.fooThreads[args]
                 self.fooThreads[args].start()
             except IndexError: pass
         if self.running == 0:
@@ -1360,14 +1362,14 @@ class FooThreadManager:
             self.fooThreads[args] = thread
 
             if self.running < self.maxConcurrentThreads:
-                print "Starting %s" % thread
+                #print "Starting %s" % thread
                 gobject.idle_add(self.throbber.show)
                 gobject.idle_add(self.stop_btn.set_sensitive,1)
                 self.fooThreads[args].start()
                 values = {'engine': self.engine.name, 'query': self.query, 'page' : self.page}
                 gobject.idle_add(self.info.set_text,_("Searching for %(query)s with %(engine)s (page: %(page)s)") % values)
             else:
-                print "Queing %s" % thread
+                #print "Queing %s" % thread
                 self.pendingFooThreadArgs.append(args)
 
     def stop_all_threads(self, block=False):

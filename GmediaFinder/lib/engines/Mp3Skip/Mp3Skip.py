@@ -39,7 +39,6 @@ class Mp3Skip(object):
                     continue
                 if flag_right:
                     titre = line.split('<b>')[1].split('</b>')[0].replace('mp3','')
-                    print titre
                     flag_right = False
                 if '>Download<' in line:
                     flag_found = True
