@@ -4,7 +4,7 @@
 # Translation.py
 # For use gettext in python programs
 ####
-import os, locale, gettext
+import os, locale, gettext, sys
 
 debug = 0
 
@@ -23,7 +23,10 @@ class Translation():
                 lst_lang = []
                 try:
                         # Par défaut on essaye d'utiliser la langue désignée par la variable d'environement $LANG
-                        env_lang = os.environ["LANG"]
+                        if sys.platform == "win32":
+                                env_lang = locale.getdefaultlocale()[0]
+                        else:
+                                env_lang = os.environ["LANG"]
                         if ("_" in env_lang):
                             env_lang = env_lang.split('_')[0]
                         if debug:

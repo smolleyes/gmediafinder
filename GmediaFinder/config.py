@@ -9,6 +9,11 @@ VERSION = "0.9.5"
 APP_NAME = "gmediafinder"
 exec_path =  os.path.dirname(os.path.abspath(__file__))
 
+## LOCALISATION
+source_lang = "en"
+rep_trad = "/usr/share/locale"
+
+
 ## gui
 if ('/usr/local' in exec_path):
     data_path = os.path.join('/usr/local/share/gmediafinder')
@@ -17,17 +22,18 @@ elif ('/usr' in exec_path):
 else:
     data_path =  os.path.join(exec_path,"../data")
 
-if sys.platform == "win32" and not ('constants.py' in os.listdir(os.path.abspath('.'))):
+if sys.platform == "win32" and not ('config.py' in os.listdir(os.path.abspath('.'))):
     data_path= "data"
+    rep_trad = "po"
+if sys.platform == "win32" and ('config.py' in os.listdir(os.path.abspath('.'))):
+    rep_trad = os.path.join(os.path.abspath('..'),'po')
+    data_path= os.path.join(os.path.abspath('..'),'data')
 
 img_path = os.path.join(data_path,"img")
 glade_path = os.path.join(data_path,"glade")
 glade_file = os.path.join(glade_path,"mainGui.glade")
 
-
-## LOCALISATION
-source_lang = "en"
-rep_trad = "/usr/share/locale"
+##localisation end
 traduction = Translation(APP_NAME, source_lang, rep_trad)
 gettext.install(APP_NAME)
 gtk.glade.bindtextdomain(APP_NAME, rep_trad)

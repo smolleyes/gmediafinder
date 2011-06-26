@@ -5,8 +5,6 @@ import time
 import re
 import urllib2
 import urllib
-import html5lib
-from html5lib import sanitizer, treebuilders, treewalkers, serializer, treewalkers
 import threading
 import time
 import gobject
@@ -37,38 +35,18 @@ def get_url_data(url):
             return
 
         return data
-
-def clean_html(buf):
-	"""Cleans HTML of dangerous tags and content."""
-	buf = buf.strip()
-	if not buf:
-		return buf
-
-	p = html5lib.HTMLParser(tree=treebuilders.getTreeBuilder("dom"),
-			tokenizer=sanitizer_factory)
-	dom_tree = p.parseFragment(buf)
-
-	walker = treewalkers.getTreeWalker("dom")
-	stream = walker(dom_tree)
-
-	s = serializer.htmlserializer.HTMLSerializer(
-			omit_optional_tags=False,
-			quote_attr_values=False)
-	return s.render(stream).decode('UTF-8')
-
-def sanitizer_factory(self,*args, **kwargs):
-        san = sanitizer.HTMLSanitizer(*args, **kwargs)
-        # This isn't available yet
-        # san.strip_tokens = True
-        return san
         
 def download_photo(img_url):
-	image_on_web = urllib.urlretrieve(img_url)
-	try:
-		pixb = gtk.gdk.pixbuf_new_from_file_at_size(image_on_web[0],100,100)
-	except gobject.GError, error:
-		return False
-	return pixb
+        filename = os.path.basename(img_url)
+        if sys.platform == "win32":
+            file_path = os.path.join(tempfile.gettempdir(), filename)
+        else:
+            file_path = "%s%s" % ('/tmp/', filename)
+        if os.path.exists(file_path):
+            os.remove(file_path)
+        p = urllib.urlretrieve(img_url, file_path)
+        vid_pic = gtk.gdk.pixbuf_new_from_file_at_scale(p[0],100,100,1)
+	return vid_pic
 
 def get_codec(num):
     codec=None

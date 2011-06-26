@@ -2,6 +2,7 @@
 
 import os,sys
 import gtk
+import re
 from configobj import ConfigObj
 
 ## custom lib
@@ -16,11 +17,21 @@ class Engines(object):
         self.engines_list = []
         self.local_engines_list = []
         self.load_engines()
+        eng_path=""
     
     def load_engines(self):
         # local engines
-        for engine in os.listdir(config.exec_path+'/lib/engines'):
-            if os.path.isdir(os.path.join(config.exec_path+'/lib/engines', engine)):
+        self.local_engines_list = []
+        eng_path=""
+        if sys.platform == "win32" and '.exe' in config.exec_path:
+            p = re.search('(.*)\gmediafinder.exe',config.exec_path).group(1)
+            eng_path = p+'data\engines'
+        elif sys.platform == "win32" and not '.exe' in config.exec_path:
+            eng_path = config.exec_path+'\lib\engines'
+        else:
+            eng_path = config.exec_path+'/lib/engines'
+        for engine in os.listdir(eng_path):
+            if os.path.isdir(os.path.join(eng_path, engine)):
                 self.local_engines_list.append(engine)
         # activated plugins list in the gmf config file
         self.load_plugins_conf()

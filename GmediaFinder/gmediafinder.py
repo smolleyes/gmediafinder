@@ -18,11 +18,18 @@ import urllib
 import pygst
 pygst.require("0.10")
 import gst
+import mechanize
+import gdata
 
 ## custom lib
-from config import *
-from engines import Engines
-from functions import *
+try:
+    from config import *
+    from engines import Engines
+    from functions import *
+except:
+    from GmediaFinder.config import *
+    from GmediaFinder.engines import Engines
+    from GmediaFinder.functions import *
 
 class GsongFinder(object):
     def __init__(self):
@@ -149,7 +156,8 @@ class GsongFinder(object):
         try:
             self.vis = self.conf["visualisation"]
         except:
-            self.conf["visualisation"] = self.vis
+            self.conf["visualisation"] = vis
+            self.vis = vis
             self.conf.write()
         combo = self.gladeGui.get_widget("vis_chooser")
         self.vis_selector = ComboBox(combo)
@@ -622,12 +630,6 @@ class GsongFinder(object):
                 self.player.set_property('vis-plugin', self.visual)
         self.play_btn_pb.set_from_pixbuf(self.stop_icon)
         self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
-        if self.search_engine.type == "video":
-            if not sys.platform == "win32":
-                self.videosink.set_property('force-aspect-ratio', True)
-        else:
-            if not sys.platform == "win32":
-                self.videosink.set_property('force-aspect-ratio', False)
         self.player.set_property("uri", url)
         self.player.set_state(gst.STATE_PLAYING)
         self.play_thread_id = thread.start_new_thread(self.play_thread, ())
@@ -718,6 +720,8 @@ class GsongFinder(object):
         self.stop_search_btn.set_sensitive(0)
 
     def on_message(self, bus, message):
+        if self.search_engine.type == "video" and not sys.platform == "win32":
+                self.videosink.set_property('force-aspect-ratio', True)
         t = message.type
         if t == gst.MESSAGE_EOS:
             self.play_thread_id = None
@@ -733,10 +737,6 @@ class GsongFinder(object):
             self.is_playing = False
             self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
             self.play_btn_pb.set_from_pixbuf(self.stop_icon)
-            if not sys.platform == "win32" and ('No port available' in debug) and not self.xsink:
-                self.videosink = gst.element_factory_make('ximagesink')
-                self.player.set_property("video-sink", self.videosink)
-                self.xsink = True
             ## continue if continue option selected...
             if self.play_options == "continue":
                 self.check_play_options()
@@ -862,7 +862,11 @@ class GsongFinder(object):
         ## update timer for mini_player and hide it if more than 5 sec
         ## without mouse movements
         self.timer += 1
-        if self.fullscreen == True and self.mini_player == True and self.timer > 5 :
+        if self.fullscreen == True and self.mini_player == True and self.timer > 3 :
+            pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
+            color = gtk.gdk.Color()
+            cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
+            self.window.window.set_cursor(cursor)
             self.show_mini_player()
 
         if self.duration == None:
@@ -914,6 +918,7 @@ class GsongFinder(object):
             self.results_box.show()
             self.control_box.show()
             self.options_bar.show()
+            self.window.window.set_cursor(None)
             self.window.window.unfullscreen()
             self.window.set_position(gtk.WIN_POS_CENTER)
         else:
@@ -966,6 +971,7 @@ class GsongFinder(object):
             self.mini_player = False
         else:
             self.control_box.show()
+            self.window.window.set_cursor(None)
             self.mini_player = True
 
     def onKeyPress(self, widget, event):
@@ -1146,12 +1152,13 @@ class GsongFinder(object):
         target = os.path.join(self.down_dir,name+'.mp3')
         if os.path.exists(target):
             os.remove(target)
-        self.statbar.push(1,_("Converting process started..."))
         if sys.platform != "linux2":
-            ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(exec_path)),'ffmpeg\\ffmpeg.exe')
+            ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(exec_path)),'ffmpeg\\ffmpeg.exe').replace("\\","\\\\")
+            target = target.replace("\\","\\\\")
+            src = src.replace("\\","\\\\")
         else:
             ffmpeg_path = "/usr/bin/ffmpeg"
-        (pid,t,r,s) = gobject.spawn_async([ffmpeg_path, '-i', src, '-f', 'mp3', '-ab', '192k', target],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
+        (pid,t,r,s) = gobject.spawn_async([str(ffmpeg_path), '-i', str(src), '-f', 'mp3', '-ab', '192k', str(target)],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
         data=(convbtn,throbber)
         gobject.child_watch_add(pid, self.task_done,data)
 
@@ -1161,7 +1168,6 @@ class GsongFinder(object):
         throbber.set_from_pixbuf(self.loader_pixbuf)
         throbber.hide()
         convbtn.show()
-        self.statbar.push(1,_("Audio file successfully created !"))
 
     def on_about_btn_pressed(self, widget):
         dlg = self.gladeGui.get_widget("aboutdialog")
