@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-06-17 23:32+0200\n"
+"POT-Creation-Date: 2011-06-26 02:20+0200\n"
 "PO-Revision-Date: 2011-06-17 19:11+0000\n"
 "Last-Translator: LukynZ <suchoi@centrum.cz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -16,6 +16,309 @@ msgstr ""
 "Content-Transfer-Encoding: 8bit\n"
 "Plural-Forms: nplurals=3; plural=(n==1) ? 0 : (n>=2 && n<=4) ? 1 : 2\n"
 
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Redtube/Redtube.py:22
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/DailyMotion/DailyMotion.py:21
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:21
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/YouPorn/YouPorn.py:41
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:35
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/SunPorno/SunPorno.py:17
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:22
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:21
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:21
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:41
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:35
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/SunPorno/SunPorno.py:17
+msgid "Order by: "
+msgstr "Řazeno podle:"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Redtube/Redtube.py:31
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/DailyMotion/DailyMotion.py:31
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/YouPorn/YouPorn.py:52
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:99
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:31
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:31
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:99
+msgid "Most recent"
+msgstr "Nejčastějších"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Redtube/Redtube.py:31
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/DailyMotion/DailyMotion.py:31
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/YouPorn/YouPorn.py:52
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:99
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:31
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:31
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:99
+msgid "Most viewed"
+msgstr "Nejprohlíženějších"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Redtube/Redtube.py:32
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/DailyMotion/DailyMotion.py:31
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/YouPorn/YouPorn.py:53
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:100
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:32
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:31
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:100
+msgid "Most rated"
+msgstr "Nejvíce hodnocených"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Redtube/Redtube.py:32
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Redtube/Redtube.py:36
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/DailyMotion/DailyMotion.py:31
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/YouPorn/YouPorn.py:54
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/YouPorn/YouPorn.py:58
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:98
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:116
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:32
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:36
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:31
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:58
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:98
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:116
+msgid "Most relevant"
+msgstr "Nejvíce souvisejících"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Redtube/Redtube.py:79
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Mp3Fusion/Mp3Fusion.py:46
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Mp3Fusion/Mp3Fusion.py:50
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Mp3Moo/Mp3Moo.py:48
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Mp3Moo/Mp3Moo.py:52
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/YouPorn/YouPorn.py:84
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Mp3Skip/Mp3Skip.py:50
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Tagoo/Tagoo.py:52
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/BurningCamel/BurningCamel.py:74
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/SunPorno/SunPorno.py:75
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Dilandau/Dilandau.py:44
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Dilandau/Dilandau.py:48
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Mp3Realm/Mp3Realm.py:58
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Xvideos/Xvideos.py:84
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:79
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:46
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:50
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:48
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:52
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:84
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Skip/Mp3Skip.py:50
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:52
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/BurningCamel/BurningCamel.py:74
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/SunPorno/SunPorno.py:75
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:44
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:48
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:58
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:84
+#, python-format
+msgid "%s: No results for %s..."
+msgstr "%s: Žádné výsledky pro %s..."
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/DailyMotion/DailyMotion.py:22
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:22
+msgid "Filters: "
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/DailyMotion/DailyMotion.py:33
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:33
+msgid "HD"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/DailyMotion/DailyMotion.py:72
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/BurningCamel/BurningCamel.py:69
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:72
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/BurningCamel/BurningCamel.py:69
+#, fuzzy, python-format
+msgid "%s: No more results for %s..."
+msgstr "%s: Žádné výsledky pro %s..."
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:22
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:22
+msgid "Tag: "
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:31
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:45
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:31
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:45
+msgid "Date of release"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:31
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:31
+msgid "Average rating"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:32
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:32
+msgid "Week rating"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:32
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:32
+#, fuzzy
+msgid "Month rating"
+msgstr "Nejvíce hodnocených"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:33
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:33
+msgid "Listened"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:33
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:33
+msgid "Starred"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:33
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:33
+#, fuzzy
+msgid "Tag relevant"
+msgstr "Nejvíce souvisejících"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Jamendo/Jamendo.py:46
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:46
+#, fuzzy
+msgid "music"
+msgstr "Hudba"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Mp3Moo/Mp3Moo.py:29
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:29
+#, python-format
+msgid "%s: Please wait, it can take longtime ..."
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Mp3Moo/Mp3Moo.py:42
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:321
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:321
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:42
+msgid "Engine: "
+msgstr "Zdroj"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/YouPorn/YouPorn.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
+msgid "Duration"
+msgstr "Trvání"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/YouPorn/YouPorn.py:101
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:101
+#, python-format
+msgid "%s: Connexion failed..."
+msgstr "%s: spojení selhalo..."
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:36
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:36
+msgid "Category: "
+msgstr "Kategorie:"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:47
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:47
+msgid "Quality"
+msgstr "Kvalita"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:107
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:107
+msgid "Sport"
+msgstr "Sport"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:108
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:108
+msgid "Films"
+msgstr "Filmy"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:108
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:108
+msgid "Cars"
+msgstr "Auta"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:109
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
+msgid "Music"
+msgstr "Hudba"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:109
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
+msgid "Technology"
+msgstr "Technologie"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:109
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
+msgid "Animals"
+msgstr "Zvířata"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:110
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
+msgid "Travel"
+msgstr "Cestování"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:110
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
+msgid "Games"
+msgstr "Hry"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:110
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
+msgid "Comedy"
+msgstr "Komedie"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:111
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
+msgid "Peoples"
+msgstr "Lidé"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:111
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
+msgid "News"
+msgstr "Zprávy"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:112
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
+msgid "Entertainement"
+msgstr "Zábava"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:112
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
+msgid "Trailers"
+msgstr "Ukázky"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:154
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:159
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:154
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:159
+#, python-format
+msgid "%s: No results for %s ..."
+msgstr "%s: Žádné výsledky pro %s..."
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:202
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:202
+#, fuzzy, python-format
+msgid ""
+"\n"
+"<small><b>view:</b> %(count)s        <b>Duration:</b> %(duration)s</small>"
+msgstr ""
+"<small><b>%(name)s</b></small>\n"
+"<small><b>zobrazeno:</b> %(count)s\t\t<b>Trvání:</b> %(duration)s</small>"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/SunPorno/SunPorno.py:27
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/SunPorno/SunPorno.py:27
+msgid "Relevance"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/SunPorno/SunPorno.py:28
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/SunPorno/SunPorno.py:28
+msgid "Rating"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/SunPorno/SunPorno.py:29
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/SunPorno/SunPorno.py:29
+msgid "Added date"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/engines/SunPorno/SunPorno.py:30
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/SunPorno/SunPorno.py:30
+msgid "View count"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:11
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
 msgid ""
 "    Gmediafinder \n"
@@ -52,138 +355,134 @@ msgstr ""
 "   Kopie Obecné veřejné licence GNU je ke stažení spolu s tímto programem.\n"
 "   Pokud se tak nestalo, najdete ji zde: http://www.gnu.org/licenses/.\n"
 
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:78
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:78
+msgid "Previous page"
+msgstr "Předchozí stránka"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:102
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:102
+msgid "Next page"
+msgstr "Další stránka"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:126
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
+#, fuzzy
+msgid "Stop"
+msgstr "Zastaveno"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:149
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:149
 msgid "About"
 msgstr "O programu"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:122
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:123
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:208
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:208
+msgid "Preferences"
+msgstr "Předvolby"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:241
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:242
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:242
 msgid "Clean"
 msgstr "Smazat"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:150
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:208
-msgid "Preferences"
-msgstr "Předvolby"
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:174
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:78
-msgid "Previous page"
-msgstr "Předchozí stránka"
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:198
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:102
-msgid "Next page"
-msgstr "Další stránka"
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:298
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:321
-msgid "Engine: "
-msgstr "Zdroj"
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:310
-msgid " "
-msgstr " "
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:568
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:946
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:591
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:962
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:592
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:592
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1015
 msgid "Download"
 msgstr "Stáhnout"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:599
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:622
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:623
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:623
 msgid "Downloads manager"
 msgstr "Manažer stahování"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:729
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:752
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:819
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:819
 msgid "page 1"
 msgstr "stránka 1"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:801
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:824
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:891
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:891
 msgid "Home"
 msgstr "Domů"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:831
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:854
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:921
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:921
 msgid "Download path :     "
 msgstr "Stáhnout do:"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:849
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:872
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:939
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:939
 msgid "Choose a folder"
 msgstr "Vyberte složku"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:880
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:903
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:970
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:970
 msgid "<b>Downloads  : </b>"
 msgstr "<b>Stahování : <b/>"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:896
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:919
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:986
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:986
 msgid "page 2"
 msgstr "stránka 2"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:938
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1278
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:961
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1300
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1028
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1427
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1028
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1427
 msgid "Options"
 msgstr "Volby"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1020
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1043
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1110
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1110
 msgid "Show preview images"
 msgstr "Zobrazit obrázky náhledu"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1033
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1056
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1123
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1123
 msgid "<b>Playlist options : </b>"
 msgstr "<b>Volby seznamu : </b>"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1066
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1089
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1156
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1156
 msgid "Max resolution : "
 msgstr "Maximální rozlišení :"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1093
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1116
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1183
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1183
 msgid "320x240"
 msgstr "320x240"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1111
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1134
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1200
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1200
 msgid "640x320"
 msgstr "640x320"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1128
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1151
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1217
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1217
 msgid "854x480"
 msgstr "854x480"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1145
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1168
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1234
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1234
 msgid "1280x720"
 msgstr "1280x720"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1163
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1185
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1251
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1251
 msgid "1920x1080"
 msgstr "1920x1080"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1193
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1215
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1281
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1281
 msgid "<b>Youtube video options : </b>"
 msgstr "<b>Volby youtube videa : </b>"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1224
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1246
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1312
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1312
 msgid ""
 "disabled\n"
 "jess\n"
@@ -207,23 +506,39 @@ msgstr ""
 "corona\n"
 "bumpscope"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1254
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1276
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1342
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1342
 msgid "<b>Visualisations :</b>"
 msgstr "<b>Vizualizace :</b>"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1320
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1342
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1367
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1367
+msgid "Enable downloads"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1383
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1383
+msgid "Enable audio extraction"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1403
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1403
+#, fuzzy
+msgid "<b>Extras options : </b>"
+msgstr "<b>Volby seznamu : </b>"
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1483
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1483
 msgid "<b>Select your engines : </b>"
 msgstr "<b>Vyberte zdroje : </b>"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1345
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1367
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1508
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1508
 msgid "Engines"
 msgstr "Zdroje"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1377
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1399
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1540
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1540
 msgid ""
 "Play/pause : Space\n"
 "Stop: s\n"
@@ -236,67 +551,121 @@ msgstr ""
 "Celá obrazovka : f\n"
 "aktivovat vyhledávácí pole : BackSpacezobrazit stahování : d"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1390
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1412
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1553
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1553
 msgid "<b>Shortcuts:</b>"
 msgstr "<b>Zkratky:</b>"
 
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1408
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1430
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1571
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1571
 msgid "Infos"
 msgstr "Informace"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:207
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1643
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1643
+msgid "I refuse"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1686
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1686
+msgid "I accept"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1733
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1733
+msgid "  Disclaimer, Please read:"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1764
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1764
+msgid ""
+"The following are terms and conditions for use of gmediafinder including all "
+"services offered.\n"
+"\n"
+"The service is offered to you conditioned on your acceptance without "
+"modification of the terms, conditions, and notices contained herein. By "
+"visiting and using Mp3-center.org or any of its affiliate sites and "
+"services, you are acknowledging your full compliance to the terms listed "
+"here. \n"
+"\n"
+"gmediafinder is based on its links to third party sites. The linked sites "
+"are not under the control of gmediafinder and gmediafinder is not "
+"responsible for the content of any linked sites or any links contained in a "
+"linked site. gmediafinder is providing these links to you only as a "
+"convenience, and the inclusion of any link does not imply endorsement by "
+"gmediafinder of the site or any association with their operators. \n"
+"\n"
+"gmediafinder's team do not assume any responsibility or liability for the "
+"audio file, from completeness to legalities.\n"
+"\n"
+"gmediafinder user agrees that gmediafinder is hereby absolved from any and "
+"all liabilities, losses, costs and claims, including attorney's fees "
+"asserted against gmediafinder, its agents, officers, employees, or "
+"associates, that may arise or result from any service provided, performed, "
+"be agreed to be performed by gmediafinder. \n"
+"\n"
+"gmediafinder team makes no warranties, expressed or implied, for the "
+"services we provide. gmediafinder will not be held responsible for any "
+"damages you or your business may suffer from using gmediafinder services. "
+"gmediafinder will not be held responsible for any interruptions, delays, "
+"failures, inaccuracies, or typographical errors \n"
+"\n"
+"gmediafinder team does not represent or warrant that the Service or the "
+"server that makes it available, are free of viruses or other harmful "
+"components. gmediafinder does not warrant or represent that the use or the "
+"results of the use of the Service or the materials made available as part of "
+"the Service will be correct, accurate, timely, or otherwise reliable \n"
+"\n"
+"gmediafinder team reserves the right to update this policy at any time "
+"without notice."
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:217
 msgid " Results : "
 msgstr " Výsledky :"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:272
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:278
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:288
 msgid "All"
 msgstr "Vše"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:273
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:279
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:289
 msgid "All audios"
 msgstr "Všechno audio"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:274
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:280
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:290
 msgid "All videos"
 msgstr "Všechna videa"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:404
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:550
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:415
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:567
-#, python-format
-msgid "Playing : %s"
-msgstr "Přehrávám : %s"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:413
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:424
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:474
 msgid "Please select a search engine..."
 msgstr "Prosím vyberte zdroj pro vyhledávání..."
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:416
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:427
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:477
 msgid "Please enter an artist/album or song name..."
 msgstr "Prosím zadejte umělce/album nebo název písničky"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:419
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:430
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:480
 msgid "Please select an engine..."
 msgstr "Prosím zvolte zdroj..."
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:553
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1091
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:570
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1107
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:621
 msgid "Stopped"
 msgstr "Zastaveno"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:946
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:962
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:855
+msgid "Bitrate:"
+msgstr "Bitrate:"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:856
+msgid "Encoding:"
+msgstr "Kódování:"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:857
+#, fuzzy
+msgid "Playing:"
+msgstr "Přehrávám : %s"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1015
 #, python-format
 msgid ""
 "The file:\n"
@@ -310,268 +679,70 @@ msgstr ""
 "%s \n"
 "již existuje, stáhnout znovu?"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:966
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:982
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1035
 msgid "Stop Downloading"
 msgstr "Zastavit Stahování"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:974
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:990
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1043
 msgid "Show in folder"
 msgstr "Zobrazit ve složce"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:982
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:998
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1051
 msgid "Convert to mp3"
 msgstr "Převést na mp3"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:993
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1009
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1062
 msgid "Remove"
 msgstr "Ostranit"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1041
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1057
-msgid "Bitrate:"
-msgstr "Bitrate:"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1042
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1058
-msgid "Encoding:"
-msgstr "Kódování:"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1085
-msgid "Converting process started..."
-msgstr "Proces kódování začal..."
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1084
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1100
-msgid "Audio file successfully created !"
-msgstr "Hudební soubor úspěšně vytvořen !"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1089
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1105
-#, python-format
-msgid "Playing %s"
-msgstr "Přehrávám %s"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1215
-#, python-format
-msgid "Searching for %(query)s with %(engine)s "
-msgstr "Vyhledávám %(query)s s pomocí %(engine)s"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:48
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:48
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:92
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:49
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:49
-msgid "Order by: "
-msgstr "Řazeno podle:"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:52
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:97
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
-msgid "Most recent"
-msgstr "Nejčastějších"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:52
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:97
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
-msgid "Most viewed"
-msgstr "Nejprohlíženějších"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:98
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:54
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
-msgid "Most rated"
-msgstr "Nejvíce hodnocených"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:53
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:96
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:54
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:55
-msgid "Most relevant"
-msgstr "Nejvíce souvisejících"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:70
-#, python-format
-msgid "%s: connexion failed..."
-msgstr "%s: spojení selhalo..."
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:119
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:50
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:60
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:99
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:71
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:56
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:66
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:70
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:106
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:42
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:46
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:42
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:46
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:89
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:53
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/BurningCamel/BurningCamel.py:74
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:45
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:49
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:59
-#, python-format
-msgid "%s: No results for %s..."
-msgstr "%s: Žádné výsledky pro %s..."
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Fusion/Mp3Fusion.py:29
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:112
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Tagoo/Tagoo.py:34
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Dilandau/Dilandau.py:29
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Realm/Mp3Realm.py:35
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:106
-#, python-format
-msgid "%s: Connexion failed..."
-msgstr "%s: spojení selhalo..."
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
-msgid "Duration"
-msgstr "Trvání"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:43
-msgid "Quality"
-msgstr "Kvalita"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:105
-msgid "Category: "
-msgstr "Kategorie:"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
-msgid "Sport"
-msgstr "Sport"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
-msgid "Films"
-msgstr "Filmy"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
-msgid "Cars"
-msgstr "Auta"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
-msgid "Music"
-msgstr "Hudba"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
-msgid "Technology"
-msgstr "Technologie"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
-msgid "Animals"
-msgstr "Zvířata"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
-msgid "Travel"
-msgstr "Cestování"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
-msgid "Games"
-msgstr "Hry"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
-msgid "Comedy"
-msgstr "Komedie"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:113
-msgid "Peoples"
-msgstr "Lidé"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:113
-msgid "News"
-msgstr "Zprávy"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:114
-msgid "Entertainement"
-msgstr "Zábava"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:114
-msgid "Trailers"
-msgstr "Ukázky"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:164
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:169
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:161
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:166
-#, python-format
-msgid "%s: No results for %s ..."
-msgstr "%s: Žádné výsledky pro %s..."
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:207
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:204
-#, python-format
-msgid ""
-"<small><b>%(name)s</b></small>\n"
-"<small><b>view:</b> %(count)s\t\t<b>Duration:</b> %(duration)s</small>"
-msgstr ""
-"<small><b>%(name)s</b></small>\n"
-"<small><b>zobrazeno:</b> %(count)s\t\t<b>Trvání:</b> %(duration)s</small>"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:109
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:116
-msgid "Failed..."
-msgstr "Selhalo..."
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:138
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:145
-#, python-format
-msgid "Downloading %-66s"
-msgstr "Stahuji %-66s"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:151
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:158
-#, python-format
-msgid "%(downloaded).02f MB of %(total).02f MB"
-msgstr "%(downloaded).02f MB z %(total).02f MB"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:152
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:159
-#, python-format
-msgid " at %d Kb/s "
-msgstr " rychlostí %d Kb/s "
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:163
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:170
-msgid "Download complete"
-msgstr "Stahování dokončeno"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:185
-#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:192
-#, python-format
-msgid "Remaining : %(min)02d:%(sec)02d"
-msgstr "Zbývá : %(min)02d:%(sec)02d"
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
-#, fuzzy
-msgid "Stop"
-msgstr "Zastaveno"
-
-#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1237
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1301
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1372
 #, fuzzy, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr "Vyhledávám %(query)s s pomocí %(engine)s"
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:24
-#, python-format
-msgid "%s: Please wait, it can take longtime ..."
-msgstr ""
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:98
+msgid "Failed..."
+msgstr "Selhalo..."
 
-#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/BurningCamel/BurningCamel.py:69
-#, fuzzy, python-format
-msgid "%s: No more results for %s..."
-msgstr "%s: Žádné výsledky pro %s..."
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:126
+#, python-format
+msgid "Downloading %-66s"
+msgstr "Stahuji %-66s"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:139
+#, python-format
+msgid "%(downloaded).02f MB of %(total).02f MB"
+msgstr "%(downloaded).02f MB z %(total).02f MB"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:140
+#, python-format
+msgid " at %d Kb/s "
+msgstr " rychlostí %d Kb/s "
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:151
+msgid "Download complete"
+msgstr "Stahování dokončeno"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:173
+#, python-format
+msgid "Remaining : %(min)02d:%(sec)02d"
+msgstr "Zbývá : %(min)02d:%(sec)02d"
+
+#~ msgid " "
+#~ msgstr " "
+
+#~ msgid "Converting process started..."
+#~ msgstr "Proces kódování začal..."
+
+#~ msgid "Audio file successfully created !"
+#~ msgstr "Hudební soubor úspěšně vytvořen !"
+
+#~ msgid "Playing %s"
+#~ msgstr "Přehrávám %s"
+
+#~ msgid "Searching for %(query)s with %(engine)s "
+#~ msgstr "Vyhledávám %(query)s s pomocí %(engine)s"
+
+#~ msgid "%s: connexion failed..."
+#~ msgstr "%s: spojení selhalo..."
