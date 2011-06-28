@@ -1,4 +1,4 @@
-gmediafinder (0.9.6-0ppa4~natty) natty; urgency=high
+gmediafinder (0.9.6-0ppa5~natty) natty; urgency=high
 
   * separate download/convert functions
   * better engine system
