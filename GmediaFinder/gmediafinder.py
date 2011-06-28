@@ -435,8 +435,8 @@ class GsongFinder(object):
             return
         ## load the plugin
         self.search_engine = getattr(self.engines_client,'%s' % self.engine)
-        if not global_search:
-            self.search_engine.load_gui()
+        #if not global_search:
+        self.search_engine.load_gui()
 
     def show_downloads(self, widget):
         self.notebook.set_current_page(1)
@@ -455,7 +455,7 @@ class GsongFinder(object):
         self.media_markup = self.model.get_value(self.selected_iter, 1)
         self.media_plugname = self.model.get_value(self.selected_iter, 5)
         ## for global search
-        if not self.engine_selector.getSelected == self.media_plugname:
+        if not self.engine_selector.getSelected() == self.media_plugname:
             self.set_engine(self.media_plugname)
         ## return only theme name and description then extract infos from hash
         self.media_link = self.model.get_value(self.selected_iter, 2)
@@ -539,7 +539,6 @@ class GsongFinder(object):
                         continue
             elif self.engine_selector.getSelected() == self.global_video_search:
                 for engine in self.engine_list:
-                    self.set_engine(engine)
                     self.search_engine = getattr(self.engines_client,'%s' % engine)
                     if not self.search_engine.type == "video":
                         continue
@@ -644,6 +643,7 @@ class GsongFinder(object):
         self.duration = None
         self.update_time_label()
         self.active_link = None
+        self.movie_window.queue_draw()
 
     def play_thread(self):
         play_thread_id = self.play_thread_id
@@ -688,8 +688,6 @@ class GsongFinder(object):
         if pagep_icon:
             self.page_prev_icon = pagep_icon.load_icon()
 
-        ## control section
-
         ## play
         self.play_btn = self.gladeGui.get_widget("play_btn")
         self.play_btn_pb = self.gladeGui.get_widget("play_btn_img")
@@ -720,8 +718,13 @@ class GsongFinder(object):
         self.stop_search_btn.set_sensitive(0)
 
     def on_message(self, bus, message):
-        if self.search_engine.type == "video" and not sys.platform == "win32":
+        if self.search_engine.type == "video":
+            if not sys.platform == "win32":
                 self.videosink.set_property('force-aspect-ratio', True)
+        else:
+            if not sys.platform == "win32":
+                self.videosink.set_property('force-aspect-ratio', False)
+        
         t = message.type
         if t == gst.MESSAGE_EOS:
             self.play_thread_id = None

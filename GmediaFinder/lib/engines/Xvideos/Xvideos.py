@@ -76,7 +76,7 @@ class Xvideos(object):
                 title = line.split('>')[1].split('<')[0]
                 continue
             if 'ng>(' in line:
-                duration = '  <small>%s</small>' % line.split('>')[1].split('<')[0]
+                duration = '    <small>%s</small>' % line.split('>')[1].split('<')[0]
                 gobject.idle_add(self.gui.add_sound, title, link, img, None, self.name, duration)
                 flag_found = True
                 continue
