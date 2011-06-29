@@ -21,6 +21,11 @@ import gst
 import mechanize
 import gdata
 
+if sys.platform == "win32":
+    import win32api
+else:
+    import virtkey
+
 ## custom lib
 try:
     from config import *
@@ -633,6 +638,7 @@ class GsongFinder(object):
         self.player.set_state(gst.STATE_PLAYING)
         self.play_thread_id = thread.start_new_thread(self.play_thread, ())
         self.is_playing = True
+        self.is_paused = False
 
     def stop_play(self,widget=None):
         self.player.set_state(gst.STATE_NULL)
@@ -871,7 +877,17 @@ class GsongFinder(object):
             cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
             self.window.window.set_cursor(cursor)
             self.show_mini_player()
-
+        
+        ## disable screensaver
+        if self.fullscreen == True and self.mini_player == False and self.timer > 25:
+            if sys.platform == "win32":
+                win32api.keybd_event(7,0,0,0)
+            else:
+                KeyEmulator=virtkey.virtkey()
+                KeyEmulator.press_unicode(ord("A"))
+                KeyEmulator.release_unicode(ord("A"))
+            self.timer = 0
+        
         if self.duration == None:
           try:
             self.length = self.player.query_duration(self.timeFormat, None)[0]
