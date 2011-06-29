@@ -1,7 +1,5 @@
-gmediafinder (0.9.6-0ppa5~maverick) maverick; urgency=high
+gmediafinder (0.9.6.1-0ppa1~maverick) maverick; urgency=high
 
-  * separate download/convert functions
-  * better engine system
-  * fixs...
+  * disable fullscreen while fullscreen
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
