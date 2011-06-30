@@ -50,7 +50,7 @@ class GsongFinder(object):
         self.user_search = ""
         self.fullscreen = False
         self.mini_player = True
-        self.showed = False ## trayicon
+        self.showed = True ## trayicon
         self.timer = 0
         self.settings_folder = None
         self.conf_file = None
@@ -1293,13 +1293,11 @@ class GsongFinder(object):
         menu.show_all()
         menu.popup(None, None, None, button, activate_time)
   
-    def __show_update_box_from_menu(self, widget):
-        self.show_update_box()
-  
     def __close(self, widget, event=None):
         if self.minimize == 'on':
             self.showed = False
             self.hide()
+            self.save_window_state()
         else:
             self.quit(widget)
         return True
