@@ -861,7 +861,7 @@ class GsongFinder(object):
         if self.is_playing == False:
           adjustment = gtk.Adjustment(0, 0.00, 100.0, 0.1, 1.0, 1.0)
           self.seeker.set_adjustment(adjustment)
-          self.time_label.set_text("00:00 / 00:00")
+          gobject.idle_add(self.time_label.set_text,"00:00 / 00:00")
           return False
 
         ## update labels
@@ -891,8 +891,8 @@ class GsongFinder(object):
                 win32api.keybd_event(7,0,0,0)
             else:
                 KeyEmulator=virtkey.virtkey()
-                KeyEmulator.press_unicode(ord("A"))
-                KeyEmulator.release_unicode(ord("A"))
+                gobject.idle_add(KeyEmulator.press_unicode,ord("A"))
+                gobject.idle_add(KeyEmulator.release_unicode,ord("A"))
             self.timer = 0
         
         if self.duration == None:
