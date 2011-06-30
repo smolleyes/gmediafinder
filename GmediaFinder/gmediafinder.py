@@ -50,6 +50,7 @@ class GsongFinder(object):
         self.user_search = ""
         self.fullscreen = False
         self.mini_player = True
+        self.showed = False ## trayicon
         self.timer = 0
         self.settings_folder = None
         self.conf_file = None
@@ -69,15 +70,7 @@ class GsongFinder(object):
         self.window = self.gladeGui.get_widget("main_window")
         self.window.set_title("Gmediafinder")
         self.window.set_resizable(1)
-        self.window.set_default_size(int(self.conf['window_state'][0]),int(self.conf['window_state'][1]))
-        try:
-            x,y = int(self.conf['window_state'][2]),int(self.conf['window_state'][3])
-            if x == 0 or y == 0:
-                self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
-            else:
-                self.window.move(x,y)
-        except:
-            self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+        self.set_window_position()
         self.show_thumbs_opt_toggle = self.gladeGui.get_widget("show_thumbs_opt")
         if self.conf['show_thumbs'] == "True" :
             self.show_thumbs_opt_toggle.set_active(1)
@@ -319,6 +312,9 @@ class GsongFinder(object):
             self.down_btn.hide()
             self.down_menu_btn.hide()
             
+        ## tray icon
+        self.__create_trayicon()
+            
         ## start main loop
         gobject.threads_init()
         #THE ACTUAL THREAD BIT
@@ -326,6 +322,17 @@ class GsongFinder(object):
         self.mainloop = gobject.MainLoop(is_running=True)
         self.mainloop.run()
 
+    def set_window_position(self):
+        self.window.set_default_size(int(self.conf['window_state'][0]),int(self.conf['window_state'][1]))
+        try:
+            x,y = int(self.conf['window_state'][2]),int(self.conf['window_state'][3])
+            if x == 0 or y == 0:
+                self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+            else:
+                self.window.move(x,y)
+        except:
+            self.window.set_position(gtk.WIN_POS_CENTER_ALWAYS)
+    
     def set_extras_options(self, widget):
         if ('convert' in widget.name):
             if widget.get_active():
@@ -1255,6 +1262,47 @@ class GsongFinder(object):
 
     def thread_progress(self, thread):
         pass
+        
+    def __create_trayicon(self):
+        if gtk.check_version(2, 10, 0) is not None:
+            self.log.debug("Disabled Tray Icon. It needs PyGTK >= 2.10.0")
+            return
+        self.tray = gtk.StatusIcon()
+        self.tray.set_from_file(os.path.join(self.img_path,'gmediafinder.png'))
+        self.tray.set_tooltip('Gmediafinder')
+        self.tray.connect("activate", self.__on_trayicon_click)
+        self.tray.connect("popup-menu", self.__show_tray_menu)
+  
+  
+    def __on_trayicon_click(self, widget):
+        if(self.showed is True):
+            self.showed = False
+            self.window.hide()
+            self.save_window_state()
+        else:
+            self.showed = True
+            self.window.show()
+            self.set_window_position()
+  
+    def __show_tray_menu(self, widget, button, activate_time):
+        menu = gtk.Menu()
+        exit_item = gtk.ImageMenuItem(gtk.STOCK_QUIT)
+        menu.append(exit_item)
+        exit_item.connect('activate', self.exit)
+  
+        menu.show_all()
+        menu.popup(None, None, None, button, activate_time)
+  
+    def __show_update_box_from_menu(self, widget):
+        self.show_update_box()
+  
+    def __close(self, widget, event=None):
+        if self.minimize == 'on':
+            self.showed = False
+            self.hide()
+        else:
+            self.quit(widget)
+        return True
 
 
 class _IdleObject(gobject.GObject):
@@ -1403,6 +1451,8 @@ class FooThreadManager:
             if block:
                 if thread.isAlive():
                     thread.join()
+                    
+
 
 
 
