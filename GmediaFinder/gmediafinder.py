@@ -887,14 +887,14 @@ class GsongFinder(object):
             color = gtk.gdk.Color()
             cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
             self.window.window.set_cursor(cursor)
-            gobject.idle_add(self.show_mini_player)
+            self.show_mini_player()
         
         ## disable screensaver
         if self.fullscreen == True and self.mini_player == False and self.timer > 58:
             if sys.platform == "win32":
                 win32api.keybd_event(7,0,0,0)
             else:
-                send_string('A')
+                gobject.idle_add(send_string('A'))
             self.timer = 0
         
         if self.duration == None:
