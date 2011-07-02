@@ -507,7 +507,7 @@ class GsongFinder(object):
         elif self.engine_selector.getSelected() == self.global_video_search:
             for engine in self.engine_list:
                 self.search_engine = getattr(self.engines_client,'%s' % engine)
-                if not self.search_engine.type == "video":
+                if not self.search_engine.engine_type == "video":
                     continue
                 try:
                     self.search()
@@ -517,7 +517,7 @@ class GsongFinder(object):
         elif self.engine_selector.getSelected() == self.global_audio_search:
             for engine in self.engine_list:
                 self.search_engine = getattr(self.engines_client,'%s' % engine)
-                if not self.search_engine.type == "audio" or self.search_engine.name == "Jamendo":
+                if not self.search_engine.engine_type == "audio" or self.search_engine.name == "Jamendo":
                     continue
                 try:
                     self.search()
@@ -544,14 +544,7 @@ class GsongFinder(object):
             if self.engine_selector.getSelected() == self.global_search:
                 for engine in self.engine_list:
                     self.search_engine = getattr(self.engines_client,'%s' % engine)
-                    try:
-                        self.do_change_page(name)
-                    except:
-                        continue
-            elif self.engine_selector.getSelected() == self.global_search:
-                for engine in self.engine_list:
-                    self.search_engine = getattr(self.engines_client,'%s' % engine)
-                    if not self.search_engine.type == "video":
+                    if self.search_engine.name == "Jamendo":
                         continue
                     try:
                         self.do_change_page(name)
@@ -560,7 +553,16 @@ class GsongFinder(object):
             elif self.engine_selector.getSelected() == self.global_audio_search:
                 for engine in self.engine_list:
                     self.search_engine = getattr(self.engines_client,'%s' % engine)
-                    if not self.search_engine.type == "audio" or self.search_engine.name == "Jamendo":
+                    if self.search_engine.engine_type == "video" or self.search_engine.name == "Jamendo":
+                        continue
+                    try:
+                        self.do_change_page(name)
+                    except:
+                        continue
+            elif self.engine_selector.getSelected() == self.global_video_search:
+                for engine in self.engine_list:
+                    self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    if self.search_engine.engine_type == "audio":
                         continue
                     try:
                         self.do_change_page(name)
@@ -569,6 +571,9 @@ class GsongFinder(object):
             return self.do_change_page(name)
 
     def do_change_page(self,name):
+        if self.engine_selector.getSelected() == self.global_audio_search:
+            if self.search_engine.engine_type == "video":
+                return
         if name == "pageback_btn":
             if self.search_engine.current_page != 1:
                 try:
@@ -634,7 +639,7 @@ class GsongFinder(object):
     def start_play(self,url):
         self.active_link = url
         if not sys.platform == "win32":
-            if not self.vis_selector.getSelectedIndex() == 0 and not self.search_engine.type == "video":
+            if not self.vis_selector.getSelectedIndex() == 0 and not self.search_engine.engine_type == "video":
                 self.vis = self.change_visualisation()
                 self.visual = gst.element_factory_make(self.vis,'visual')
                 self.player.set_property('vis-plugin', self.visual)
@@ -730,7 +735,7 @@ class GsongFinder(object):
         self.stop_search_btn.set_sensitive(0)
 
     def on_message(self, bus, message):
-        if self.search_engine.type == "video":
+        if self.search_engine.engine_type == "video":
             if not sys.platform == "win32":
                 self.videosink.set_property('force-aspect-ratio', True)
         else:
@@ -864,7 +869,7 @@ class GsongFinder(object):
           return False
 
         ## update labels
-        #if not self.search_engine.type == "audio":
+        #if not self.search_engine.engine_type == "audio":
             #gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b></small>' % self.media_name)
         #else:
         bit=_('Bitrate:')
@@ -1066,7 +1071,7 @@ class GsongFinder(object):
         btnf.set_tooltip_text(_("Show in folder"))
         ## convert button
         btn_conv = gtk.Button()
-        if self.search_engine.type == "video":
+        if self.search_engine.engine_type == "video":
             image = gtk.Image()
             image.set_from_stock(gtk.STOCK_CONVERT, gtk.ICON_SIZE_BUTTON)
             btn_conv.add(image)
@@ -1086,7 +1091,7 @@ class GsongFinder(object):
 
         box.show_all()
         btnf.hide()
-        if self.search_engine.type == "video":
+        if self.search_engine.engine_type == "video":
             btn_conv.hide()
             throbber.hide()
             btn_conv.connect('clicked', self.extract_audio,self.media_name,codec,btn_conv,throbber)

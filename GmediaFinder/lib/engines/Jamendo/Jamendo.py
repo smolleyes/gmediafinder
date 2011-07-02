@@ -12,7 +12,7 @@ class Jamendo(object):
     def __init__(self,gui):
         self.gui = gui
         self.name = 'Jamendo'
-        self.type = "audio"
+        self.engine_type = "audio"
         self.options_dic = {}
         self.current_page = 1
         self.main_start_page = 1

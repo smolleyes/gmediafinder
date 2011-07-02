@@ -11,7 +11,7 @@ class Redtube(object):
     def __init__(self,gui):
         self.gui = gui
         self.name="Redtube"
-        self.type = "video"
+        self.engine_type = "video"
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False

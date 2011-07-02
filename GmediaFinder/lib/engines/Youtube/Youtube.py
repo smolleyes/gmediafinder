@@ -20,7 +20,7 @@ class Youtube(object):
         self.gui = gui
         self.current_page = 1
         self.main_start_page = 1
-        self.type = "video"
+        self.engine_type = "video"
         self.num_start = 1
         self.results_by_page = 25
         self.name="Youtube"

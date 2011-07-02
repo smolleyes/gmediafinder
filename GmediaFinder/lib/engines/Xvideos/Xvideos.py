@@ -10,8 +10,8 @@ except:
 class Xvideos(object):
     def __init__(self,gui):
         self.gui = gui
-        self.name="Xvideos"
-        self.type = "video"
+        self.name = "Xvideos"
+        self.engine_type = "video"
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False

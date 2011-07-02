@@ -11,7 +11,7 @@ class NuttyMp3(object):
     def __init__(self, gui):    
         self.gui = gui
         self.name="NuttyMp3"
-        self.type = "audio"
+        self.engine_type = "audio"
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False

@@ -10,7 +10,7 @@ except:
 class Tagoo(object):
     def __init__(self,gui):
         self.gui = gui
-        self.type = "audio"
+        self.engine_type = "audio"
         self.current_page = 1
         self.main_start_page = 1
         self.name="Tagoo"
