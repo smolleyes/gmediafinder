@@ -3,7 +3,7 @@ Maintainer: Laguillaumie sylvain <s.lagui@free.fr>
 Section: sound
 Version: 0.1
 Priority: optional
-Build-Depends: debhelper (>= 7), python-support (>= 0.8.4), python-distutils-extra, python-setuptools
+Build-Depends: debhelper (>= 7), python-support (>= 0.8.4), python-distutils-extra, python-setuptools, python-virtkey
 Standards-Version: 3.8.4
 XS-Python-Version: current
 

@@ -499,14 +499,14 @@ class GsongFinder(object):
         if self.engine_selector.getSelected() == self.global_search:
             for engine in self.engine_list:
                 try:
-                    self.set_engine(engine)
+                    self.search_engine = getattr(self.engines_client,'%s' % engine)
                     self.search()
                 except:
                     continue
             self.engine_selector.setIndexFromString(self.global_video_search)
         elif self.engine_selector.getSelected() == self.global_video_search:
             for engine in self.engine_list:
-                self.set_engine(engine)
+                self.search_engine = getattr(self.engines_client,'%s' % engine)
                 if not self.search_engine.type == "video":
                     continue
                 try:
@@ -516,8 +516,8 @@ class GsongFinder(object):
             self.engine_selector.setIndexFromString(self.global_video_search)
         elif self.engine_selector.getSelected() == self.global_audio_search:
             for engine in self.engine_list:
-                self.set_engine(engine)
-                if not self.search_engine.type == "audio":
+                self.search_engine = getattr(self.engines_client,'%s' % engine)
+                if not self.search_engine.type == "audio" or self.search_engine.name == "Jamendo":
                     continue
                 try:
                     self.search()
@@ -543,7 +543,6 @@ class GsongFinder(object):
             self.engine_selector.select(self.latest_engine)
             if self.engine_selector.getSelected() == self.global_search:
                 for engine in self.engine_list:
-                    self.set_engine(engine)
                     self.search_engine = getattr(self.engines_client,'%s' % engine)
                     try:
                         self.do_change_page(name)
@@ -561,7 +560,7 @@ class GsongFinder(object):
             elif self.engine_selector.getSelected() == self.global_audio_search:
                 for engine in self.engine_list:
                     self.search_engine = getattr(self.engines_client,'%s' % engine)
-                    if not self.search_engine.type == "audio":
+                    if not self.search_engine.type == "audio" or self.search_engine.name == "Jamendo":
                         continue
                     try:
                         self.do_change_page(name)
@@ -635,7 +634,7 @@ class GsongFinder(object):
     def start_play(self,url):
         self.active_link = url
         if not sys.platform == "win32":
-            if not self.vis_selector.getSelectedIndex() == 0:
+            if not self.vis_selector.getSelectedIndex() == 0 and not self.search_engine.type == "video":
                 self.vis = self.change_visualisation()
                 self.visual = gst.element_factory_make(self.vis,'visual')
                 self.player.set_property('vis-plugin', self.visual)
@@ -883,7 +882,7 @@ class GsongFinder(object):
             color = gtk.gdk.Color()
             cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
             self.window.window.set_cursor(cursor)
-            self.show_mini_player()
+            gobject.idle_add(self.show_mini_player)
         
         ## disable screensaver
         if self.fullscreen == True and self.mini_player == False and self.timer > 25:
@@ -891,8 +890,8 @@ class GsongFinder(object):
                 win32api.keybd_event(7,0,0,0)
             else:
                 KeyEmulator=virtkey.virtkey()
-                gobject.idle_add(KeyEmulator.press_unicode,ord("A"))
-                gobject.idle_add(KeyEmulator.release_unicode,ord("A"))
+                KeyEmulator.press_unicode(ord("A"))
+                KeyEmulator.release_unicode(ord("A"))
             self.timer = 0
         
         if self.duration == None:
