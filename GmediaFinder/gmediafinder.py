@@ -23,18 +23,18 @@ import gdata
 
 if sys.platform == "win32":
     import win32api
-else:
-    import virtkey
 
 ## custom lib
 try:
     from config import *
     from engines import Engines
     from functions import *
+    from pykey import send_string
 except:
     from GmediaFinder.config import *
     from GmediaFinder.engines import Engines
     from GmediaFinder.functions import *
+    from GmediaFinder.virtkey import send_string
 
 class GsongFinder(object):
     def __init__(self):
@@ -885,13 +885,11 @@ class GsongFinder(object):
             gobject.idle_add(self.show_mini_player)
         
         ## disable screensaver
-        if self.fullscreen == True and self.mini_player == False and self.timer > 25:
+        if self.fullscreen == True and self.mini_player == False and self.timer > 58:
             if sys.platform == "win32":
                 win32api.keybd_event(7,0,0,0)
             else:
-                KeyEmulator=virtkey.virtkey()
-                KeyEmulator.press_unicode(ord("A"))
-                KeyEmulator.release_unicode(ord("A"))
+                send_string('A')
             self.timer = 0
         
         if self.duration == None:
