@@ -503,7 +503,7 @@ class GsongFinder(object):
                     self.search()
                 except:
                     continue
-            self.engine_selector.setIndexFromString(self.global_video_search)
+            self.engine_selector.setIndexFromString(self.global_search)
         elif self.engine_selector.getSelected() == self.global_video_search:
             for engine in self.engine_list:
                 self.search_engine = getattr(self.engines_client,'%s' % engine)
@@ -548,7 +548,7 @@ class GsongFinder(object):
                         self.do_change_page(name)
                     except:
                         continue
-            elif self.engine_selector.getSelected() == self.global_video_search:
+            elif self.engine_selector.getSelected() == self.global_search:
                 for engine in self.engine_list:
                     self.search_engine = getattr(self.engines_client,'%s' % engine)
                     if not self.search_engine.type == "video":
