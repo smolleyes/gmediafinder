@@ -1,4 +1,4 @@
-gmediafinder (0.9.7-0ppa2~natty) natty; urgency=high
+gmediafinder (0.9.7-0ppa2~lucid) lucid; urgency=high
 
   * fix fullscreen
   * fix screensaver deactivation
