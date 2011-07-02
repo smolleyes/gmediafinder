@@ -123,7 +123,7 @@
                     <property name="visible">True</property>
                     <property name="can_focus">True</property>
                     <property name="receives_default">True</property>
-                    <property name="tooltip" translatable="yes">Stop</property>
+                    <property name="tooltip" translatable="yes">Stop search</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
                     <signal name="clicked" handler="on_stop_search_btn_clicked" />
@@ -238,6 +238,7 @@
                     <property name="secondary_icon_activatable">True</property>
                     <property name="primary_icon_sensitive">True</property>
                     <property name="secondary_icon_sensitive">True</property>
+                    <property name="primary_icon_tooltip_text" translatable="yes">Start search</property>
                     <property name="secondary_icon_tooltip_text" translatable="yes">Clean</property>
                     <property name="secondary_icon_tooltip_markup" translatable="yes">Clean</property>
                     <signal name="activate" handler="on_search_entry_activate" />
@@ -479,6 +480,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
+                                        <property name="tooltip" translatable="yes">Play/Stop</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="relief">none</property>
                                         <signal name="clicked" handler="on_play_btn_clicked" />
@@ -501,6 +503,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
+                                        <property name="tooltip" translatable="yes">Pause</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="relief">none</property>
                                         <signal name="clicked" handler="on_pause_btn_clicked" />
@@ -523,6 +526,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
+                                        <property name="tooltip" translatable="yes">Shuffle</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="relief">none</property>
                                         <signal name="toggled" handler="on_shuffle_btn_toggled" />
@@ -545,6 +549,7 @@
                                         <property name="visible">True</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
+                                        <property name="tooltip" translatable="yes">Repeat</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="relief">none</property>
                                         <signal name="toggled" handler="on_repeat_btn_toggled" />
