@@ -894,7 +894,7 @@ class GsongFinder(object):
             if sys.platform == "win32":
                 win32api.keybd_event(7,0,0,0)
             else:
-                gobject.idle_add(send_string('A'))
+                send_string('A')
             self.timer = 0
         
         if self.duration == None:
