@@ -9,8 +9,8 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-03 00:27+0200\n"
-"PO-Revision-Date: 2011-06-26 01:12+0000\n"
+"POT-Creation-Date: 2011-07-03 00:37+0200\n"
+"PO-Revision-Date: 2011-07-02 22:34+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: fr\n"
@@ -855,25 +855,24 @@ msgstr "Restant: %(min)02d:%(sec)02d"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
 msgid "Stop search"
-msgstr ""
+msgstr "Arrêter la recherche"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
 msgid "Start search"
-msgstr ""
+msgstr "Démarrer la recherche"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:483
-#, fuzzy
 msgid "Play/Stop"
-msgstr "Arrêter"
+msgstr "Lecture / Arrêt"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:506
 msgid "Pause"
-msgstr ""
+msgstr "Pause"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:529
 msgid "Shuffle"
-msgstr ""
+msgstr "Lecture Aléatoire"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:552
 msgid "Repeat"
-msgstr ""
+msgstr "Répéter"
