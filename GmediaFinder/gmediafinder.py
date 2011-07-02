@@ -382,11 +382,11 @@ class GsongFinder(object):
         if int((model.get_string_from_iter(iter).split(":")[0])) % 2:
             cell.set_property('background-gdk', self.odd)
             cell.set_property('cell-background-gdk', self.odd)
-            cell.set_property('foreground-gdk', gtk.gdk.color_parse(str(self.window.style.fg[gtk.STATE_NORMAL])))
+            cell.set_property('foreground-gdk', gtk.gdk.color_parse(str(self.window.style.fg[gtk.STATE_ACTIVE])))
         else:
             cell.set_property('background-gdk', self.even)
             cell.set_property('cell-background-gdk', self.even)
-            cell.set_property('foreground-gdk', gtk.gdk.color_parse(str(self.window.style.text[gtk.STATE_NORMAL])))
+            cell.set_property('foreground-gdk', gtk.gdk.color_parse(str(self.window.style.fg[gtk.STATE_NORMAL])))
 
     def save_position(self,widget,e):
         self.x,self.y=self.window.get_position()
