@@ -34,7 +34,7 @@ except:
     from GmediaFinder.config import *
     from GmediaFinder.engines import Engines
     from GmediaFinder.functions import *
-    from GmediaFinder.virtkey import send_string
+    from GmediaFinder.pykey import send_string
 
 class GsongFinder(object):
     def __init__(self):
