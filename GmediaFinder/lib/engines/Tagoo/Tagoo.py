@@ -15,7 +15,7 @@ class Tagoo(object):
         self.main_start_page = 1
         self.name="Tagoo"
         self.thread_stop=False
-        self.search_url = "http://tagoo.ru/en/search.php?for=audio&search=%s&page=%d&sort=date"
+        self.search_url = "http://tagoo.ru/en/search.php?for=audio&search=%s&page=%d&sort=rel&bitrate=3"
         self.start_engine()
 
 

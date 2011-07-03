@@ -666,10 +666,8 @@ class GsongFinder(object):
         play_thread_id = self.play_thread_id
         while play_thread_id == self.play_thread_id:
             if play_thread_id == self.play_thread_id:
-                gtk.gdk.threads_enter()
                 if not self.seeker_move:
                     self.update_time_label()
-                gtk.gdk.threads_leave()
             time.sleep(1)
 
     def load_gui_icons(self):
@@ -852,7 +850,7 @@ class GsongFinder(object):
         if self.is_playing == True:
             duration = self.player.query_duration(self.timeFormat, None)[0]
             time = value * (duration / 100)
-            gobject.idle_add(self.player.seek_simple,self.timeFormat, gst.SEEK_FLAG_FLUSH, time)
+            self.player.seek_simple(self.timeFormat, gst.SEEK_FLAG_FLUSH, time)
 
     def seeker_block(self,widget,event):
         self.seeker_move = 1
