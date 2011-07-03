@@ -7,16 +7,16 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-03 00:27+0200\n"
+"POT-Creation-Date: 2011-07-03 00:43+0200\n"
 "PO-Revision-Date: 2011-06-06 07:12+0000\n"
 "Last-Translator: nikoola <nrad@eunet.rs>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: sr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n"
-"%10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
+"Language: sr\n"
+"Plural-Forms: nplurals=3; plural=(n%10==1 && n%100!=11 ? 0 : n%10>=2 && n%"
+"10<=4 && (n%100<10 || n%100>=20) ? 1 : 2)\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:11
@@ -62,10 +62,8 @@ msgid "Next page"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
-#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:126
-#, fuzzy
-msgid "Stop"
-msgstr "Заустављено"
+msgid "Stop search"
+msgstr ""
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:149
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:149
@@ -78,140 +76,161 @@ msgid "Preferences"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
+msgid "Start search"
+msgstr ""
+
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:242
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:243
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:241
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:242
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:243
 msgid "Clean"
 msgstr "Очисти"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:322
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:321
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Mp3Moo/Mp3Moo.py:42
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:321
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Mp3Moo/Mp3Moo.py:42
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:322
 msgid "Engine: "
 msgstr "Механизам: "
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:483
+#, fuzzy
+msgid "Play/Stop"
+msgstr "Заустављено"
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:506
+msgid "Pause"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:529
+msgid "Shuffle"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:552
+msgid "Repeat"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:597
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:592
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:592
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1015
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1018
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1034
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:597
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1043
 msgid "Download"
 msgstr "Преузимање"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:628
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:623
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:623
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:628
 #, fuzzy
 msgid "Downloads manager"
 msgstr "Преузмимање је завршено"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:824
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:819
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:819
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:824
 msgid "page 1"
 msgstr "страна 1"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:896
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:891
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:891
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:896
 msgid "Home"
 msgstr "Почетак"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:926
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:921
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:921
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:926
 msgid "Download path :     "
 msgstr "Путања за преузимање :     "
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:944
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:939
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:939
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:944
 msgid "Choose a folder"
 msgstr "Изаберите директоријум"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:975
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:970
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:970
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:975
 msgid "<b>Downloads  : </b>"
 msgstr "<b>Преузимања  :</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:991
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:986
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:986
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:991
 msgid "page 2"
 msgstr "страна 2"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1033
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1432
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1028
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1427
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1028
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1427
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1033
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1432
 msgid "Options"
 msgstr "Опције"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1115
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1110
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1110
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1115
 msgid "Show preview images"
 msgstr "Прикажи преглед слика"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1128
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1123
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1123
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1128
 msgid "<b>Playlist options : </b>"
 msgstr "<b>Опције листе пуштања:</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1161
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1156
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1156
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1161
 msgid "Max resolution : "
 msgstr "Максимална резолуција: "
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1188
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1183
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1183
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1188
 msgid "320x240"
 msgstr "320x240"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1205
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1200
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1200
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1205
 msgid "640x320"
 msgstr "640x320"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1222
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1217
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1217
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1222
 msgid "854x480"
 msgstr "854x480"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1239
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1234
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1234
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1239
 msgid "1280x720"
 msgstr "1280x720"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1256
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1251
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1251
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1256
 msgid "1920x1080"
 msgstr "1920x1080"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1286
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1281
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1281
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1286
 msgid "<b>Youtube video options : </b>"
 msgstr "<b>Опције Youtube видеа:</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1317
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1312
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1312
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1317
 #, fuzzy
 msgid ""
 "disabled\n"
@@ -235,46 +254,46 @@ msgstr ""
 "corona\n"
 "bumpscope"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1347
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1342
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1342
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1347
 msgid "<b>Visualisations :</b>"
 msgstr "<b>Визуализације:</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1372
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1367
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1367
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1372
 msgid "Enable downloads"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1388
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1383
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1383
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1388
 msgid "Enable audio extraction"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1408
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1403
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1403
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1408
 #, fuzzy
 msgid "<b>Extras options : </b>"
 msgstr "<b>Опције листе пуштања:</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1488
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1483
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1483
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1488
 msgid "<b>Select your engines : </b>"
 msgstr "<b>Изаберите механизам:</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1513
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1508
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1508
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1513
 msgid "Engines"
 msgstr "Механизми"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1545
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1540
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1540
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1545
 msgid ""
 "Play/pause : Space\n"
 "Stop: s\n"
@@ -288,39 +307,39 @@ msgstr ""
 "поље претраге: BackSpace\n"
 "приказ преузимања: d"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1558
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1553
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1553
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1558
 msgid "<b>Shortcuts:</b>"
 msgstr "<b>Пречице:</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1576
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1571
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1571
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1576
 msgid "Infos"
 msgstr "Информације"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1648
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1643
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1643
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1648
 msgid "I refuse"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1691
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1686
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1686
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1691
 msgid "I accept"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1738
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1733
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1733
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1738
 msgid "  Disclaimer, Please read:"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1769
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1764
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1764
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1769
 msgid ""
 "The following are terms and conditions for use of gmediafinder including all "
 "services offered.\n"
@@ -362,6 +381,12 @@ msgid ""
 "gmediafinder team reserves the right to update this policy at any time "
 "without notice."
 msgstr ""
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
+#: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:126
+#, fuzzy
+msgid "Stop"
+msgstr "Заустављено"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Redtube/Redtube.py:22
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/DailyMotion/DailyMotion.py:21
@@ -816,31 +841,6 @@ msgstr "Преузмимање је завршено"
 #, python-format
 msgid "Remaining : %(min)02d:%(sec)02d"
 msgstr "Преостаје : %(min)02d:%(sec)02d"
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
-msgid "Stop search"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
-msgid "Start search"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:483
-#, fuzzy
-msgid "Play/Stop"
-msgstr "Заустављено"
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:506
-msgid "Pause"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:529
-msgid "Shuffle"
-msgstr ""
-
-#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:552
-msgid "Repeat"
-msgstr ""
 
 #~ msgid " "
 #~ msgstr " "

@@ -1,4 +1,8 @@
+<<<<<<< HEAD
 gmediafinder (0.9.7-0ppa3~natty) natty; urgency=high
+=======
+gmediafinder (0.9.7-0ppa2~maverick) maverick; urgency=high
+>>>>>>> 0aca188702afdb8ea7494cd51f5bf398f196ee02
 
   * fix fullscreen
   * fix screensaver deactivation
