@@ -852,7 +852,7 @@ class GsongFinder(object):
         if self.is_playing == True:
             duration = self.player.query_duration(self.timeFormat, None)[0]
             time = value * (duration / 100)
-            self.player.seek_simple(self.timeFormat, gst.SEEK_FLAG_FLUSH, time)
+            gobject.idle_add(self.player.seek_simple,self.timeFormat, gst.SEEK_FLAG_FLUSH, time)
 
     def seeker_block(self,widget,event):
         self.seeker_move = 1
@@ -895,7 +895,7 @@ class GsongFinder(object):
                 win32api.keybd_event(7,0,0,0)
             else:
                 send_string('A')
-            self.timer = 0
+            self.timer = 1
         
         if self.duration == None:
           try:
@@ -916,7 +916,7 @@ class GsongFinder(object):
             # gtk.Adjustment(value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0)
             percent = (float(self.current_position)/float(self.length))*100.0
             adjustment = gtk.Adjustment(percent, 0.00, 100.0, 0.1, 1.0, 1.0)
-            gobject.idle_add(self.seeker.set_adjustment,adjustment)
+            self.seeker.set_adjustment(adjustment)
 
         return True
 
@@ -998,7 +998,7 @@ class GsongFinder(object):
             gobject.idle_add(self.options_bar.hide)
             self.mini_player = False
         else:
-            gobject.idle_add(self.control_box.show)
+            self.control_box.show()
             self.window.window.set_cursor(None)
             self.mini_player = True
 
