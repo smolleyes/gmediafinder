@@ -1112,6 +1112,7 @@ class GsongFinder(object):
         self.file_tags['container-format'] = ""
         #put the keys in the dictionary
         for key in taglist.keys():
+            print key, taglist[key]
             if key == "preview-image" or key == "image":
                 ipath="/tmp/temp.png"
                 img = open(ipath, 'w')
