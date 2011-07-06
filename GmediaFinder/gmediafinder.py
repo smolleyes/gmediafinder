@@ -1305,9 +1305,19 @@ class GsongFinder(object):
         menu.popup(None, None, None, button, activate_time)
         
     def __add_to_history(self):
-        f = os.open(history_file,os.O_RDWR|os.O_CREAT|os.O_APPEND)
-        os.write(f,"%s\n" % self.search_entry.get_text())
-        os.close(f)
+        c = open(history_file,'r')
+        t = c.readlines()
+        c.close()
+        if len(t) >= int(max_history):
+            f = open(history_file,'w')
+            del t[0]
+            f.writelines(t)
+            f.write("%s\n" % self.search_entry.get_text())
+            f.close()
+        else:
+            f = open(history_file,'a+w')
+            f.write("%s\n" % self.search_entry.get_text())
+            f.close()
         
     def __search_history(self, widget):
         search = self.search_entry.get_text()

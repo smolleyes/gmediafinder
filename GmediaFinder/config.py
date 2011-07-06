@@ -48,6 +48,8 @@ window_state = "%s,%s,%s,%s" % (width-200,height-80,0,0)
 show_thumbs_opt = "True"
 downloads = False
 convert = False
+max_history = 50
+
 if sys.platform == "win32":
     from win32com.shell import shell, shellcon
     df = shell.SHGetDesktopFolder()
@@ -113,4 +115,11 @@ try:
     convert = conf["convert"]
 except:
     conf["convert"] = convert
+    conf.write()
+    
+## history
+try:
+    max_history = conf["max_history"]
+except:
+    conf["max_history"] = max_history
     conf.write()
