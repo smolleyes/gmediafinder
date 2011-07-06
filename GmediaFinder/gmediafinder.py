@@ -902,8 +902,9 @@ class GsongFinder(object):
             if sys.platform == "win32":
                 win32api.keybd_event(7,0,0,0)
             else:
+                print 'send'
                 send_string('A')
-            self.timer = 1
+            self.timer = 0
         
         if self.duration == None:
           try:
@@ -1305,18 +1306,21 @@ class GsongFinder(object):
         menu.popup(None, None, None, button, activate_time)
         
     def __add_to_history(self):
+        search = self.search_entry.get_text()
         c = open(history_file,'r')
         t = c.readlines()
         c.close()
+        if (search in str(t)):
+            return
         if len(t) >= int(max_history):
             f = open(history_file,'w')
             del t[0]
             f.writelines(t)
-            f.write("%s\n" % self.search_entry.get_text())
+            f.write("%s\n" % search)
             f.close()
         else:
             f = open(history_file,'a+w')
-            f.write("%s\n" % self.search_entry.get_text())
+            f.write("%s\n" % search)
             f.close()
         
     def __search_history(self, widget):
