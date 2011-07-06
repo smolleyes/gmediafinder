@@ -72,9 +72,9 @@ conf_file = os.path.join(settings_folder, 'gmediafinder_config')
 ## history file
 history_file = os.path.join(settings_folder, 'history')
 if not os.path.exists(history_file):
-    f = os.open(history_file,os.O_CREAT)
-    os.write(f,'')
-    os.close(f)
+    f = open(history_file,'w')
+    f.write('')
+    f.close()
     
 if not os.path.exists(settings_folder):
     os.mkdir(settings_folder)
