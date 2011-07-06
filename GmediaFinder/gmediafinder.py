@@ -97,6 +97,15 @@ class GsongFinder(object):
 
         self.search_entry = self.gladeGui.get_widget("search_entry")
         self.stop_search_btn = self.gladeGui.get_widget("stop_search_btn")
+        ## history
+        self.search_entry.connect('changed',self.__search_history)
+        self.search_entry.connect('focus-out-event',self.__show_history)
+        self.history_view = gtk.EntryCompletion()
+        self.history_view.set_minimum_key_length(2)
+        self.search_entry.set_completion(self.history_view)
+        self.history_model = gtk.ListStore(gobject.TYPE_STRING)
+        self.history_view.set_model(self.history_model)
+        self.history_view.set_text_column(0)
         ## options box
         self.search_opt_box = self.gladeGui.get_widget("search_options_box")
 
@@ -221,7 +230,7 @@ class GsongFinder(object):
 
         qualityColumn = gtk.TreeViewColumn("Quality", renderer)
         self.treeview.append_column(qualityColumn)
-
+        
         nameColumn = gtk.TreeViewColumn("Name", renderer)
         self.treeview.append_column(nameColumn)
 
@@ -496,6 +505,7 @@ class GsongFinder(object):
         self.model.clear()
         self.changepage_btn.set_sensitive(0)
         self.pageback_btn.set_sensitive(0)
+        self.__add_to_history()
         if self.engine_selector.getSelected() == self.global_search:
             for engine in self.engine_list:
                 try:
@@ -1293,6 +1303,24 @@ class GsongFinder(object):
   
         menu.show_all()
         menu.popup(None, None, None, button, activate_time)
+        
+    def __add_to_history(self):
+        f = os.open(history_file,os.O_RDWR|os.O_CREAT|os.O_APPEND)
+        os.write(f,"%s\n" % self.search_entry.get_text())
+        os.close(f)
+        
+    def __search_history(self, widget):
+        search = self.search_entry.get_text()
+        self.history_model.clear()
+        for l in open(history_file,'r'):
+            try:
+                s = re.search('.*%s.*' % search,l).group()
+                self.history_model.append([s])
+            except:
+                pass
+            
+    def __show_history(self, widget, event):
+        pass
   
     def __close(self, widget, event=None):
         if self.minimize == 'on':

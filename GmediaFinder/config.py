@@ -67,6 +67,13 @@ gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
 
 ## conf file
 conf_file = os.path.join(settings_folder, 'gmediafinder_config')
+## history file
+history_file = os.path.join(settings_folder, 'history')
+if not os.path.exists(history_file):
+    f = os.open(history_file,os.O_CREAT)
+    os.write(f,'')
+    os.close(f)
+    
 if not os.path.exists(settings_folder):
     os.mkdir(settings_folder)
     fd = os.open(conf_file, os.O_RDWR|os.O_CREAT)
