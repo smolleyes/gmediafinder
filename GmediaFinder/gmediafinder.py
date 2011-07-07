@@ -101,7 +101,7 @@ class GsongFinder(object):
         self.search_entry.connect('changed',self.__search_history)
         self.search_entry.connect('focus-out-event',self.__show_history)
         self.history_view = gtk.EntryCompletion()
-        self.history_view.set_minimum_key_length(2)
+        self.history_view.set_minimum_key_length(1)
         self.search_entry.set_completion(self.history_view)
         self.history_model = gtk.ListStore(gobject.TYPE_STRING)
         self.history_view.set_model(self.history_model)
@@ -174,10 +174,13 @@ class GsongFinder(object):
         self.downloads_check = self.gladeGui.get_widget("downloads_enabled")
         self.convert_check = self.gladeGui.get_widget("convert_enabled")
         self.warn_dialog = self.gladeGui.get_widget("warn_dialog")
+        self.systray_check = self.gladeGui.get_widget("systray_enabled")
         if downloads == 'True':
             self.downloads_check.set_active(1)
         if convert == 'True':
             self.convert_check.set_active(1)
+        if systray == 'True':
+            self.systray_check.set_active(1)
 
         ## SIGNALS
         dic = {"on_main_window_destroy_event" : self.exit,
@@ -202,6 +205,7 @@ class GsongFinder(object):
         "on_stop_search_btn_clicked": self.stop_threads,
         "on_downloads_enabled_toggled" : self.set_extras_options,
         "on_convert_enabled_toggled" : self.set_extras_options,
+        "on_systray_enabled_toggled" : self.set_extras_options,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -322,7 +326,8 @@ class GsongFinder(object):
             self.down_menu_btn.hide()
             
         ## tray icon
-        self.__create_trayicon()
+        if systray == 'True':
+            self.__create_trayicon()
             
         ## start main loop
         gobject.threads_init()
@@ -354,6 +359,15 @@ class GsongFinder(object):
             else:
                 convert = 'False'
                 self.conf['convert'] = False
+                
+        elif ('systray' in widget.name):
+            if widget.get_active():
+                systray = 'True'
+                self.conf['systray'] = True
+                self.__create_trayicon()
+            else:
+                systray = 'False'
+                self.conf['systray'] = False
         else:
             if widget.get_active():
                 accept = warn_dialog(self.warn_dialog)
@@ -898,12 +912,11 @@ class GsongFinder(object):
             self.show_mini_player()
         
         ## disable screensaver
-        if self.fullscreen == True and self.mini_player == False and self.timer > 58:
+        if self.fullscreen == True and self.mini_player == False and self.timer > 30:
             if sys.platform == "win32":
                 win32api.keybd_event(7,0,0,0)
             else:
-                print 'send'
-                send_string('A')
+                send_string('a')
             self.timer = 0
         
         if self.duration == None:
@@ -1113,9 +1126,10 @@ class GsongFinder(object):
 
     def bus_message_tag(self, bus, message):
         codec = None
-        self.audio_codec= None
+        self.audio_codec = None
         self.media_bitrate = None
         self.mode = None
+        self.media_codec = None
         #we received a tag message
         taglist = message.parse_tag()
         self.file_tags['audio-codec'] = ""
@@ -1123,7 +1137,7 @@ class GsongFinder(object):
         self.file_tags['container-format'] = ""
         #put the keys in the dictionary
         for key in taglist.keys():
-            print key, taglist[key]
+            #print key, taglist[key]
             if key == "preview-image" or key == "image":
                 ipath="/tmp/temp.png"
                 img = open(ipath, 'w')
@@ -1149,7 +1163,7 @@ class GsongFinder(object):
                 codec = self.file_tags['video-codec']
             else:
                 codec = self.file_tags['audio-codec']
-            if codec == "" and self.file_tags['container-format']:
+            if codec == "" and self.file_tags['container-format'] != "":
                 codec = self.file_tags['container-format']
             if ('MP3' in codec or 'ID3' in codec):
                     self.media_codec = 'mp3'

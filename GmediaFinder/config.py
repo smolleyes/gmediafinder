@@ -69,6 +69,8 @@ gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
 
 ## conf file
 conf_file = os.path.join(settings_folder, 'gmediafinder_config')
+## systray
+systray = False
 ## history file
 history_file = os.path.join(settings_folder, 'history')
 if not os.path.exists(history_file):
@@ -122,4 +124,11 @@ try:
     max_history = conf["max_history"]
 except:
     conf["max_history"] = max_history
+    conf.write()
+
+## systray
+try:
+    systray = conf["systray"]
+except:
+    conf["systray"] = systray
     conf.write()
