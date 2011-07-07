@@ -64,6 +64,7 @@ class GsongFinder(object):
         self.conf=conf
         self.latest_engine = ""
         self.change_page_request = False
+        self.tray = None
 
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
@@ -364,10 +365,14 @@ class GsongFinder(object):
             if widget.get_active():
                 systray = 'True'
                 self.conf['systray'] = True
-                self.__create_trayicon()
+                if not self.tray:
+                    self.__create_trayicon()
+                else:
+                    self.tray.set_visible(1)
             else:
                 systray = 'False'
                 self.conf['systray'] = False
+                self.tray.set_visible(0)
         else:
             if widget.get_active():
                 accept = warn_dialog(self.warn_dialog)
