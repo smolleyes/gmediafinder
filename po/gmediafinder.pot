@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-07 01:31+0200\n"
+"POT-Creation-Date: 2011-07-07 22:32+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -116,6 +116,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1041
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:610
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1052
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1065
 msgid "Download"
 msgstr ""
 
@@ -176,6 +177,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1427
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1046
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1445
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1461
 msgid "Options"
 msgstr ""
 
@@ -284,6 +286,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1403
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1403
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1421
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1437
 msgid "<b>Extras options : </b>"
 msgstr ""
 
@@ -291,6 +294,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1483
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1483
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1501
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1517
 msgid "<b>Select your engines : </b>"
 msgstr ""
 
@@ -298,6 +302,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1508
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1508
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1526
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1542
 msgid "Engines"
 msgstr ""
 
@@ -305,6 +310,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1540
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1540
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1558
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1574
 msgid ""
 "Play/pause : Space\n"
 "Stop: s\n"
@@ -317,6 +323,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1553
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1553
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1571
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1587
 msgid "<b>Shortcuts:</b>"
 msgstr ""
 
@@ -324,6 +331,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1571
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1571
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1589
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1605
 msgid "Infos"
 msgstr ""
 
@@ -331,6 +339,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1643
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1643
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1661
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1677
 msgid "I refuse"
 msgstr ""
 
@@ -338,6 +347,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1686
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1686
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1704
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1720
 msgid "I accept"
 msgstr ""
 
@@ -345,6 +355,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1733
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1733
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1751
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1767
 msgid "  Disclaimer, Please read:"
 msgstr ""
 
@@ -352,6 +363,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1764
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1764
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1782
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1798
 msgid ""
 "The following are terms and conditions for use of gmediafinder including all "
 "services offered.\n"
@@ -693,6 +705,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:222
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:215
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:224
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:228
 msgid " Results : "
 msgstr ""
 
@@ -700,6 +713,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:293
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:286
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:295
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:299
 msgid "All"
 msgstr ""
 
@@ -707,6 +721,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:294
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:287
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:296
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:300
 msgid "All audios"
 msgstr ""
 
@@ -714,6 +729,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:295
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:288
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:297
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:301
 msgid "All videos"
 msgstr ""
 
@@ -721,6 +737,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:479
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:486
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:495
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:509
 msgid "Please select a search engine..."
 msgstr ""
 
@@ -728,6 +745,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:482
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:489
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:498
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:512
 msgid "Please enter an artist/album or song name..."
 msgstr ""
 
@@ -735,6 +753,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:485
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:492
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:501
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:515
 msgid "Please select an engine..."
 msgstr ""
 
@@ -743,6 +762,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:625
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:636
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:646
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:660
 msgid "Stopped"
 msgstr ""
 
@@ -752,6 +772,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:875
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:873
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:883
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:897
 msgid "Bitrate:"
 msgstr ""
 
@@ -761,6 +782,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:876
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:874
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:884
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:898
 msgid "Encoding:"
 msgstr ""
 
@@ -770,6 +792,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:877
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:875
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:885
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:899
 msgid "Playing:"
 msgstr ""
 
@@ -779,6 +802,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1043
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1041
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1052
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1065
 #, python-format
 msgid ""
 "The file:\n"
@@ -794,6 +818,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1063
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1061
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1072
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1085
 msgid "Stop Downloading"
 msgstr ""
 
@@ -803,6 +828,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1071
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1080
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1093
 msgid "Show in folder"
 msgstr ""
 
@@ -812,6 +838,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1079
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1077
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1088
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1101
 msgid "Convert to mp3"
 msgstr ""
 
@@ -821,6 +848,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1090
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1088
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1099
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1112
 msgid "Remove"
 msgstr ""
 
@@ -836,6 +864,8 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1437
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1409
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1480
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1423
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1494
 #, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr ""
@@ -866,4 +896,8 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:173
 #, python-format
 msgid "Remaining : %(min)02d:%(sec)02d"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1417
+msgid "Enable systray"
 msgstr ""
