@@ -100,9 +100,9 @@ def char_to_keycode(ch) :
 
 def send_string(str) :
     for ch in str :
-        print "sending", ch, "=", display.keysym_to_keycode(Xlib.XK.string_to_keysym(ch))
+        #print "sending", ch, "=", display.keysym_to_keycode(Xlib.XK.string_to_keysym(ch))
         keycode, shift_mask = char_to_keycode(ch)
-        print "Trying fake_input of", ch, ", shift_mask is", shift_mask
+        #print "Trying fake_input of", ch, ", shift_mask is", shift_mask
         if shift_mask != 0 :
             Xlib.ext.xtest.fake_input(display, Xlib.X.KeyPress, 50)
         Xlib.ext.xtest.fake_input(display, Xlib.X.KeyPress, keycode)

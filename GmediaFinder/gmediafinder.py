@@ -689,7 +689,7 @@ class GsongFinder(object):
         self.duration = None
         self.update_time_label()
         self.active_link = None
-        self.movie_window.queue_draw()
+        gobject.idle_add(self.movie_window.queue_draw)
 
     def play_thread(self):
         play_thread_id = self.play_thread_id
@@ -917,7 +917,7 @@ class GsongFinder(object):
             self.show_mini_player()
         
         ## disable screensaver
-        if self.fullscreen == True and self.mini_player == False and self.timer > 30:
+        if self.fullscreen == True and self.mini_player == False and self.timer > 55:
             if sys.platform == "win32":
                 win32api.keybd_event(7,0,0,0)
             else:
