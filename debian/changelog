@@ -1,8 +1,9 @@
-gmediafinder (0.9.7.1-0ppa1~natty) natty; urgency=high
+gmediafinder (0.9.7.1-0ppa2~natty) natty; urgency=high
 
   * fix fullscreen
   * fix screensaver
   * add search history
   * systray icon as option
+  * fix program first start
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
