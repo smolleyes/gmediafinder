@@ -1,3 +1,10 @@
+V 0.9.7.1
+  * fix fullscreen
+  * fix screensaver
+  * add search history
+  * systray icon as option
+  * fix program first start
+
 V 0.9.5
  * big gui changes
  * add page back button
