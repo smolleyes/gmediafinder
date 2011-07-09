@@ -88,7 +88,7 @@ conf = ConfigObj(conf_file,write_empty_values=True)
 history_file = os.path.join(settings_folder, 'history')
 if not os.path.exists(history_file):
     f = open(history_file,'w')
-    f.write('')
+    f.write(' ')
     f.close()
 ## down dir
 try:

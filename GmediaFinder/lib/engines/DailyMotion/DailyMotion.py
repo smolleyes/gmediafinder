@@ -20,7 +20,7 @@ class DailyMotion(object):
         ## options labels
         self.order_label = _("Order by: ")
         self.filters_label = _("Filters: ")
-        self.search_url = 'https://api.dailymotion.com/videos?%ssort=%s&page=%s&limit=25&search=%s&fields=embed_url,thumbnail_medium_url,title'
+        self.search_url = 'https://api.dailymotion.com/videos?%ssort=%s&page=%s&limit=25&search=%s&fields=embed_url,thumbnail_medium_url,title,views_total,duration'
         
         self.start_engine()
     
@@ -59,15 +59,21 @@ class DailyMotion(object):
         js = json.load(data)
         l = js['list']
         for dic in l:
-            #print dic
             if self.thread_stop == True:
                 break
             title = dic['title']
             link = dic['embed_url']
             img_link = dic['thumbnail_medium_url']
+            duration = dic['duration']
+            calc = divmod(int(duration),60)
+            seconds = int(calc[1])
+            if seconds < 10:
+                seconds = "0%d" % seconds
+            duration = "%d:%s" % (calc[0],seconds)
+            total = dic['views_total']
             img = download_photo(img_link)
-            title = glib.markup_escape_text(title)
-            gobject.idle_add(self.gui.add_sound, title, link, img, None, self.name)
+            markup = _("\n<small><b>views:</b> %s        <b>Duration:</b> %s</small>") % (total, duration)
+            gobject.idle_add(self.gui.add_sound, title, link, img, None, self.name, markup)
         if js['has_more'] != 'true':
             self.print_info(_("%s: No more results for %s...") % (self.name,user_search))
             time.sleep(5)
@@ -76,3 +82,4 @@ class DailyMotion(object):
     
     def print_info(self,msg):
         gobject.idle_add(self.gui.info_label.set_text,msg)
+

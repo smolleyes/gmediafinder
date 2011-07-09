@@ -100,7 +100,6 @@ class GsongFinder(object):
         self.stop_search_btn = self.gladeGui.get_widget("stop_search_btn")
         ## history
         self.search_entry.connect('changed',self.__search_history)
-        self.search_entry.connect('focus-out-event',self.__show_history)
         self.history_view = gtk.EntryCompletion()
         self.history_view.set_minimum_key_length(1)
         self.search_entry.set_completion(self.history_view)
@@ -207,6 +206,7 @@ class GsongFinder(object):
         "on_downloads_enabled_toggled" : self.set_extras_options,
         "on_convert_enabled_toggled" : self.set_extras_options,
         "on_systray_enabled_toggled" : self.set_extras_options,
+        "on_clear_history_btn_clicked" : self.clear_history,
          }
         self.gladeGui.signal_autoconnect(dic)
         self.window.connect('destroy', self.exit)
@@ -679,6 +679,7 @@ class GsongFinder(object):
         self.play_thread_id = thread.start_new_thread(self.play_thread, ())
         self.is_playing = True
         self.is_paused = False
+        gobject.idle_add(self.movie_window.queue_draw)
 
     def stop_play(self,widget=None):
         self.player.set_state(gst.STATE_NULL)
@@ -1332,7 +1333,7 @@ class GsongFinder(object):
             return
         if len(t) >= int(max_history):
             f = open(history_file,'w')
-            del t[0]
+            del t[1]
             f.writelines(t)
             f.write("%s\n" % search)
             f.close()
@@ -1350,9 +1351,14 @@ class GsongFinder(object):
                 self.history_model.append([s])
             except:
                 pass
-            
-    def __show_history(self, widget, event):
-        pass
+    
+    def clear_history(self, widget):
+        search = self.search_entry.get_text()
+        self.history_model.clear()
+        f = open(history_file,'w')
+        f.write(' ')
+        f.close()
+
   
     def __close(self, widget, event=None):
         if self.minimize == 'on':

@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-09 19:30+0200\n"
+"POT-Creation-Date: 2011-07-10 00:08+0200\n"
 "PO-Revision-Date: 2011-05-26 21:49+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -185,6 +185,7 @@ msgstr "Strona 2"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1046
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1445
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1461
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1521
 msgid "Options"
 msgstr "Opcje"
 
@@ -305,6 +306,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1403
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1421
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1437
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1497
 #, fuzzy
 msgid "<b>Extras options : </b>"
 msgstr "<b>Opcje odtwarzania : </b>"
@@ -314,6 +316,7 @@ msgstr "<b>Opcje odtwarzania : </b>"
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1483
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1501
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1517
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1577
 msgid "<b>Select your engines : </b>"
 msgstr "<b> Wybierz swoje wyszukiwarki : </b>"
 
@@ -322,6 +325,7 @@ msgstr "<b> Wybierz swoje wyszukiwarki : </b>"
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1508
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1526
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1542
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1602
 msgid "Engines"
 msgstr "Wyszukiwarki"
 
@@ -330,6 +334,7 @@ msgstr "Wyszukiwarki"
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1540
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1558
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1574
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1634
 msgid ""
 "Play/pause : Space\n"
 "Stop: s\n"
@@ -343,6 +348,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1553
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1571
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1587
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1647
 #, fuzzy
 msgid "<b>Shortcuts:</b>"
 msgstr "<b>Informacje :</b>"
@@ -352,6 +358,7 @@ msgstr "<b>Informacje :</b>"
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1571
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1589
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1605
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1665
 msgid "Infos"
 msgstr ""
 
@@ -360,6 +367,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1643
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1661
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1677
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1737
 msgid "I refuse"
 msgstr ""
 
@@ -368,6 +376,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1686
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1704
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1720
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1780
 msgid "I accept"
 msgstr ""
 
@@ -376,6 +385,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1733
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1751
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1767
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1827
 msgid "  Disclaimer, Please read:"
 msgstr ""
 
@@ -384,6 +394,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1764
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1782
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1798
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1858
 msgid ""
 "The following are terms and conditions for use of gmediafinder including all "
 "services offered.\n"
@@ -549,6 +560,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/BurningCamel/BurningCamel.py:69
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:72
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/BurningCamel/BurningCamel.py:69
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:78
 #, fuzzy, python-format
 msgid "%s: No more results for %s..."
 msgstr "Dla %s nic nie znaleziono..."
@@ -811,6 +823,7 @@ msgstr "Zatrzymano"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:883
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:897
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:902
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:903
 msgid "Bitrate:"
 msgstr ""
 
@@ -822,6 +835,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:884
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:898
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:903
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:904
 msgid "Encoding:"
 msgstr ""
 
@@ -833,6 +847,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:885
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:899
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:904
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:905
 #, fuzzy
 msgid "Playing:"
 msgstr "Odtworzono : %s"
@@ -927,6 +942,8 @@ msgstr "Usuń"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1499
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1427
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1498
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1433
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1504
 #, fuzzy, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr "Poszukuję %s w %s"
@@ -961,6 +978,17 @@ msgstr ""
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1417
 msgid "Enable systray"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1462
+msgid "Clear history"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:75
+#, python-format
+msgid ""
+"\n"
+"<small><b>views:</b> %s        <b>Duration:</b> %s</small>"
 msgstr ""
 
 #~ msgid "Converting process started..."
