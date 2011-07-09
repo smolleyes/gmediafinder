@@ -1014,10 +1014,8 @@ class GsongFinder(object):
 
     def on_motion_notify(self, widget, event):
         #h=gtk.gdk.screen_height()
-        self.timer = 0
         if self.fullscreen and not self.mini_player:
             self.show_mini_player()
-            time.sleep(0.5)
 
     def show_mini_player(self):
         if self.mini_player == True:
@@ -1025,9 +1023,10 @@ class GsongFinder(object):
             gobject.idle_add(self.options_bar.hide)
             self.mini_player = False
         else:
-            self.control_box.show()
+            gobject.idle_add(self.control_box.show)
             self.window.window.set_cursor(None)
             self.mini_player = True
+            self.timer = 0
 
     def onKeyPress(self, widget, event):
         if self.search_entry.is_focus():
