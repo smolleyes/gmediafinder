@@ -1,4 +1,4 @@
-gmediafinder (0.9.7.1-0ppa4~maverick) maverick; urgency=high
+gmediafinder (0.9.7.1-0ppa4~lucid) lucid; urgency=high
 
   * fix fullscreen
   * fix screensaver
