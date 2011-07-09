@@ -71,12 +71,6 @@ gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
 conf_file = os.path.join(settings_folder, 'gmediafinder_config')
 ## systray
 systray = False
-## history file
-history_file = os.path.join(settings_folder, 'history')
-if not os.path.exists(history_file):
-    f = open(history_file,'w')
-    f.write('')
-    f.close()
     
 if not os.path.exists(settings_folder):
     os.mkdir(settings_folder)
@@ -89,6 +83,14 @@ if not os.path.exists(settings_folder):
     os.write(fd,"convert=%s\n" % downloads)
     os.close(fd)
 conf = ConfigObj(conf_file,write_empty_values=True)
+
+## history file
+history_file = os.path.join(settings_folder, 'history')
+if not os.path.exists(history_file):
+    f = open(history_file,'w')
+    f.write('')
+    f.close()
+## down dir
 try:
     down_dir = conf["download_path"]
 except:
