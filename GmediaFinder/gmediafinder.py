@@ -691,6 +691,13 @@ class GsongFinder(object):
         self.update_time_label()
         self.active_link = None
         gobject.idle_add(self.movie_window.queue_draw)
+        bit=_('Bitrate:')
+        enc=_('Encoding:')
+        play=_('Playing:')
+        name = glib.markup_escape_text(self.media_name)
+        gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b></small>' % play)
+        gobject.idle_add(self.media_bitrate_label.set_markup,'<small><b>%s </b></small>' % bit)
+        gobject.idle_add(self.media_codec_label.set_markup,'<small><b>%s </b></small>' % enc)
 
     def play_thread(self):
         play_thread_id = self.play_thread_id
@@ -895,11 +902,7 @@ class GsongFinder(object):
           self.seeker.set_adjustment(adjustment)
           gobject.idle_add(self.time_label.set_text,"00:00 / 00:00")
           return False
-
-        ## update labels
-        #if not self.search_engine.engine_type == "audio":
-            #gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b></small>' % self.media_name)
-        #else:
+        
         bit=_('Bitrate:')
         enc=_('Encoding:')
         play=_('Playing:')
@@ -907,10 +910,11 @@ class GsongFinder(object):
         gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s</small>' % (play,name))
         gobject.idle_add(self.media_bitrate_label.set_markup,'<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
         gobject.idle_add(self.media_codec_label.set_markup,'<small><b>%s </b> %s</small>' % (enc,self.media_codec))
+
         ## update timer for mini_player and hide it if more than 5 sec
         ## without mouse movements
         self.timer += 1
-        if self.fullscreen == True and self.mini_player == True and self.timer > 3 :
+        if self.fullscreen == True and self.mini_player == True and self.timer > 5 :
             pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
             color = gtk.gdk.Color()
             cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
@@ -968,20 +972,21 @@ class GsongFinder(object):
             return self.set_fullscreen()
 
     def set_fullscreen(self,widget=None):
+        self.timer = 0
         if self.fullscreen :
             self.fullscreen = False
-            self.search_box.show()
-            self.results_box.show()
-            self.control_box.show()
-            self.options_bar.show()
+            gobject.idle_add(self.search_box.show)
+            gobject.idle_add(self.results_box.show)
+            gobject.idle_add(self.control_box.show)
+            gobject.idle_add(self.options_bar.show)
             self.window.window.set_cursor(None)
-            self.window.window.unfullscreen()
-            self.window.set_position(gtk.WIN_POS_CENTER)
+            gobject.idle_add(self.window.window.unfullscreen)
+            gobject.idle_add(self.window.set_position,gtk.WIN_POS_CENTER)
         else:
-            self.search_box.hide()
-            self.results_box.hide()
-            self.options_bar.hide()
-            self.window.window.fullscreen()
+            gobject.idle_add(self.search_box.hide)
+            gobject.idle_add(self.results_box.hide)
+            gobject.idle_add(self.options_bar.hide)
+            gobject.idle_add(self.window.window.fullscreen)
             self.fullscreen = True
             self.mini_player = True
 
@@ -999,7 +1004,7 @@ class GsongFinder(object):
 
     def on_expose_event(self, widget, event):
         x , y, width, height = event.area
-        widget.window.draw_drawable(widget.get_style().fg_gc[gtk.STATE_NORMAL],
+        gobject.idle_add(widget.window.draw_drawable,widget.get_style().fg_gc[gtk.STATE_NORMAL],
                                       pixmap, x, y, x, y, width, height)
         return False
 
@@ -1008,17 +1013,18 @@ class GsongFinder(object):
 
           x, y, width, height = widget.get_allocation()
           pixmap = gtk.gdk.Pixmap(widget.window, width, height)
-          pixmap.draw_rectangle(widget.get_style().black_gc,
+          gobject.idle_add(pixmap.draw_rectangle,widget.get_style().black_gc,
                                 True, 0, 0, width, height)
 
           return True
 
     def on_motion_notify(self, widget, event):
-        #h=gtk.gdk.screen_height()
+        self.timer = 0
         if self.fullscreen and not self.mini_player:
             self.show_mini_player()
 
     def show_mini_player(self):
+        self.timer = 0
         if self.mini_player == True:
             gobject.idle_add(self.control_box.hide)
             gobject.idle_add(self.options_bar.hide)
@@ -1027,7 +1033,6 @@ class GsongFinder(object):
             gobject.idle_add(self.control_box.show)
             self.window.window.set_cursor(None)
             self.mini_player = True
-            self.timer = 0
 
     def onKeyPress(self, widget, event):
         if self.search_entry.is_focus():
@@ -1044,9 +1049,9 @@ class GsongFinder(object):
             return self.search_entry.grab_focus()
         elif key == 'd':
             if self.notebook.get_current_page() == 0:
-                self.notebook.set_current_page(1)
+                gobject.idle_add(self.notebook.set_current_page,1)
             else:
-                self.notebook.set_current_page(0)
+                gobject.idle_add(self.notebook.set_current_page,0)
 
         # If user press Esc button in fullscreen mode
         if event.keyval == gtk.keysyms.Escape and self.fullscreen:
