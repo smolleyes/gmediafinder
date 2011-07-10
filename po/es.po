@@ -3,15 +3,16 @@
 # This file is distributed under the same license as the PACKAGE package.
 #
 # alan, 2011.
+#   <momojg@hotmail.com>, 2011.
 #   <rquesadaj@gmail.com>, 2011.
 # Bernardo Miguel Savone <bmsavone@gmail.com>, 2011.
 msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-10 00:08+0200\n"
-"PO-Revision-Date: 2011-06-28 00:55+0000\n"
-"Last-Translator: dyem <alan004@gmail.com>\n"
+"POT-Creation-Date: 2011-07-10 17:21+0200\n"
+"PO-Revision-Date: 2011-07-08 17:01+0000\n"
+"Last-Translator: momojg <momojg@hotmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "Language: es\n"
 "MIME-Version: 1.0\n"
@@ -41,9 +42,9 @@ msgstr ""
 "    Gmediafinder \n"
 "    Derechos Reservados (C) 2011 Laguillaumie Sylvain\n"
 "\n"
-"    Este programa es un software libre: puede redistribuirlo y/o modificarlo "
-"bajo los términos de la Licencia General Pública de la  GNU así como por la "
-"Free Software Foundation, sea por la version 2 de la Licencia, o (en su "
+"    Este programa es software libre: puede redistribuirlo y/o modificarlo "
+"bajo los términos de la Licencia General Pública de la  GNU, publicada por "
+"la Free Software Foundation, sea por la version 2 de la Licencia, o (en su "
 "opción) cualquier versión posterior.\n"
 "    Este programa es distribuido con la esperanza de que sea útil, pero SIN "
 "GARANTÍA ALGUNA; sin la garantía implicita de COMERCIALIZACIÓN o "
@@ -66,12 +67,12 @@ msgstr "Próxima página"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
 msgid "Stop search"
-msgstr ""
+msgstr "Detener búsqueda"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:149
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:149
 msgid "About"
-msgstr "Sobre"
+msgstr "Acerca de"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:208
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:208
@@ -82,7 +83,7 @@ msgstr "Preferencias"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:245
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:247
 msgid "Start search"
-msgstr ""
+msgstr "Comenzar búsqueda"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:242
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:243
@@ -105,24 +106,23 @@ msgstr "Motor:"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:483
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:496
-#, fuzzy
 msgid "Play/Stop"
-msgstr "Detener"
+msgstr "Reproducir/Detener"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:506
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:519
 msgid "Pause"
-msgstr ""
+msgstr "Pausa"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:529
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:542
 msgid "Shuffle"
-msgstr ""
+msgstr "Aleatorio"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:552
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:565
 msgid "Repeat"
-msgstr ""
+msgstr "Repetir"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:597
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:592
@@ -137,6 +137,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1065
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1070
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1075
 msgid "Download"
 msgstr "Descargar"
 
@@ -214,14 +215,14 @@ msgstr "Mostrar imágenes miniatura"
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1123
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1141
 msgid "<b>Playlist options : </b>"
-msgstr "<b>Opciones de playlist : </b>"
+msgstr "<b>Opciones de la lista de reproducción : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1161
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1156
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1156
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1174
 msgid "Max resolution : "
-msgstr "Máxima resolución :  "
+msgstr "Resolución máxima :  "
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1188
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1183
@@ -263,7 +264,7 @@ msgstr "1920x1080"
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:1281
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1299
 msgid "<b>Youtube video options : </b>"
-msgstr "<b>Youtube opciones de video : </b>"
+msgstr "<b>Opciones de video de Youtube : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1317
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1312
@@ -320,7 +321,7 @@ msgstr "Permitir extracción de audio"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1437
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1497
 msgid "<b>Extras options : </b>"
-msgstr "<b>Opciones extras : </b>"
+msgstr "<b>Opciones extras: </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1488
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1483
@@ -353,9 +354,9 @@ msgid ""
 "enter search box: BackSpace\n"
 "show downloads: d"
 msgstr ""
-"Reproducir/pausar : Espacio\n"
+"Reproducir/pausar: Espacio\n"
 "Detener: s\n"
-"Pantalla completa : f\n"
+"Pantalla completa: f\n"
 "Ir al campo de búsqueda: Barra espaciadora\n"
 "Ver descargas: d"
 
@@ -402,7 +403,7 @@ msgstr "Acepto"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1767
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1827
 msgid "  Disclaimer, Please read:"
-msgstr "Aviso legal, por favor leer:"
+msgstr "Aviso legal, por favor lea:"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1769
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1764
@@ -455,8 +456,8 @@ msgstr ""
 "incluyendo todos los servicios que se ofrecen. \n"
 "\n"
 "El servicio se ofrece a usted condicionado a la aceptación sin modificación "
-"de los términos, condiciones y avisos aquí contenidos. Por visitar y "
-"utilizar Mp3-center.org o cualquiera de sus sitios afiliados y los "
+"de los términos, condiciones y avisos aquí contenidos. Visitando y "
+"utilizando Mp3-center.org o cualquiera de sus sitios afiliados y los "
 "servicios, usted reconoce su pleno cumplimiento a los términos que figuran "
 "aquí. \n"
 "\n"
@@ -468,30 +469,31 @@ msgstr ""
 "la aprobación por parte de gmediafinder del sitio o cualquier asociación con "
 "sus operadores. \n"
 "\n"
-"el equipo de gmediafinder no asume ninguna responsabilidad u obligación por "
-"el archivo de audio, desde la integridad a la legalidad. \n"
+"El equipo de gmediafinder no asume ninguna responsabilidad u obligación por "
+"el archivo de audio, desde la integridad a la legalidad.\n"
 "\n"
-"el usuario de gmediafinder acepta que gmediafinder queda eximido de todas "
+"El usuario de gmediafinder acepta que gmediafinder queda eximido de todas "
 "las responsabilidades, pérdidas, costos y reclamaciones, incluyendo "
 "honorarios de abogados afirmados contra gmediafinder, sus agentes, "
 "funcionarios, empleados o socios, que puedan surgir o resultar de cualquier "
 "servicio proporcionado, realizado, acordado de ser realizado por "
 "gmediafinder. \n"
 "\n"
-"el equipo de gmediafinder no ofrece ninguna garantía, expresa o implícita, "
+"El equipo de gmediafinder no ofrece ninguna garantía, expresa o implícita, "
 "de los servicios que ofrece. gmediafinder no se hace responsable de "
 "cualquier daño a usted o a su negocio que pueda sufrir por el uso de los "
 "servicios gmediafinder. gmediafinder no se hará responsable de las "
-"interrupciones, retrasos, fallos, inexactitudes o errores tipográficos \n"
+"interrupciones, retrasos, fallos, inexactitudes o errores tipográficos.\n"
 "\n"
-"el equipo de gmediafinder no representa ni garantiza que el Servicio o el "
-"servidor que lo hace disponible están libres de virus u otros componentes "
+"El equipo de gmediafinder no representa ni garantiza que el Servicio o el "
+"servidor que lo hace disponible, estén libres de virus u otros componentes "
 "potencialmente peligrosos. gmediafinder no garantiza ni declara que el uso o "
 "los resultados de la utilización del servicio o de los materiales "
-"disponibles como parte de el servicio es correcta, precisa, oportuna o "
-"confiable \n"
+"disponibles como parte de el servicio sea correcta, precisa, oportuna o "
+"confiable.\n"
 "\n"
-"el equipo de gmediafinder se reserva el derecho de actualizar esta política "
+"\n"
+"El equipo de gmediafinder se reserva el derecho de actualizar esta política "
 "en cualquier momento sin previo aviso."
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
@@ -841,7 +843,7 @@ msgstr "Todos los videos"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:509
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:514
 msgid "Please select a search engine..."
-msgstr "Por favor, seleccione un motor de búsqueda ..."
+msgstr "Por favor, seleccione un motor de búsqueda..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:477
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:482
@@ -850,7 +852,7 @@ msgstr "Por favor, seleccione un motor de búsqueda ..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:512
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:517
 msgid "Please enter an artist/album or song name..."
-msgstr "Por favor, introduzca un artista / álbum o nombre de canción ..."
+msgstr "Por favor, introduzca un artista/álbum o nombre de canción..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:480
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:485
@@ -859,7 +861,7 @@ msgstr "Por favor, introduzca un artista / álbum o nombre de canción ..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:515
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:520
 msgid "Please select an engine..."
-msgstr "Por favor seleccione un motor ..."
+msgstr "Por favor seleccione un motor..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:621
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:620
@@ -880,6 +882,8 @@ msgstr "Detenido"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:897
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:902
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:903
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:694
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:906
 msgid "Bitrate:"
 msgstr "Tasa de bits"
 
@@ -892,6 +896,8 @@ msgstr "Tasa de bits"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:898
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:903
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:904
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:695
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:907
 msgid "Encoding:"
 msgstr "Codificando:"
 
@@ -904,6 +910,8 @@ msgstr "Codificando:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:899
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:904
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:905
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:696
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:908
 msgid "Playing:"
 msgstr "Reproduciendo:"
 
@@ -916,6 +924,7 @@ msgstr "Reproduciendo:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1065
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1070
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1075
 #, python-format
 msgid ""
 "The file:\n"
@@ -939,6 +948,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1085
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1090
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1089
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1095
 msgid "Stop Downloading"
 msgstr "Detener la descarga"
 
@@ -951,6 +961,7 @@ msgstr "Detener la descarga"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1093
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1098
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1097
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1103
 msgid "Show in folder"
 msgstr "Mostrar en la carpeta"
 
@@ -963,8 +974,9 @@ msgstr "Mostrar en la carpeta"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1101
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1106
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1105
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1111
 msgid "Convert to mp3"
-msgstr "Convertir a MP3"
+msgstr "Convertir a mp3"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1062
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1065
@@ -975,6 +987,7 @@ msgstr "Convertir a MP3"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1117
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1116
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1122
 msgid "Remove"
 msgstr "Remover"
 
@@ -998,13 +1011,15 @@ msgstr "Remover"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1498
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1433
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1504
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1438
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1509
 #, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr "Buscando %(query)s con %(engine)s (página: %(page)s)"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:98
 msgid "Failed..."
-msgstr "Fallido ..."
+msgstr "Fallido..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:126
 #, python-format

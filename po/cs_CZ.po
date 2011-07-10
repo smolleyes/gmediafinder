@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-10 00:08+0200\n"
+"POT-Creation-Date: 2011-07-10 17:21+0200\n"
 "PO-Revision-Date: 2011-06-17 19:11+0000\n"
 "Last-Translator: LukynZ <suchoi@centrum.cz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -136,6 +136,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1065
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1070
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1075
 msgid "Download"
 msgstr "Stáhnout"
 
@@ -841,6 +842,8 @@ msgstr "Zastaveno"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:897
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:902
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:903
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:694
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:906
 msgid "Bitrate:"
 msgstr "Bitrate:"
 
@@ -853,6 +856,8 @@ msgstr "Bitrate:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:898
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:903
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:904
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:695
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:907
 msgid "Encoding:"
 msgstr "Kódování:"
 
@@ -865,6 +870,8 @@ msgstr "Kódování:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:899
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:904
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:905
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:696
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:908
 #, fuzzy
 msgid "Playing:"
 msgstr "Přehrávám : %s"
@@ -878,6 +885,7 @@ msgstr "Přehrávám : %s"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1065
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1070
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1075
 #, python-format
 msgid ""
 "The file:\n"
@@ -900,6 +908,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1085
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1090
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1089
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1095
 msgid "Stop Downloading"
 msgstr "Zastavit Stahování"
 
@@ -912,6 +921,7 @@ msgstr "Zastavit Stahování"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1093
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1098
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1097
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1103
 msgid "Show in folder"
 msgstr "Zobrazit ve složce"
 
@@ -924,6 +934,7 @@ msgstr "Zobrazit ve složce"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1101
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1106
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1105
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1111
 msgid "Convert to mp3"
 msgstr "Převést na mp3"
 
@@ -936,6 +947,7 @@ msgstr "Převést na mp3"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1117
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1116
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1122
 msgid "Remove"
 msgstr "Ostranit"
 
@@ -959,6 +971,8 @@ msgstr "Ostranit"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1498
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1433
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1504
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1438
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1509
 #, fuzzy, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr "Vyhledávám %(query)s s pomocí %(engine)s"
