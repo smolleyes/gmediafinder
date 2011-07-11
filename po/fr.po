@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-#
+# 
 # smo <s.lagui@free.fr>, 2011.
 #   <s.lagui@free.fr>, 2011.
 # paokouran <s.lagui@free.fr>, 2011.
@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-10 17:21+0200\n"
-"PO-Revision-Date: 2011-07-10 15:20+0000\n"
+"POT-Creation-Date: 2011-07-12 00:54+0200\n"
+"PO-Revision-Date: 2011-07-11 22:56+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
-"Language: fr\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=UTF-8\n"
 "Content-Transfer-Encoding: 8bit\n"
+"Language: fr\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
@@ -43,17 +43,13 @@ msgstr ""
 "\n"
 "Ce programme est un logiciel libre ; vous pouvez le redistribuer ou le\n"
 "modifier suivant les termes de la GNU General Public License telle que\n"
-"publiée par la Free Software Foundation , soit la version 2 de la Licence, "
-"soit (à votre gré) toute version ultérieure.\n"
+"publiée par la Free Software Foundation , soit la version 2 de la Licence, soit (à votre gré) toute version ultérieure.\n"
 "\n"
 "Ce programme est distribué dans l’espoir qu’il sera utile, mais SANS\n"
 "AUCUNE GARANTIE : sans même la garantie implicite de COMMERCIALISABILITÉ\n"
-"ni d’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la GNU General Public "
-"License pour plus de détails.\n"
+"ni d’ADÉQUATION À UN OBJECTIF PARTICULIER. Consultez la GNU General Public License pour plus de détails.\n"
 "\n"
-"Vous devriez avoir reçu une copie de la GNU General Public License avec ce "
-"programme ; si ce n’est pas le cas, consultez : <http://www.gnu.org/licenses/"
-">.\n"
+"Vous devriez avoir reçu une copie de la GNU General Public License avec ce programme ; si ce n’est pas le cas, consultez : <http://www.gnu.org/licenses/>.\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:78
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:78
@@ -412,87 +408,45 @@ msgstr "Avertissement, veuillez lire s'il vous plaît :"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1798
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1858
 msgid ""
-"The following are terms and conditions for use of gmediafinder including all "
-"services offered.\n"
+"The following are terms and conditions for use of gmediafinder including all services offered.\n"
 "\n"
-"The service is offered to you conditioned on your acceptance without "
-"modification of the terms, conditions, and notices contained herein. By "
-"visiting and using Mp3-center.org or any of its affiliate sites and "
-"services, you are acknowledging your full compliance to the terms listed "
-"here. \n"
+"The service is offered to you conditioned on your acceptance without modification of the terms, conditions, and notices contained herein. By visiting and using Mp3-center.org or any of its affiliate sites and services, you are acknowledging your full compliance to the terms listed here. \n"
 "\n"
-"gmediafinder is based on its links to third party sites. The linked sites "
-"are not under the control of gmediafinder and gmediafinder is not "
-"responsible for the content of any linked sites or any links contained in a "
-"linked site. gmediafinder is providing these links to you only as a "
-"convenience, and the inclusion of any link does not imply endorsement by "
-"gmediafinder of the site or any association with their operators. \n"
+"gmediafinder is based on its links to third party sites. The linked sites are not under the control of gmediafinder and gmediafinder is not responsible for the content of any linked sites or any links contained in a linked site. gmediafinder is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement by gmediafinder of the site or any association with their operators. \n"
 "\n"
-"gmediafinder's team do not assume any responsibility or liability for the "
-"audio file, from completeness to legalities.\n"
+"gmediafinder's team do not assume any responsibility or liability for the audio file, from completeness to legalities.\n"
 "\n"
-"gmediafinder user agrees that gmediafinder is hereby absolved from any and "
-"all liabilities, losses, costs and claims, including attorney's fees "
-"asserted against gmediafinder, its agents, officers, employees, or "
-"associates, that may arise or result from any service provided, performed, "
-"be agreed to be performed by gmediafinder. \n"
+"gmediafinder user agrees that gmediafinder is hereby absolved from any and all liabilities, losses, costs and claims, including attorney's fees asserted against gmediafinder, its agents, officers, employees, or associates, that may arise or result from any service provided, performed, be agreed to be performed by gmediafinder. \n"
 "\n"
-"gmediafinder team makes no warranties, expressed or implied, for the "
-"services we provide. gmediafinder will not be held responsible for any "
-"damages you or your business may suffer from using gmediafinder services. "
-"gmediafinder will not be held responsible for any interruptions, delays, "
-"failures, inaccuracies, or typographical errors \n"
+"gmediafinder team makes no warranties, expressed or implied, for the services we provide. gmediafinder will not be held responsible for any damages you or your business may suffer from using gmediafinder services. gmediafinder will not be held responsible for any interruptions, delays, failures, inaccuracies, or typographical errors \n"
 "\n"
-"gmediafinder team does not represent or warrant that the Service or the "
-"server that makes it available, are free of viruses or other harmful "
-"components. gmediafinder does not warrant or represent that the use or the "
-"results of the use of the Service or the materials made available as part of "
-"the Service will be correct, accurate, timely, or otherwise reliable \n"
+"gmediafinder team does not represent or warrant that the Service or the server that makes it available, are free of viruses or other harmful components. gmediafinder does not warrant or represent that the use or the results of the use of the Service or the materials made available as part of the Service will be correct, accurate, timely, or otherwise reliable \n"
 "\n"
-"gmediafinder team reserves the right to update this policy at any time "
-"without notice."
+"gmediafinder team reserves the right to update this policy at any time without notice."
 msgstr ""
-"Les éléments suivants sont des termes et conditions d'utilisation de "
-"gmediafinder et de tous les services inclus. \n"
+"Les éléments suivants sont des termes et conditions d'utilisation de gmediafinder et de tous les services inclus. \n"
 "\n"
-"Ce service vous est offert sous réserve de votre acceptation sans "
-"modification des termes, conditions et notifications contenus aux présentes. "
-"En utilisant gmediafinder ou un de ses sites affiliés et leurs services, "
-"vous reconnaissez votre pleine conformité aux termes énumérés ici. \n"
+"Ce service vous est offert sous réserve de votre acceptation sans modification des termes, conditions et notifications contenus aux présentes. En utilisant gmediafinder ou un de ses sites affiliés et leurs services, vous reconnaissez votre pleine conformité aux termes énumérés ici. \n"
 "\n"
-"gmediafinder est basé sur des liens vers des sites tiers. Les sites liés ne "
-"sont pas sous le contrôle de gmediafinder et gmediafinder n'est pas "
-"responsable du contenu des sites liés ou des liens contenus dans un de ces "
-"sites.\n"
+"gmediafinder est basé sur des liens vers des sites tiers. Les sites liés ne sont pas sous le contrôle de gmediafinder et gmediafinder n'est pas responsable du contenu des sites liés ou des liens contenus dans un de ces sites.\n"
 "\n"
 "gmediafinder fournit ces liens seulement comme une \n"
-"commodité et le téléchargement de tout lien n'implique pas l'approbation par "
-"l'equipe gmediafinder ou un des sites liés ou encore de toute association "
-"avec leurs exploitants. \n"
+"commodité et le téléchargement de tout lien n'implique pas l'approbation par l'equipe gmediafinder ou un des sites liés ou encore de toute association avec leurs exploitants. \n"
 "\n"
-"l'équipe de gmediafinder n'assume aucune responsabilité ou obligation sur "
-"les fichiers audio/vidéo issus de vos recherches.\n"
+"l'équipe de gmediafinder n'assume aucune responsabilité ou obligation sur les fichiers audio/vidéo issus de vos recherches.\n"
 "\n"
-"l'utilisateur accepte que gmediafinder est absous de toutes les "
-"responsabilités, pertes, coûts et réclamations, y compris les honoraires "
-"d'avocat \n"
-"opposables aux services de gmediafinder et son équipe qui pourrait survenir "
-"ou résulter de tout service fourni dans gmediafinder. \n"
+"l'utilisateur accepte que gmediafinder est absous de toutes les responsabilités, pertes, coûts et réclamations, y compris les honoraires d'avocat \n"
+"opposables aux services de gmediafinder et son équipe qui pourrait survenir ou résulter de tout service fourni dans gmediafinder. \n"
 "\n"
-"l'équipe gmediafinder ne donne aucune garantie, expresse ou implicite, pour "
-"les \n"
+"l'équipe gmediafinder ne donne aucune garantie, expresse ou implicite, pour les \n"
 "services offerts. gmediafinder ne sera pas tenue responsable de tout \n"
-"dommage dont vous ou tout tiers pourrait souffrir en utilisant ses "
-"services. \n"
+"dommage dont vous ou tout tiers pourrait souffrir en utilisant ses services. \n"
 "gmediafinder ne sera pas tenu responsable des interruptions, retards, \n"
 "échecs, des inexactitudes ou des erreurs typographiques... \n"
 "\n"
-"l'équipe gmediafinder ne garantie pas que le service ou les serveurs qui les "
-"rendent accessibles soient exempts de virus ou autres composants "
-"nuisibles. \n"
+"l'équipe gmediafinder ne garantie pas que le service ou les serveurs qui les rendent accessibles soient exempts de virus ou autres composants nuisibles. \n"
 "\n"
-"l'équipe gmediafinder se réserve le droit de mettre à jour cette politique à "
-"tout moment, sans préavis."
+"l'équipe gmediafinder se réserve le droit de mettre à jour cette politique à tout moment, sans préavis."
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:126
@@ -512,6 +466,7 @@ msgstr "Arrêter"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:35
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/SunPorno/SunPorno.py:17
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:20
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:37
 msgid "Order by: "
 msgstr "Trier par:"
 
@@ -524,6 +479,7 @@ msgstr "Trier par:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:99
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:28
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 msgid "Most recent"
 msgstr "Plus récentes"
 
@@ -535,6 +491,7 @@ msgstr "Plus récentes"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:31
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:99
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 msgid "Most viewed"
 msgstr "Plus vues"
 
@@ -547,6 +504,7 @@ msgstr "Plus vues"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:100
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:29
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:113
 msgid "Most rated"
 msgstr "Mieux notées"
 
@@ -566,6 +524,8 @@ msgstr "Mieux notées"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:116
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:29
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:33
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:129
 msgid "Most relevant"
 msgstr "Pertinence"
 
@@ -687,76 +647,91 @@ msgstr "%s: connexion échouée ..."
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:36
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:36
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:38
 msgid "Category: "
 msgstr "Catégorie:"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:47
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:47
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:49
 msgid "Quality"
 msgstr "Qualité"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:107
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:107
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:120
 msgid "Sport"
 msgstr "Sport"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:108
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:108
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
 msgid "Films"
 msgstr "Films"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:108
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:108
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
 msgid "Cars"
 msgstr "Voiture"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 msgid "Music"
 msgstr "Musique"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 msgid "Technology"
 msgstr "Technologie"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 msgid "Animals"
 msgstr "Animaux"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 msgid "Travel"
 msgstr "Voyage"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 msgid "Games"
 msgstr "Jeux"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 msgid "Comedy"
 msgstr "Comédie"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:111
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
 msgid "Peoples"
 msgstr "Peuples"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:111
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
 msgid "News"
 msgstr "Nouvelles"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:125
 msgid "Entertainement"
 msgstr "Divertissement"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:125
 msgid "Trailers"
 msgstr "bandes annonces"
 
@@ -764,12 +739,15 @@ msgstr "bandes annonces"
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:159
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:154
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:159
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:190
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:199
 #, python-format
 msgid "%s: No results for %s ..."
 msgstr "%s: Aucun résultat pour %s..."
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:202
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:202
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:242
 #, python-format
 msgid ""
 "\n"
@@ -1058,4 +1036,25 @@ msgid ""
 "<small><b>views:</b> %s        <b>Duration:</b> %s</small>"
 msgstr ""
 "\n"
-"<small><b>Durée:</b> %s        <b>Vues:</b> %s</small>"
+"<small><b>Vues:</b> %s        <b>Durée:</b> %s</small>"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:106
+msgid "Paste youtube link"
+msgstr "Coller un lien youtube"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:145
+#, python-format
+msgid ""
+"Your link:\n"
+"\n"
+"%s\n"
+"\n"
+"is not a valid youtube link..."
+msgstr ""
+"Votre lien:\n"
+"\n"
+"%s\n"
+"\n"
+"n'est pas un lien youtube valide..."
+
+
