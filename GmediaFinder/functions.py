@@ -188,7 +188,19 @@ def yesno(title,msg):
     if result == gtk.RESPONSE_YES:
         return "Yes"
     elif result == gtk.RESPONSE_NO:
-        return "No"   
+        return "No"
+        
+def error_dialog(message, parent = None):
+    """
+    Displays an error message.
+    """
+
+    dialog = gtk.MessageDialog(parent = parent, type = gtk.MESSAGE_ERROR, buttons = gtk.BUTTONS_OK, flags = gtk.DIALOG_MODAL)
+    dialog.set_markup(message)
+    dialog.set_position('center')
+
+    result = dialog.run()
+    dialog.destroy()
 
 def sortDict(d):
     """ Returns the keys of dictionary d sorted by their values """

@@ -9,11 +9,13 @@ try:
     from functions import download_photo
     from functions import ComboBox
     from functions import sortDict
+    from config import img_path,_
 except:
     from GmediaFinder.functions import *
     from GmediaFinder.functions import download_photo
     from GmediaFinder.functions import ComboBox
     from GmediaFinder.functions import sortDict
+    from GmediaFinder.config import img_path,_
 
 class Youtube(object):
     def __init__(self,gui):
@@ -93,6 +95,17 @@ class Youtube(object):
         self.youtube_video_rate.set_active(0)
 
     def load_gui(self):
+        ## paste entry
+        btn = gtk.Button()
+        image = gtk.Image()
+        pb = gtk.gdk.pixbuf_new_from_file(img_path+"/yt_icone.jpg")
+        image.set_from_pixbuf(pb) 
+        button = gtk.Button()
+        button.set_image(image)
+        button.connect("clicked", self.on_paste)
+        button.set_tooltip_text(_('Paste youtube link'))
+        self.gui.search_opt_box.pack_start(button,False,False,10)
+        
         ## create orderby combobox
         cb = create_comboBox()
         self.orderbyOpt = {self.order_label:{_("Most relevant"):"relevance",
@@ -114,6 +127,29 @@ class Youtube(object):
         }
         self.category = create_comboBox(self.gui, self.catlist)
         self.orderby.setIndexFromString(_("Most relevant"))
+        
+        self.gui.search_opt_box.show_all()
+        
+    def on_paste(self,widget):
+        clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "CLIPBOARD")
+        data = clipboard.wait_for_contents('UTF8_STRING')
+        text = data.get_text()
+        if text != '':
+            vid=None
+            try:
+                vid = re.search('watch\?v=(.*?)&(.*)',text).group(1)
+            except:
+                try:
+                    vid = re.search('watch\?v=(.*)',text).group(1)
+                except:
+                    error_dialog(_('Your link:\n\n%s\n\nis not a valid youtube link...' % text))
+                    return
+            print vid
+            yt = yt_service.YouTubeService()
+            entry = yt.GetYouTubeVideoEntry(video_id='%s' % vid)
+            return self.filter(entry, '', 1)
+        else:
+            return
 
     def set_max_youtube_res(self, widget):
         if widget.get_active():
@@ -147,7 +183,7 @@ class Youtube(object):
         vquery = self.client.YouTubeQuery(query)
         self.filter(vquery,user_search)
 
-    def filter(self,vquery,user_search):
+    def filter(self,vquery,user_search,direct_link=None):
         if not vquery :
             self.num_start = 1
             self.current_page = 1
@@ -155,6 +191,10 @@ class Youtube(object):
             time.sleep(5)
             self.thread_stop=True
 
+        if direct_link:
+            self.gui.model.clear()
+            return self.make_youtube_entry(vquery)
+        
         if len(vquery.entry) == 0:
             self.print_info(_("%s: No results for %s ...") % (self.name,user_search))
             time.sleep(5)
