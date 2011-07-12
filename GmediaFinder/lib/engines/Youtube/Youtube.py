@@ -133,7 +133,11 @@ class Youtube(object):
     def on_paste(self,widget):
         clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "CLIPBOARD")
         data = clipboard.wait_for_contents('UTF8_STRING')
-        text = data.get_text()
+        try:
+            text = data.get_text()
+        except:
+            error_dialog(_("There's no link to paste..." % text))
+            return
         if text != '':
             vid=None
             try:
@@ -144,7 +148,6 @@ class Youtube(object):
                 except:
                     error_dialog(_('Your link:\n\n%s\n\nis not a valid youtube link...' % text))
                     return
-            print vid
             yt = yt_service.YouTubeService()
             entry = yt.GetYouTubeVideoEntry(video_id='%s' % vid)
             return self.filter(entry, '', 1)
@@ -247,7 +250,10 @@ class Youtube(object):
 
     def load_youtube_res(self,link):
         self.youtube_quality_model.clear()
-        self.media_link,self.quality_list = self.get_quality_list(link)
+        try:
+            self.media_link,self.quality_list = self.get_quality_list(link)
+        except:
+            return
         if not self.quality_list:
             return
         for rate in self.quality_list:
