@@ -136,7 +136,7 @@ class Youtube(object):
         try:
             text = data.get_text()
         except:
-            error_dialog(_("There's no link to paste..." % text))
+            error_dialog(_("There's no link to paste..."))
             return
         if text != '':
             vid=None
