@@ -78,6 +78,8 @@ class GsongFinder(object):
         self.img_path = img_path
         self.window.set_icon_from_file(os.path.join(self.img_path,'gmediafinder.png'))
         self.window.connect('key-press-event', self.onKeyPress)
+    
+        
         # options menu
         self.options_bar = self.gladeGui.get_widget("options_bar")
         self.search_box = self.gladeGui.get_widget("search_box")
@@ -283,10 +285,10 @@ class GsongFinder(object):
 
         ## create engines selector combobox
         box = self.gladeGui.get_widget("engine_selector_box")
-        combo = create_comboBox()
-        combo.connect("changed", self.set_engine)
-        box.pack_start(combo, False,False,5)
-        self.engine_selector = ComboBox(combo)
+        self.active_engines = create_comboBox()
+        self.active_engines.connect("changed", self.set_engine)
+        box.pack_start(self.active_engines, False,False,5)
+        self.engine_selector = ComboBox(self.active_engines)
         self.engine_selector.append("")
 
         ## start gui
@@ -525,6 +527,7 @@ class GsongFinder(object):
         self.changepage_btn.set_sensitive(0)
         self.pageback_btn.set_sensitive(0)
         self.__add_to_history()
+        self.engine_list = self.engine_selector.get_list()
         if self.engine_selector.getSelected() == self.global_search:
             for engine in self.engine_list:
                 try:
@@ -535,7 +538,10 @@ class GsongFinder(object):
             self.engine_selector.setIndexFromString(self.global_search)
         elif self.engine_selector.getSelected() == self.global_video_search:
             for engine in self.engine_list:
-                self.search_engine = getattr(self.engines_client,'%s' % engine)
+                try:
+                    self.search_engine = getattr(self.engines_client,'%s' % engine)
+                except:
+                    continue
                 if not self.search_engine.engine_type == "video":
                     continue
                 try:
@@ -545,7 +551,10 @@ class GsongFinder(object):
             self.engine_selector.setIndexFromString(self.global_video_search)
         elif self.engine_selector.getSelected() == self.global_audio_search:
             for engine in self.engine_list:
-                self.search_engine = getattr(self.engines_client,'%s' % engine)
+                try:
+                    self.search_engine = getattr(self.engines_client,'%s' % engine)
+                except:
+                    continue
                 if not self.search_engine.engine_type == "audio" or self.search_engine.name == "Jamendo":
                     continue
                 try:
@@ -572,7 +581,10 @@ class GsongFinder(object):
             self.engine_selector.select(self.latest_engine)
             if self.engine_selector.getSelected() == self.global_search:
                 for engine in self.engine_list:
-                    self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    try:
+                        self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    except:
+                        continue
                     if self.search_engine.name == "Jamendo":
                         continue
                     try:
@@ -581,7 +593,10 @@ class GsongFinder(object):
                         continue
             elif self.engine_selector.getSelected() == self.global_audio_search:
                 for engine in self.engine_list:
-                    self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    try:
+                        self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    except:
+                        continue
                     if self.search_engine.engine_type == "video" or self.search_engine.name == "Jamendo":
                         continue
                     try:
@@ -590,7 +605,10 @@ class GsongFinder(object):
                         continue
             elif self.engine_selector.getSelected() == self.global_video_search:
                 for engine in self.engine_list:
-                    self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    try:
+                        self.search_engine = getattr(self.engines_client,'%s' % engine)
+                    except:
+                        continue
                     if self.search_engine.engine_type == "audio":
                         continue
                     try:
@@ -918,7 +936,7 @@ class GsongFinder(object):
             pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
             color = gtk.gdk.Color()
             cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
-            self.window.window.set_cursor(cursor)
+            gobject.idle_add(self.window.window.set_cursor,cursor)
             self.show_mini_player()
         
         ## disable screensaver
@@ -986,9 +1004,19 @@ class GsongFinder(object):
             gobject.idle_add(self.search_box.hide)
             gobject.idle_add(self.results_box.hide)
             gobject.idle_add(self.options_bar.hide)
+            pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
+            color = gtk.gdk.Color()
+            cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
+            gobject.idle_add(self.window.window.set_cursor,cursor)
+            gobject.idle_add(self.control_box.hide)
             gobject.idle_add(self.window.window.fullscreen)
+            #win = gtk.Window()
+            #win.set_decorated(False)
+            #self.control_box.reparent(win)
+            #win.show_all()
+            #win.set_size_request(gtk.gdk.screen_width(),40)
             self.fullscreen = True
-            self.mini_player = True
+            self.mini_player = False
 
     def on_drawingarea_realized(self, sender):
         if sys.platform == "win32":
@@ -1031,7 +1059,7 @@ class GsongFinder(object):
             self.mini_player = False
         else:
             gobject.idle_add(self.control_box.show)
-            self.window.window.set_cursor(None)
+            gobject.idle_add(self.window.window.set_cursor,None)
             self.mini_player = True
 
     def onKeyPress(self, widget, event):

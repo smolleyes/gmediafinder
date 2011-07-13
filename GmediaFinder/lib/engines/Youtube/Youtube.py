@@ -32,7 +32,6 @@ class Youtube(object):
         self.thread_stop= False
         ## the gui box to show custom filters/options
         self.opt_box = self.gui.gladeGui.get_widget("search_options_box")
-        
         ## options labels
         self.order_label = _("Order by: ")
         self.category_label = _("Category: ")

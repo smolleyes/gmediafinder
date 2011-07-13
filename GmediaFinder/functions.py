@@ -269,6 +269,17 @@ class ComboBox(object):
                 self.select(path[0])
                 break
             self.combobox.set_active(-1)
+            
+    def get_list(self):
+        l = {}
+        for item in self.model:
+            iter = item.iter
+            path = item.path
+            name = self.model.get_value(iter, 0)
+            if not name == "":
+                l[name] = ''
+        return l
+        
 
 def decode_htmlentities(text):
     p = htmllib.HTMLParser(None)
