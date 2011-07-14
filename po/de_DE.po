@@ -1,7 +1,7 @@
 # SOME DESCRIPTIVE TITLE.
 # Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
 # This file is distributed under the same license as the PACKAGE package.
-# 
+#
 # smo <s.lagui@free.fr>, 2011.
 #   <s.lagui@free.fr>, 2011.
 # MartinKG <linux4martin@gmx.de>, 2011.
@@ -9,14 +9,14 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-13 14:36+0200\n"
+"POT-Creation-Date: 2011-07-14 12:22+0200\n"
 "PO-Revision-Date: 2011-07-11 22:56+0000\n"
 "Last-Translator: MartinKG <linux4martin@gmx.de>\n"
 "Language-Team: LANGUAGE de_DE\n"
+"Language: de_DE\n"
 "MIME-Version: 1.0\n"
 "Content-Type: text/plain; charset=ISO-8859-1\n"
 "Content-Transfer-Encoding: 8bit\n"
-"Language: de_DE\n"
 "Plural-Forms: nplurals=2; plural=(n > 1)\n"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:11
@@ -122,6 +122,8 @@ msgstr "Wiederholen"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1070
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1075
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1103
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1098
 msgid "Download"
 msgstr "Herunterladen"
 
@@ -404,21 +406,45 @@ msgstr "Bitte Hinweis lesen :"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1782
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1798
 msgid ""
-"The following are terms and conditions for use of gmediafinder including all services offered.\n"
+"The following are terms and conditions for use of gmediafinder including all "
+"services offered.\n"
 "\n"
-"The service is offered to you conditioned on your acceptance without modification of the terms, conditions, and notices contained herein. By visiting and using Mp3-center.org or any of its affiliate sites and services, you are acknowledging your full compliance to the terms listed here. \n"
+"The service is offered to you conditioned on your acceptance without "
+"modification of the terms, conditions, and notices contained herein. By "
+"visiting and using Mp3-center.org or any of its affiliate sites and "
+"services, you are acknowledging your full compliance to the terms listed "
+"here. \n"
 "\n"
-"gmediafinder is based on its links to third party sites. The linked sites are not under the control of gmediafinder and gmediafinder is not responsible for the content of any linked sites or any links contained in a linked site. gmediafinder is providing these links to you only as a convenience, and the inclusion of any link does not imply endorsement by gmediafinder of the site or any association with their operators. \n"
+"gmediafinder is based on its links to third party sites. The linked sites "
+"are not under the control of gmediafinder and gmediafinder is not "
+"responsible for the content of any linked sites or any links contained in a "
+"linked site. gmediafinder is providing these links to you only as a "
+"convenience, and the inclusion of any link does not imply endorsement by "
+"gmediafinder of the site or any association with their operators. \n"
 "\n"
-"gmediafinder's team do not assume any responsibility or liability for the audio file, from completeness to legalities.\n"
+"gmediafinder's team do not assume any responsibility or liability for the "
+"audio file, from completeness to legalities.\n"
 "\n"
-"gmediafinder user agrees that gmediafinder is hereby absolved from any and all liabilities, losses, costs and claims, including attorney's fees asserted against gmediafinder, its agents, officers, employees, or associates, that may arise or result from any service provided, performed, be agreed to be performed by gmediafinder. \n"
+"gmediafinder user agrees that gmediafinder is hereby absolved from any and "
+"all liabilities, losses, costs and claims, including attorney's fees "
+"asserted against gmediafinder, its agents, officers, employees, or "
+"associates, that may arise or result from any service provided, performed, "
+"be agreed to be performed by gmediafinder. \n"
 "\n"
-"gmediafinder team makes no warranties, expressed or implied, for the services we provide. gmediafinder will not be held responsible for any damages you or your business may suffer from using gmediafinder services. gmediafinder will not be held responsible for any interruptions, delays, failures, inaccuracies, or typographical errors \n"
+"gmediafinder team makes no warranties, expressed or implied, for the "
+"services we provide. gmediafinder will not be held responsible for any "
+"damages you or your business may suffer from using gmediafinder services. "
+"gmediafinder will not be held responsible for any interruptions, delays, "
+"failures, inaccuracies, or typographical errors \n"
 "\n"
-"gmediafinder team does not represent or warrant that the Service or the server that makes it available, are free of viruses or other harmful components. gmediafinder does not warrant or represent that the use or the results of the use of the Service or the materials made available as part of the Service will be correct, accurate, timely, or otherwise reliable \n"
+"gmediafinder team does not represent or warrant that the Service or the "
+"server that makes it available, are free of viruses or other harmful "
+"components. gmediafinder does not warrant or represent that the use or the "
+"results of the use of the Service or the materials made available as part of "
+"the Service will be correct, accurate, timely, or otherwise reliable \n"
 "\n"
-"gmediafinder team reserves the right to update this policy at any time without notice."
+"gmediafinder team reserves the right to update this policy at any time "
+"without notice."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
@@ -440,6 +466,7 @@ msgstr "Stoppen"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/SunPorno/SunPorno.py:17
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:20
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:37
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:36
 msgid "Order by: "
 msgstr "Sortieren nach:"
 
@@ -453,6 +480,7 @@ msgstr "Sortieren nach:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:99
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:28
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 msgid "Most recent"
 msgstr "Aktuellstem"
 
@@ -465,6 +493,7 @@ msgstr "Aktuellstem"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:52
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:99
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 msgid "Most viewed"
 msgstr "Meistgesehenen"
 
@@ -478,6 +507,7 @@ msgstr "Meistgesehenen"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:100
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:29
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:113
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 msgid "Most rated"
 msgstr "Meistbewerteten"
 
@@ -499,6 +529,8 @@ msgstr "Meistbewerteten"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:33
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:129
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:128
 msgid "Most relevant"
 msgstr "Wichtigsten"
 
@@ -621,90 +653,105 @@ msgstr "%s: Verbindung fehlgeschlagen..."
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:36
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:36
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:38
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:37
 msgid "Category: "
 msgstr "Kategorie:"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:47
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:47
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:49
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:48
 msgid "Quality"
 msgstr "Qualität"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:107
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:107
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:120
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:119
 msgid "Sport"
 msgstr "Sport"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:108
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:108
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:120
 msgid "Films"
 msgstr "Filme"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:108
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:108
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:120
 msgid "Cars"
 msgstr "Autos"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
 msgid "Music"
 msgstr "Musik"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
 msgid "Technology"
 msgstr "Technologie"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
 msgid "Animals"
 msgstr "Tiere"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 msgid "Travel"
 msgstr "Reisen"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 msgid "Games"
 msgstr "Spiele"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 msgid "Comedy"
 msgstr "Komödie"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:111
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 msgid "Peoples"
 msgstr "Leute"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:111
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 msgid "News"
 msgstr "Neuigkeiten"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:125
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
 msgid "Entertainement"
 msgstr "Unterhaltung"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:125
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
 msgid "Trailers"
 msgstr "Trailer"
 
@@ -714,6 +761,8 @@ msgstr "Trailer"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:159
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:190
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:199
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:192
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:201
 #, python-format
 msgid "%s: No results for %s ..."
 msgstr "%s: Keine Suchergebnisse für %s..."
@@ -721,6 +770,7 @@ msgstr "%s: Keine Suchergebnisse für %s..."
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/Youtube/Youtube.py:202
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:202
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:242
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:244
 #, python-format
 msgid ""
 "\n"
@@ -755,6 +805,7 @@ msgstr "Zugangsdaten"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:224
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:228
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:229
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:231
 msgid " Results : "
 msgstr " Ergebnisse"
 
@@ -764,6 +815,7 @@ msgstr " Ergebnisse"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:295
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:299
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:300
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:302
 msgid "All"
 msgstr "Alle"
 
@@ -773,6 +825,7 @@ msgstr "Alle"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:296
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:300
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:301
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:303
 msgid "All audios"
 msgstr "Alle Audios"
 
@@ -782,6 +835,7 @@ msgstr "Alle Audios"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:297
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:301
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:302
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:304
 msgid "All videos"
 msgstr "Alle Videos"
 
@@ -791,6 +845,7 @@ msgstr "Alle Videos"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:495
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:509
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:514
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:516
 msgid "Please select a search engine..."
 msgstr "Bitte Suchmaschine wählen..."
 
@@ -800,6 +855,7 @@ msgstr "Bitte Suchmaschine wählen..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:498
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:512
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:517
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:519
 msgid "Please enter an artist/album or song name..."
 msgstr "Bitte einen Künstler/Album oder Titlename eingeben..."
 
@@ -809,6 +865,7 @@ msgstr "Bitte einen Künstler/Album oder Titlename eingeben..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:501
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:515
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:520
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:522
 msgid "Please select an engine..."
 msgstr "Bitte Suchmaschine wählen..."
 
@@ -819,6 +876,7 @@ msgstr "Bitte Suchmaschine wählen..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:646
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:660
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:665
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:683
 msgid "Stopped"
 msgstr "Gestoppt"
 
@@ -833,6 +891,8 @@ msgstr "Gestoppt"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:903
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:694
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:906
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:712
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:924
 msgid "Bitrate:"
 msgstr "Qualität:"
 
@@ -847,6 +907,8 @@ msgstr "Qualität:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:904
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:695
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:907
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:713
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:925
 msgid "Encoding:"
 msgstr "Kodierung:"
 
@@ -861,6 +923,8 @@ msgstr "Kodierung:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:905
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:696
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:908
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:714
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:926
 msgid "Playing:"
 msgstr "Abspielen: "
 
@@ -874,6 +938,8 @@ msgstr "Abspielen: "
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1070
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1069
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1075
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1103
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1098
 #, python-format
 msgid ""
 "The file:\n"
@@ -898,6 +964,8 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1090
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1089
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1095
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1123
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1118
 msgid "Stop Downloading"
 msgstr "Download stoppen"
 
@@ -911,6 +979,8 @@ msgstr "Download stoppen"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1098
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1097
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1103
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1131
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1126
 msgid "Show in folder"
 msgstr "Im Verzeichnis auflisten"
 
@@ -924,6 +994,8 @@ msgstr "Im Verzeichnis auflisten"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1106
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1105
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1111
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1139
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1134
 msgid "Convert to mp3"
 msgstr "Konvertiere nach mp3"
 
@@ -937,6 +1009,8 @@ msgstr "Konvertiere nach mp3"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1117
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1116
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1122
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1150
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1145
 msgid "Remove"
 msgstr "Löschen"
 
@@ -962,6 +1036,10 @@ msgstr "Löschen"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1504
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1438
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1509
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1466
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1537
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1461
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1532
 #, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr "Suchen nach %(query)s mit %(engine)s (page: %(page)s)"
@@ -1004,10 +1082,12 @@ msgstr ""
 "<small><b>Angesehen:</b> %s        <b>Dauer:</b> %s</small>"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:106
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:105
 msgid "Paste youtube link"
 msgstr "Youtube Link einfügen"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:145
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:148
 #, python-format
 msgid ""
 "Your link:\n"
@@ -1022,4 +1102,6 @@ msgstr ""
 "\n"
 "ist kein gültiger youtube link..."
 
-
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:138
+msgid "There's no link to paste..."
+msgstr ""
