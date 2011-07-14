@@ -1007,14 +1007,9 @@ class GsongFinder(object):
             pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
             color = gtk.gdk.Color()
             cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
-            gobject.idle_add(self.window.window.set_cursor,cursor)
+            self.window.window.set_cursor(cursor)
             gobject.idle_add(self.control_box.hide)
             gobject.idle_add(self.window.window.fullscreen)
-            #win = gtk.Window()
-            #win.set_decorated(False)
-            #self.control_box.reparent(win)
-            #win.show_all()
-            #win.set_size_request(gtk.gdk.screen_width(),40)
             self.fullscreen = True
             self.mini_player = False
 
@@ -1059,7 +1054,7 @@ class GsongFinder(object):
             self.mini_player = False
         else:
             gobject.idle_add(self.control_box.show)
-            gobject.idle_add(self.window.window.set_cursor,None)
+            self.window.window.set_cursor(None)
             self.mini_player = True
 
     def onKeyPress(self, widget, event):

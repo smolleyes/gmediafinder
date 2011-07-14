@@ -60,7 +60,7 @@ data_files = [
 	('share/icons/hicolor/48x48/apps',['images/48x48/gmediafinder.png']),
 	('share/applications',['gmediafinder.desktop']),
 	('share/gmediafinder/glade',['data/glade/mainGui.glade']),
-	('share/gmediafinder/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif']),
+	('share/gmediafinder/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif','data/img/yt_icone.jpg']),
 	('share/pyshared/GmediaFinder/', ['GmediaFinder/__init__.py']),
 	('share/pyshared/GmediaFinder/lib/', ['GmediaFinder/__init__.py']),
 	('share/pyshared/GmediaFinder/lib/engines/', ['GmediaFinder/__init__.py']),

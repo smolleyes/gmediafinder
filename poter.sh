@@ -5,7 +5,7 @@
 basedir="$(pwd)/po"
 cd "$(pwd)"
 
-LANGLIST="en fr it ro pl_PL sr es cs_CZ"
+LANGLIST="en fr it ro pl_PL sr es cs_CZ de_DE"
 
 if [ "$1" = "cmo" ]; then
 	for lang in $LANGLIST; do

@@ -77,6 +77,6 @@ setup(
 	('images/48x48',['images/48x48/gmediafinder.png','images/48x48/gmediafinder.ico']),
         ('images/48x48/apps',['images/48x48/gmediafinder.png']),
 	('data/glade',['data/glade/mainGui.glade']),
-        ('data/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif']),
+        ('data/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif','data/img/yt_icone.jpg']),
                ]
 )
