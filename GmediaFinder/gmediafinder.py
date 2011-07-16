@@ -504,6 +504,7 @@ class GsongFinder(object):
         self.media_img = self.model.get_value(self.selected_iter, 0)
         self.media_bitrate = ""
         self.media_codec = ""
+        self.file_tags = {}
         self.stop_play()
         ## play in engine
         #thread.start_new_thread(self.search_engine.play,(self.media_link,))
@@ -1165,12 +1166,9 @@ class GsongFinder(object):
         self.media_codec = None
         #we received a tag message
         taglist = message.parse_tag()
-        self.file_tags['audio-codec'] = ""
-        self.file_tags['video-codec'] = ""
-        self.file_tags['container-format'] = ""
+        self.old_name = self.media_name
         #put the keys in the dictionary
         for key in taglist.keys():
-            #print key, taglist[key]
             if key == "preview-image" or key == "image":
                 ipath="/tmp/temp.png"
                 img = open(ipath, 'w')
@@ -1185,12 +1183,16 @@ class GsongFinder(object):
                 self.file_tags[key] = taglist[key]
             elif key == "audio-codec":
                 k = str(taglist[key])
-                self.file_tags[key] = k
+                if not self.file_tags.has_key(key) or self.file_tags[key] == '':
+                    self.file_tags[key] = k
             elif key == "video-codec":
-                self.file_tags[key] = taglist[key]
+                k = str(taglist[key])
+                if not self.file_tags.has_key(key) or self.file_tags[key] == '':
+                    self.file_tags[key] = k
             elif key == "container-format":
-                self.file_tags[key] = taglist[key]
-
+                k = str(taglist[key])
+                if not self.file_tags.has_key(key) or self.file_tags[key] == '':
+                    self.file_tags[key] = k
         try:
             if self.file_tags['video-codec'] != "":
                 codec = self.file_tags['video-codec']
@@ -1200,6 +1202,8 @@ class GsongFinder(object):
                 codec = self.file_tags['container-format']
             if ('MP3' in codec or 'ID3' in codec):
                     self.media_codec = 'mp3'
+            elif ('XVID' in codec):
+                    self.media_codec = 'avi'
             elif ('MPEG-4' in codec or 'H.264' in codec or 'MP4' in codec):
                     self.media_codec = 'mp4'
             elif ('WMA' in codec or 'ASF' in codec or 'Microsoft Windows Media 9' in codec):
@@ -1213,9 +1217,9 @@ class GsongFinder(object):
             self.media_bitrate = self.file_tags['bitrate']
             self.mode = self.file_tags['channel-mode']
             self.model.set_value(self.selected_iter, 1, self.media_markup)
+            self.file_tags = tags
         except:
             return
-
 
     def show_folder(self,widget,path):
         if sys.platform == "win32":
