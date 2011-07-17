@@ -494,6 +494,7 @@ class GsongFinder(object):
         self.media_thumb = self.model.get_value(self.selected_iter, 0)
         name = self.model.get_value(self.selected_iter, 4)
         self.media_name = decode_htmlentities(name)
+        self.file_tags = {}
         self.media_markup = self.model.get_value(self.selected_iter, 1)
         self.media_plugname = self.model.get_value(self.selected_iter, 5)
         ## for global search
@@ -504,11 +505,10 @@ class GsongFinder(object):
         self.media_img = self.model.get_value(self.selected_iter, 0)
         self.media_bitrate = ""
         self.media_codec = ""
-        self.file_tags = {}
         self.stop_play()
         ## play in engine
-        #thread.start_new_thread(self.search_engine.play,(self.media_link,))
-        self.search_engine.play(self.media_link)
+        thread.start_new_thread(self.search_engine.play,(self.media_link,))
+        #self.search_engine.play(self.media_link)
         
     def prepare_search(self,widget=None):
         self.user_search = self.search_entry.get_text()
@@ -517,8 +517,10 @@ class GsongFinder(object):
             self.info_label.set_text(_("Please select a search engine..."))
             return
         if not self.user_search:
-            self.info_label.set_text(_("Please enter an artist/album or song name..."))
-            return
+            eng = self.engine_selector.getSelected()
+            if not eng == "StreamLol" and not eng == "Jamendo" and not eng == 'DpStream':
+                self.info_label.set_text(_("Please enter an artist/album or song name..."))
+                return
         if not self.engine:
             self.info_label.set_text(_("Please select an engine..."))
             return
@@ -577,8 +579,14 @@ class GsongFinder(object):
         user_search = self.search_entry.get_text()
         engine = self.latest_engine
         if not user_search or user_search != self.user_search or not engine or engine != self.latest_engine:
-            return self.prepare_search()
+            if not self.search_engine.name == "Jamendo" and not self.search_engine.name == "StreamLol" and not self.search_engine.name == 'DpStream':
+                return self.prepare_search()
+            else:
+                return self.prepare_change_page(engine, user_search, name)
         else:
+            return self.prepare_change_page(engine, user_search, name)
+            
+    def prepare_change_page(self, engine, user_search, name):
             self.engine_selector.select(self.latest_engine)
             if self.engine_selector.getSelected() == self.global_search:
                 for engine in self.engine_list:
@@ -699,6 +707,7 @@ class GsongFinder(object):
         self.is_playing = True
         self.is_paused = False
         gobject.idle_add(self.movie_window.queue_draw)
+        self.file_tags = {}
 
     def stop_play(self,widget=None):
         self.player.set_state(gst.STATE_NULL)
@@ -1157,7 +1166,8 @@ class GsongFinder(object):
         t = Downloader(self,url, name, pbar, btnf, btn, btn_conv,
         btnstop, convert, oname)
         t.start()
-
+        
+    
     def bus_message_tag(self, bus, message):
         codec = None
         self.audio_codec = None
@@ -1194,7 +1204,7 @@ class GsongFinder(object):
                 if not self.file_tags.has_key(key) or self.file_tags[key] == '':
                     self.file_tags[key] = k
         try:
-            if self.file_tags['video-codec'] != "":
+            if self.file_tags.has_key('video-codec') and self.file_tags['video-codec'] != "":
                 codec = self.file_tags['video-codec']
             else:
                 codec = self.file_tags['audio-codec']
@@ -1220,6 +1230,7 @@ class GsongFinder(object):
             self.file_tags = tags
         except:
             return
+
 
     def show_folder(self,widget,path):
         if sys.platform == "win32":
@@ -1450,7 +1461,7 @@ class _FooThread(threading.Thread, _IdleObject):
         gobject.idle_add(self.info.set_text,'')
         self.engine.thread_stop = False
         self.cancelled = False
-        if not self.engine.name == 'Youtube':
+        if not self.engine.name == 'Youtube' and not self.engine.name == 'StreamLol' and not self.engine.name == 'DpStream':
             url = self.engine.get_search_url(self.query, self.engine.current_page)
             query = urlFetch(self.engine, url, self.query, self.engine.current_page)
             query.start()
@@ -1465,7 +1476,7 @@ class _FooThread(threading.Thread, _IdleObject):
                 gobject.idle_add(self.info.set_text,_("Searching for %(query)s with %(engine)s (page: %(page)s)") % values)
                 self.emit("progress")
             else:
-                if not self.engine.name == 'Youtube':
+                if not self.engine.name == 'Youtube' and not self.engine.name == 'StreamLol' and not self.engine.name == 'DpStream':
                     query.abort()
                 self.engine.thread_stop = True
                 break
