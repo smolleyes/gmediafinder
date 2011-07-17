@@ -1101,7 +1101,7 @@ class GsongFinder(object):
 
     def geturl(self, url, codec=None):
         oname = self.media_name+".%s" % self.media_codec
-        name = urllib.quote(oname)
+        name = urllib.quote(oname.encode('utf-8'))
         target = os.path.join(self.down_dir,name)
         otarget = os.path.join(self.down_dir,oname)
         if os.path.exists(otarget):
