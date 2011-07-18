@@ -841,6 +841,7 @@ msgid ""
 "\n"
 "<small><b>view:</b> %(count)s        <b>Duration:</b> %(duration)s</small>"
 msgstr ""
+"\n"
 "<small><b>Aufrufe:</b> %(count)s        <b>Dauer:</b> %(duration)s</small>"
 
 #: /home/smo/Documents/gmediafinder/win32/dist/data/engines/SunPorno/SunPorno.py:27

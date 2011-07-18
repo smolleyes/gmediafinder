@@ -1,4 +1,4 @@
-gmediafinder (0.9.7.2-0ppa2~lucid) lucid; urgency=high
+gmediafinder (0.9.7.2-0ppa3~lucid) lucid; urgency=high
 
   * fix codec detection
   * update translations
