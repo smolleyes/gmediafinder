@@ -1,9 +1,8 @@
-gmediafinder (0.9.7.1-0ppa5~maverick) maverick; urgency=high
+gmediafinder (0.9.7.2-0ppa1~natty) natty; urgency=high
 
-  * fix fullscreen
-  * fix screensaver
-  * add search history
-  * systray icon as option
-  * fix program first start
+  * fix codec detection
+  * update translations
+  * add function to paste youtube links directly in gmf
+  * more fixes...
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
