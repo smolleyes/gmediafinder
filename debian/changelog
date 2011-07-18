@@ -1,4 +1,4 @@
-gmediafinder (0.9.7.2-0ppa1~natty) natty; urgency=high
+gmediafinder (0.9.7.2-0ppa1~maverick) maverick; urgency=high
 
   * fix codec detection
   * update translations
