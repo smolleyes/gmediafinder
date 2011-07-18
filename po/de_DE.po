@@ -11,7 +11,7 @@ msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: 2011-07-12 00:54+0200\n"
-"PO-Revision-Date: 2011-07-16 10:23+0000\n"
+"PO-Revision-Date: 2011-07-16 17:12+0000\n"
 "Last-Translator: MartinKaG <linux4martin@gmx.de>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
 "MIME-Version: 1.0\n"
@@ -330,7 +330,7 @@ msgstr "<b>Extras Optionen : </b>"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1517
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1577
 msgid "<b>Select your engines : </b>"
-msgstr "<b>Suchmaschine wählen : </b>"
+msgstr "<b>Suchmaschinen wählen : </b>"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1513
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1508
@@ -339,7 +339,7 @@ msgstr "<b>Suchmaschine wählen : </b>"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1542
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1602
 msgid "Engines"
-msgstr "Suchmaschine"
+msgstr "Suchmaschinen"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1545
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1540
