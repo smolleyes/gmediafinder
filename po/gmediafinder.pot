@@ -8,7 +8,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-18 17:30+0200\n"
+"POT-Creation-Date: 2011-07-21 20:09+0200\n"
 "PO-Revision-Date: YEAR-MO-DA HO:MI+ZONE\n"
 "Last-Translator: FULL NAME <EMAIL@ADDRESS>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -747,6 +747,8 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:199
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:192
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:201
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:193
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:202
 #, python-format
 msgid "%s: No results for %s ..."
 msgstr ""
@@ -755,6 +757,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:202
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:242
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:244
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:248
 #, python-format
 msgid ""
 "\n"
@@ -840,6 +843,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:517
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:519
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:522
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:521
 msgid "Please enter an artist/album or song name..."
 msgstr ""
 
@@ -851,6 +855,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:520
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:522
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:525
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:524
 msgid "Please select an engine..."
 msgstr ""
 
@@ -1034,34 +1039,42 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1532
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1476
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1547
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1478
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1549
 #, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:98
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:89
 msgid "Failed..."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:126
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:117
 #, python-format
 msgid "Downloading %-66s"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:139
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:130
 #, python-format
 msgid "%(downloaded).02f MB of %(total).02f MB"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:140
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:131
 #, python-format
 msgid " at %d Kb/s "
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:151
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:142
 msgid "Download complete"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:173
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:164
 #, python-format
 msgid "Remaining : %(min)02d:%(sec)02d"
 msgstr ""
@@ -1080,6 +1093,7 @@ msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:145
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:148
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:149
 #, python-format
 msgid ""
 "Your link:\n"
@@ -1090,5 +1104,10 @@ msgid ""
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:138
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:139
 msgid "There's no link to paste..."
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1218
+msgid "640x360"
 msgstr ""

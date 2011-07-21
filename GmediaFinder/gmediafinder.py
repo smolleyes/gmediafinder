@@ -517,8 +517,7 @@ class GsongFinder(object):
             self.info_label.set_text(_("Please select a search engine..."))
             return
         if not self.user_search:
-            eng = self.engine_selector.getSelected()
-            if not eng == "StreamLol" and not eng == "Jamendo" and not eng == 'DpStream':
+            if not self.search_engine.has_browser_mode:
                 self.info_label.set_text(_("Please enter an artist/album or song name..."))
                 return
         if not self.engine:
@@ -579,7 +578,8 @@ class GsongFinder(object):
         user_search = self.search_entry.get_text()
         engine = self.latest_engine
         if not user_search or user_search != self.user_search or not engine or engine != self.latest_engine:
-            if not self.search_engine.name == "Jamendo" and not self.search_engine.name == "StreamLol" and not self.search_engine.name == 'DpStream':
+            ## if engine doesn t have browser mode, start a new search
+            if not self.search_engine.has_browser_mode:
                 return self.prepare_search()
             else:
                 return self.prepare_change_page(engine, user_search, name)
@@ -659,7 +659,7 @@ class GsongFinder(object):
             #thread.start_new_thread(self.search_engine.search,(self.user_search,page))
         self.add_thread(self.search_engine,self.user_search,page)
 
-    def add_sound(self, name, media_link, img=None, quality_list=None, plugname=None,markup_src=None):
+    def add_sound(self, name, media_link, img=None, quality_list=None, plugname=None,markup_src=None, tooltip=None):
         if not img:
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         if not name or not media_link or not img:
@@ -1224,6 +1224,8 @@ class GsongFinder(object):
                     self.media_codec = 'ogg'
             elif ('Sorenson Spark Video' in codec):
                     self.media_codec = 'flv'
+            elif ('VP8' in codec):
+                self.media_codec = 'webm'
             self.media_bitrate = self.file_tags['bitrate']
             self.mode = self.file_tags['channel-mode']
             self.model.set_value(self.selected_iter, 1, self.media_markup)

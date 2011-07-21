@@ -30,6 +30,7 @@ class Youtube(object):
         self.youtube_max_res = "320x240"
         self.media_codec = None
         self.thread_stop= False
+        self.has_browser_mode = False
         ## the gui box to show custom filters/options
         self.opt_box = self.gui.gladeGui.get_widget("search_options_box")
         ## options labels
@@ -81,7 +82,7 @@ class Youtube(object):
 
         if self.youtube_max_res == "320x240":
             self.res320.set_active(1)
-        elif self.youtube_max_res == "640x320":
+        elif self.youtube_max_res == "640x360":
             self.res640.set_active(1)
         elif self.youtube_max_res == "854x480":
             self.res854.set_active(1)
@@ -90,8 +91,8 @@ class Youtube(object):
         elif self.youtube_max_res == "1920x1080":
             self.res1920.set_active(1)
 
-        self.youtube_video_rate.hide()
-        self.youtube_video_rate.set_active(0)
+        gobject.idle_add(self.youtube_video_rate.hide)
+        gobject.idle_add(self.youtube_video_rate.set_active,0)
 
     def load_gui(self):
         ## paste entry
@@ -127,7 +128,7 @@ class Youtube(object):
         self.category = create_comboBox(self.gui, self.catlist)
         self.orderby.setIndexFromString(_("Most relevant"))
         
-        self.gui.search_opt_box.show_all()
+        gobject.idle_add(self.gui.search_opt_box.show_all)
         
     def on_paste(self,widget):
         clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "CLIPBOARD")
@@ -194,7 +195,7 @@ class Youtube(object):
             self.thread_stop=True
 
         if direct_link:
-            self.gui.model.clear()
+            gobject.idle_add(self.gui.model.clear)
             return self.make_youtube_entry(vquery)
         
         if len(vquery.entry) == 0:
@@ -213,8 +214,11 @@ class Youtube(object):
         gobject.idle_add(self.gui.quality_box.show)
         self.load_youtube_res(link)
         active = self.youtube_video_rate.get_active()
-        self.media_codec = self.quality_list[active].split('|')[1]
-        return self.gui.start_play(self.media_link[active])
+        try:
+            self.media_codec = self.quality_list[active].split('|')[1]
+            return self.gui.start_play(self.media_link[active])
+        except:
+            return self.gui.start_play('')
 
     def make_youtube_entry(self,video):
         duration = video.media.duration.seconds
@@ -247,8 +251,22 @@ class Youtube(object):
         gobject.idle_add(self.gui.add_sound,title, vid_id, vid_pic,None,self.name,markup)
 
 
+    def get_codec(self, num):
+        codec=None
+        if re.match('5|34|35',num):
+            codec = "flv"
+        elif re.match('18|22|37|38',num):
+            codec= "mp4"
+        elif re.match('43|45',num):
+            codec= "webm"
+        elif re.match('17',num):
+            codec= "3gp"
+        return codec
+    
     def load_youtube_res(self,link):
-        self.youtube_quality_model.clear()
+        gobject.idle_add(self.youtube_quality_model.clear)
+        self.media_link = None
+        self.quality_list = None
         try:
             self.media_link,self.quality_list = self.get_quality_list(link)
         except:
@@ -257,7 +275,7 @@ class Youtube(object):
             return
         for rate in self.quality_list:
             new_iter = self.youtube_quality_model.append()
-            self.youtube_quality_model.set(new_iter,
+            gobject.idle_add(self.youtube_quality_model.set,new_iter,
                             0, rate,
                             )
         self.set_default_youtube_video_rate()
@@ -269,13 +287,12 @@ class Youtube(object):
         ## if there s only one quality available, read it...
         if active == -1:
             if len(self.quality_list) == 1:
-                self.youtube_video_rate.set_active(0)
+                gobject.idle_add(self.youtube_video_rate.set_active,0)
             for frate in self.quality_list:
                 rate = frate.split('|')[0]
                 h = int(rate.split('x')[0])
                 dh = int(self.youtube_max_res.split('x')[0])
                 if h > dh:
-                    qn+=1
                     continue
                 else:
                     self.youtube_video_rate.set_active(qn)
@@ -292,8 +309,7 @@ class Youtube(object):
                 self.media_codec = self.quality_list[active].split('|')[1]
             except:
                 pass
-            self.gui.videosink.set_property('force-aspect-ratio', True)
-            return self.gui.start_play(self.media_link[active])
+            self.gui.start_play(self.media_link[active])
 
 
     def get_quality_list(self,vid_id):
@@ -303,24 +319,26 @@ class Youtube(object):
             req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
             stream = urllib2.urlopen(req)
             contents = stream.read()
+            stream.close()
             ## links list
             regexp1 = re.compile("fmt_stream_map=([^&]+)&")
             matches = regexp1.search(contents).group(1)
-            fmt_arr = urllib2.unquote(matches).split(',')
+            fmt_arr = urllib.unquote(matches).split(',')
             ## quality_list
             regexp1 = re.compile("fmt_map=([^&]+)&")
             matches = regexp1.search(contents).group(1)
-            quality_list = urllib2.unquote(matches).split(',')
+            quality_list = urllib.unquote(matches).split(',')
             ##
-            stream.close()
             link_list = []
             for link in fmt_arr:
-                res = link.split('|')[1]
-                link_list.append(res)
+                res = re.search('url=(.*?)&type', link).group(1)
+                link_list.append(urllib.unquote(res))
             ## remove flv links...
             i = 0
+            if quality_list[0] == quality_list[1]:
+                quality_list.remove(quality_list[0])
             for quality in quality_list:
-                codec = get_codec(quality)
+                codec = self.get_codec(quality)
                 if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
                     i+=1
                     continue
