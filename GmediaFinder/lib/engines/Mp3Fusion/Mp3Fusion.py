@@ -13,6 +13,7 @@ class Mp3Fusion(object):
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
+        self.has_browser_mode = False
         self.search_url = "http://www.mp3fusion.net/music/%s-%s.html"
         self.start_engine()
     

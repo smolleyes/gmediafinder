@@ -17,6 +17,7 @@ class Jamendo(object):
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
+        self.has_browser_mode = True
         ## options labels
         self.order_label = _("Order by: ")
         self.tag_label = _("Tag: ")

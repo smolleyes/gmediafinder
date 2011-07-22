@@ -37,6 +37,7 @@ class YouPorn(object):
         self.adult_content=True
         self.search_url = "http://www.youporn.com/search/%s?query=%s&type=%s&page=%s"
         self.initialized=False
+        self.has_browser_mode = False
         ## options labels
         self.order_label = _("Order by: ")
         self.browser = mechanize.Browser()

@@ -11,6 +11,7 @@ class Dilandau(object):
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
+        self.has_browser_mode = False
         self.search_url = "http://fr.dilandau.com/telecharger_musique/%s-%s.html"
         self.start_engine()
     

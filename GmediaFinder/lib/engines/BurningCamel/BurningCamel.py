@@ -16,6 +16,7 @@ class BurningCamel(object):
         self.main_start_page = 1
         self.thread_stop=False
         self.adult_content=True
+        self.has_browser_mode = False
         self.search_url = "http://www.burningcamel.com/search/results/page:%s/limit:36/sort:live/direction:desc/q:%s/matchMode:any/s:1/t:2/width:medium"
         self.start_engine()
     

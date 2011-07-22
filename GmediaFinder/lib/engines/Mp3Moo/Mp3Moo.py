@@ -16,6 +16,7 @@ class Mp3Moo(object):
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
+        self.has_browser_mode = False
         self.search_url = "http://mp3moo.com/search/mp3/%s/%s.html"
         self.start_engine()
     

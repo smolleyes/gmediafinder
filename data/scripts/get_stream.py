@@ -25,14 +25,17 @@ class Crawler(gtk.Window):
     def crawl(self):
         view = WebView()
         view.load_uri(self._url)
-        view.connect('load-finished', self._finished_loading)
+        view.connect('document-load-finished', self._finished_loading)
         self.add(view)
         gtk.main()
     
     def _finished_loading(self, view, frame):
         d = urllib.unquote(view.get_html())
         data = re.sub('&quot;','"',d)
-        link = re.search('url":"(.*?)"',data).group(1)
+        try:
+            link = re.search('url":"(.*?)"',data).group(1)
+        except:
+            return
         print link
         gtk.main_quit()
  

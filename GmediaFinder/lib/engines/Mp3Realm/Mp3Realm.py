@@ -15,6 +15,7 @@ class Mp3Realm(object):
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
+        self.has_browser_mode = False
         self.search_url = "http://mp3realm.org/search?q=%s&bitrate=&dur=0&pp=50&page=%s"
         self.start_engine()
     

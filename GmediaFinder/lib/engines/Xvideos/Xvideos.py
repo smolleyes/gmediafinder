@@ -16,6 +16,7 @@ class Xvideos(object):
         self.main_start_page = 1
         self.thread_stop=False
         self.adult_content=True
+        self.has_browser_mode = False
         self.search_url = "http://www.xvideos.com/?k=%s&sort=%s&p=%s"
         self.order_label = _("Order by: ")
         self.start_engine()

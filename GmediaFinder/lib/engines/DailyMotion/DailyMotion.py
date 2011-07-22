@@ -17,6 +17,7 @@ class DailyMotion(object):
         self.current_page = 1
         self.main_start_page = 1
         self.thread_stop=False
+        self.has_browser_mode = False
         ## options labels
         self.order_label = _("Order by: ")
         self.filters_label = _("Filters: ")

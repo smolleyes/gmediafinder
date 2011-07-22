@@ -16,6 +16,7 @@ class Redtube(object):
         self.main_start_page = 1
         self.thread_stop=False
         self.adult_content=True
+        self.has_browser_mode = False
         self.search_url = "http://www.redtube.com/%s?search=%s&page=%s"
         self.category_url = "http://www.redtube.com/redtube/%s?sorting=%s&page=%s"
         ## options labels
