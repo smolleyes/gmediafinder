@@ -256,9 +256,16 @@ class GsongFinder(object):
         self.columns[5].set_visible(0)
         self.results_scroll.add(self.treeview)
         self.results_scroll.connect_after('size-allocate', self.resize_wrap, self.treeview, self.columns[1], rendertxt)
+        ## right click menu
+        self.search_playlist_menu = gtk.Menu()
+        getlink_item = gtk.ImageMenuItem(gtk.STOCK_COPY)
+        getlink_item.get_children()[0].set_label(_('Copy file link'))
+        self.search_playlist_menu.append(getlink_item)
+        getlink_item.connect('activate', self._copy_link)
         ## connect treeview signals
+        self.search_playlist_menu_active = False
         self.treeview.connect('cursor-changed',self.get_model)
-
+        self.treeview.connect('button-press-event',self._show_search_playlist_menu)
         ## create the players
         self.player = gst.element_factory_make("playbin", "player")
         audiosink = gst.element_factory_make("autoaudiosink")
@@ -486,7 +493,9 @@ class GsongFinder(object):
     def show_home(self, widget):
         self.notebook.set_current_page(0)
 
-    def get_model(self,widget):
+    def get_model(self,widget,path=None,column=None):
+        if self.search_playlist_menu_active:
+            return
         selected = self.treeview.get_selection()
         self.selected_iter = selected.get_selected()[1]
         self.path = self.model.get_path(self.selected_iter)
@@ -1339,6 +1348,21 @@ class GsongFinder(object):
     def thread_progress(self, thread):
         pass
         
+    
+    def _show_search_playlist_menu(self,widget,event):
+        if event.button == 3:
+            self.search_playlist_menu_active = True
+            self.search_playlist_menu.show_all()
+            self.search_playlist_menu.popup(None, None, None, event.button, event.time)
+        
+    def _copy_link(self,widget):
+        self.search_playlist_menu_active = False
+        if self.search_engine.name == 'Youtube':
+            self.media_link = 'http://www.youtube.com/watch?v=%s' % self.media_link
+        clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "CLIPBOARD")
+        clipboard.set_text(self.media_link)
+        print '%s copied to clipboard' % self.media_link
+    
     def __create_trayicon(self):
         if gtk.check_version(2, 10, 0) is not None:
             self.log.debug("Disabled Tray Icon. It needs PyGTK >= 2.10.0")
@@ -1386,7 +1410,7 @@ class GsongFinder(object):
             f = open(history_file,'a+w')
             f.write("%s\n" % search)
             f.close()
-        
+    
     def __search_history(self, widget):
         search = self.search_entry.get_text()
         self.history_model.clear()
@@ -1463,12 +1487,9 @@ class _FooThread(threading.Thread, _IdleObject):
         gobject.idle_add(self.info.set_text,'')
         self.engine.thread_stop = False
         self.cancelled = False
-        if not self.engine.name == 'Youtube' and not self.engine.name == 'StreamLol' and not self.engine.name == 'DpStream':
-            url = self.engine.get_search_url(self.query, self.engine.current_page)
-            query = urlFetch(self.engine, url, self.query, self.engine.current_page)
-            query.start()
-        else:
-            self.engine.search(self.query, self.engine.current_page)
+        url = self.engine.get_search_url(self.query, self.engine.current_page)
+        query = urlFetch(self.engine, url, self.query, self.engine.current_page)
+        query.start()
         while 1:
             if self.engine.thread_stop == False and not self.cancelled:
                 time.sleep(1)
@@ -1478,8 +1499,7 @@ class _FooThread(threading.Thread, _IdleObject):
                 gobject.idle_add(self.info.set_text,_("Searching for %(query)s with %(engine)s (page: %(page)s)") % values)
                 self.emit("progress")
             else:
-                if not self.engine.name == 'Youtube' and not self.engine.name == 'StreamLol' and not self.engine.name == 'DpStream':
-                    query.abort()
+                query.abort()
                 self.engine.thread_stop = True
                 break
         self.emit("completed")

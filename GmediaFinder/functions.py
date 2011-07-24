@@ -308,22 +308,29 @@ class urlFetch(Thread):
         sys.stdout.flush()
 
     def run(self):
-        try:
-            t = urlretrieve(self.url, self.local, self._hook)
-            f = open(self.local)
-            self.engine.filter(f,self.query)
-        except Abort, KeyBoardInterrupt:
-            e = sys.exc_info()[1]
-            if e != "":
-                print "<p>Error: %s</p>" % e
-            print 'Aborted'
-        except:
+        if not isinstance(self.url, str):
             try:
-                t = urllib2.urlopen(self.url)
-                self.engine.filter(t, self.query)
+                self.engine.filter(self.url,self.query)
             except:
                 self.stop = True
-                raise
+                self.abort()
+        else:
+            try:
+                t = urlretrieve(self.url, self.local, self._hook)
+                f = open(self.local)
+                self.engine.filter(f,self.query)
+            except Abort, KeyBoardInterrupt:
+                e = sys.exc_info()[1]
+                if e != "":
+                    print "<p>Error: %s</p>" % e
+                print 'Aborted'
+            except:
+                try:
+                    t = urllib2.urlopen(self.url)
+                    self.engine.filter(t, self.query)
+                except:
+                    self.stop = True
+                    raise
 
 
     def abort(self):

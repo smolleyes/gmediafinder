@@ -164,6 +164,9 @@ class Youtube(object):
             except:
                 print "Can't write to the %s config file..." % self.gui.conf_file
 
+    def get_search_url(self,user_search,page):
+        return self.search(user_search,page)
+    
     def search(self,user_search,page):
         self.thread_stop=False
         nlist = []
@@ -184,7 +187,7 @@ class Youtube(object):
             self.num_start = 1
         query.start_index = self.num_start
         vquery = self.client.YouTubeQuery(query)
-        self.filter(vquery,user_search)
+        return vquery
 
     def filter(self,vquery,user_search,direct_link=None):
         if not vquery :
