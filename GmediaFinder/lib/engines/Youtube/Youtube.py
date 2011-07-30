@@ -256,11 +256,11 @@ class Youtube(object):
 
     def get_codec(self, num):
         codec=None
-        if re.match('5|34|35',num):
+        if re.match('5',num):
             codec = "flv"
-        elif re.match('18|22|37|38',num):
+        elif re.match('18|22|38|37|34|35',num):
             codec= "mp4"
-        elif re.match('43|45',num):
+        elif re.match('43|44|45',num):
             codec= "webm"
         elif re.match('17',num):
             codec= "3gp"
@@ -293,11 +293,15 @@ class Youtube(object):
                 gobject.idle_add(self.youtube_video_rate.set_active,0)
             for frate in self.quality_list:
                 rate = frate.split('|')[0]
+                codec = frate.split('|')[1]
                 h = int(rate.split('x')[0])
                 dh = int(self.youtube_max_res.split('x')[0])
                 if h > dh:
+                    qn += 1
                     continue
                 else:
+                    if codec == 'mp4' and '%s|webm' % rate in str(self.quality_list):
+                        continue
                     self.youtube_video_rate.set_active(qn)
             active = self.youtube_video_rate.get_active()
         else:
@@ -340,7 +344,9 @@ class Youtube(object):
             i = 0
             if quality_list[0] == quality_list[1]:
                 quality_list.remove(quality_list[0])
+                fmt_arr.remove(fmt_arr[0])
             for quality in quality_list:
+                #print quality
                 codec = self.get_codec(quality)
                 if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
                     i+=1
@@ -350,6 +356,7 @@ class Youtube(object):
                     continue
                 else:
                     links_arr.append(link_list[i])
+                    q = quality.split("/")[1] + "|%s" % codec
                     quality_arr.append(quality.split("/")[1] + "|%s" % codec)
                     i+=1
         except:

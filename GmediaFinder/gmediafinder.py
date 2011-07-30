@@ -726,7 +726,7 @@ class GsongFinder(object):
         self.play_thread_id = None
         self.duration = None
         self.update_time_label()
-        self.active_link = None
+        #self.active_link = None
         gobject.idle_add(self.movie_window.queue_draw)
         bit=_('Bitrate:')
         enc=_('Encoding:')
@@ -1000,9 +1000,7 @@ class GsongFinder(object):
                 win_id = self.movie_window.window.handle
             else:
                 win_id = self.movie_window.window.xid
-            gtk.gdk.threads_enter()
-            self.videosink.set_xwindow_id(win_id)
-            gtk.gdk.threads_leave()
+            gobject.idle_add(self.videosink.set_xwindow_id,win_id)
 
     def on_drawingarea_clicked(self, widget, event):
         if event.type == gtk.gdk._2BUTTON_PRESS:
@@ -1036,13 +1034,9 @@ class GsongFinder(object):
         if sys.platform == "win32":
             window = self.movie_window.get_window()
             window.ensure_native()
-            gtk.gdk.threads_enter()
-            self.videosink.set_xwindow_id(self.movie_window.window.handle)
-            gtk.gdk.threads_leave()
+            gobject.idle_add(self.videosink.set_xwindow_id,self.movie_window.window.handle)
         else:
-            gtk.gdk.threads_enter()
-            self.videosink.set_xwindow_id(self.movie_window.window.xid)
-            gtk.gdk.threads_leave()
+            gobject.idle_add(self.videosink.set_xwindow_id,self.movie_window.window.xid)
 
     def on_expose_event(self, widget, event):
         x , y, width, height = event.area
@@ -1188,6 +1182,7 @@ class GsongFinder(object):
         self.old_name = self.media_name
         #put the keys in the dictionary
         for key in taglist.keys():
+            #print key, taglist[key]
             if key == "preview-image" or key == "image":
                 ipath="/tmp/temp.png"
                 img = open(ipath, 'w')
@@ -1212,6 +1207,7 @@ class GsongFinder(object):
                 k = str(taglist[key])
                 if not self.file_tags.has_key(key) or self.file_tags[key] == '':
                     self.file_tags[key] = k
+            #print self.file_tags
         try:
             if self.file_tags.has_key('video-codec') and self.file_tags['video-codec'] != "":
                 codec = self.file_tags['video-codec']
@@ -1407,7 +1403,7 @@ class GsongFinder(object):
             f.write("%s\n" % search)
             f.close()
         else:
-            f = open(history_file,'a+w')
+            f = open(history_file,'a')
             f.write("%s\n" % search)
             f.close()
     

@@ -75,16 +75,17 @@ class Downloader(threading.Thread):
             ## download...
             try:
                 start_time = time.time()
-                urllib.urlretrieve(self.url, self.gui.down_dir+"/"+ self.name,
-                lambda nb, bs, fs, url=self.url: self._reporthook(nb,bs,fs,start_time,self.url,self.name,self.pbar))
+                fpath = self.gui.down_dir+"/"+ self.name
+                urllib.urlretrieve(self.url, fpath,
+                lambda nb, bs, fs, url=self.url: self._reporthook(nb,bs,fs,start_time,self.url,self.name,self.pbar,fpath))
                 gobject.idle_add(self.btnf.show)
                 if self.convert_check == 'True':
                     gobject.idle_add(self.btn_conv.show)
                 gobject.idle_add(self.btn.show)
                 gobject.idle_add(self.btnstop.hide)
                 self.decrease_down_count()
+                os.rename(fpath,self.gui.down_dir+"/"+ self.label)
                 self._stopevent.set()
-                os.rename(self.gui.down_dir+"/"+ self.name,self.gui.down_dir+"/"+ self.label)
             except:
                 gobject.idle_add(self.pbar.set_text,_("Failed..."))
                 gobject.idle_add(self.btn.show)
@@ -97,7 +98,7 @@ class Downloader(threading.Thread):
     def stop(self,widget=None):
 		self._stopevent.set()
 		self.decrease_down_count()
-		os.remove(self.gui.down_dir+"/"+ self.name)
+		#os.remove(self.gui.down_dir+"/"+ self.name)
 		self.gui.remove_download(widget)
     
     def decrease_down_count(self):
@@ -105,42 +106,42 @@ class Downloader(threading.Thread):
 			self.gui.active_downloads -= 1
 			gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
 	
-    def _reporthook(self, numblocks, blocksize, filesize, start_time, url, name, progressbar):
-		#print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
-		#XXX Should handle possible filesize=-1.
-		if self._stopevent.isSet():
-			self._reporthook(numblocks, blocksize, filesize, start_time, url, name, progressbar)
-			pass
-			
-		if filesize == -1:
-			gtk.gdk.threads_enter()
-			progressbar.set_text(_("Downloading %-66s") % name)
-			progressbar.set_pulse_step(0.2)
-			progressbar.pulse()
-			gtk.gdk.threads_leave()
-		else:
-			if numblocks != 0:
-				try:
-					percent = min((numblocks*blocksize*100)/filesize, 100)
-					currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
-					kbps_speed = numblocks * blocksize / (time.time() - start_time)
-					kbps_speed = kbps_speed / 1024
-					total = float(filesize) / (1024 * 1024)
-					values = {'downloaded': currently_downloaded, 'total': total}
-					mbs = _('%(downloaded).02f MB of %(total).02f MB') % values
-					e = _(' at %d Kb/s ') % kbps_speed
-					e += calc_eta(start_time, time.time(), total, currently_downloaded)
-				except:
-					percent = 100
-					return
-				if percent < 100:
-					gtk.gdk.threads_enter()
-					progressbar.set_text("%s %3d%% %s" % (mbs,percent,e))
-					progressbar.set_fraction(percent/100.0)
-					gtk.gdk.threads_leave()
-				else:
-					progressbar.set_text(_("Download complete"))
-					return
+    def _reporthook(self, numblocks, blocksize, filesize, start_time, url, name, progressbar,fpath):
+        #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
+        #XXX Should handle possible filesize=-1.
+        if self._stopevent.isSet():
+            self._reporthook(numblocks, blocksize, filesize, start_time, url, name, progressbar)
+            return
+        print fpath, numblocks
+        ## check if we need resume
+        if os.path.exists(fpath) and numblocks == 0:
+            numblocks = int(os.stat(urllib.unquote(fpath)).st_size) 
+            currently_downloaded = float(numblocks) * blocksize / (1024 * 1024)
+            print numblocks, currently_downloaded
+            
+        if filesize == -1:
+            gobject.idle_add(progressbar.set_text,_("Downloading %-66s") % name)
+            gobject.idle_add(progressbar.set_pulse_step,0.2)
+            gobject.idle_add(progressbar.pulse)
+        else:
+            if numblocks != 0:
+                try:
+                    percent = min((numblocks*blocksize*100)/filesize, 100)
+                    currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
+                    kbps_speed = numblocks * blocksize / (time.time() - start_time)
+                    kbps_speed = kbps_speed / 1024
+                    total = float(filesize) / (1024 * 1024)
+                    values = {'downloaded': currently_downloaded, 'total': total}
+                    mbs = _('%(downloaded).02f MB of %(total).02f MB') % values
+                    e = _(' at %d Kb/s ') % kbps_speed
+                    e += calc_eta(start_time, time.time(), total, currently_downloaded)
+                except:
+                    percent = 100
+                if percent < 100:
+                    gobject.idle_add(progressbar.set_text,"%s %3d%% %s" % (mbs,percent,e))
+                    gobject.idle_add(progressbar.set_fraction,percent/100.0)
+                else:
+                    gobject.idle_add(progressbar.set_text,_("Download complete"))
 
 def with_lock(func, args):
 		gtk.gdk.threads_enter()
