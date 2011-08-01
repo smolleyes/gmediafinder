@@ -51,98 +51,6 @@ def download_photo(img_url):
     except:
         return None
 
-class Downloader(threading.Thread):
-    def __init__(self,gui,url, name, pbar, btnf, btn,btn_conv,btnstop,convert,label=''):
-        threading.Thread.__init__(self)
-        self.label = label
-        self.gui = gui
-        self._stopevent = threading.Event()
-        self.url = url
-        self.name = name
-        self.pbar = pbar
-        self.btnf = btnf
-        self.btn = btn
-        self.btn_conv = btn_conv
-        self.btnstop = btnstop
-        self.convert_check = convert
-        self.btnstop.connect('clicked', self.stop)
-        
-    def run(self,):
-        i = 0
-        while not self._stopevent.isSet():
-            self.gui.active_downloads += 1
-            gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
-            ## download...
-            try:
-                start_time = time.time()
-                fpath = self.gui.down_dir+"/"+ self.name
-                urllib.urlretrieve(self.url, fpath,
-                lambda nb, bs, fs, url=self.url: self._reporthook(nb,bs,fs,start_time,self.url,self.name,self.pbar,fpath))
-                gobject.idle_add(self.btnf.show)
-                if self.convert_check == 'True':
-                    gobject.idle_add(self.btn_conv.show)
-                gobject.idle_add(self.btn.show)
-                gobject.idle_add(self.btnstop.hide)
-                self.decrease_down_count()
-                os.rename(fpath,self.gui.down_dir+"/"+ self.label)
-                self._stopevent.set()
-            except:
-                gobject.idle_add(self.pbar.set_text,_("Failed..."))
-                gobject.idle_add(self.btn.show)
-                self.decrease_down_count()
-                gobject.idle_add(self.btnstop.hide)
-                self._stopevent.set()
-			
-
-	
-    def stop(self,widget=None):
-		self._stopevent.set()
-		self.decrease_down_count()
-		#os.remove(self.gui.down_dir+"/"+ self.name)
-		self.gui.remove_download(widget)
-    
-    def decrease_down_count(self):
-		if self.gui.active_downloads > 0:
-			self.gui.active_downloads -= 1
-			gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
-	
-    def _reporthook(self, numblocks, blocksize, filesize, start_time, url, name, progressbar,fpath):
-        #print "reporthook(%s, %s, %s)" % (numblocks, blocksize, filesize)
-        #XXX Should handle possible filesize=-1.
-        if self._stopevent.isSet():
-            self._reporthook(numblocks, blocksize, filesize, start_time, url, name, progressbar)
-            return
-        print fpath, numblocks
-        ## check if we need resume
-        if os.path.exists(fpath) and numblocks == 0:
-            numblocks = int(os.stat(urllib.unquote(fpath)).st_size) 
-            currently_downloaded = float(numblocks) * blocksize / (1024 * 1024)
-            print numblocks, currently_downloaded
-            
-        if filesize == -1:
-            gobject.idle_add(progressbar.set_text,_("Downloading %-66s") % name)
-            gobject.idle_add(progressbar.set_pulse_step,0.2)
-            gobject.idle_add(progressbar.pulse)
-        else:
-            if numblocks != 0:
-                try:
-                    percent = min((numblocks*blocksize*100)/filesize, 100)
-                    currently_downloaded = float(numblocks) * blocksize / (1024 * 1024) 
-                    kbps_speed = numblocks * blocksize / (time.time() - start_time)
-                    kbps_speed = kbps_speed / 1024
-                    total = float(filesize) / (1024 * 1024)
-                    values = {'downloaded': currently_downloaded, 'total': total}
-                    mbs = _('%(downloaded).02f MB of %(total).02f MB') % values
-                    e = _(' at %d Kb/s ') % kbps_speed
-                    e += calc_eta(start_time, time.time(), total, currently_downloaded)
-                except:
-                    percent = 100
-                if percent < 100:
-                    gobject.idle_add(progressbar.set_text,"%s %3d%% %s" % (mbs,percent,e))
-                    gobject.idle_add(progressbar.set_fraction,percent/100.0)
-                else:
-                    gobject.idle_add(progressbar.set_text,_("Download complete"))
-
 def with_lock(func, args):
 		gtk.gdk.threads_enter()
 		try:
@@ -348,3 +256,174 @@ def warn_dialog(dialog):
     result = dialog.run()
     dialog.hide()
     return result
+    
+    
+    
+""" Inbox Files Downloader by maris@chown.lv. You are free do whatever You want with this code! """
+
+import urllib2, urllib, cookielib, re, time, optparse, socket, os, sys
+
+
+""" Poster lib for HTTP streaming upload, taken from http://atlee.ca/software/poster"""
+
+import httplib, urllib2, socket
+
+class FileDownloader(threading.Thread):
+    """ Inbox Files downloader class """
+    createdir = False
+    urlopen = urllib2.urlopen
+    cj = cookielib.LWPCookieJar()
+    Request = urllib2.Request
+    
+    post_data = None
+    download_items = []
+    
+    localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
+    
+    def __init__(self, gui,url, name, pbar, btnf, btn,btn_conv,btnstop,convert,label=''):
+        threading.Thread.__init__(self)
+        self.label = label
+        self.gui = gui
+        self._stopevent = threading.Event()
+        self.url = url
+        self.name = name
+        self.pbar = pbar
+        self.btnf = btnf
+        self.btn = btn
+        self.btn_conv = btn_conv
+        self.btnstop = btnstop
+        self.convert_check = convert
+        self.btnstop.connect('clicked', self.stop)
+        self.createdir = False
+        self.localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
+    
+    
+    def download(self, url, destination):
+        resume = False
+        req = urllib2.Request(url, headers = self.localheaders)
+        response = urllib2.urlopen(req)
+        headers = response.info()
+        filename = urllib.unquote(destination)
+        if os.path.isfile(filename) and float(headers['Content-Length']) == float(os.stat(filename)[6]):
+            os.unlink(urllib.unquote(filename))
+        elif os.path.isfile(filename):
+            response.close()
+            gobject.idle_add(self.pbar.set_text,_("File is here but seems to be incomplete!"))
+            size_local = float(os.stat(filename)[6])
+            size_on_server = float(headers['Content-Length'])
+            if headers['Accept-Ranges'] == 'bytes':
+                gobject.idle_add(self.pbar.set_text,_("Range request supported, trying to resume..."))
+                try:
+                    req = urllib2.Request(url, headers = self.localheaders)
+                    req.add_header("range", "bytes=%d-%d"%(size_local,size_on_server))
+                    response = urllib2.urlopen(req)
+                    resume = True
+                except:	
+                    resume = False
+                    filename = filename+'.duplicate'
+                    return False
+            else:
+                gobject.idle_add(self.pbar.set_text,_("Range request not supported, redownloading file"))
+                os.unlink(filename)
+                return False
+        try:
+            f = open(filename, "ab")
+        except IOError, errmsg:
+            if self.createdir:
+                if not os.path.exists(destination):
+                    os.mkdir(destination)
+                    f = open(filename, "wb")
+            else:
+                print "%s" %(errmsg)
+                response.close()
+                return False
+    
+        try:
+            if resume:
+                current_bytes = size_local
+            else:
+                current_bytes = 0
+            while True:
+                try:
+                    if self._stopevent.isSet():
+                        break
+                    read_start = time.time()
+                    bytes = response.read(102400)
+                    current_bytes += 102400
+                    time_diff = time.time() - read_start
+                    if time_diff == 0:
+                        time_diff = 1
+                    troughput = round((float(102400/time_diff)/1024)/1024*1024,2)
+                    procents = int((float(current_bytes)/float(headers['Content-Length']))*100)
+                    length = round((float(int(headers['Content-Length'])/1024))/1024,2)
+                    current = round((float(current_bytes/1024))/1024,2)
+                    if procents < 100:
+                        gobject.idle_add(self.pbar.set_text,"%3d%% %s of %s Mb at %s Kb/s" % (procents, current, length,
+                                                                        troughput))
+                        gobject.idle_add(self.pbar.set_fraction,procents/100.0)
+                    else:
+                        gobject.idle_add(self.pbar.set_text,_("Download complete"))
+                        gobject.idle_add(self.pbar.set_fraction,100/100.0)
+                    f.write(bytes)
+                except IOError, (errno, strerror):
+                    print "I/O error(%s): %s" % (errno, strerror)
+                if bytes == "":
+                    print "%s Finished" % (filename)
+                    break
+            sys.stdout.write("\n")
+        except KeyboardInterrupt, errmsg:
+            print "KeyboardInterrupt Caught: %s" % (errmsg)
+            print "Cleaning up"
+            f.close()
+            response.close()
+            sys.exit(5)
+        f.close()
+        response.close()
+        return True
+    
+        
+    def run(self):
+        i = 0
+        gobject.idle_add(self.pbar.set_text,_("Starting download..."))
+        while not self._stopevent.isSet():
+            self.gui.active_downloads += 1
+            gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
+            ## download...
+            try:
+                start_time = time.time()
+                fpath = self.gui.down_dir+"/"+ self.name
+                #urllib.urlretrieve(self.url, fpath,
+                #lambda nb, bs, fs, url=self.url: self._reporthook(nb,bs,fs,start_time,self.url,self.name,self.pbar,fpath))
+                req = urllib2.Request(self.url)
+                response = urllib2.urlopen(req)
+                self.download_items.append(self.url)
+                response.close()
+                self.download(self.url, fpath)
+                gobject.idle_add(self.btnf.show)
+                if self.convert_check == 'True':
+                    gobject.idle_add(self.btn_conv.show)
+                gobject.idle_add(self.btn.show)
+                gobject.idle_add(self.btnstop.hide)
+                self.decrease_down_count()
+                #os.rename(fpath,urllib.unquote(os.path.basename(fpath)))
+                self._stopevent.set()
+            except KeyboardInterrupt, errmsg:
+                gobject.idle_add(self.pbar.set_text,_("Failed..."))
+                gobject.idle_add(self.btn.show)
+                self.decrease_down_count()
+                gobject.idle_add(self.btnstop.hide)
+                self._stopevent.set()
+            
+    
+    
+    def stop(self,widget=None):
+        self._stopevent.set()
+        self.decrease_down_count()
+        #os.remove(self.gui.down_dir+"/"+ self.name)
+        self.gui.remove_download(widget)
+    
+    def decrease_down_count(self):
+        if self.gui.active_downloads > 0:
+            self.gui.active_downloads -= 1
+            gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
+    

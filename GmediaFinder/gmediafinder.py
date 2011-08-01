@@ -25,6 +25,7 @@ if sys.platform == "win32":
     import win32api
 
 ## custom lib
+from functions import *
 try:
     from config import *
     from engines import Engines
@@ -720,14 +721,14 @@ class GsongFinder(object):
 
     def stop_play(self,widget=None):
         self.player.set_state(gst.STATE_NULL)
-        self.play_btn_pb.set_from_pixbuf(self.play_icon)
-        self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
+        gobject.idle_add(self.play_btn_pb.set_from_pixbuf,self.play_icon)
+        gobject.idle_add(self.pause_btn_pb.set_from_pixbuf,self.pause_icon)
         self.is_playing = False
         self.play_thread_id = None
         self.duration = None
         self.update_time_label()
         #self.active_link = None
-        gobject.idle_add(self.movie_window.queue_draw)
+        self.movie_window.queue_draw()
         bit=_('Bitrate:')
         enc=_('Encoding:')
         play=_('Playing:')
@@ -1000,7 +1001,7 @@ class GsongFinder(object):
                 win_id = self.movie_window.window.handle
             else:
                 win_id = self.movie_window.window.xid
-            gobject.idle_add(self.videosink.set_xwindow_id,win_id)
+            self.videosink.set_xwindow_id(win_id)
 
     def on_drawingarea_clicked(self, widget, event):
         if event.type == gtk.gdk._2BUTTON_PRESS:
@@ -1034,13 +1035,13 @@ class GsongFinder(object):
         if sys.platform == "win32":
             window = self.movie_window.get_window()
             window.ensure_native()
-            gobject.idle_add(self.videosink.set_xwindow_id,self.movie_window.window.handle)
+            self.videosink.set_xwindow_id(self.movie_window.window.handle)
         else:
             gobject.idle_add(self.videosink.set_xwindow_id,self.movie_window.window.xid)
 
     def on_expose_event(self, widget, event):
         x , y, width, height = event.area
-        gobject.idle_add(widget.window.draw_drawable,widget.get_style().fg_gc[gtk.STATE_NORMAL],
+        widget.window.draw_drawable(widget.get_style().fg_gc[gtk.STATE_NORMAL],
                                       pixmap, x, y, x, y, width, height)
         return False
 
@@ -1049,7 +1050,7 @@ class GsongFinder(object):
 
           x, y, width, height = widget.get_allocation()
           pixmap = gtk.gdk.Pixmap(widget.window, width, height)
-          gobject.idle_add(pixmap.draw_rectangle,widget.get_style().black_gc,
+          pixmap.draw_rectangle(widget.get_style().black_gc,
                                 True, 0, 0, width, height)
 
           return True
@@ -1098,8 +1099,6 @@ class GsongFinder(object):
         return True
 
     def download_file(self,widget):
-        if self.engine == "Youtube":
-            return self.geturl(self.active_link, self.search_engine.media_codec)
         return self.geturl(self.active_link)
 
     def geturl(self, url, codec=None):
@@ -1107,11 +1106,7 @@ class GsongFinder(object):
         name = urllib.quote(oname.encode('utf-8'))
         target = os.path.join(self.down_dir,name)
         otarget = os.path.join(self.down_dir,oname)
-        if os.path.exists(otarget):
-            ret = yesno(_("Download"),_("The file:\n\n%s \n\nalready exist, download again ?") % oname)
-            if ret == "No":
-                return
-        #self.notebook.set_current_page(1)
+        self.notebook.set_current_page(1)
         box = gtk.HBox(False, 5)
         vbox = gtk.VBox(False, 5)
         label = gtk.Label(oname)
@@ -1166,7 +1161,7 @@ class GsongFinder(object):
         btn.hide()
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
-        t = Downloader(self,url, name, pbar, btnf, btn, btn_conv,
+        t = FileDownloader(self,url, name, pbar, btnf, btn, btn_conv,
         btnstop, convert, oname)
         t.start()
         
