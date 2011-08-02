@@ -219,9 +219,9 @@ class Youtube(object):
         active = self.youtube_video_rate.get_active()
         try:
             self.media_codec = self.quality_list[active].split('|')[1]
-            return self.gui.start_play(self.media_link[active])
+            self.gui.start_play(self.media_link[active])
         except:
-            return self.gui.start_play('')
+            self.gui.start_play('')
 
     def make_youtube_entry(self,video):
         duration = video.media.duration.seconds
@@ -278,7 +278,7 @@ class Youtube(object):
             return
         for rate in self.quality_list:
             new_iter = self.youtube_quality_model.append()
-            gobject.idle_add(self.youtube_quality_model.set,new_iter,
+            self.youtube_quality_model.set(new_iter,
                             0, rate,
                             )
         self.set_default_youtube_video_rate()

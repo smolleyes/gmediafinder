@@ -25,17 +25,18 @@ if sys.platform == "win32":
     import win32api
 
 ## custom lib
-from functions import *
 try:
     from config import *
     from engines import Engines
     from functions import *
-    from pykey import send_string
+    if sys.platform != "win32":
+        from pykey import send_string
 except:
     from GmediaFinder.config import *
     from GmediaFinder.engines import Engines
     from GmediaFinder.functions import *
-    from GmediaFinder.pykey import send_string
+    if sys.platform != "win32":
+        from GmediaFinder.pykey import send_string
 
 class GsongFinder(object):
     def __init__(self):
@@ -721,8 +722,8 @@ class GsongFinder(object):
 
     def stop_play(self,widget=None):
         self.player.set_state(gst.STATE_NULL)
-        gobject.idle_add(self.play_btn_pb.set_from_pixbuf,self.play_icon)
-        gobject.idle_add(self.pause_btn_pb.set_from_pixbuf,self.pause_icon)
+        self.play_btn_pb.set_from_pixbuf(self.play_icon)
+        self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
         self.is_playing = False
         self.play_thread_id = None
         self.duration = None
