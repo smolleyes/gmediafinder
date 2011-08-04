@@ -179,6 +179,7 @@ class GsongFinder(object):
         self.convert_check = self.gladeGui.get_widget("convert_enabled")
         self.warn_dialog = self.gladeGui.get_widget("warn_dialog")
         self.systray_check = self.gladeGui.get_widget("systray_enabled")
+        self.down_dir = down_dir
         if downloads == 'True':
             self.downloads_check.set_active(1)
         if convert == 'True':
@@ -340,6 +341,8 @@ class GsongFinder(object):
         ## tray icon
         if systray == 'True':
             self.__create_trayicon()
+        ## load download to resume
+        self.resume_downloads()
             
         ## start main loop
         gobject.threads_init()
@@ -491,6 +494,7 @@ class GsongFinder(object):
 
     def show_downloads(self, widget):
         self.notebook.set_current_page(1)
+        self.down_container.queue_draw()
 
     def show_home(self, widget):
         self.notebook.set_current_page(0)
@@ -1088,6 +1092,7 @@ class GsongFinder(object):
         elif key == 'd':
             if self.notebook.get_current_page() == 0:
                 gobject.idle_add(self.notebook.set_current_page,1)
+                self.notebook.queue_draw()
             else:
                 gobject.idle_add(self.notebook.set_current_page,0)
 
@@ -1100,14 +1105,28 @@ class GsongFinder(object):
         return True
 
     def download_file(self,widget):
-        return self.geturl(self.active_link)
-
-    def geturl(self, url, codec=None):
-        oname = self.media_name+".%s" % self.media_codec
+        return self.geturl(self.active_link,self.media_name)
+        
+    def resume_downloads(self):
+        for media in os.listdir(self.down_dir):
+            if '.conf' in media:
+                bname = re.sub('^.','',media).replace('.conf','')
+                fmt = '.'+bname.split('.').pop(-1)
+                name = bname.replace('%s' % fmt,'')
+                f = open(self.down_dir+'/.'+bname+'.conf')
+                link = f.read()
+                f.close()
+                self.geturl(link, name, fmt)
+    
+    def geturl(self, url, srcname=None,codec=None):
+        if codec:
+            oname = srcname+codec
+        else:
+            oname = srcname+".%s" % self.media_codec
         name = urllib.quote(oname.encode('utf-8'))
         target = os.path.join(self.down_dir,name)
         otarget = os.path.join(self.down_dir,oname)
-        self.notebook.set_current_page(1)
+        #self.notebook.set_current_page(1)
         box = gtk.HBox(False, 5)
         vbox = gtk.VBox(False, 5)
         label = gtk.Label(oname)
@@ -1116,7 +1135,11 @@ class GsongFinder(object):
         pbar = gtk.ProgressBar()
         pbar.set_size_request(400, 25)
         vbox.pack_end(pbar, False, False, 5)
-        box.pack_start(gtk.image_new_from_pixbuf(self.media_thumb), False,False, 5)
+        try:
+            box.pack_start(gtk.image_new_from_pixbuf(self.media_thumb), False,False, 5)
+        except:
+            pb = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
+            box.pack_start(gtk.image_new_from_pixbuf(pb), False,False, 5)
         box.pack_start(vbox, False, False, 5)
         ## stop btn
         btnstop = gtk.Button()
@@ -1158,7 +1181,7 @@ class GsongFinder(object):
         if self.search_engine.engine_type == "video":
             btn_conv.hide()
             throbber.hide()
-            btn_conv.connect('clicked', self.extract_audio,self.media_name,codec,btn_conv,throbber)
+            btn_conv.connect('clicked', self.extract_audio,otarget,btn_conv,throbber)
         btn.hide()
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
@@ -1243,15 +1266,16 @@ class GsongFinder(object):
 
     def remove_download(self, widget):
         ch = widget.parent
-        ch.parent.remove(ch)
+        gobject.idle_add(ch.parent.remove,ch)
 
-    def extract_audio(self,widget,name,codec,convbtn,throbber):
+    def extract_audio(self,widget,src,convbtn,throbber):
         convbtn.hide()
         self.animation = gtk.gdk.PixbufAnimation(self.img_path+'/throbber.gif')
         self.loader_pixbuf = throbber.get_pixbuf() # save the Image contents so we can set it back later
         throbber.set_from_animation(self.animation)
         throbber.show()
-        src = os.path.join(self.down_dir,name+'.'+self.media_codec)
+        codec = src.split('.')[-1]
+        name = os.path.basename(src).replace('.%s' % codec,'')
         target = os.path.join(self.down_dir,name+'.mp3')
         if os.path.exists(target):
             os.remove(target)

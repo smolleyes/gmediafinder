@@ -325,21 +325,26 @@ class Youtube(object):
         try:
             req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
             stream = urllib2.urlopen(req)
-            contents = stream.read()
-            stream.close()
+            contents = urllib.unquote(stream.read())
             ## links list
-            regexp1 = re.compile("fmt_stream_map=([^&]+)&")
-            matches = regexp1.search(contents).group(1)
+            try:
+                matches = re.search("url_encoded_fmt_stream_map=(.*?)fmt_list",contents).group(1)
+            except:
+                matches = re.search("url_encoded_fmt_stream_map=(.*?)\">",contents).group(1)
             fmt_arr = urllib.unquote(matches).split(',')
             ## quality_list
-            regexp1 = re.compile("fmt_map=([^&]+)&")
+            regexp1 = re.compile("fmt_list=([^&]+)&")
             matches = regexp1.search(contents).group(1)
             quality_list = urllib.unquote(matches).split(',')
+            stream.close()
             ##
             link_list = []
             for link in fmt_arr:
-                res = re.search('url=(.*?)&type', link).group(1)
-                link_list.append(urllib.unquote(res))
+                try:
+                    res = re.search('url=(.*?)&type', link).group(1)
+                    link_list.append(urllib.unquote(res))
+                except:
+                    continue
             ## remove flv links...
             i = 0
             if quality_list[0] == quality_list[1]:
