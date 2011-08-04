@@ -67,6 +67,7 @@ class GsongFinder(object):
         self.latest_engine = ""
         self.change_page_request = False
         self.tray = None
+        self.download_pool = []
 
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
@@ -1193,6 +1194,7 @@ class GsongFinder(object):
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
         t = FileDownloader(self,url, name, pbar, btnf, btn, btn_conv,btnstop, convert, oname, btnpause)
+        self.download_pool.append(t)
         t.start()
     
     
@@ -1331,6 +1333,9 @@ class GsongFinder(object):
         ## save window state
         self.save_window_state()
         self.manager.stop_all_threads(block=True)
+        for th in self.download_pool:
+            if not th._stopevent.isSet():
+                th.stop()
         self.mainloop.quit()
 
     def stop_threads(self, *args):

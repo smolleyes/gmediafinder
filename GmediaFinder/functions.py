@@ -302,11 +302,11 @@ class FileDownloader(threading.Thread):
         self.btnstop = btnstop
         self.btnpause = btnpause
         self.convert_check = convert
-        self.btnstop.connect('clicked', self.stop)
+        self.btnstop.connect('clicked', self.cancel)
         self.btnpause.connect('clicked', self.pause)
         self.createdir = False
         self.paused = False
-        self.stopped = False
+        self.canceled = False
         self.localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
         
     def download(self, url, destination):
@@ -356,7 +356,6 @@ class FileDownloader(threading.Thread):
                 try:
                     if self._stopevent.isSet():
                         gobject.idle_add(self.pbar.set_text,_("download stopped..."))
-                        self.stopped = True
                         break
                     read_start = time.time()
                     if not self.paused:
@@ -412,13 +411,13 @@ class FileDownloader(threading.Thread):
                 #response.close()
                 self.download(self.url, self.temp_file)
                 gobject.idle_add(self.btnf.show)
-                if self.convert_check == 'True' and not self.stopped:
+                if self.convert_check == 'True' and not self.canceled:
                     gobject.idle_add(self.btn_conv.show)
                 gobject.idle_add(self.btn.show)
                 gobject.idle_add(self.btnstop.hide)
                 gobject.idle_add(self.btnpause.hide)
                 self.decrease_down_count()
-                if self.stopped:
+                if self.canceled:
                     self.gui.remove_download(self.btnstop)
                 else:
                     self._stopevent.set()
@@ -440,12 +439,16 @@ class FileDownloader(threading.Thread):
             self.url = f.read()
             f.close()
             
-    def stop(self,widget):
+    def cancel(self,widget):
+        self.canceled = True
         gobject.idle_add(self.pbar.set_text,_("Cancel downloading..."))
         self._stopevent.set()
         self.decrease_down_count()
         os.unlink(self.temp_file)
         os.unlink(self.conf_temp_file)
+        
+    def stop(self,widget=None):
+        self._stopevent.set()
     
     def pause(self,widget):
         if not self.paused:
