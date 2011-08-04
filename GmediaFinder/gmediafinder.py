@@ -1131,58 +1131,62 @@ class GsongFinder(object):
         vbox = gtk.VBox(False, 5)
         label = gtk.Label(oname)
         label.set_alignment(0, 0.5)
+        label.set_line_wrap(True)
         vbox.pack_start(label, False, False, 5)
         pbar = gtk.ProgressBar()
         pbar.set_size_request(400, 25)
-        vbox.pack_end(pbar, False, False, 5)
         try:
             box.pack_start(gtk.image_new_from_pixbuf(self.media_thumb), False,False, 5)
         except:
             pb = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
             box.pack_start(gtk.image_new_from_pixbuf(pb), False,False, 5)
-        box.pack_start(vbox, False, False, 5)
-        ## stop btn
-        btnstop = gtk.Button()
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_BUTTON)
-        btnstop.add(image)
-        box.pack_end(btnstop, False, False, 5)
-        btnstop.set_tooltip_text(_("Stop Downloading"))
-        self.down_container.pack_start(box, False ,False, 5)
-        ## show folder button
-        btnf = gtk.Button()
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_FIND, gtk.ICON_SIZE_BUTTON)
-        btnf.add(image)
-        box.pack_end(btnf, False, False, 5)
-        btnf.set_tooltip_text(_("Show in folder"))
+        btnbox = gtk.HBox(False, 5)
         ## pause download button
         btnpause = gtk.Button()
         image = gtk.Image()
         image.set_from_pixbuf(self.pause_icon)
         btnpause.add(image)
-        box.pack_end(btnpause, False, False, 5)
+        btnbox.pack_start(btnpause, False, False, 5)
         btnpause.set_tooltip_text(_("Pause/Resume download"))
+        ## stop btn
+        btnstop = gtk.Button()
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_SMALL_TOOLBAR)
+        btnstop.add(image)
+        btnbox.pack_start(btnstop, False, False, 5)
+        btnstop.set_tooltip_text(_("Stop Downloading"))
+        self.down_container.pack_start(box, False ,False, 5)
+        ## show folder button
+        btnf = gtk.Button()
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_FIND, gtk.ICON_SIZE_SMALL_TOOLBAR)
+        btnf.add(image)
+        btnbox.pack_start(btnf, False, False, 5)
+        btnf.set_tooltip_text(_("Show in folder"))
+        ## clear button
+        btn = gtk.Button()
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_SMALL_TOOLBAR)
+        btn.add(image)
+        btnbox.pack_start(btn, False, False, 5)
+        btn.set_tooltip_text(_("Remove"))
         ## convert button
         btn_conv = gtk.Button()
         if self.search_engine.engine_type == "video":
             image = gtk.Image()
-            image.set_from_stock(gtk.STOCK_CONVERT, gtk.ICON_SIZE_BUTTON)
+            image.set_from_stock(gtk.STOCK_CONVERT, gtk.ICON_SIZE_SMALL_TOOLBAR)
             btn_conv.add(image)
-            box.pack_end(btn_conv, False, False, 5)
+            btnbox.pack_start(btn_conv, False, False, 5)
             btn_conv.set_tooltip_text(_("Convert to mp3"))
             ## spinner
             throbber = gtk.Image()
             throbber.set_from_file(self.img_path+'/throbber.png')
-            box.pack_end(throbber, False, False, 5)
-        ## clear button
-        btn = gtk.Button()
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_BUTTON)
-        btn.add(image)
-        box.pack_end(btn, False, False, 5)
-        btn.set_tooltip_text(_("Remove"))
-
+            btnbox.pack_start(throbber, False, False, 5)
+        
+        vbox.pack_start(btnbox, False, False, 0)
+        vbox.pack_end(pbar, False, False, 5)
+        box.pack_start(vbox, False, False, 5)
+        
         box.show_all()
         btnf.hide()
         if self.search_engine.engine_type == "video":
@@ -1273,7 +1277,8 @@ class GsongFinder(object):
 
     def remove_download(self, widget):
         ch = widget.parent
-        gobject.idle_add(ch.parent.remove,ch)
+        ru = ch.parent.parent
+        gobject.idle_add(ru.parent.remove,ru)
 
     def extract_audio(self,widget,src,convbtn,throbber):
         convbtn.hide()
