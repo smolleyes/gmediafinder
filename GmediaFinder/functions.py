@@ -369,7 +369,7 @@ class FileDownloader(threading.Thread):
                         length = round((float(int(headers['Content-Length'])/1024))/1024,2)
                         current = round((float(current_bytes/1024))/1024,2)
                         if procents < 100 and not self.paused:
-                            gobject.idle_add(self.pbar.set_text,"%3d%% %s of %s Mb at %s Kb/s" % (procents, current, length,
+                            gobject.idle_add(self.pbar.set_text,"%3d%% %s of %s Mb at %s Ko/s" % (procents, current, length,
                                                                             troughput))
                             gobject.idle_add(self.pbar.set_fraction,procents/100.0)
                         elif procents == 100:
@@ -418,9 +418,11 @@ class FileDownloader(threading.Thread):
                 gobject.idle_add(self.btnpause.hide)
                 self.decrease_down_count()
                 if self.canceled:
-                    self.gui.remove_download(self.btnstop)
+                    gobject.idle_add(self.pbar.set_text,_("Download canceled..."))
                 else:
                     self._stopevent.set()
+                    gobject.idle_add(self.pbar.set_text,_("Download complete"))
+                gobject.idle_add(self.pbar.set_fraction,100/100.0)
             except KeyboardInterrupt, errmsg:
                 gobject.idle_add(self.pbar.set_text,_("Failed..."))
                 gobject.idle_add(self.btn.show)
