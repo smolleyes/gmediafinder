@@ -5,7 +5,7 @@ from configobj import ConfigObj
 
 from Translation import Translation
 
-VERSION = "0.9.7.1"
+VERSION = "0.9.7.5"
 APP_NAME = "gmediafinder"
 exec_path =  os.path.dirname(os.path.abspath(__file__))
 

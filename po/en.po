@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: PACKAGE VERSION\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-04 21:40+0200\n"
+"POT-Creation-Date: 2011-08-04 23:29+0200\n"
 "PO-Revision-Date: 2011-05-18 01:22+0200\n"
 "Last-Translator: smo <s.lagui@free.fr>\n"
 "Language-Team: Language EN\n"
@@ -1029,6 +1029,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1118
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1128
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1150
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1157
 msgid "Stop Downloading"
 msgstr ""
 
@@ -1046,6 +1047,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1126
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1136
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1158
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1165
 msgid "Show in folder"
 msgstr ""
 
@@ -1063,6 +1065,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1134
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1144
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1173
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1180
 msgid "Convert to mp3"
 msgstr ""
 
@@ -1080,6 +1083,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1145
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1155
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1184
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1172
 msgid "Remove"
 msgstr ""
 
@@ -1113,6 +1117,8 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1549
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1525
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1595
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1530
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1600
 #, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr ""
@@ -1194,6 +1200,7 @@ msgid "Copy file link"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1165
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1150
 msgid "Pause/Resume download"
 msgstr ""
 
