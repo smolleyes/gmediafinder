@@ -350,7 +350,6 @@ class GsongFinder(object):
         #THE ACTUAL THREAD BIT
         self.manager = FooThreadManager(20)
         self.mainloop = gobject.MainLoop(is_running=True)
-        self.mainloop.run()
 
     def set_window_position(self):
         self.window.set_default_size(int(self.conf['window_state'][0]),int(self.conf['window_state'][1]))
@@ -1163,7 +1162,7 @@ class GsongFinder(object):
         image.set_from_pixbuf(self.pause_icon)
         btnpause.add(image)
         box.pack_end(btnpause, False, False, 5)
-        btnpause.set_tooltip_text(_("Pause download"))
+        btnpause.set_tooltip_text(_("Pause/Resume download"))
         ## convert button
         btn_conv = gtk.Button()
         if self.search_engine.engine_type == "video":
@@ -1326,7 +1325,7 @@ class GsongFinder(object):
         except:
             return
 
-    def exit(self,widget):
+    def exit(self,widget=None):
         """Stop method, sets the event to terminate the thread's main loop"""
         if self.player.set_state(gst.STATE_PLAYING):
             self.player.set_state(gst.STATE_NULL)
@@ -1615,4 +1614,8 @@ class FooThreadManager:
 
 
 if __name__ == "__main__":
-    GsongFinder()
+    app = GsongFinder()
+    try:
+        app.mainloop.run()
+    except KeyboardInterrupt, errmsg:
+        app.exit()

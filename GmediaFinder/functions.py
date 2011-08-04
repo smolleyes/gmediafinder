@@ -457,10 +457,16 @@ class FileDownloader(threading.Thread):
             self.paused = True
             gobject.idle_add(self.pbar.set_text,_("download paused..."))
             self.decrease_down_count()
+            image = gtk.Image()
+            image.set_from_pixbuf(self.gui.play_icon)
+            self.btnpause.set_image(image)
         else:
             self.paused = False
             self.increase_down_count()
             gobject.idle_add(self.pbar.set_text,_("Resuming download..."))
+            image = gtk.Image()
+            image.set_from_pixbuf(self.gui.pause_icon)
+            self.btnpause.set_image(image)
     
     def decrease_down_count(self):
         if self.gui.active_downloads > 0:
