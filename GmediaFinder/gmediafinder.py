@@ -1156,6 +1156,13 @@ class GsongFinder(object):
         btnf.add(image)
         box.pack_end(btnf, False, False, 5)
         btnf.set_tooltip_text(_("Show in folder"))
+        ## pause download button
+        btnpause = gtk.Button()
+        image = gtk.Image()
+        image.set_from_pixbuf(self.pause_icon)
+        btnpause.add(image)
+        box.pack_end(btnpause, False, False, 5)
+        btnpause.set_tooltip_text(_("Pause download"))
         ## convert button
         btn_conv = gtk.Button()
         if self.search_engine.engine_type == "video":
@@ -1185,10 +1192,9 @@ class GsongFinder(object):
         btn.hide()
         btnf.connect('clicked', self.show_folder, self.down_dir)
         btn.connect('clicked', self.remove_download)
-        t = FileDownloader(self,url, name, pbar, btnf, btn, btn_conv,
-        btnstop, convert, oname)
+        t = FileDownloader(self,url, name, pbar, btnf, btn, btn_conv,btnstop, convert, oname, btnpause)
         t.start()
-        
+    
     
     def bus_message_tag(self, bus, message):
         codec = None
