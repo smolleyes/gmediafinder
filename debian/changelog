@@ -1,6 +1,7 @@
-gmediafinder (0.9.7.3-0ppa0~lucid) lucid; urgency=high
+gmediafinder (0.9.7.5-0ppa0~natty) natty; urgency=high
 
-  * add webm support for youtube
-  * fixs
+  * youtube fix
+  * new download manager, can now pause/resume files and more...
+  * add ar, ru and zh_CH translations (partials, need translators)
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100

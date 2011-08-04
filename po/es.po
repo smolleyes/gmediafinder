@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-07-22 16:56+0200\n"
+"POT-Creation-Date: 2011-08-04 21:40+0200\n"
 "PO-Revision-Date: 2011-07-19 22:35+0000\n"
 "Last-Translator: bersil <bmsavone@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -879,6 +879,8 @@ msgstr "Trailers"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:201
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:193
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:202
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:196
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:205
 #, python-format
 msgid "%s: No results for %s ..."
 msgstr "%s: Sin resultados para %s ..."
@@ -888,6 +890,7 @@ msgstr "%s: Sin resultados para %s ..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:242
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:244
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:248
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:251
 #, python-format
 msgid ""
 "\n"
@@ -923,6 +926,7 @@ msgstr "Número de reproducciones"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:228
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:229
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:231
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:235
 msgid " Results : "
 msgstr " Resultados: "
 
@@ -933,6 +937,7 @@ msgstr " Resultados: "
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:299
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:300
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:302
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:313
 msgid "All"
 msgstr "Todo"
 
@@ -943,6 +948,7 @@ msgstr "Todo"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:300
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:301
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:303
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:314
 msgid "All audios"
 msgstr "Todos los sonidos"
 
@@ -953,6 +959,7 @@ msgstr "Todos los sonidos"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:301
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:302
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:304
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:315
 msgid "All videos"
 msgstr "Todos los videos"
 
@@ -964,6 +971,7 @@ msgstr "Todos los videos"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:514
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:516
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:517
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:532
 msgid "Please select a search engine..."
 msgstr "Por favor, seleccione un motor de búsqueda..."
 
@@ -975,6 +983,7 @@ msgstr "Por favor, seleccione un motor de búsqueda..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:517
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:519
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:521
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:536
 msgid "Please enter an artist/album or song name..."
 msgstr "Por favor, introduzca un artista/álbum o nombre de canción..."
 
@@ -986,6 +995,7 @@ msgstr "Por favor, introduzca un artista/álbum o nombre de canción..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:520
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:522
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:524
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:539
 msgid "Please select an engine..."
 msgstr "Por favor seleccione un motor..."
 
@@ -998,6 +1008,7 @@ msgstr "Por favor seleccione un motor..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:665
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:683
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:692
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:707
 msgid "Stopped"
 msgstr "Detenido"
 
@@ -1016,6 +1027,8 @@ msgstr "Detenido"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:924
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:722
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:934
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:737
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:949
 msgid "Bitrate:"
 msgstr "Tasa de bits"
 
@@ -1034,6 +1047,8 @@ msgstr "Tasa de bits"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:925
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:723
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:935
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:738
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:950
 msgid "Encoding:"
 msgstr "Codificando:"
 
@@ -1052,6 +1067,8 @@ msgstr "Codificando:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:926
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:724
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:936
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:739
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:951
 msgid "Playing:"
 msgstr "Reproduciendo:"
 
@@ -1095,6 +1112,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1123
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1118
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1128
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1150
 msgid "Stop Downloading"
 msgstr "Detener la descarga"
 
@@ -1111,6 +1129,7 @@ msgstr "Detener la descarga"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1131
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1126
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1136
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1158
 msgid "Show in folder"
 msgstr "Mostrar en la carpeta"
 
@@ -1127,6 +1146,7 @@ msgstr "Mostrar en la carpeta"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1139
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1134
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1144
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1173
 msgid "Convert to mp3"
 msgstr "Convertir a mp3"
 
@@ -1143,6 +1163,7 @@ msgstr "Convertir a mp3"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1150
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1145
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1155
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1184
 msgid "Remove"
 msgstr "Remover"
 
@@ -1174,12 +1195,15 @@ msgstr "Remover"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1532
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1478
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1549
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1525
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1595
 #, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr "Buscando %(query)s con %(engine)s (página: %(page)s)"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:98
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:89
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:427
 msgid "Failed..."
 msgstr "Fallido..."
 
@@ -1203,11 +1227,14 @@ msgstr "a %d Kb/s "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:151
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:142
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:376
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:424
 msgid "Download complete"
 msgstr "Descarga completa"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:173
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:164
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:73
 #, python-format
 msgid "Remaining : %(min)02d:%(sec)02d"
 msgstr "Quedan : %(min)02d:%(sec)02d"
@@ -1253,3 +1280,49 @@ msgstr ""
 #, fuzzy
 msgid "640x360"
 msgstr "640x320"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:266
+msgid "Copy file link"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1165
+msgid "Pause/Resume download"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:322
+msgid "File is here but seems to be incomplete!"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:326
+msgid "Range request supported, trying to resume..."
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:337
+msgid "Range request not supported, redownloading file"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:358
+#, fuzzy
+msgid "download stopped..."
+msgstr "Descarga completa"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:401
+msgid "Starting download..."
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:421
+#, fuzzy
+msgid "Download canceled..."
+msgstr "Descarga completa"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:446
+msgid "Cancel downloading..."
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:458
+msgid "download paused..."
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:466
+msgid "Resuming download..."
+msgstr ""
