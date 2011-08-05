@@ -23,5 +23,10 @@ except ImportError:
         raise SystemExit(' * Error: the "GmediaFinder" module is missing. If you did not install gmediafinder to /usr, you may need to add the appropriate site-packages directory to your PYTHONPATH')
 
 from GmediaFinder import gmediafinder
-gmediafinder.GsongFinder()
+app = gmediafinder.GsongFinder()
+try:
+    app.mainloop.run()
+except KeyboardInterrupt, errmsg:
+    app.exit()
+
 
