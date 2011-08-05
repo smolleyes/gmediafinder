@@ -322,15 +322,22 @@ class Youtube(object):
     def get_quality_list(self,vid_id):
         links_arr = []
         quality_arr = []
+        print vid_id
         try:
             req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
             stream = urllib2.urlopen(req)
             contents = urllib.unquote(stream.read())
+            f = open('/home/smo/Bureau/%s' % vid_id, 'w')
+            f.write(urllib.unquote(contents))
+            f.close()
             ## links list
             try:
                 matches = re.search("url_encoded_fmt_stream_map=(.*?)fmt_list",contents).group(1)
             except:
-                matches = re.search("url_encoded_fmt_stream_map=(.*?)\">",contents).group(1)
+                try:
+                    matches = re.search("url_encoded_fmt_stream_map=(.*?)\">",contents).group(1)
+                except:
+                    matches = re.search("url_encoded_fmt_stream_map=(.*)",contents).group(1)
             fmt_arr = urllib.unquote(matches).split(',')
             ## quality_list
             regexp1 = re.compile("fmt_list=([^&]+)&")
@@ -340,6 +347,7 @@ class Youtube(object):
             ##
             link_list = []
             for link in fmt_arr:
+                print link
                 try:
                     res = re.search('url=(.*?)&type', link).group(1)
                     link_list.append(urllib.unquote(res))
