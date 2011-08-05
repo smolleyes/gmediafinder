@@ -326,9 +326,6 @@ class Youtube(object):
             req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
             stream = urllib2.urlopen(req)
             contents = urllib.unquote(stream.read())
-            f = open('/home/smo/Bureau/%s' % vid_id, 'w')
-            f.write(urllib.unquote(contents))
-            f.close()
             ## links list
             try:
                 matches = re.search("url_encoded_fmt_stream_map=(.*?)fmt_list",contents).group(1)
