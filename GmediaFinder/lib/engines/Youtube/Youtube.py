@@ -322,7 +322,6 @@ class Youtube(object):
     def get_quality_list(self,vid_id):
         links_arr = []
         quality_arr = []
-        print vid_id
         try:
             req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
             stream = urllib2.urlopen(req)
