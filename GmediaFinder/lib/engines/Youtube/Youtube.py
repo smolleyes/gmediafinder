@@ -347,7 +347,6 @@ class Youtube(object):
             ##
             link_list = []
             for link in fmt_arr:
-                print link
                 try:
                     res = re.search('url=(.*?)&type', link).group(1)
                     link_list.append(urllib.unquote(res))
