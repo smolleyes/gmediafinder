@@ -14,13 +14,10 @@
 # You should have received a copy of the GNU General Public License
 # along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-import os, sys, time
-
 try:
-        import GmediaFinder
-
+    import GmediaFinder
 except ImportError:
-        raise SystemExit(' * Error: the "GmediaFinder" module is missing. If you did not install gmediafinder to /usr, you may need to add the appropriate site-packages directory to your PYTHONPATH')
+    raise SystemExit(' * Error: the "GmediaFinder" module is missing. If you did not install gmediafinder to /usr, you may need to add the appropriate site-packages directory to your PYTHONPATH')
 
 from GmediaFinder import gmediafinder
 app = gmediafinder.GsongFinder()
