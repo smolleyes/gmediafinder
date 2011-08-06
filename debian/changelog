@@ -1,7 +1,8 @@
-gmediafinder (0.9.7.5-0ppa3~maverick) maverick; urgency=high
+gmediafinder (0.9.7.5-0ppa4~natty) natty; urgency=high
 
   * youtube fix
   * new download manager, can now pause/resume files and more...
   * add ar, ru and zh_CH translations (partials, need translators)
+  * add paypal button
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100

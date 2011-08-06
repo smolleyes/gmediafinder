@@ -806,6 +806,14 @@ class GsongFinder(object):
         self.loop_btn = self.gladeGui.get_widget("repeat_btn")
         self.loop_pixb = self.gladeGui.get_widget("repeat_btn_pixb")
         self.loop_pixb.set_from_pixbuf(self.loop_icon)
+        ## paypalsupport img
+        self.support_pixb = self.gladeGui.get_widget("paypal_img")
+        pb = gtk.gdk.pixbuf_new_from_file(img_path+"/paypal.gif")
+        self.support_pixb.set_from_pixbuf(pb)
+        ## donate btn
+        self.donate_pixb = self.gladeGui.get_widget("donate_img")
+        pb = gtk.gdk.pixbuf_new_from_file(img_path+"/donate.gif")
+        self.donate_pixb.set_from_pixbuf(pb)
 
         ## hide some icons by default
         self.changepage_btn.set_sensitive(0)
@@ -1613,9 +1621,6 @@ class FooThreadManager:
                 if thread.isAlive():
                     thread.join()
                     
-
-
-
 
 
 if __name__ == "__main__":
