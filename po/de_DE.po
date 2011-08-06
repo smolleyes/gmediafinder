@@ -10,7 +10,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-06 13:26+0200\n"
+"POT-Creation-Date: 2011-08-06 14:13+0200\n"
 "PO-Revision-Date: 2011-07-18 15:18+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -59,29 +59,34 @@ msgstr ""
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:78
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:78
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:113
 msgid "Previous page"
 msgstr "Vorherige Seite"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:102
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:102
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:175
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:137
 msgid "Next page"
 msgstr "Nächste Seite"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:126
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:199
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:161
 msgid "Stop search"
 msgstr "Suche anhalten"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:149
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:149
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:102
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:78
 msgid "About"
 msgstr "Über"
 
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:208
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:208
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:151
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:195
 msgid "Preferences"
 msgstr "Einstellungen"
 
@@ -90,6 +95,8 @@ msgstr "Einstellungen"
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:241
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:248
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:250
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:232
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:234
 msgid "Start search"
 msgstr "Starte Suche"
 
@@ -102,6 +109,8 @@ msgstr "Starte Suche"
 #: /home/smo/Documents/gmediafinder/win32/dist/data/glade/mainGui.glade:242
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:249
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:251
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:233
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:235
 msgid "Clean"
 msgstr "Bereinigen"
 
