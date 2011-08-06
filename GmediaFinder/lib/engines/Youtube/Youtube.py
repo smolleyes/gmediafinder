@@ -4,6 +4,7 @@ import gdata.youtube.service as yt_service
 import gobject
 import os
 import sys
+from subprocess import Popen,PIPE
 
 try:
     from functions import *
