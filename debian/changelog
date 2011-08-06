@@ -1,4 +1,4 @@
-gmediafinder (0.9.7.5-0ppa6~lucid) lucid; urgency=high
+gmediafinder (0.9.7.5-0ppa6~natty) natty; urgency=high
 
   * youtube fix
   * new download manager, can now pause/resume files and more...
