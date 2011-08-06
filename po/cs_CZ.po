@@ -6,7 +6,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-06 14:13+0200\n"
+"POT-Creation-Date: 2011-08-06 20:06+0200\n"
 "PO-Revision-Date: 2011-06-17 19:11+0000\n"
 "Last-Translator: LukynZ <suchoi@centrum.cz>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -546,6 +546,7 @@ msgstr "Zastaveno"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Jamendo/Jamendo.py:22
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:42
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:21
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:39
 msgid "Order by: "
 msgstr "Řazeno podle:"
 
@@ -564,6 +565,7 @@ msgstr "Řazeno podle:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:32
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:29
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:114
 msgid "Most recent"
 msgstr "Nejčastějších"
 
@@ -580,6 +582,7 @@ msgstr "Nejčastějších"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Redtube/Redtube.py:32
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:32
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:53
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:114
 msgid "Most viewed"
 msgstr "Nejprohlíženějších"
 
@@ -598,6 +601,7 @@ msgstr "Nejprohlíženějších"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/DailyMotion/DailyMotion.py:32
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:54
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:30
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:115
 msgid "Most rated"
 msgstr "Nejvíce hodnocených"
 
@@ -628,6 +632,8 @@ msgstr "Nejvíce hodnocených"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/YouPorn/YouPorn.py:59
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:30
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Xvideos/Xvideos.py:34
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:113
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:131
 msgid "Most relevant"
 msgstr "Nejvíce souvisejících"
 
@@ -784,6 +790,7 @@ msgstr "%s: spojení selhalo..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:36
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:38
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:37
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:40
 msgid "Category: "
 msgstr "Kategorie:"
 
@@ -791,6 +798,7 @@ msgstr "Kategorie:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:47
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:49
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:48
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:51
 msgid "Quality"
 msgstr "Kvalita"
 
@@ -798,6 +806,7 @@ msgstr "Kvalita"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:107
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:120
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:119
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 msgid "Sport"
 msgstr "Sport"
 
@@ -805,6 +814,7 @@ msgstr "Sport"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:108
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:120
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 msgid "Films"
 msgstr "Filmy"
 
@@ -812,6 +822,7 @@ msgstr "Filmy"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:108
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:120
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 msgid "Cars"
 msgstr "Auta"
 
@@ -819,6 +830,7 @@ msgstr "Auta"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
 msgid "Music"
 msgstr "Hudba"
 
@@ -826,6 +838,7 @@ msgstr "Hudba"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
 msgid "Technology"
 msgstr "Technologie"
 
@@ -833,6 +846,7 @@ msgstr "Technologie"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:109
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:121
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
 msgid "Animals"
 msgstr "Zvířata"
 
@@ -840,6 +854,7 @@ msgstr "Zvířata"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:125
 msgid "Travel"
 msgstr "Cestování"
 
@@ -847,6 +862,7 @@ msgstr "Cestování"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:125
 msgid "Games"
 msgstr "Hry"
 
@@ -854,6 +870,7 @@ msgstr "Hry"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:110
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:122
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:125
 msgid "Comedy"
 msgstr "Komedie"
 
@@ -861,6 +878,7 @@ msgstr "Komedie"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:126
 msgid "Peoples"
 msgstr "Lidé"
 
@@ -868,6 +886,7 @@ msgstr "Lidé"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:111
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:123
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:126
 msgid "News"
 msgstr "Zprávy"
 
@@ -875,6 +894,7 @@ msgstr "Zprávy"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:125
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:127
 msgid "Entertainement"
 msgstr "Zábava"
 
@@ -882,6 +902,7 @@ msgstr "Zábava"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:112
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:125
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:124
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:127
 msgid "Trailers"
 msgstr "Ukázky"
 
@@ -897,6 +918,8 @@ msgstr "Ukázky"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:202
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:196
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:205
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:215
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:224
 #, python-format
 msgid "%s: No results for %s ..."
 msgstr "%s: Žádné výsledky pro %s..."
@@ -907,6 +930,7 @@ msgstr "%s: Žádné výsledky pro %s..."
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:244
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:248
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:251
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:270
 #, fuzzy, python-format
 msgid ""
 "\n"
@@ -1134,6 +1158,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1150
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1157
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1165
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1168
 msgid "Stop Downloading"
 msgstr "Zastavit Stahování"
 
@@ -1153,6 +1178,7 @@ msgstr "Zastavit Stahování"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1158
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1165
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1173
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1176
 msgid "Show in folder"
 msgstr "Zobrazit ve složce"
 
@@ -1172,6 +1198,7 @@ msgstr "Zobrazit ve složce"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1173
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1180
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1188
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1191
 msgid "Convert to mp3"
 msgstr "Převést na mp3"
 
@@ -1191,6 +1218,7 @@ msgstr "Převést na mp3"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1184
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1172
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1180
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1183
 msgid "Remove"
 msgstr "Ostranit"
 
@@ -1228,6 +1256,8 @@ msgstr "Ostranit"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1600
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1538
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1608
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1541
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1611
 #, fuzzy, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr "Vyhledávám %(query)s s pomocí %(engine)s"
@@ -1282,12 +1312,14 @@ msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:106
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:105
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:108
 msgid "Paste youtube link"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:145
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:148
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:149
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:168
 #, python-format
 msgid ""
 "Your link:\n"
@@ -1299,6 +1331,7 @@ msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:138
 #: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:139
+#: /home/smo/Documents/gmediafinder/GmediaFinder/lib/engines/Youtube/Youtube.py:158
 msgid "There's no link to paste..."
 msgstr ""
 
@@ -1315,6 +1348,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1165
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1150
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1158
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1161
 msgid "Pause/Resume download"
 msgstr ""
 
