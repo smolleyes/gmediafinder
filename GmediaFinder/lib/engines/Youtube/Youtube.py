@@ -137,14 +137,12 @@ class Youtube(object):
             try:
                 req = Popen('gst-inspect | grep vp8',shell=True,stdout=PIPE)
                 out, err = req.communicate()
-                print out
                 if not out == '':
                     self.vp8 = True
             except:
                 try:
                     req = Popen('gst-inspect-0.10 | grep vp8',shell=True,stdout=PIPE)
                     out, err = req.communicate()
-                    print out
                     if not out == '':
                         self.vp8 = True
                 except:
