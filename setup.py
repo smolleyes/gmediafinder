@@ -61,7 +61,7 @@ data_files = [
 	('share/applications',['gmediafinder.desktop']),
 	('share/gmediafinder/glade',['data/glade/mainGui.glade']),
 	('share/gmediafinder/scripts',['data/scripts/get_stream.py']),
-	('share/gmediafinder/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif','data/img/yt_icone.jpg']),
+	('share/gmediafinder/img',['data/img/gmediafinder.png','data/img/sound.png','data/img/throbber.png','data/img/throbber.gif','data/img/yt_icone.jpg','data/img/donate.gif','data/img/paypal.gif']),
 	('share/pyshared/GmediaFinder/', ['GmediaFinder/__init__.py']),
 	('share/pyshared/GmediaFinder/lib/', ['GmediaFinder/__init__.py']),
 	('share/pyshared/GmediaFinder/lib/engines/', ['GmediaFinder/__init__.py']),
