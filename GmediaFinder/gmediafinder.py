@@ -1117,14 +1117,17 @@ class GsongFinder(object):
         
     def resume_downloads(self):
         for media in os.listdir(self.down_dir):
-            if '.conf' in media:
-                bname = re.sub('^.','',media).replace('.conf','')
-                fmt = '.'+bname.split('.').pop(-1)
-                name = bname.replace('%s' % fmt,'')
-                f = open(self.down_dir+'/.'+bname+'.conf')
-                link = f.read()
-                f.close()
-                self.geturl(link, name, fmt)
+            try:
+                if '.conf' in media:
+                    bname = re.sub('^.','',media).replace('.conf','')
+                    fmt = '.'+bname.split('.').pop(-1)
+                    name = bname.replace('%s' % fmt,'')
+                    f = open(self.down_dir+'/.'+bname+'.conf')
+                    link = f.read()
+                    f.close()
+                    self.geturl(link, name, fmt)
+            except:
+                continue
     
     def geturl(self, url, srcname=None,codec=None):
         if codec:
