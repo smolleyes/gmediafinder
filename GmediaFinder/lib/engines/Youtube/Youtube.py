@@ -3,6 +3,7 @@ import urllib
 import gdata.youtube.service as yt_service
 import gobject
 import os
+import sys
 
 try:
     from functions import *
@@ -31,6 +32,7 @@ class Youtube(object):
         self.media_codec = None
         self.thread_stop= False
         self.has_browser_mode = False
+        self.vp8 = False
         ## the gui box to show custom filters/options
         self.opt_box = self.gui.gladeGui.get_widget("search_options_box")
         ## options labels
@@ -129,6 +131,25 @@ class Youtube(object):
         self.orderby.setIndexFromString(_("Most relevant"))
         
         gobject.idle_add(self.gui.search_opt_box.show_all)
+        
+        ## vp8 check
+        if not sys.platform == 'win32':
+            try:
+                req = Popen('gst-inspect | grep vp8',shell=True,stdout=PIPE)
+                out, err = req.communicate()
+                print out
+                if not out == '':
+                    self.vp8 = True
+            except:
+                try:
+                    req = Popen('gst-inspect-0.10 | grep vp8',shell=True,stdout=PIPE)
+                    out, err = req.communicate()
+                    print out
+                    if not out == '':
+                        self.vp8 = True
+                except:
+                    return
+            
         
     def on_paste(self,widget):
         clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "CLIPBOARD")
@@ -356,6 +377,8 @@ class Youtube(object):
             for quality in quality_list:
                 #print quality
                 codec = self.get_codec(quality)
+                if codec == 'webm' and not self.vp8:
+                    continue
                 if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
                     i+=1
                     continue
