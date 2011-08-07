@@ -135,19 +135,13 @@ class Youtube(object):
         
         ## vp8 check
         if not sys.platform == 'win32':
-            try:
-                req = Popen('gst-inspect | grep vp8',shell=True,stdout=PIPE)
-                out, err = req.communicate()
+            out, err = Popen('gst-inspect | grep vp8',shell=True,stdout=PIPE).communicate()
+            if not out == '':
+                self.vp8 = True
+            else:
+                out, err = Popen('gst-inspect-0.10 | grep vp8',shell=True,stdout=PIPE).communicate()
                 if not out == '':
                     self.vp8 = True
-            except:
-                try:
-                    req = Popen('gst-inspect-0.10 | grep vp8',shell=True,stdout=PIPE)
-                    out, err = req.communicate()
-                    if not out == '':
-                        self.vp8 = True
-                except:
-                    return
             
         
     def on_paste(self,widget):
