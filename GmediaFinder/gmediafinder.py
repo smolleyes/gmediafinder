@@ -969,8 +969,8 @@ class GsongFinder(object):
             pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
             color = gtk.gdk.Color()
             cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
-            gobject.idle_add(self.window.window.set_cursor,cursor)
-            self.show_mini_player()
+            self.window.window.set_cursor(cursor)
+            return self.show_mini_player()
         
         ## disable screensaver
         if self.fullscreen == True and self.mini_player == False and self.timer > 55:
