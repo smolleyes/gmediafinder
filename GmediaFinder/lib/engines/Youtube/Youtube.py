@@ -135,11 +135,11 @@ class Youtube(object):
         
         ## vp8 check
         if not sys.platform == 'win32':
-            out, err = Popen('gst-inspect | grep vp8',shell=True,stdout=PIPE).communicate()
+            out = Popen('/usr/bin/gst-inspect-0.10| grep vp8 >/dev/null',shell=True,stdout=PIPE).communicate()
             if not out == '':
                 self.vp8 = True
             else:
-                out, err = Popen('gst-inspect-0.10 | grep vp8',shell=True,stdout=PIPE).communicate()
+                out = Popen('/usr/bin/gst-inspect | grep vp8',shell=True,stdout=PIPE).communicate()
                 if not out == '':
                     self.vp8 = True
         print 'vp8 support : %s' % self.vp8
