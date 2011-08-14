@@ -18,6 +18,7 @@ from urllib import urlretrieve
 import HTMLParser
 import htmlentitydefs
 import htmllib
+from subprocess import Popen,PIPE
 
 HTMLParser.attrfind = re.compile(r'\s*([a-zA-Z_][-.:a-zA-Z_0-9]*)(\s*=\s*'r'(\'[^\']*\'|"[^"]*"|[^\s>^\[\]{}\|\'\"]*))?')
 
@@ -72,6 +73,39 @@ def calc_eta(start, now, total, current):
 		values = {'min': eta_mins, 'sec': eta_secs}
 		return _('Remaining : %(min)02d:%(sec)02d') % values
 
+import htmlentitydefs
+
+def translate_html(text_html):
+    code = htmlentitydefs.codepoint2name
+    new_text = ""
+    dict_code = dict([(unichr(key),value) for key,value in code.items()])
+    for key in text_html:
+#        key = unicode(key)
+        if dict_code.has_key(key):
+            new_text += "&%s;" % dict_code[key]
+        else:
+            new_text += key
+    return new_text
+
+
+
+def htmlentitydecode(s):
+    # First convert alpha entities (such as &eacute;)
+    # (Inspired from [url]http://mail.python.org/pipermail/python-list/2007-June/443813.html[/url])
+    def entity2char(m):
+        entity = m.group(1)
+        if entity in htmlentitydefs.name2codepoint:
+            return unichr(htmlentitydefs.name2codepoint[entity])
+        return u" "  # Unknown entity: We replace with a space.
+    expression = u'&(%s);' % u'|'.join(htmlentitydefs.name2codepoint)
+    t = re.sub(expression, entity2char, s)
+
+
+    # Then convert numerical entities (such as &#38;#233;)
+    t = re.sub(u'&#38;#(d+);', lambda x: unichr(int(x.group(1))), t)
+
+    # Then convert hexa entities (such as &#38;#x00E9;)
+    return re.sub(u'&#38;#x(w+);', lambda x: unichr(int(x.group(1),16)), t)
 		
 def yesno(title,msg):
     dialog = gtk.MessageDialog(parent = None,

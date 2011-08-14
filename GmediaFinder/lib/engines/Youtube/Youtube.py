@@ -144,14 +144,18 @@ class Youtube(object):
                     self.vp8 = True
             
         
-    def on_paste(self,widget):
-        clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "CLIPBOARD")
-        data = clipboard.wait_for_contents('UTF8_STRING')
-        try:
-            text = data.get_text()
-        except:
-            error_dialog(_("There's no link to paste..."))
-            return
+    def on_paste(self,widget=None,url=None):
+        text = ''
+        if not url:
+            clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "CLIPBOARD")
+            data = clipboard.wait_for_contents('UTF8_STRING')
+            try:
+                text = data.get_text()
+            except:
+                error_dialog(_("There's no link to paste..."))
+                return
+        else:
+            text = url
         if text != '':
             vid=None
             try:
@@ -164,7 +168,7 @@ class Youtube(object):
                     return
             yt = yt_service.YouTubeService()
             entry = yt.GetYouTubeVideoEntry(video_id='%s' % vid)
-            return self.filter(entry, '', 1)
+            self.filter(entry, '', 1)
         else:
             return
 
@@ -213,7 +217,7 @@ class Youtube(object):
 
         if direct_link:
             gobject.idle_add(self.gui.model.clear)
-            return self.make_youtube_entry(vquery)
+            return self.make_youtube_entry(vquery, True)
         
         if len(vquery.entry) == 0:
             self.print_info(_("%s: No results for %s ...") % (self.name,user_search))
@@ -230,6 +234,7 @@ class Youtube(object):
     def play(self,link):
         gobject.idle_add(self.gui.quality_box.show)
         self.load_youtube_res(link)
+        self.gui.media_link=link
         active = self.youtube_video_rate.get_active()
         try:
             self.media_codec = self.quality_list[active].split('|')[1]
@@ -237,7 +242,7 @@ class Youtube(object):
         except:
             self.gui.start_play('')
 
-    def make_youtube_entry(self,video):
+    def make_youtube_entry(self,video,read=None):
         duration = video.media.duration.seconds
         calc = divmod(int(duration),60)
         seconds = int(calc[1])
@@ -266,7 +271,7 @@ class Youtube(object):
         if not title or not url or not vid_pic:
             return
         gobject.idle_add(self.gui.add_sound,title, vid_id, vid_pic,None,self.name,markup)
-
+                
 
     def get_codec(self, num):
         codec=None

@@ -25,16 +25,19 @@ if sys.platform == "win32":
     import win32api
 
 ## custom lib
+from playlist import Playlist
 try:
     from config import *
     from engines import Engines
     from functions import *
+    from playlist import Playlist
     if sys.platform != "win32":
         from pykey import send_string
 except:
     from GmediaFinder.config import *
     from GmediaFinder.engines import Engines
     from GmediaFinder.functions import *
+    from GmediaFinder.playlist import Playlist
     if sys.platform != "win32":
         from GmediaFinder.pykey import send_string
 
@@ -68,6 +71,8 @@ class GsongFinder(object):
         self.change_page_request = False
         self.tray = None
         self.download_pool = []
+        self.media_bitrate= None
+        self.media_codec= None
 
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
@@ -88,14 +93,16 @@ class GsongFinder(object):
         self.search_box = self.gladeGui.get_widget("search_box")
         self.results_box = self.gladeGui.get_widget("results_box")
         self.quality_box = self.gladeGui.get_widget("quality_box")
+        
 
         ## throbber
         self.throbber = self.gladeGui.get_widget("throbber_img")
         animation = gtk.gdk.PixbufAnimation(self.img_path+'/throbber.gif')
         self.throbber.set_from_animation(animation)
 
-        ## notebook
+        ## notebooks
         self.notebook = self.gladeGui.get_widget("notebook")
+        self.results_notebook = self.gladeGui.get_widget("results_notebook")
         self.video_cont = self.gladeGui.get_widget("video_cont")
 
         self.volume_btn = self.gladeGui.get_widget("volume_btn")
@@ -103,6 +110,9 @@ class GsongFinder(object):
 
         self.search_entry = self.gladeGui.get_widget("search_entry")
         self.stop_search_btn = self.gladeGui.get_widget("stop_search_btn")
+        ## playlist
+        self.playlists_xml = playlists_xml
+        self.playlist_scrollbox = self.gladeGui.get_widget("playlist_scrollbox")
         ## history
         self.search_entry.connect('changed',self.__search_history)
         self.history_view = gtk.EntryCompletion()
@@ -192,6 +202,7 @@ class GsongFinder(object):
         dic = {"on_main_window_destroy_event" : self.exit,
         "on_quit_menu_activate" : self.exit,
         "on_pause_btn_clicked" : self.pause_resume,
+        "on_play_btn_clicked" : self.start_stop,
         "on_down_btn_clicked" : self.download_file,
         "on_nextpage_btn_clicked" : self.change_page,
         "on_pageback_btn_clicked" : self.change_page,
@@ -264,11 +275,15 @@ class GsongFinder(object):
         self.search_playlist_menu = gtk.Menu()
         getlink_item = gtk.ImageMenuItem(gtk.STOCK_COPY)
         getlink_item.get_children()[0].set_label(_('Copy file link'))
+        addplaylist_item = gtk.ImageMenuItem(gtk.STOCK_EDIT)
+        addplaylist_item.get_children()[0].set_label(_('Add to Library'))
         self.search_playlist_menu.append(getlink_item)
+        self.search_playlist_menu.append(addplaylist_item)
         getlink_item.connect('activate', self._copy_link)
+        addplaylist_item.connect('activate', self._add_to_playlist)
         ## connect treeview signals
         self.search_playlist_menu_active = False
-        self.treeview.connect('cursor-changed',self.get_model)
+        self.treeview.connect('row-activated',self.get_model)
         self.treeview.connect('button-press-event',self._show_search_playlist_menu)
         ## create the players
         self.player = gst.element_factory_make("playbin", "player")
@@ -301,7 +316,8 @@ class GsongFinder(object):
         box.pack_start(self.active_engines, False,False,5)
         self.engine_selector = ComboBox(self.active_engines)
         self.engine_selector.append("")
-
+        ## load playlists
+        self.Playlist = Playlist(self)
         ## start gui
         self.window.show_all()
         self.throbber.hide()
@@ -500,8 +516,8 @@ class GsongFinder(object):
         self.notebook.set_current_page(0)
 
     def get_model(self,widget,path=None,column=None):
-        if self.search_playlist_menu_active:
-            return
+        #if self.search_playlist_menu_active:
+        #   return
         selected = self.treeview.get_selection()
         self.selected_iter = selected.get_selected()[1]
         self.path = self.model.get_path(self.selected_iter)
@@ -674,7 +690,7 @@ class GsongFinder(object):
             #thread.start_new_thread(self.search_engine.search,(self.user_search,page))
         self.add_thread(self.search_engine,self.user_search,page)
 
-    def add_sound(self, name, media_link, img=None, quality_list=None, plugname=None,markup_src=None, tooltip=None):
+    def add_sound(self, name, media_link, img=None, quality_list=None, plugname=None,markup_src=None):
         if not img:
             img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
         if not name or not media_link or not img:
@@ -888,6 +904,7 @@ class GsongFinder(object):
             path = self.model.get_path(self.selected_iter)
             if path:
                 self.treeview.set_cursor(path)
+                self.get_model()
         elif self.play_options == "continue":
             ## first, check if iter is still available (changed search while
             ## continue mode for exemple..)
@@ -899,6 +916,7 @@ class GsongFinder(object):
                         if self.selected_iter:
                             path = self.model.get_path(self.selected_iter)
                             self.treeview.set_cursor(path)
+                            self.get_model()
                     except:
                         return
                 else:
@@ -906,6 +924,7 @@ class GsongFinder(object):
                         self.selected_iter = self.model.iter_next(self.selected_iter)
                         path = self.model.get_path(self.selected_iter)
                         self.treeview.set_cursor(path)
+                        self.get_model()
                     except:
                         self.load_new_page()
             except:
@@ -916,6 +935,7 @@ class GsongFinder(object):
             self.selected_iter = self.model[num].iter
             path = self.model.get_path(self.selected_iter)
             self.treeview.set_cursor(path)
+            self.get_model()
 
     def load_new_page(self):
         self.change_page_request=True
@@ -970,7 +990,7 @@ class GsongFinder(object):
             color = gtk.gdk.Color()
             cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
             self.window.window.set_cursor(cursor)
-            return self.show_mini_player()
+            self.show_mini_player()
         
         ## disable screensaver
         if self.fullscreen == True and self.mini_player == False and self.timer > 55:
@@ -1025,7 +1045,7 @@ class GsongFinder(object):
         if self.fullscreen :
             self.fullscreen = False
             gobject.idle_add(self.search_box.show)
-            gobject.idle_add(self.results_box.show)
+            gobject.idle_add(self.results_notebook.show)
             gobject.idle_add(self.control_box.show)
             gobject.idle_add(self.options_bar.show)
             self.window.window.set_cursor(None)
@@ -1033,7 +1053,7 @@ class GsongFinder(object):
             gobject.idle_add(self.window.set_position,gtk.WIN_POS_CENTER)
         else:
             gobject.idle_add(self.search_box.hide)
-            gobject.idle_add(self.results_box.hide)
+            gobject.idle_add(self.results_notebook.hide)
             gobject.idle_add(self.options_bar.hide)
             pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
             color = gtk.gdk.Color()
@@ -1391,19 +1411,37 @@ class GsongFinder(object):
         pass
         
     
+    def select_first_media(self):
+        ## wait for 10 seconds or exit
+        print len(self.model)
+        try:
+            self.selected_iter = self.model.get_iter_first()
+            path = self.model.get_path(self.selected_iter)
+            self.treeview.set_cursor(path)
+        except:
+            return
+    
     def _show_search_playlist_menu(self,widget,event):
         if event.button == 3:
             self.search_playlist_menu_active = True
             self.search_playlist_menu.show_all()
             self.search_playlist_menu.popup(None, None, None, event.button, event.time)
         
-    def _copy_link(self,widget):
+    def _copy_link(self,widget=None,vid=None):
         self.search_playlist_menu_active = False
-        if self.search_engine.name == 'Youtube':
-            self.media_link = 'http://www.youtube.com/watch?v=%s' % self.media_link
+        link = self.media_link
+        if self.search_engine.name == 'Youtube' and not vid:
+            link = 'http://www.youtube.com/watch?v=%s' % self.media_link
         clipboard = gtk.Clipboard(gtk.gdk.display_get_default(), "CLIPBOARD")
-        clipboard.set_text(self.media_link)
-        print '%s copied to clipboard' % self.media_link
+        clipboard.set_text(link)
+        print '%s copied to clipboard' % link
+        
+    def _add_to_playlist(self,widget):
+        self.search_playlist_menu_active = False
+        link = self.media_link
+        if self.search_engine.name == 'Youtube':
+            link = 'http://www.youtube.com/watch?v=%s' % self.media_link
+        self.Playlist.add(self.media_name, link, self.active_link, self.media_plugname)
     
     def __create_trayicon(self):
         if gtk.check_version(2, 10, 0) is not None:

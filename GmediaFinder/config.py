@@ -4,8 +4,10 @@ import gettext
 from configobj import ConfigObj
 
 from Translation import Translation
+from xml.dom import minidom
+from xml.dom.minidom import Document
 
-VERSION = "0.9.7.5"
+VERSION = "0.9.7.1"
 APP_NAME = "gmediafinder"
 exec_path =  os.path.dirname(os.path.abspath(__file__))
 
@@ -63,6 +65,17 @@ else:
 ## small config dir for downloads...
 if not os.path.exists(down_dir):
     os.mkdir(down_dir)
+## xml file for playlists
+playlists_xml = os.path.join(settings_folder,"playlists.xml")
+if not os.path.exists(playlists_xml):
+    ## create a basic wallpapers xml if not exist
+    xml_obj = minidom.Document()
+    root = xml_obj.createElement("playlists")
+    xml_obj.appendChild(root)
+    root.appendChild(xml_obj.createTextNode("\n"))
+    root.appendChild(xml_obj.createComment("File playlists.xml create by Gmediafinder"))
+    root.appendChild(xml_obj.createTextNode("\n\t"))
+    xml_obj.writexml(open(playlists_xml,"w"), "", "", "\n", "UTF-8")
 ## Get Icons shown on buttons
 settings = gtk.settings_get_default()
 gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
