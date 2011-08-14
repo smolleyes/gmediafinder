@@ -72,6 +72,7 @@ class GsongFinder(object):
         self.download_pool = []
         self.media_bitrate= None
         self.media_codec= None
+        self.playlist_mode = False
 
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
@@ -515,30 +516,45 @@ class GsongFinder(object):
         self.notebook.set_current_page(0)
 
     def get_model(self,widget=None,path=None,column=None):
-        #if self.search_playlist_menu_active:
-        #   return
-        selected = self.treeview.get_selection()
-        self.selected_iter = selected.get_selected()[1]
-        self.path = self.model.get_path(self.selected_iter)
-        ## else extract needed metacity's infos
-        self.media_thumb = self.model.get_value(self.selected_iter, 0)
-        name = self.model.get_value(self.selected_iter, 4)
-        self.media_name = decode_htmlentities(name)
-        self.file_tags = {}
-        self.media_markup = self.model.get_value(self.selected_iter, 1)
-        self.media_plugname = self.model.get_value(self.selected_iter, 5)
-        ## for global search
-        if not self.engine_selector.getSelected() == self.media_plugname:
-            self.set_engine(self.media_plugname)
-        ## return only theme name and description then extract infos from hash
-        self.media_link = self.model.get_value(self.selected_iter, 2)
-        self.media_img = self.model.get_value(self.selected_iter, 0)
-        self.media_bitrate = ""
-        self.media_codec = ""
-        self.stop_play()
-        ## play in engine
-        thread.start_new_thread(self.search_engine.play,(self.media_link,))
-        #self.search_engine.play(self.media_link)
+		#if self.search_playlist_menu_active:
+		#   return
+		self.media_bitrate = ""
+		self.media_codec = ""
+		if not self.playlist_mode or widget:
+			self.playlist_mode = False
+			selected = self.treeview.get_selection()
+			self.selected_iter = selected.get_selected()[1]
+			self.path = self.model.get_path(self.selected_iter)
+			## else extract needed metacity's infos
+			self.media_thumb = self.model.get_value(self.selected_iter, 0)
+			name = self.model.get_value(self.selected_iter, 4)
+			self.media_name = decode_htmlentities(name)
+			self.file_tags = {}
+			self.media_markup = self.model.get_value(self.selected_iter, 1)
+			self.media_plugname = self.model.get_value(self.selected_iter, 5)
+			## for global search
+			if not self.engine_selector.getSelected() == self.media_plugname:
+				self.set_engine(self.media_plugname)
+			## return only theme name and description then extract infos from hash
+			self.media_link = self.model.get_value(self.selected_iter, 2)
+			self.media_img = self.model.get_value(self.selected_iter, 0)
+		else:
+			selected = self.Playlist.treeview.get_selection()
+			self.selected_iter = selected.get_selected()[1]
+			self.path = self.Playlist.treestore.get_path(self.selected_iter)
+			## else extract needed metacity's infos
+			self.media_thumb = self.Playlist.treestore.get_value(self.selected_iter, 0)
+			name = self.Playlist.treestore.get_value(self.selected_iter, 0)
+			self.media_name = decode_htmlentities(name)
+			self.file_tags = {}
+			self.media_markup = self.Playlist.treestore.get_value(self.selected_iter, 0)
+			self.media_plugname = self.Playlist.treestore.get_value(self.selected_iter, 0)
+			return self.Playlist.on_selected(self.Playlist.treeview)
+			## return only theme name and description then extract infos from hash
+		self.stop_play()
+		## play in engine
+		thread.start_new_thread(self.search_engine.play,(self.media_link,))
+		#self.search_engine.play(self.media_link)
         
     def prepare_search(self,widget=None):
         self.user_search = self.search_entry.get_text()
@@ -918,44 +934,56 @@ class GsongFinder(object):
 			self.play_options = "continue"
 		
     def check_play_options(self):
-        if self.play_options == "loop":
-            path = self.model.get_path(self.selected_iter)
-            print path
-            if path:
-                self.treeview.set_cursor(path)
-                self.get_model()
-        elif self.play_options == "continue":
-            ## first, check if iter is still available (changed search while
-            ## continue mode for exemple..)
-            ## check for next iter
-            try:
-                if not self.model.get_path(self.selected_iter) == self.path:
-                    try:
-                        self.selected_iter = self.model.get_iter_first()
-                        if self.selected_iter:
-                            path = self.model.get_path(self.selected_iter)
-                            self.treeview.set_cursor(path)
-                            self.get_model()
-                    except:
-                        return
-                else:
-                    try:
-                        self.selected_iter = self.model.iter_next(self.selected_iter)
-                        path = self.model.get_path(self.selected_iter)
-                        self.treeview.set_cursor(path)
-                        self.get_model()
-                    except:
-                        self.load_new_page()
-            except:
-                 self.load_new_page()
-
-        elif self.play_options == "shuffle":
-            num = random.randint(0,len(self.model))
-            self.selected_iter = self.model[num].iter
-            path = self.model.get_path(self.selected_iter)
-            self.treeview.set_cursor(path)
-            self.get_model()
-
+		path = self.model.get_path(self.selected_iter)
+		model = None
+		treeview = None
+		if path:
+			model = self.model
+			treeview = self.treeview
+		else:
+			model = self.Playlist.treestore
+			path = model.get_path(self.selected_iter)
+			treeview = self.Playlist.treeview
+				
+		if self.play_options == "loop":
+			path = model.get_path(self.selected_iter)
+			if path:
+				treeview.set_cursor(path)
+				self.get_model()
+		elif self.play_options == "continue":
+			## first, check if iter is still available (changed search while
+			## continue mode for exemple..)
+			## check for next iter
+			try:
+				if not model.get_path(self.selected_iter) == self.path:
+					try:
+						self.selected_iter = model.get_iter_first()
+						if self.selected_iter:
+							path = model.get_path(self.selected_iter)
+							treeview.set_cursor(path)
+							self.get_model()
+					except:
+						return
+				else:
+					try:
+						self.selected_iter = model.iter_next(self.selected_iter)
+						path = model.get_path(self.selected_iter)
+						treeview.set_cursor(path)
+						self.get_model()
+					except:
+						if not self.playlist_mode:
+							self.load_new_page()
+			except:
+				if not self.playlist_mode:
+					self.load_new_page()
+		
+		elif self.play_options == "shuffle":
+			num = random.randint(0,len(model))
+			self.selected_iter = model[num].iter
+			path = model.get_path(self.selected_iter)
+			treeview.set_cursor(path)
+			self.get_model()
+		
     def load_new_page(self):
         self.change_page_request=True
         self.change_page()
