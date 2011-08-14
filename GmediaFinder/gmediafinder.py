@@ -756,6 +756,7 @@ class GsongFinder(object):
 		self.play_thread_id = thread.start_new_thread(self.play_thread, ())
 		self.is_playing = True
 		self.is_paused = False
+		self.duration = None
 		self.file_tags = {}
 		self.play = True
 
@@ -765,6 +766,9 @@ class GsongFinder(object):
         self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
         self.is_playing = False
         self.is_paused = False
+        self.duration = None
+        self.play_thread_id = None
+        self.play = False
         self.update_time_label()
         #self.active_link = None
         self.movie_window.queue_draw()
@@ -775,9 +779,6 @@ class GsongFinder(object):
         gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b></small>' % play)
         gobject.idle_add(self.media_bitrate_label.set_markup,'<small><b>%s </b></small>' % bit)
         gobject.idle_add(self.media_codec_label.set_markup,'<small><b>%s </b></small>' % enc)
-        self.duration = None
-        self.play_thread_id = None
-        self.play = False
 
     def play_thread(self):
 		play_thread_id = self.play_thread_id
@@ -905,7 +906,6 @@ class GsongFinder(object):
     def set_play_options(self,widget):
 		wname = widget.name
 		wstate = widget.get_active()
-		print wname, wstate
 		if wname == "shuffle_btn":
 			if wstate:
 				self.play_options = "shuffle"
