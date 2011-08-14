@@ -25,7 +25,6 @@ if sys.platform == "win32":
     import win32api
 
 ## custom lib
-from playlist import Playlist
 try:
     from config import *
     from engines import Engines
@@ -515,7 +514,7 @@ class GsongFinder(object):
     def show_home(self, widget):
         self.notebook.set_current_page(0)
 
-    def get_model(self,widget,path=None,column=None):
+    def get_model(self,widget=None,path=None,column=None):
         #if self.search_playlist_menu_active:
         #   return
         selected = self.treeview.get_selection()
@@ -724,27 +723,31 @@ class GsongFinder(object):
                 return self.stop_play()
 
     def start_play(self,url):
-        self.active_link = url
-        if not sys.platform == "win32":
-            if not self.vis_selector.getSelectedIndex() == 0 and not self.search_engine.engine_type == "video":
-                self.vis = self.change_visualisation()
-                self.visual = gst.element_factory_make(self.vis,'visual')
-                self.player.set_property('vis-plugin', self.visual)
-        self.play_btn_pb.set_from_pixbuf(self.stop_icon)
-        self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
-        self.player.set_property("uri", url)
-        self.player.set_state(gst.STATE_PLAYING)
-        self.play_thread_id = thread.start_new_thread(self.play_thread, ())
-        self.is_playing = True
-        self.is_paused = False
-        gobject.idle_add(self.movie_window.queue_draw)
-        self.file_tags = {}
+		self.active_link = url
+		if not sys.platform == "win32":
+			if not self.vis_selector.getSelectedIndex() == 0 and not self.search_engine.engine_type == "video":
+				self.vis = self.change_visualisation()
+				self.visual = gst.element_factory_make(self.vis,'visual')
+				self.player.set_property('vis-plugin', self.visual)
+		self.play_btn_pb.set_from_pixbuf(self.stop_icon)
+		self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
+		self.player.set_property("uri", url)
+		self.movie_window.queue_draw()
+		self.player.set_state(gst.STATE_PLAYING)
+		play=_('Playing:')
+		name = glib.markup_escape_text(self.media_name)
+		gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s</small>' % (play,name))
+		self.play_thread_id = thread.start_new_thread(self.play_thread, ())
+		self.is_playing = True
+		self.is_paused = False
+		self.file_tags = {}
 
     def stop_play(self,widget=None):
         self.player.set_state(gst.STATE_NULL)
         self.play_btn_pb.set_from_pixbuf(self.play_icon)
         self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
         self.is_playing = False
+        self.is_paused = False
         self.play_thread_id = None
         self.duration = None
         self.update_time_label()
@@ -759,12 +762,18 @@ class GsongFinder(object):
         gobject.idle_add(self.media_codec_label.set_markup,'<small><b>%s </b></small>' % enc)
 
     def play_thread(self):
-        play_thread_id = self.play_thread_id
-        while play_thread_id == self.play_thread_id:
-            if play_thread_id == self.play_thread_id:
-                if not self.seeker_move:
-                    self.update_time_label()
-            time.sleep(1)
+		play_thread_id = self.play_thread_id
+		while play_thread_id == self.play_thread_id:
+			if play_thread_id == self.play_thread_id:
+				if not self.seeker_move:
+					gtk.gdk.threads_enter()
+					enc=_('Encoding:')
+					bit=_('Bitrate:')
+					self.media_bitrate_label.set_markup('<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
+					self.media_codec_label.set_markup('<small><b>%s </b> %s</small>' % (enc,self.media_codec))
+					gtk.gdk.threads_leave()
+					self.update_time_label()
+			time.sleep(1)
 
     def load_gui_icons(self):
         ## try to load and use the current gtk icon theme,
@@ -876,32 +885,40 @@ class GsongFinder(object):
             self.is_paused = False
 
     def set_play_options(self,widget):
-        wname = widget.name
-        wstate = widget.get_active()
-        if wname == "shuffle_btn":
-            if wstate:
-                self.play_options = "shuffle"
-                if self.shuffle_btn.get_active():
-                    self.shuffle_btn.set_active(1)
-                if self.loop_btn.get_active():
-                    self.loop_btn.set_active(0)
-            else:
-                self.play_options = "continue"
-        elif wname == "repeat_btn":
-            if wstate:
-                self.play_options = "loop"
-                if self.loop_btn.get_active():
-                    self.loop_btn.set_active(1)
-                if self.shuffle_btn.get_active():
-                    self.shuffle_btn.set_active(0)
-            else:
-                self.play_options = "continue"
-        else:
-            self.play_options = "continue"
-
+		wname = widget.name
+		wstate = widget.get_active()
+		print wname, wstate
+		if wname == "shuffle_btn":
+			if wstate:
+				self.play_options = "shuffle"
+				if not self.shuffle_btn.get_active():
+					self.shuffle_btn.set_active(1)
+				if self.loop_btn.get_active():
+					self.loop_btn.set_active(0)
+			else:
+				if self.loop_btn.get_active():
+					self.play_options = "loop"
+				else:
+					self.play_options = "continue"
+		elif wname == "repeat_btn":
+			if wstate:
+				self.play_options = "loop"
+				if not self.loop_btn.get_active():
+					self.loop_btn.set_active(1)
+				if self.shuffle_btn.get_active():
+					self.shuffle_btn.set_active(0)
+			else:
+				if self.shuffle_btn.get_active():
+					self.play_options = "shuffle"
+				else:
+					self.play_options = "continue"
+		else:
+			self.play_options = "continue"
+		
     def check_play_options(self):
         if self.play_options == "loop":
             path = self.model.get_path(self.selected_iter)
+            print path
             if path:
                 self.treeview.set_cursor(path)
                 self.get_model()
@@ -973,14 +990,6 @@ class GsongFinder(object):
           self.seeker.set_adjustment(adjustment)
           gobject.idle_add(self.time_label.set_text,"00:00 / 00:00")
           return False
-        
-        bit=_('Bitrate:')
-        enc=_('Encoding:')
-        play=_('Playing:')
-        name = glib.markup_escape_text(self.media_name)
-        gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s</small>' % (play,name))
-        gobject.idle_add(self.media_bitrate_label.set_markup,'<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
-        gobject.idle_add(self.media_codec_label.set_markup,'<small><b>%s </b> %s</small>' % (enc,self.media_codec))
 
         ## update timer for mini_player and hide it if more than 5 sec
         ## without mouse movements
@@ -1233,72 +1242,72 @@ class GsongFinder(object):
     
     
     def bus_message_tag(self, bus, message):
-        codec = None
-        self.audio_codec = None
-        self.media_bitrate = None
-        self.mode = None
-        self.media_codec = None
-        #we received a tag message
-        taglist = message.parse_tag()
-        self.old_name = self.media_name
-        #put the keys in the dictionary
-        for key in taglist.keys():
-            #print key, taglist[key]
-            if key == "preview-image" or key == "image":
-                ipath="/tmp/temp.png"
-                img = open(ipath, 'w')
-                img.write(taglist[key])
-                img.close()
-                self.media_thumb = gtk.gdk.pixbuf_new_from_file_at_scale(ipath, 64,64, 1)
-                self.model.set_value(self.selected_iter, 0, self.media_thumb)
-            elif key == "bitrate":
-                r = int(taglist[key]) / 1000
-                self.file_tags[key] = "%sk" % r
-            elif key == "channel-mode":
-                self.file_tags[key] = taglist[key]
-            elif key == "audio-codec":
-                k = str(taglist[key])
-                if not self.file_tags.has_key(key) or self.file_tags[key] == '':
-                    self.file_tags[key] = k
-            elif key == "video-codec":
-                k = str(taglist[key])
-                if not self.file_tags.has_key(key) or self.file_tags[key] == '':
-                    self.file_tags[key] = k
-            elif key == "container-format":
-                k = str(taglist[key])
-                if not self.file_tags.has_key(key) or self.file_tags[key] == '':
-                    self.file_tags[key] = k
-            #print self.file_tags
-        try:
-            if self.file_tags.has_key('video-codec') and self.file_tags['video-codec'] != "":
-                codec = self.file_tags['video-codec']
-            else:
-                codec = self.file_tags['audio-codec']
-            if codec == "" and self.file_tags['container-format'] != "":
-                codec = self.file_tags['container-format']
-            if ('MP3' in codec or 'ID3' in codec):
-                    self.media_codec = 'mp3'
-            elif ('XVID' in codec):
-                    self.media_codec = 'avi'
-            elif ('MPEG-4' in codec or 'H.264' in codec or 'MP4' in codec):
-                    self.media_codec = 'mp4'
-            elif ('WMA' in codec or 'ASF' in codec or 'Microsoft Windows Media 9' in codec):
-                    self.media_codec = 'wma'
-            elif ('Quicktime' in codec):
-                    self.media_codec = 'mov'
-            elif ('Vorbis' in codec or 'Ogg' in codec):
-                    self.media_codec = 'ogg'
-            elif ('Sorenson Spark Video' in codec):
-                    self.media_codec = 'flv'
-            elif ('VP8' in codec):
-                self.media_codec = 'webm'
-            self.media_bitrate = self.file_tags['bitrate']
-            self.mode = self.file_tags['channel-mode']
-            self.model.set_value(self.selected_iter, 1, self.media_markup)
-            self.file_tags = tags
-        except:
-            return
-
+		codec = None
+		self.audio_codec = None
+		self.media_bitrate = None
+		self.mode = None
+		self.media_codec = None
+		#we received a tag message
+		taglist = message.parse_tag()
+		self.old_name = self.media_name
+		#put the keys in the dictionary
+		for key in taglist.keys():
+			#print key, taglist[key]
+			if key == "preview-image" or key == "image":
+				ipath="/tmp/temp.png"
+				img = open(ipath, 'w')
+				img.write(taglist[key])
+				img.close()
+				self.media_thumb = gtk.gdk.pixbuf_new_from_file_at_scale(ipath, 64,64, 1)
+				self.model.set_value(self.selected_iter, 0, self.media_thumb)
+			elif key == "bitrate":
+				r = int(taglist[key]) / 1000
+				self.file_tags[key] = "%sk" % r
+			elif key == "channel-mode":
+				self.file_tags[key] = taglist[key]
+			elif key == "audio-codec":
+				k = str(taglist[key])
+				if not self.file_tags.has_key(key) or self.file_tags[key] == '':
+					self.file_tags[key] = k
+			elif key == "video-codec":
+				k = str(taglist[key])
+				if not self.file_tags.has_key(key) or self.file_tags[key] == '':
+					self.file_tags[key] = k
+			elif key == "container-format":
+				k = str(taglist[key])
+				if not self.file_tags.has_key(key) or self.file_tags[key] == '':
+					self.file_tags[key] = k
+			#print self.file_tags
+		try:
+			if self.file_tags.has_key('video-codec') and self.file_tags['video-codec'] != "":
+				codec = self.file_tags['video-codec']
+			else:
+				codec = self.file_tags['audio-codec']
+			if codec == "" and self.file_tags['container-format'] != "":
+				codec = self.file_tags['container-format']
+			if ('MP3' in codec or 'ID3' in codec):
+					self.media_codec = 'mp3'
+			elif ('XVID' in codec):
+					self.media_codec = 'avi'
+			elif ('MPEG-4' in codec or 'H.264' in codec or 'MP4' in codec):
+					self.media_codec = 'mp4'
+			elif ('WMA' in codec or 'ASF' in codec or 'Microsoft Windows Media 9' in codec):
+					self.media_codec = 'wma'
+			elif ('Quicktime' in codec):
+					self.media_codec = 'mov'
+			elif ('Vorbis' in codec or 'Ogg' in codec):
+					self.media_codec = 'ogg'
+			elif ('Sorenson Spark Video' in codec):
+					self.media_codec = 'flv'
+			elif ('VP8' in codec):
+				self.media_codec = 'webm'
+			self.media_bitrate = self.file_tags['bitrate']
+			self.mode = self.file_tags['channel-mode']
+			self.model.set_value(self.selected_iter, 1, self.media_markup)
+			self.file_tags = tags
+		except:
+			return
+		
 
     def show_folder(self,widget,path):
         if sys.platform == "win32":
@@ -1398,6 +1407,7 @@ class GsongFinder(object):
                     self.selected_iter = self.model.get_iter_first()
                     path = self.model.get_path(self.selected_iter)
                     self.treeview.set_cursor(path)
+                    self.get_model()
                     self.change_page_request=False
                 except:
                     self.change_page_request=False
@@ -1418,6 +1428,7 @@ class GsongFinder(object):
             self.selected_iter = self.model.get_iter_first()
             path = self.model.get_path(self.selected_iter)
             self.treeview.set_cursor(path)
+            self.get_model()
         except:
             return
     

@@ -65,17 +65,6 @@ else:
 ## small config dir for downloads...
 if not os.path.exists(down_dir):
     os.mkdir(down_dir)
-## xml file for playlists
-playlists_xml = os.path.join(settings_folder,"playlists.xml")
-if not os.path.exists(playlists_xml):
-    ## create a basic wallpapers xml if not exist
-    xml_obj = minidom.Document()
-    root = xml_obj.createElement("playlists")
-    xml_obj.appendChild(root)
-    root.appendChild(xml_obj.createTextNode("\n"))
-    root.appendChild(xml_obj.createComment("File playlists.xml create by Gmediafinder"))
-    root.appendChild(xml_obj.createTextNode("\n\t"))
-    xml_obj.writexml(open(playlists_xml,"w"), "", "", "\n", "UTF-8")
 ## Get Icons shown on buttons
 settings = gtk.settings_get_default()
 gtk.Settings.set_long_property(settings, "gtk-button-images", 1, "main")
@@ -96,6 +85,18 @@ if not os.path.exists(settings_folder):
     os.write(fd,"convert=%s\n" % downloads)
     os.close(fd)
 conf = ConfigObj(conf_file,write_empty_values=True)
+
+## xml file for playlists
+playlists_xml = os.path.join(settings_folder,"playlists.xml")
+if not os.path.exists(playlists_xml):
+    ## create a basic wallpapers xml if not exist
+    xml_obj = minidom.Document()
+    root = xml_obj.createElement("playlists")
+    xml_obj.appendChild(root)
+    root.appendChild(xml_obj.createTextNode("\n"))
+    root.appendChild(xml_obj.createComment("File playlists.xml create by Gmediafinder"))
+    root.appendChild(xml_obj.createTextNode("\n\t"))
+    xml_obj.writexml(open(playlists_xml,"w"), "", "", "\n", "UTF-8")
 
 ## history file
 history_file = os.path.join(settings_folder, 'history')
