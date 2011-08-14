@@ -142,6 +142,7 @@ class Youtube(object):
                 out, err = Popen('gst-inspect-0.10 | grep vp8',shell=True,stdout=PIPE).communicate()
                 if not out == '':
                     self.vp8 = True
+        print 'vp8 support : %s' % self.vp8
             
         
     def on_paste(self,widget=None,url=None):
