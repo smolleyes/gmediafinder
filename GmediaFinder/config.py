@@ -43,7 +43,7 @@ gettext.textdomain(APP_NAME)
 _ = traduction.gettext
 
 ## gui config
-vis="goom"
+vis="disabled"
 width = gtk.gdk.screen_width()
 height = gtk.gdk.screen_height()
 window_state = "%s,%s,%s,%s" % (width-200,height-80,0,0)
