@@ -4,7 +4,7 @@ import gdata.youtube.service as yt_service
 import gobject
 import os
 import sys
-from subprocess import Popen,PIPE
+from subprocess import Popen,PIPE,STDOUT
 
 try:
     from functions import *
@@ -138,14 +138,15 @@ class Youtube(object):
         
         ## vp8 check
         if not sys.platform == 'win32':
-            out = Popen('/usr/bin/gst-inspect-0.10| grep vp8',shell=True,stdout=PIPE).communicate()
-            if 'vp8' in out:
+            out,err = Popen('/usr/bin/gst-inspect-0.10| grep vp8',shell=True,stdout=PIPE,stderr=STDOUT).communicate()
+            if 'vp8' in str(out):
                 self.vp8 = True
             else:
-                out = Popen('/usr/bin/gst-inspect | grep vp8',shell=True,stdout=PIPE).communicate()
-                if 'vp8' in out:
+                out,err = Popen('/usr/bin/gst-inspect | grep vp8',shell=True,stdout=PIPE,stderr=STDOUT).communicate()
+                if 'vp8' in str(out):
                     self.vp8 = True
-            
+        else:
+            self.vp8 = True
         
     def on_paste(self,widget=None,url=None):
         text = ''
