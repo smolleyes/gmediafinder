@@ -349,6 +349,10 @@ class Youtube(object):
             req = urllib2.Request("http://www.youtube.com/get_video_info?video_id=" + urllib2.quote('%s' % vid_id))
             stream = urllib2.urlopen(req)
             contents = urllib.unquote(stream.read())
+            if re.search('status=fail',contents):
+                req = urllib2.Request("http://www.youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
+                stream = urllib2.urlopen(req)
+                contents = urllib.unquote(stream.read())
             ## links list
             try:
                 matches = re.search("url_encoded_fmt_stream_map=(.*?)fmt_list",contents).group(1)
