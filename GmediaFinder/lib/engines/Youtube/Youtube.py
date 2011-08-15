@@ -97,6 +97,9 @@ class Youtube(object):
         gobject.idle_add(self.youtube_video_rate.hide)
         gobject.idle_add(self.youtube_video_rate.set_active,0)
 
+    
+    
+    
     def load_gui(self):
         ## paste entry
         btn = gtk.Button()
@@ -142,8 +145,8 @@ class Youtube(object):
                 out = Popen('/usr/bin/gst-inspect | grep vp8',shell=True,stdout=PIPE).communicate()
                 if 'vp8' in out:
                     self.vp8 = True
-                    
-    
+            
+        
     def on_paste(self,widget=None,url=None):
         text = ''
         if not url:
@@ -337,12 +340,12 @@ class Youtube(object):
                 pass
             self.gui.start_play(self.media_link[active])
 
-
+    
     def get_quality_list(self,vid_id):
         links_arr = []
         quality_arr = []
         try:
-            req = urllib2.Request("http://youtube.com/watch?v=" + urllib2.quote('%s' % vid_id))
+            req = urllib2.Request("http://www.youtube.com/get_video_info?video_id=" + urllib2.quote('%s' % vid_id))
             stream = urllib2.urlopen(req)
             contents = urllib.unquote(stream.read())
             ## links list
@@ -376,11 +379,15 @@ class Youtube(object):
                 #print quality
                 codec = self.get_codec(quality)
                 if codec == 'webm' and not self.vp8:
+                    i+=1
                     continue
                 if codec == "flv" and quality.split("/")[1] == "320x240" and re.search("18/320x240",str(quality_list)):
                     i+=1
                     continue
                 elif codec == "flv" and quality.split("/")[1] != "320x240":
+                    i+=1
+                    continue
+                elif quality == '18/640x360/9/0/115' and re.search("34/640x360/9/0/115",str(quality_list)):
                     i+=1
                     continue
                 else:

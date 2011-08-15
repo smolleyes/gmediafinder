@@ -111,6 +111,8 @@ class Playlist(object):
 
     def on_selected(self, cell, t=None, r=None):
         self.selected_iter = cell.get_selection().get_selected()[1]
+        self.gui.selected_iter = cell.get_selection().get_selected()[1]
+        self.gui.path = self.treestore.get_path(self.selected_iter)
         url = self.treestore.get_value(self.selected_iter, 2)
         src_link = self.treestore.get_value(self.selected_iter, 1)
         if url == '':
@@ -120,6 +122,7 @@ class Playlist(object):
             self.gui.set_engine(engine)
         except:
             return
+        self.gui.playlist_mode = True
         if self.test_link(url):
             self.gui.media_name = self.treestore.get_value(self.selected_iter, 0)
             self.gui.stop_play()

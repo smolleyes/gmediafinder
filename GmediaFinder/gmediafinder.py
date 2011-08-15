@@ -286,7 +286,7 @@ class GsongFinder(object):
         self.treeview.connect('row-activated',self.get_model)
         self.treeview.connect('button-press-event',self._show_search_playlist_menu)
         ## create the players
-        self.player = gst.element_factory_make("playbin", "player")
+        self.player = gst.element_factory_make("playbin2", "player")
         audiosink = gst.element_factory_make("autoaudiosink")
 
         if sys.platform == "win32":
@@ -295,6 +295,7 @@ class GsongFinder(object):
             self.videosink = gst.element_factory_make('xvimagesink')
         self.player.set_property("audio-sink", audiosink)
         self.player.set_property('video-sink', self.videosink)
+        self.player.set_property('buffer-size', 1024000)
         bus = self.player.get_bus()
         bus.add_signal_watch()
         bus.enable_sync_message_emission()
@@ -367,6 +368,7 @@ class GsongFinder(object):
         self.manager = FooThreadManager(20)
         self.mainloop = gobject.MainLoop(is_running=True)
 
+    
     def set_window_position(self):
         self.window.set_default_size(int(self.conf['window_state'][0]),int(self.conf['window_state'][1]))
         try:
