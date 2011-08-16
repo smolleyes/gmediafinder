@@ -403,7 +403,7 @@ class FileDownloader(threading.Thread):
                         length = round((float(int(headers['Content-Length'])/1024))/1024,2)
                         current = round((float(current_bytes/1024))/1024,2)
                         if procents < 100 and not self.paused:
-                            gobject.idle_add(self.pbar.set_text,"%3d%% %s of %s Mb at %s Ko/s" % (procents, current, length,
+                            gobject.idle_add(self.pbar.set_text,_("%3d%% %s of %s Mb at %s KB/s") % (procents, current, length,
                                                                             troughput))
                             gobject.idle_add(self.pbar.set_fraction,procents/100.0)
                         elif procents == 100:
