@@ -1044,7 +1044,6 @@ class GsongFinder(object):
             duration = self.player.query_duration(self.timeFormat, None)[0]
             time = value * (duration / 100)
             self.player.seek_simple(self.timeFormat, gst.SEEK_FLAG_FLUSH, time)
-            self.pause_resume()
 
     def seeker_block(self,widget,event):
         self.seeker_move = 1
