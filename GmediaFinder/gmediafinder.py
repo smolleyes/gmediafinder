@@ -20,6 +20,7 @@ pygst.require("0.10")
 import gst
 import mechanize
 import gdata
+import math
 
 if sys.platform == "win32":
     import win32api
@@ -40,7 +41,13 @@ except:
     if sys.platform != "win32":
         from GmediaFinder.pykey import send_string
 
+
 class GsongFinder(object):
+    STOPPED = 0
+    PLAYING = 1
+    PAUSED = 2
+    BUFFERING = 3
+    PREROLLING = 4
     def __init__(self):
         ## default search options
         self.is_playing = False
@@ -73,6 +80,9 @@ class GsongFinder(object):
         self.media_bitrate= None
         self.media_codec= None
         self.playlist_mode = False
+        self._cbuffering = -1
+        self.status = self.STOPPED
+        self.target_status = self.STOPPED
 
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
@@ -288,11 +298,13 @@ class GsongFinder(object):
         ## create the players
         self.player = gst.element_factory_make("playbin2", "player")
         audiosink = gst.element_factory_make("autoaudiosink")
+        audiosink.set_property('async-handling', True)
 
         if sys.platform == "win32":
             self.videosink = gst.element_factory_make('d3dvideosink')
         else:
             self.videosink = gst.element_factory_make('xvimagesink')
+        self.videosink.set_property('async', False)
         self.player.set_property("audio-sink", audiosink)
         self.player.set_property('video-sink', self.videosink)
         self.player.set_property('buffer-size', 1024000)
@@ -302,6 +314,7 @@ class GsongFinder(object):
         bus.connect("message", self.on_message)
         bus.connect("sync-message::element", self.on_sync_message)
         bus.connect("message::tag", self.bus_message_tag)
+        bus.connect('message::buffering', self.on_message_buffering)
 
         ## engines
         self.dlg = self.gladeGui.get_widget("settings_dialog")
@@ -742,19 +755,22 @@ class GsongFinder(object):
 
     def start_play(self,url):
 		self.active_link = url
-		if not sys.platform == "win32":
-			if not self.vis_selector.getSelectedIndex() == 0 and not self.search_engine.engine_type == "video":
-				self.vis = self.change_visualisation()
-				self.visual = gst.element_factory_make(self.vis,'visual')
-				self.player.set_property('vis-plugin', self.visual)
+		#if not sys.platform == "win32":
+			#if not self.vis_selector.getSelectedIndex() == 0 and not self.search_engine.engine_type == "video":
+				#self.player.set_property('flags', "Render visualisation when no video is present")
+				#self.vis = self.change_visualisation()
+				#self.visual = gst.element_factory_make(self.vis,'visual')
+				#self.player.set_property('vis-plugin', self.visual)
+			#else:
+				#if self.search_engine.engine_type == "video":
+					#self.player.set_property('flags', "Render the video stream")
+				#else:
+					#self.player.set_property('flags', "Render the audio stream")
 		self.play_btn_pb.set_from_pixbuf(self.stop_icon)
 		self.pause_btn_pb.set_from_pixbuf(self.pause_icon)
 		self.player.set_property("uri", url)
 		self.movie_window.queue_draw()
 		self.player.set_state(gst.STATE_PLAYING)
-		play=_('Playing:')
-		name = glib.markup_escape_text(self.media_name)
-		gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s</small>' % (play,name))
 		self.play_thread_id = thread.start_new_thread(self.play_thread, ())
 		self.is_playing = True
 		self.is_paused = False
@@ -787,12 +803,6 @@ class GsongFinder(object):
 		while play_thread_id == self.play_thread_id:
 			if play_thread_id == self.play_thread_id:
 				if not self.seeker_move:
-					gtk.gdk.threads_enter()
-					enc=_('Encoding:')
-					bit=_('Bitrate:')
-					self.media_bitrate_label.set_markup('<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
-					self.media_codec_label.set_markup('<small><b>%s </b> %s</small>' % (enc,self.media_codec))
-					gtk.gdk.threads_leave()
 					self.update_time_label()
 			time.sleep(1)
 
@@ -866,6 +876,32 @@ class GsongFinder(object):
         self.pageback_btn.set_sensitive(0)
         self.stop_search_btn.set_sensitive(0)
 
+    def on_message_buffering(self, bus, message):
+		percent = message.parse_buffering()
+		
+		if math.floor(percent/5) > self._cbuffering:
+			self._cbuffering = math.floor(percent/5)
+			buffering = _('Buffering :')
+			gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s%s</small>' % (buffering,percent,'%'))
+		
+		if percent == 100:
+			if self.is_paused:
+				self.info_label.set_text('')
+				enc=_('Encoding:')
+				bit=_('Bitrate:')
+				play=_('Playing:')
+				name = glib.markup_escape_text(self.media_name)
+				gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s</small>' % (play,name))
+				self.media_bitrate_label.set_markup('<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
+				self.media_codec_label.set_markup('<small><b>%s </b> %s</small>' % (enc,self.media_codec))
+				self.status = self.PLAYING
+				self.pause_resume()
+			self._cbuffering = -1
+		elif self.status != self.BUFFERING:
+			if not self.is_paused:
+				self.pause_resume()
+			self.status = self.BUFFERING
+		
     def on_message(self, bus, message):
         if self.search_engine.engine_type == "video":
             if not sys.platform == "win32":

@@ -1651,7 +1651,6 @@ audio-volume-medium</property>
                         </child>
                         <child>
                           <widget class="GtkFrame" id="frame6">
-                            <property name="visible">True</property>
                             <property name="can_focus">False</property>
                             <property name="label_xalign">0</property>
                             <child>
@@ -1730,7 +1729,7 @@ bumpscope</property>
                                     <signal name="toggled" handler="on_downloads_enabled_toggled" swapped="no"/>
                                   </widget>
                                   <packing>
-                                    <property name="expand">True</property>
+                                    <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">0</property>
                                   </packing>
@@ -1746,7 +1745,7 @@ bumpscope</property>
                                     <signal name="toggled" handler="on_convert_enabled_toggled" swapped="no"/>
                                   </widget>
                                   <packing>
-                                    <property name="expand">True</property>
+                                    <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">1</property>
                                   </packing>
@@ -1762,7 +1761,7 @@ bumpscope</property>
                                     <signal name="toggled" handler="on_systray_enabled_toggled" swapped="no"/>
                                   </widget>
                                   <packing>
-                                    <property name="expand">True</property>
+                                    <property name="expand">False</property>
                                     <property name="fill">True</property>
                                     <property name="position">2</property>
                                   </packing>
@@ -2048,6 +2047,7 @@ show downloads: d</property>
 the project, click the link below and donate .
 
 thanks!</property>
+                                <property name="wrap">True</property>
                               </widget>
                               <packing>
                                 <property name="expand">False</property>
