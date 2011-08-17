@@ -32,15 +32,14 @@ try:
 except ImportError:
     pass
 
-mfcdir = 'C:\Python26\Lib\site-packages\pythonwin'
-mfcfiles = [path.join(mfcdir, i) for i in ["mfc90.dll","mfc90u.dll" ,"mfcm90.dll","mfcm90u.dll","Microsoft.VC90.MFC.manifest"]]
-gstPath = "C:\gst"
+mfcdir = 'C:\\Python26\\Lib\\site-packages\\pythonwin'
+gstPath = "C:\\Program Files (x86)\\OSSBuild\\GStreamer\\v0.10.7"
 
 print ('Deploying GStreamer')
 # Copy gstreamer binaries to the dist folder
 for name in os.listdir(os.path.join(gstPath, 'bin')):
     shutil.copy (os.path.join(gstPath, 'bin', name),
-                 os.path.join (os.getcwd(), 'dist/bin'))
+                 os.path.join (os.getcwd(), 'dist\\bin'))
 ## copy ffmpeg dir
 if not os.path.exists(os.path.join(os.getcwd(), 'dist\\ffmpeg')):
     shutil.copytree(os.path.join(os.getcwd(), 'win32\\ffmpeg'),os.path.join(os.getcwd(), 'dist\\ffmpeg'))
@@ -51,15 +50,15 @@ for file in filter(lambda f: f.endswith('.dll'),
 
 if not os.path.exists(os.path.join(os.getcwd(), 'dist\\lib\\gstreamer-0.10')):
     shutil.copytree(os.path.join(gstPath, 'lib', 'gstreamer-0.10'),
-                    os.path.join(os.path.join (os.getcwd(), 'dist/lib'), 'gstreamer-0.10'))
-shutil.copyfile("C:\\libxml2-2.dll", 'dist/libxml2-2.dll')
+                    os.path.join(os.path.join (os.getcwd(), 'dist\\lib'), 'gstreamer-0.10'))
+#shutil.copyfile(os.path.join (os.getcwd(), 'dist\\bin\\libxml2-2.dll'), 'dist/libxml2-2.dll')
 
 setup(
     name = 'gmediafinder',
     packages = ['GmediaFinder'],
     description = 'Stream and download youtube or mp3 search engines files',
     version = '1.0',
-
+    zipfile = None,
     windows = ['GmediaFinder/gmediafinder.py'],
 
     options = {
@@ -71,8 +70,7 @@ setup(
                   }
               },
 
-    data_files=[("Microsoft.VC90.MFC", mfcfiles),
-                   ('images/22x22',['images/22x22/gmediafinder.png']),
+    data_files=[('images/22x22',['images/22x22/gmediafinder.png']),
 	('images/24x24',['images/24x24/gmediafinder.png']),
 	('images/48x48',['images/48x48/gmediafinder.png','images/48x48/gmediafinder.ico']),
         ('images/48x48/apps',['images/48x48/gmediafinder.png']),

@@ -326,13 +326,13 @@ class Youtube(object):
                     if codec == 'mp4' and '%s|webm' % rate in str(self.quality_list):
                         continue
                     self.youtube_video_rate.set_active(qn)
-            active = self.youtube_video_rate.get_active()
+            active = gobject.idle_add(self.youtube_video_rate.get_active)
         else:
             if self.quality_list:
                 active = self.youtube_video_rate.get_active()
 
     def on_youtube_video_rate_changed(self,widget):
-        active = self.youtube_video_rate.get_active()
+        active = gobject.idle_add(self.youtube_video_rate.get_active)
         if self.gui.is_playing:
             self.gui.stop_play()
             try:

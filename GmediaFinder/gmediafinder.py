@@ -882,33 +882,29 @@ class GsongFinder(object):
 		if math.floor(percent/5) > self._cbuffering:
 			self._cbuffering = math.floor(percent/5)
 			buffering = _('Buffering :')
+			self.status = self.BUFFERING
 			gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s%s</small>' % (buffering,percent,'%'))
 		
 		if percent == 100:
 			if self.is_paused:
-				self.info_label.set_text('')
-				enc=_('Encoding:')
-				bit=_('Bitrate:')
-				play=_('Playing:')
-				name = glib.markup_escape_text(self.media_name)
-				gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s</small>' % (play,name))
-				self.media_bitrate_label.set_markup('<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
-				self.media_codec_label.set_markup('<small><b>%s </b> %s</small>' % (enc,self.media_codec))
-				self.status = self.PLAYING
-				self.pause_resume()
+			    self.info_label.set_text('')
+			    enc=_('Encoding:')
+			    bit=_('Bitrate:')
+			    play=_('Playing:')
+			    name = glib.markup_escape_text(self.media_name)
+			    gobject.idle_add(self.media_name_label.set_markup,'<small><b>%s</b> %s</small>' % (play,name))
+			    self.media_bitrate_label.set_markup('<small><b>%s </b> %s</small>' % (bit,self.media_bitrate))
+			    self.media_codec_label.set_markup('<small><b>%s </b> %s</small>' % (enc,self.media_codec))
+			    self.status = self.PLAYING
+			    self.pause_resume()
 			self._cbuffering = -1
-		elif self.status != self.BUFFERING:
+		elif self.status == self.BUFFERING:
 			if not self.is_paused:
 				self.pause_resume()
-			self.status = self.BUFFERING
 		
     def on_message(self, bus, message):
         if self.search_engine.engine_type == "video":
-            if not sys.platform == "win32":
-                self.videosink.set_property('force-aspect-ratio', True)
-        else:
-            if not sys.platform == "win32":
-                self.videosink.set_property('force-aspect-ratio', False)
+            self.videosink.set_property('force-aspect-ratio', True)
         
         t = message.type
         if t == gst.MESSAGE_EOS:
@@ -1047,7 +1043,8 @@ class GsongFinder(object):
 
     def seeker_block(self,widget,event):
         self.seeker_move = 1
-        self.pause_resume()
+        if not self.is_paused:
+            self.pause_resume()
 
     def update_time_label(self):
         """
@@ -1078,6 +1075,9 @@ class GsongFinder(object):
                 send_string('a')
             self.timer = 0
         
+        if self.status == self.BUFFERING:
+            return
+       
         if self.duration == None:
           try:
             self.length = self.player.query_duration(self.timeFormat, None)[0]

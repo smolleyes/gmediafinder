@@ -7,15 +7,15 @@
 ; (To generate a new GUID, click Tools | Generate GUID inside the IDE.)
 AppId={{EDE58C73-4D17-47B4-A663-38208D9AA2FA}
 AppName=gmediafinder
-AppVersion=0.8.2
+AppVersion=0.9.7.5
 ;AppVerName=Gmediafinder 0.1
 AppPublisher=smo
 DefaultDirName={pf}\gmediafinder
 DefaultGroupName=gmediafinder
-LicenseFile=C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\gpl-2.0.txt
+LicenseFile=C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\gpl-2.0.txt
 OutputDir=C:\Documents and Settings\Administrateur\Bureau
 OutputBaseFilename=gmediafinder_setup
-SetupIconFile=C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\images\48x48\gmediafinder.ico
+SetupIconFile=C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\images\48x48\gmediafinder.ico
 Compression=lzma
 SolidCompression=yes
 
@@ -28,168 +28,168 @@ Name: "desktopicon"; Description: "{cm:CreateDesktopIcon}"; GroupDescription: "{
 Name: "quicklaunchicon"; Description: "{cm:CreateQuickLaunchIcon}"; GroupDescription: "{cm:AdditionalIcons}"; Flags: unchecked; OnlyBelowVersion: 0,6.1
 
 [Files]
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gmediafinder.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\_elementtree.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\_hashlib.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\_socket.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\_ssl.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\_win32sysloader.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\atk.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\avcodec-gpl-52.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\avcore-gpl-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\avdevice-gpl-52.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\avfilter-gpl-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\avformat-gpl-52.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\avutil-gpl-50.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\bz2.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\cairo._cairo.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\freetype6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gio._gio.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\glew32.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\glib._glib.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gmediafinder.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gobject._gobject.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gst._gst.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gst.audio.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gst.interfaces.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gst.pbutils.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gst.tag.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gst.video.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gtk._gtk.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gtk.glade.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\intl.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\liba52-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libatk-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libbz2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libcairo-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libcairo-gobject-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libcairo-script-interpreter-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libcelt-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libcharset-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libcroco-0.6-3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libdca-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libdvdcss-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libdvdnav-4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libdvdnavmini-4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libdvdread-4.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libexpat-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libfaac-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libfaad-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libffi-5.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libFLAC-8.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libfontconfig-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libfreetype-6.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libfribidi-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgailutil-18.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgcc_s_sjlj-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgcrypt-11.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgdk_pixbuf-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgdk-win32-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgio-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libglade-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libglib-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgmodule-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgmp-10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgnutls-26.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgnutls-extra-26.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgnutls-openssl-26.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgobject-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgpg-error-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgsf-1-114.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgsf-win32-1-114.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstapp-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstaudio-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstbase-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstbasevideo-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstcdda-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstcontroller-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstdataprotocol-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstfarsight-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstfft-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstgl-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstinterfaces-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstnet-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstnetbuffer-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstpbutils-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstphotography-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstreamer-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstriff-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstrtp-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstrtsp-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstsdp-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstsignalprocessor-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgsttag-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgstvideo-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgthread-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgtkgl-2.0-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libgtk-win32-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libhogweed-2-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libiconv-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libid3tag-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libjpeg-8.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libmad-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libmms-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libmp3lame-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libmpeg2-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libmpeg2convert-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libneon-27.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libnettle-4-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libnice-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libogg-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\liboil-0.3-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libopenjpeg-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\liborc-0.4-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\liborc-test-0.4-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libpango-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libpangocairo-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libpangoft2-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libpangowin32-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libpixman-1-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libpng14-14.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\library.zip"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\librsvg-2-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libschroedinger-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libsndfile-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libsoup-2.4-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libspeex-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libspeexdsp-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libtasn1-3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libtheora-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libtheoradec-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libtheoraenc-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libtiff-3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libturbojpeg.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libvorbis-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libvorbisenc-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libvorbisfile-3.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libwavpack-1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libx264-107.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\libxml2-2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\pango.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\pangocairo.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\pthreadGC2.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\pyexpat.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\python26.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\pythoncom26.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\pywintypes26.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\SDL.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\SDL_ttf.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\select.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\swscale-gpl-0.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\unicodedata.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\w9xpopen.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\gspawn-win32-helper.exe"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\win32api.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\win32com.shell.shell.pyd"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\xvidcore.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\z.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\data\*"; DestDir: "{app}/data"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\etc\*"; DestDir: "{app}/etc"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\images\*"; DestDir: "{app}/images"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\lib\*"; DestDir: "{app}/lib"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\share\*"; DestDir: "{app}/share"; Flags: ignoreversion recursesubdirs createallsubdirs
-Source: "C:\Documents and Settings\Administrateur\Bureau\smolleyes-gmediafinder-107ce9f\dist\ffmpeg\*"; DestDir: "{app}/ffmpeg"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gmediafinder.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\_elementtree.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\_hashlib.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\_socket.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\_ssl.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\_win32sysloader.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\atk.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\avcodec-gpl-52.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\avcore-gpl-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\avdevice-gpl-52.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\avfilter-gpl-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\avformat-gpl-52.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\avutil-gpl-50.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\bz2.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\cairo._cairo.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\freetype6.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gio._gio.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\glew32.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\glib._glib.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gmediafinder.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gobject._gobject.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gst._gst.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gst.audio.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gst.interfaces.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gst.pbutils.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gst.tag.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gst.video.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gtk._gtk.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gtk.glade.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\intl.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\liba52-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libatk-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libbz2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libcairo-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libcairo-gobject-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libcairo-script-interpreter-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libcelt-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libcharset-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libcroco-0.6-3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libdca-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libdvdcss-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libdvdnav-4.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libdvdnavmini-4.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libdvdread-4.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libexpat-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libfaac-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libfaad-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libffi-5.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libFLAC-8.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libfontconfig-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libfreetype-6.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libfribidi-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgailutil-18.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgcc_s_sjlj-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgcrypt-11.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgdk_pixbuf-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgdk-win32-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgio-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libglade-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libglib-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgmodule-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgmp-10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgnutls-26.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgnutls-extra-26.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgnutls-openssl-26.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgobject-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgpg-error-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgsf-1-114.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgsf-win32-1-114.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstapp-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstaudio-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstbase-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstbasevideo-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstcdda-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstcontroller-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstdataprotocol-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstfarsight-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstfft-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstgl-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstinterfaces-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstnet-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstnetbuffer-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstpbutils-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstphotography-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstreamer-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstriff-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstrtp-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstrtsp-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstsdp-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstsignalprocessor-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgsttag-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgstvideo-0.10.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgthread-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgtkgl-2.0-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libgtk-win32-2.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libhogweed-2-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libiconv-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libid3tag-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libjpeg-8.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libmad-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libmms-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libmp3lame-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libmpeg2-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libmpeg2convert-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libneon-27.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libnettle-4-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libnice-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libogg-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\liboil-0.3-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libopenjpeg-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\liborc-0.4-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\liborc-test-0.4-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libpango-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libpangocairo-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libpangoft2-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libpangowin32-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libpixman-1-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libpng14-14.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\library.zip"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\librsvg-2-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libschroedinger-1.0-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libsndfile-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libsoup-2.4-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libspeex-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libspeexdsp-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libtasn1-3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libtheora-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libtheoradec-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libtheoraenc-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libtiff-3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libturbojpeg.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libvorbis-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libvorbisenc-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libvorbisfile-3.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libwavpack-1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libx264-107.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\libxml2-2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\pango.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\pangocairo.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\pthreadGC2.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\pyexpat.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\python26.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\pythoncom26.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\pywintypes26.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\SDL.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\SDL_ttf.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\select.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\swscale-gpl-0.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\unicodedata.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\w9xpopen.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\gspawn-win32-helper.exe"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\win32api.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\win32com.shell.shell.pyd"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\xvidcore.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\z.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\zlib1.dll"; DestDir: "{app}"; Flags: ignoreversion
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\data\*"; DestDir: "{app}/data"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\etc\*"; DestDir: "{app}/etc"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\images\*"; DestDir: "{app}/images"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\lib\*"; DestDir: "{app}/lib"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\share\*"; DestDir: "{app}/share"; Flags: ignoreversion recursesubdirs createallsubdirs
+Source: "C:\Users\soso\Desktop\smolleyes-gmediafinder-0b299b6\dist\ffmpeg\*"; DestDir: "{app}/ffmpeg"; Flags: ignoreversion recursesubdirs createallsubdirs
 ; NOTE: Don't use "Flags: ignoreversion" on any shared system files
 
 [Icons]
