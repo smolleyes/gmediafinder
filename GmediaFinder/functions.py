@@ -314,41 +314,117 @@ class FileDownloader(threading.Thread):
     
     localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
     
-    def __init__(self, gui,url, name, pbar, btnf, btn,btn_conv,btnstop,convert,label,btnpause):
+    def __init__(self, gui, url, name, codec, data=None):
         threading.Thread.__init__(self)
-        self.label = label
         self.gui = gui
         self._stopevent = threading.Event()
         self.url = url
+        self.data = data # urllib request reply
         ## filenames
-        self.encoded_name = name
-        self.decoded_name = label
+        if not '.' in codec:
+            codec = '.'+codec
+        self.decoded_name = name+"%s" % codec
+        self.encoded_name = urllib.quote(self.decoded_name.encode('utf-8'))
         self.target = os.path.join(self.gui.down_dir,self.decoded_name)
         self.temp_name = self.decoded_name
         self.temp_file = os.path.join(self.gui.down_dir,self.temp_name)
         self.conf_temp_name = '.'+self.decoded_name+'.conf'
         self.conf_temp_file = os.path.join(self.gui.down_dir,self.conf_temp_name)
         # progress bar and buttons
-        self.pbar = pbar
-        self.btnf = btnf
-        self.btn = btn
-        self.btn_conv = btn_conv
-        self.btnstop = btnstop
-        self.btnpause = btnpause
-        self.convert_check = convert
+        box = gtk.HBox(False, 5)
+        vbox = gtk.VBox(False, 5)
+        label = gtk.Label(self.decoded_name)
+        label.set_alignment(0, 0.5)
+        label.set_line_wrap(True)
+        vbox.pack_start(label, False, False, 5)
+        self.pbar = gtk.ProgressBar()
+        self.pbar.set_size_request(400, 25)
+        try:
+            box.pack_start(gtk.image_new_from_pixbuf(self.media_thumb), False,False, 5)
+        except:
+            pb = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.gui.img_path,'sound.png'), 64,64, 1)
+            box.pack_start(gtk.image_new_from_pixbuf(pb), False,False, 5)
+        btnbox = gtk.HBox(False, 5)
+        ## pause download button
+        self.btnpause = gtk.Button()
+        image = gtk.Image()
+        image.set_from_pixbuf(self.gui.pause_icon)
+        self.btnpause.add(image)
+        btnbox.pack_start(self.btnpause, False, False, 5)
+        self.btnpause.set_tooltip_text(_("Pause/Resume download"))
+        ## stop btn
+        self.btnstop = gtk.Button()
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_SMALL_TOOLBAR)
+        self.btnstop.add(image)
+        btnbox.pack_start(self.btnstop, False, False, 5)
+        self.btnstop.set_tooltip_text(_("Stop Downloading"))
+        self.gui.down_container.pack_start(box, False ,False, 5)
+        ## show folder button
+        self.btnf = gtk.Button()
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_FIND, gtk.ICON_SIZE_SMALL_TOOLBAR)
+        self.btnf.add(image)
+        btnbox.pack_start(self.btnf, False, False, 5)
+        self.btnf.set_tooltip_text(_("Show in folder"))
+        ## clear button
+        self.btn = gtk.Button()
+        image = gtk.Image()
+        image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_SMALL_TOOLBAR)
+        self.btn.add(image)
+        btnbox.pack_start(self.btn, False, False, 5)
+        self.btn.set_tooltip_text(_("Remove"))
+        ## convert button
+        self.btn_conv = gtk.Button()
+        if self.gui.search_engine.engine_type == "video":
+            image = gtk.Image()
+            image.set_from_stock(gtk.STOCK_CONVERT, gtk.ICON_SIZE_SMALL_TOOLBAR)
+            self.btn_conv.add(image)
+            btnbox.pack_start(self.btn_conv, False, False, 5)
+            self.btn_conv.set_tooltip_text(_("Convert to mp3"))
+            ## spinner
+            self.throbber = gtk.Image()
+            self.throbber.set_from_file(self.gui.img_path+'/throbber.png')
+            btnbox.pack_start(self.throbber, False, False, 5)
+        
+        vbox.pack_start(btnbox, False, False, 0)
+        vbox.pack_end(self.pbar, False, False, 5)
+        box.pack_start(vbox, False, False, 5)
+        
+        box.show_all()
+        self.btnf.hide()
+        self.convert_check = False
+        if self.gui.search_engine.engine_type == "video":
+            self.btn_conv.hide()
+            self.throbber.hide()
+            self.convert_check = True
+            self.btn_conv.connect('clicked', self.gui.extract_audio,self.target,self.btn_conv,self.throbber)
+        self.btn.hide()
+        self.btnf.connect('clicked', self.gui.show_folder, self.gui.down_dir)
+        self.btn.connect('clicked', self.remove_download)
         self.btnstop.connect('clicked', self.cancel)
         self.btnpause.connect('clicked', self.pause)
+        gobject.idle_add(self.pbar.set_text,_("Waiting..."))
+        
         self.createdir = False
         self.paused = False
         self.canceled = False
         self.localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
         
+        ## add thread to gui download pool
+        self.gui.download_pool.append(self)
+    
     def download(self, url, destination):
         resume = False
         self.paused = False
-        req = urllib2.Request(url, headers = self.localheaders)
-        response = urllib2.urlopen(req)
+        response = None
+        if not self.data:
+            req = urllib2.Request(url, headers = self.localheaders)
+            response = urllib2.urlopen(req)
+        else:
+            response = self.data
         headers = response.info()
+        print headers
         if os.path.isfile(self.target) and float(headers['Content-Length']) == float(os.stat(self.target)[6]):
             os.unlink(self.target)
             self.check_target_file(self.temp_file)
@@ -388,17 +464,22 @@ class FileDownloader(threading.Thread):
                 current_bytes = 0
             while True:
                 try:
+                    if self.canceled:
+                        break
+                        f.close()
+                        response.close()
+                        break
                     if self._stopevent.isSet():
                         gobject.idle_add(self.pbar.set_text,_("download stopped..."))
                         break
                     read_start = time.time()
                     if not self.paused:
-                        bytes = response.read(1024000)
-                        current_bytes += 1024000
+                        bytes = response.read(102400)
+                        current_bytes += 102400
                         time_diff = time.time() - read_start
                         if time_diff == 0:
                             time_diff = 1
-                        troughput = round((float(1024000/time_diff)/1024)/1024*1024,2)
+                        troughput = round((float(102400/time_diff)/1024)/1024*1024,2)
                         procents = int((float(current_bytes)/float(headers['Content-Length']))*100)
                         length = round((float(int(headers['Content-Length'])/1024))/1024,2)
                         current = round((float(current_bytes/1024))/1024,2)
@@ -430,7 +511,11 @@ class FileDownloader(threading.Thread):
         response.close()
         return True
     
-        
+    def remove_download(self, widget):
+        ch = widget.parent
+        ru = ch.parent.parent
+        gobject.idle_add(ru.parent.remove,ru)    
+    
     def run(self):
         gobject.idle_add(self.pbar.set_text,_("Starting download..."))
         while not self._stopevent.isSet():
@@ -445,7 +530,7 @@ class FileDownloader(threading.Thread):
                 #response.close()
                 self.download(self.url, self.temp_file)
                 gobject.idle_add(self.btnf.show)
-                if self.convert_check == 'True' and not self.canceled:
+                if self.convert_check and not self.canceled:
                     gobject.idle_add(self.btn_conv.show)
                 gobject.idle_add(self.btn.show)
                 gobject.idle_add(self.btnstop.hide)
@@ -453,6 +538,9 @@ class FileDownloader(threading.Thread):
                 self.decrease_down_count()
                 if self.canceled:
                     gobject.idle_add(self.pbar.set_text,_("Download canceled..."))
+                    time.sleep(2)
+                    os.remove(self.temp_file)
+                    os.remove(self.conf_temp_file)
                 else:
                     self._stopevent.set()
                     gobject.idle_add(self.pbar.set_text,_("Download complete"))
@@ -479,9 +567,7 @@ class FileDownloader(threading.Thread):
         self.canceled = True
         gobject.idle_add(self.pbar.set_text,_("Cancel downloading..."))
         self._stopevent.set()
-        self.decrease_down_count()
-        os.unlink(self.temp_file)
-        os.unlink(self.conf_temp_file)
+        gobject.idle_add(self.decrease_down_count)
         
     def stop(self,widget=None):
         self._stopevent.set()
