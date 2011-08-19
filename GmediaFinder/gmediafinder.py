@@ -373,7 +373,7 @@ class GsongFinder(object):
         if systray == 'True':
             self.__create_trayicon()
         ## load download to resume
-        print self.search_engine.engine_type
+        #print self.search_engine.engine_type
         self.resume_downloads()
             
         ## start main loop
@@ -746,7 +746,7 @@ class GsongFinder(object):
                         )
 
     def start_stop(self,widget=None):
-        url = self.media_link
+        url = self.active_link
         if self.play and url:
             if not self.is_playing:
                 return self.start_play(url)
@@ -756,6 +756,11 @@ class GsongFinder(object):
 
     def start_play(self,url):
 		self.active_link = url
+		self.play = True
+		self.is_playing = True
+		self.is_paused = False
+		self.duration = None
+		self.file_tags = {}
 		#if not sys.platform == "win32":
 			#if not self.vis_selector.getSelectedIndex() == 0 and not self.search_engine.engine_type == "video":
 				#self.player.set_property('flags', "Render visualisation when no video is present")
@@ -773,11 +778,6 @@ class GsongFinder(object):
 		self.movie_window.queue_draw()
 		self.player.set_state(gst.STATE_PLAYING)
 		self.play_thread_id = thread.start_new_thread(self.play_thread, ())
-		self.is_playing = True
-		self.is_paused = False
-		self.duration = None
-		self.file_tags = {}
-		self.play = True
 
     def stop_play(self,widget=None):
         self.player.set_state(gst.STATE_NULL)
@@ -969,6 +969,7 @@ class GsongFinder(object):
 			self.play_options = "continue"
 		
     def check_play_options(self):
+		self.stop_play()
 		path = self.model.get_path(self.selected_iter)
 		model = None
 		treeview = None
@@ -1222,20 +1223,18 @@ class GsongFinder(object):
 		download.start()
         
     def resume_downloads(self):
-        for media in os.listdir(self.down_dir):
-            print media
-            try:
-                if '.conf' in media:
-                    bname = re.sub('^.','',media).replace('.conf','')
-                    codec = '.'+bname.split('.').pop(-1)
-                    name = bname.replace('%s' % fmt,'')
-                    f = open(self.down_dir+'/.'+bname+'.conf')
-                    link = f.read()
-                    f.close()
-                    print link, name, fmt
-                    self.download_file(None,link, name, codec)
-            except:
-                continue
+		for media in os.listdir(self.down_dir):
+			try:
+				if '.conf' in media:
+					bname = re.sub('^.','',media).replace('.conf','')
+					codec = '.'+bname.split('.').pop(-1)
+					name = bname.replace('%s' % codec,'')
+					f = open(self.down_dir+'/.'+bname+'.conf')
+					link = f.read()
+					f.close()
+					self.download_file(None,link, name, codec)
+			except:
+			    continue
     
     def bus_message_tag(self, bus, message):
 		codec = None

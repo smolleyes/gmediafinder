@@ -16,28 +16,26 @@ class Engines(object):
         self.gui = gui
         self.engines_list = []
         self.local_engines_list = []
+        self.engines_path = config.engines_path
         self.load_engines()
-        eng_path=""
     
     def load_engines(self):
         # local engines
         self.local_engines_list = []
-        eng_path=""
         if sys.platform == "win32" and '.exe' in config.exec_path:
-            p = re.search('(.*)\gmediafinder.exe',config.exec_path).group(1)
-            eng_path = p+'data\engines'
-        elif sys.platform == "win32" and not '.exe' in config.exec_path:
-            eng_path = config.exec_path+'\lib\engines'
-        else:
-            eng_path = config.exec_path+'/lib/engines'
-        for engine in os.listdir(eng_path):
-            if os.path.isdir(os.path.join(eng_path, engine)):
-                self.local_engines_list.append(engine)
+            p = re.search('(.*)\library.zip',config.exec_path).group(1)
+            self.engines_path.append(p+'data\engines')
+        elif sys.platform == "win32" and not 'zip' in config.exec_path:
+            self.engines_path.append(config.exec_path+'\lib\engines')
+        for path in self.engines_path:
+            for engine in os.listdir(path):
+                if os.path.isdir(os.path.join(path, engine)):
+                    self.local_engines_list.append(engine)
         # activated plugins list in the gmf config file
         self.load_plugins_conf()
         
     def init_engine(self,engine):
-        modstr = "lib.engines.%s.%s" % (engine,engine)
+        modstr = "%s.%s" % (engine,engine)
         module = __import__(modstr, globals(), locals(), ['*'])
         init = getattr(module, '%s' % engine)
         setattr(self, '%s' % engine, init(self.gui))

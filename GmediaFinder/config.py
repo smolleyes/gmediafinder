@@ -86,6 +86,18 @@ if not os.path.exists(settings_folder):
     os.close(fd)
 conf = ConfigObj(conf_file,write_empty_values=True)
 
+## modules paths
+engines_path = []
+engine_dir = os.path.join(exec_path,'lib/engines')
+alt_engine_dir = os.path.join(settings_folder,'plugins')
+if not os.path.exists(alt_engine_dir):
+	os.mkdir(alt_engine_dir)
+if sys.platform != 'win32':
+	sys.path.append(engine_dir)
+	engines_path.append(engine_dir)
+sys.path.append(alt_engine_dir)
+engines_path.append(alt_engine_dir)
+
 ## xml file for playlists
 playlists_xml = os.path.join(settings_folder,"playlists.xml")
 if not os.path.exists(playlists_xml):
