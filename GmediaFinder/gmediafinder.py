@@ -1176,11 +1176,11 @@ class GsongFinder(object):
     def show_mini_player(self):
         self.timer = 0
         if self.mini_player == True:
-            gobject.idle_add(self.control_box.hide)
-            gobject.idle_add(self.options_bar.hide)
+            self.control_box.hide()
+            self.options_bar.hide()
             self.mini_player = False
         else:
-            gobject.idle_add(self.control_box.show)
+            self.control_box.show()
             self.window.window.set_cursor(None)
             self.mini_player = True
 

@@ -332,7 +332,7 @@ class Youtube(object):
                 active = self.youtube_video_rate.get_active()
 
     def on_youtube_video_rate_changed(self,widget):
-        active = gobject.idle_add(self.youtube_video_rate.get_active)
+        active = self.youtube_video_rate.get_active()
         if self.gui.is_playing:
             self.gui.stop_play()
             try:
