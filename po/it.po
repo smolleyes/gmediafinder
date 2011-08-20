@@ -9,7 +9,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-17 21:55+0200\n"
+"POT-Creation-Date: 2011-08-20 13:01+0200\n"
 "PO-Revision-Date: 2011-07-19 22:37+0000\n"
 "Last-Translator: bersil <bmsavone@gmail.com>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -416,54 +416,68 @@ msgid "Remaining : %(min)02d:%(sec)02d"
 msgstr "Rimanente : %(min)02d:%(sec)02d"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:356
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:443
 msgid "File is here but seems to be incomplete!"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:360
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:447
 msgid "Range request supported, trying to resume..."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:371
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:458
 msgid "Range request not supported, redownloading file"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:392
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:483
 #, fuzzy
 msgid "download stopped..."
 msgstr "Scaricamento completato"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:406
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:497
 #, python-format
 msgid "%3d%% %s of %s Mb at %s KB/s"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:410
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:458
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:501
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:546
 msgid "Download complete"
 msgstr "Scaricamento completato"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:435
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:421
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:532
 msgid "Starting download..."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:455
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:538
 #, fuzzy
 msgid "Download canceled..."
 msgstr "Scaricamento completato"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:461
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:556
 msgid "Failed..."
 msgstr "Fallito ..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:480
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:575
 msgid "Cancel downloading..."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:492
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:586
 msgid "download paused..."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:500
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:594
 msgid "Resuming download..."
 msgstr ""
 
@@ -492,62 +506,80 @@ msgid "All videos"
 msgstr "Tutti i video "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:578
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:579
 msgid "Please select a search engine..."
 msgstr "Si prega di selezionare un motore di ricerca..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:582
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:583
 msgid "Please enter an artist/album or song name..."
 msgstr "Si prega di inserire un artista / album o titolo della canzone..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:585
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:586
 msgid "Please select an engine..."
 msgstr "Si prega di selezionare un motore di ricerca..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:753
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:754
 msgid "Stopped"
 msgstr "Fermatto"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:793
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:892
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:794
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:893
 msgid "Bitrate:"
 msgstr "Bitrate: "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:794
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:891
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:795
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:892
 msgid "Encoding:"
 msgstr "Encoding: "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:795
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:893
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:796
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:894
 msgid "Playing:"
 msgstr "Riproducendo:"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:884
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:885
 msgid "Buffering :"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1259
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:356
 msgid "Pause/Resume download"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1266
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:363
 msgid "Stop Downloading"
 msgstr "Arresta il download"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1274
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:371
 msgid "Show in folder"
 msgstr "Mostra nella cartella "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1281
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:378
 msgid "Remove"
 msgstr "Elimina"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1289
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:386
 msgid "Convert to mp3"
 msgstr "Convertire in mp3"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1659
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1729
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1580
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1650
 #, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr "Ricerca per %(query)s con %(engine)s (page: %(page)s)"
@@ -786,6 +818,21 @@ msgstr ""
 msgid "%s: No more results for %s..."
 msgstr "%s: Non ci sono altri risultati per for %s..."
 
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:409
+#, fuzzy
+msgid "Waiting..."
+msgstr "Valutazione"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:428
+#, fuzzy
+msgid "Sending download request..."
+msgstr "Scaricamento completato"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:544
+#, fuzzy
+msgid "Download error..."
+msgstr "Scaricamento completato"
+
 #~ msgid "640x320"
 #~ msgstr "640x320"
 
@@ -794,9 +841,6 @@ msgstr "%s: Non ci sono altri risultati per for %s..."
 
 #~ msgid "Relevance"
 #~ msgstr "R"
-
-#~ msgid "Rating"
-#~ msgstr "Valutazione"
 
 #~ msgid "Added date"
 #~ msgstr "A"

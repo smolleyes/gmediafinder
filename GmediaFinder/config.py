@@ -7,7 +7,7 @@ from Translation import Translation
 from xml.dom import minidom
 from xml.dom.minidom import Document
 
-VERSION = "0.9.8"
+VERSION = "0.9.8.1"
 APP_NAME = "gmediafinder"
 exec_path =  os.path.dirname(os.path.abspath(__file__))
 
