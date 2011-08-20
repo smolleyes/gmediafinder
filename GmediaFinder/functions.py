@@ -410,6 +410,7 @@ class FileDownloader(threading.Thread):
         
         self.createdir = False
         self.paused = False
+        self.stopped = False
         self.canceled = False
         self.localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
         
@@ -427,12 +428,14 @@ class FileDownloader(threading.Thread):
                 gobject.idle_add(self.pbar.set_text,_("Sending download request..."))
                 response = urllib2.urlopen(req, timeout=self.TIMEOUT)
             except :
-                return self.stop()
+                return self.cancel()
         else:
             response = self.data
         headers = response.info()
-        print dir(response)
-        print headers
+        if not headers.has_key('Content-Length'):
+            print "content_length not available in headers..."
+            return self.cancel()
+        self.increase_down_count()
         if os.path.isfile(self.target) and float(headers['Content-Length']) == float(os.stat(self.target)[6]):
             os.unlink(self.target)
             self.check_target_file(self.temp_file)
@@ -525,8 +528,6 @@ class FileDownloader(threading.Thread):
     
     def run(self):
         while not self._stopevent.isSet():
-            self.gui.active_downloads += 1
-            gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
             ## download...
             gobject.idle_add(self.pbar.set_text,_("Starting download..."))
             try:
@@ -545,12 +546,12 @@ class FileDownloader(threading.Thread):
                         gobject.idle_add(self.pbar.set_text,_("Download complete"))
                         if self.convert_check:
                             gobject.idle_add(self.btn_conv.show)
-                        self.stop()
                 gobject.idle_add(self.btnf.show)
                 gobject.idle_add(self.btn.show)
                 gobject.idle_add(self.btnstop.hide)
                 gobject.idle_add(self.btnpause.hide)
                 gobject.idle_add(self.pbar.set_fraction,100/100.0)
+                self.stop()
             except KeyboardInterrupt, errmsg:
                 gobject.idle_add(self.pbar.set_text,_("Failed..."))
                 gobject.idle_add(self.btn.show)
@@ -601,7 +602,6 @@ class FileDownloader(threading.Thread):
             gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
             
     def increase_down_count(self):
-        if self.gui.active_downloads > 0:
-            self.gui.active_downloads += 1
-            gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
+        self.gui.active_downloads += 1
+        gobject.idle_add(self.gui.active_down_label.set_text,str(self.gui.active_downloads))
     
