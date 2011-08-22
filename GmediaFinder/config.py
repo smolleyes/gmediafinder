@@ -6,6 +6,7 @@ from configobj import ConfigObj
 from Translation import Translation
 from xml.dom import minidom
 from xml.dom.minidom import Document
+import re
 
 VERSION = "0.9.8.1"
 APP_NAME = "gmediafinder"
@@ -24,12 +25,13 @@ elif ('/usr' in exec_path):
 else:
     data_path =  os.path.join(exec_path,"../data")
 
-if sys.platform == "win32" and not ('config.py' in os.listdir(os.path.abspath('.'))):
-    data_path= "data"
-    rep_trad = "po"
 if sys.platform == "win32" and ('config.py' in os.listdir(os.path.abspath('.'))):
     rep_trad = os.path.join(os.path.abspath('..'),'po')
     data_path= os.path.join(os.path.abspath('..'),'data')
+if sys.platform == "win32" and 'library.zip' in exec_path:
+    p = re.search('(.*)\library.zip',exec_path).group(1)
+    rep_trad = os.path.join(os.path.abspath(p),'po')
+    data_path= os.path.join(os.path.abspath(p),'data')
 
 img_path = os.path.join(data_path,"img")
 glade_path = os.path.join(data_path,"glade")

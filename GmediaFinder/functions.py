@@ -537,8 +537,10 @@ class FileDownloader(threading.Thread):
                 if self.canceled:
                     gobject.idle_add(self.pbar.set_text,_("Download canceled..."))
                     time.sleep(2)
-                    os.remove(self.temp_file)
-                    os.remove(self.conf_temp_file)
+                    if os.path.exists(self.temp_file):
+                        os.remove(self.temp_file)
+                    if os.path.exists(self.conf_temp_file):
+                        os.remove(self.conf_temp_file)
                 else:
                     if self.stopped:
                         gobject.idle_add(self.pbar.set_text,_("Download error..."))

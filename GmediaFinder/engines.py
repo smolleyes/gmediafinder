@@ -22,11 +22,12 @@ class Engines(object):
     def load_engines(self):
         # local engines
         self.local_engines_list = []
-        if sys.platform == "win32" and '.exe' in config.exec_path:
-            p = re.search('(.*)\library.zip',config.exec_path).group(1)
-            self.engines_path.append(p+'data\engines')
+        if sys.platform == "win32" and 'zip' in config.exec_path:
+            self.engines_path.append(config.data_path+'\lib\engines')
+            sys.path.append(config.data_path+'\lib\engines')
         elif sys.platform == "win32" and not 'zip' in config.exec_path:
             self.engines_path.append(config.exec_path+'\lib\engines')
+            sys.path.append(config.exec_path+'\lib\engines')
         for path in self.engines_path:
             for engine in os.listdir(path):
                 if os.path.isdir(os.path.join(path, engine)):

@@ -14,6 +14,7 @@ import pygtk
 pygtk.require('2.0')
 import gtk
 import gtk.glade
+import gtk.gdk
 import urllib
 import pygst
 pygst.require("0.10")
@@ -21,6 +22,12 @@ import gst
 import mechanize
 import gdata
 import math
+## for win32...py2exe
+import json
+import gdata.youtube.service as yt_service
+import gettext
+import time
+import locale
 
 if sys.platform == "win32":
     import win32api
@@ -839,6 +846,11 @@ class GsongFinder(object):
         pagep_icon = default_icon_theme.lookup_icon("previous",24,gtk.ICON_LOOKUP_USE_BUILTIN)
         if pagep_icon:
             self.page_prev_icon = pagep_icon.load_icon()
+            
+        fullscreen_pix = default_icon_theme.lookup_icon("gtk-fullscreen",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        self.fullscreen_pix = fullscreen_pix.load_icon()
+        leave_fullscreen_pix = default_icon_theme.lookup_icon("gtk-leave-fullscreen",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        self.leave_fullscreen_pix = leave_fullscreen_pix.load_icon()
 
         ## play
         self.play_btn = self.gladeGui.get_widget("play_btn")
@@ -871,6 +883,12 @@ class GsongFinder(object):
         self.donate_pixb = self.gladeGui.get_widget("donate_img")
         pb = gtk.gdk.pixbuf_new_from_file(img_path+"/donate.gif")
         self.donate_pixb.set_from_pixbuf(pb)
+        ## fullscreen btn
+        self.fullscreen_btn = self.gladeGui.get_widget("fullscreen_btn")
+        self.fullscreen_btn_pixb = self.gladeGui.get_widget("fullscreen_pix")
+        self.fullscreen_btn_pixb.set_from_pixbuf(self.fullscreen_pix)
+        self.fullscreen_btn.connect('clicked', self.set_fullscreen)
+        self.fullscreen_btn.set_tooltip_text(_("enter fullscreen"))
 
         ## hide some icons by default
         self.changepage_btn.set_sensitive(0)
@@ -1063,11 +1081,14 @@ class GsongFinder(object):
         ## without mouse movements
         self.timer += 1
         if self.fullscreen == True and self.mini_player == True and self.timer > 5 :
-            pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
-            color = gtk.gdk.Color()
-            cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
-            self.window.window.set_cursor(cursor)
-            self.show_mini_player()
+			pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
+			color = gtk.gdk.Color()
+			cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
+			try:
+				self.window.window.set_cursor(cursor)
+			except:
+				return
+			self.show_mini_player()
         
         ## disable screensaver
         if self.fullscreen == True and self.mini_player == False and self.timer > 55:
@@ -1121,28 +1142,36 @@ class GsongFinder(object):
             return self.set_fullscreen()
 
     def set_fullscreen(self,widget=None):
-        self.timer = 0
-        if self.fullscreen :
-            self.fullscreen = False
-            gobject.idle_add(self.search_box.show)
-            gobject.idle_add(self.results_notebook.show)
-            gobject.idle_add(self.control_box.show)
-            gobject.idle_add(self.options_bar.show)
-            self.window.window.set_cursor(None)
-            gobject.idle_add(self.window.window.unfullscreen)
-            gobject.idle_add(self.window.set_position,gtk.WIN_POS_CENTER)
-        else:
-            gobject.idle_add(self.search_box.hide)
-            gobject.idle_add(self.results_notebook.hide)
-            gobject.idle_add(self.options_bar.hide)
-            pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
-            color = gtk.gdk.Color()
-            cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
-            self.window.window.set_cursor(cursor)
-            gobject.idle_add(self.control_box.hide)
-            gobject.idle_add(self.window.window.fullscreen)
-            self.fullscreen = True
-            self.mini_player = False
+		self.timer = 0
+		if self.fullscreen :
+			gobject.idle_add(self.search_box.show)
+			gobject.idle_add(self.results_notebook.show)
+			gobject.idle_add(self.control_box.show)
+			gobject.idle_add(self.options_bar.show)
+			self.window.window.set_cursor(None)
+			gobject.idle_add(self.window.window.unfullscreen)
+			gobject.idle_add(self.window.set_position,gtk.WIN_POS_CENTER)
+			if sys.platform == 'win32':
+				self.window.set_decorated(True)
+			self.fullscreen = False
+			gobject.idle_add(self.fullscreen_btn_pixb.set_from_pixbuf,self.fullscreen_pix)
+			gobject.idle_add(self.fullscreen_btn_pixb.set_tooltip_text,_('enter fullscreen'))
+		else:
+			gobject.idle_add(self.search_box.hide)
+			gobject.idle_add(self.results_notebook.hide)
+			gobject.idle_add(self.options_bar.hide)
+			pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
+			color = gtk.gdk.Color()
+			cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
+			self.window.window.set_cursor(cursor)
+			gobject.idle_add(self.control_box.hide)
+			gobject.idle_add(self.window.window.fullscreen)
+			if sys.platform == 'win32':
+				self.window.set_decorated(False)
+			self.fullscreen = True
+			self.mini_player = False
+			gobject.idle_add(self.fullscreen_btn_pixb.set_from_pixbuf,self.leave_fullscreen_pix)
+			gobject.idle_add(self.fullscreen_btn_pixb.set_tooltip_text,_('leave fullscreen'))
 
     def on_drawingarea_realized(self, sender):
         if sys.platform == "win32":
@@ -1180,9 +1209,12 @@ class GsongFinder(object):
             self.options_bar.hide()
             self.mini_player = False
         else:
-            self.control_box.show()
-            self.window.window.set_cursor(None)
-            self.mini_player = True
+			try:
+				self.window.window.set_cursor(None)
+			except:
+				return
+			self.control_box.show()
+			self.mini_player = True
 
     def onKeyPress(self, widget, event):
         if self.search_entry.is_focus():

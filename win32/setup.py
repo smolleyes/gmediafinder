@@ -7,8 +7,9 @@ from os import path
 
 import pygtk
 pygtk.require('2.0')
-import gtk, sys
+import gtk, sys, zlib
 import shutil
+import mechanize
 
 import pygst
 pygst.require('0.10')
@@ -33,8 +34,8 @@ except ImportError:
     pass
 
 mfcdir = 'C:\\Python26\\Lib\\site-packages\\pythonwin'
-gstPath = "C:\\Program Files (x86)\\OSSBuild\\GStreamer\\v0.10.7"
-
+gstPath = "C:\\Program Files\\OSSBuild\\GStreamer\\v0.10.7"
+mfcfiles = [path.join(mfcdir, i) for i in ["mfc90.dll","mfc90u.dll" ,"mfcm90.dll","mfcm90u.dll","Microsoft.VC90.MFC.manifest"]]
 print ('Deploying GStreamer')
 # Copy gstreamer binaries to the dist folder
 for name in os.listdir(os.path.join(gstPath, 'bin')):
@@ -51,21 +52,19 @@ for file in filter(lambda f: f.endswith('.dll'),
 if not os.path.exists(os.path.join(os.getcwd(), 'dist\\lib\\gstreamer-0.10')):
     shutil.copytree(os.path.join(gstPath, 'lib', 'gstreamer-0.10'),
                     os.path.join(os.path.join (os.getcwd(), 'dist\\lib'), 'gstreamer-0.10'))
-#shutil.copyfile(os.path.join (os.getcwd(), 'dist\\bin\\libxml2-2.dll'), 'dist/libxml2-2.dll')
 
 setup(
     name = 'gmediafinder',
-    packages = ['GmediaFinder'],
+    packages = ['GmediaFinder','GmediaFinder.lib','GmediaFinder.lib.engines'],
     description = 'Stream and download youtube or mp3 search engines files',
-    version = '1.0',
-    zipfile = None,
-    windows = ['GmediaFinder/gmediafinder.py'],
+    version = '0.9.8.1',
+    #zipfile = None,
+    windows = ['GmediaFinder\gmediafinder.py'],
 
     options = {
                   'py2exe': {
                       'unbuffered': True,
-                      'optimize': 2,
-                      'packages':'encodings',
+                      'optimize' : 0,
                       'includes': 'cairo, pango, pangocairo, atk, gobject, gio, gst, gtk'
                   }
               },
