@@ -53,7 +53,7 @@
   </widget>
   <widget class="GtkWindow" id="main_window">
     <property name="can_focus">False</property>
-    <signal name="configure_event" handler="on_main_window_configure_event" swapped="no"/>
+    <signal name="configure_event" handler="on_main_window_configure_event" />
     <child>
       <widget class="GtkVBox" id="vbox1">
         <property name="visible">True</property>
@@ -78,7 +78,7 @@
                     <property name="tooltip" translatable="yes">About</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
-                    <signal name="clicked" handler="on_about_menu_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_about_menu_clicked" />
                     <child>
                       <widget class="GtkHBox" id="hbox7">
                         <property name="visible">True</property>
@@ -113,7 +113,7 @@
                     <property name="tooltip" translatable="yes">Previous page</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
-                    <signal name="clicked" handler="on_pageback_btn_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_pageback_btn_clicked" />
                     <child>
                       <widget class="GtkImage" id="backpage_pixb">
                         <property name="visible">True</property>
@@ -137,7 +137,7 @@
                     <property name="tooltip" translatable="yes">Next page</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
-                    <signal name="clicked" handler="on_nextpage_btn_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_nextpage_btn_clicked" />
                     <child>
                       <widget class="GtkImage" id="nextpage_pixb">
                         <property name="visible">True</property>
@@ -161,7 +161,7 @@
                     <property name="tooltip" translatable="yes">Stop search</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
-                    <signal name="clicked" handler="on_stop_search_btn_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_stop_search_btn_clicked" />
                     <child>
                       <widget class="GtkImage" id="image5">
                         <property name="visible">True</property>
@@ -183,7 +183,7 @@
                     <property name="receives_default">True</property>
                     <property name="use_action_appearance">False</property>
                     <property name="relief">none</property>
-                    <signal name="clicked" handler="on_settings_menu_clicked" swapped="no"/>
+                    <signal name="clicked" handler="on_settings_menu_clicked" />
                     <child>
                       <widget class="GtkHBox" id="hbox8">
                         <property name="visible">True</property>
@@ -233,8 +233,8 @@
                         <property name="secondary_icon_tooltip_text" translatable="yes">Clean</property>
                         <property name="primary_icon_tooltip_markup" translatable="yes">Start search</property>
                         <property name="secondary_icon_tooltip_markup" translatable="yes">Clean</property>
-                        <signal name="activate" handler="on_search_entry_activate" swapped="no"/>
-                        <signal name="icon_press" handler="on_search_entry_icon_press" swapped="no"/>
+                        <signal name="activate" handler="on_search_entry_activate" />
+                        <signal name="icon_press" handler="on_search_entry_icon_press" />
                       </widget>
                       <packing>
                         <property name="expand">False</property>
@@ -622,7 +622,7 @@
                                         <property name="tooltip" translatable="yes">Play/Stop</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="relief">none</property>
-                                        <signal name="clicked" handler="on_play_btn_clicked" swapped="no"/>
+                                        <signal name="clicked" handler="on_play_btn_clicked" />
                                         <child>
                                           <widget class="GtkImage" id="play_btn_img">
                                             <property name="visible">True</property>
@@ -645,7 +645,7 @@
                                         <property name="tooltip" translatable="yes">Pause</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="relief">none</property>
-                                        <signal name="clicked" handler="on_pause_btn_clicked" swapped="no"/>
+                                        <signal name="clicked" handler="on_pause_btn_clicked" />
                                         <child>
                                           <widget class="GtkImage" id="pause_btn_img">
                                             <property name="visible">True</property>
@@ -668,7 +668,7 @@
                                         <property name="tooltip" translatable="yes">Shuffle</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="relief">none</property>
-                                        <signal name="toggled" handler="on_shuffle_btn_toggled" swapped="no"/>
+                                        <signal name="toggled" handler="on_shuffle_btn_toggled" />
                                         <child>
                                           <widget class="GtkImage" id="shuffle_btn_pixb">
                                             <property name="visible">True</property>
@@ -691,7 +691,7 @@
                                         <property name="tooltip" translatable="yes">Repeat</property>
                                         <property name="use_action_appearance">False</property>
                                         <property name="relief">none</property>
-                                        <signal name="toggled" handler="on_repeat_btn_toggled" swapped="no"/>
+                                        <signal name="toggled" handler="on_repeat_btn_toggled" />
                                         <child>
                                           <widget class="GtkImage" id="repeat_btn_pixb">
                                             <property name="visible">True</property>
@@ -712,7 +712,7 @@
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
                                         <property name="use_action_appearance">False</property>
-                                        <signal name="clicked" handler="on_down_btn_clicked" swapped="no"/>
+                                        <signal name="clicked" handler="on_down_btn_clicked" />
                                         <child>
                                           <widget class="GtkHBox" id="hbox23">
                                             <property name="visible">True</property>
@@ -766,7 +766,7 @@
                                     <property name="receives_default">True</property>
                                     <property name="tooltip" translatable="yes">Downloads manager</property>
                                     <property name="use_action_appearance">False</property>
-                                    <signal name="clicked" handler="on_down_menu_btn_clicked" swapped="no"/>
+                                    <signal name="clicked" handler="on_down_menu_btn_clicked" />
                                     <child>
                                       <widget class="GtkHBox" id="hbox6">
                                         <property name="visible">True</property>
@@ -950,7 +950,7 @@
 audio-volume-high
 audio-volume-low
 audio-volume-medium</property>
-                                    <signal name="value_changed" handler="on_vol_btn_value_changed" swapped="no"/>
+                                    <signal name="value_changed" handler="on_vol_btn_value_changed" />
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1032,7 +1032,7 @@ audio-volume-medium</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
                                         <property name="use_action_appearance">False</property>
-                                        <signal name="clicked" handler="on_backtohome_btn_clicked" swapped="no"/>
+                                        <signal name="clicked" handler="on_backtohome_btn_clicked" />
                                         <child>
                                           <widget class="GtkHBox" id="hbox5">
                                             <property name="visible">True</property>
@@ -1426,7 +1426,7 @@ audio-volume-medium</property>
                 <property name="receives_default">True</property>
                 <property name="use_action_appearance">False</property>
                 <property name="use_stock">True</property>
-                <signal name="delete_event" handler="gtk_false" swapped="no"/>
+                <signal name="delete_event" handler="gtk_false" />
               </widget>
               <packing>
                 <property name="expand">False</property>
@@ -1491,7 +1491,7 @@ audio-volume-medium</property>
                                 <property name="receives_default">False</property>
                                 <property name="use_action_appearance">False</property>
                                 <property name="draw_indicator">True</property>
-                                <signal name="toggled" handler="on_show_thumbs_opt_toggled" swapped="no"/>
+                                <signal name="toggled" handler="on_show_thumbs_opt_toggled" />
                               </widget>
                             </child>
                             <child>
@@ -1564,7 +1564,7 @@ audio-volume-medium</property>
                                             <property name="receives_default">False</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
-                                            <signal name="toggled" handler="on_res1_toggled" swapped="no"/>
+                                            <signal name="toggled" handler="on_res1_toggled" />
                                           </widget>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1582,7 +1582,7 @@ audio-volume-medium</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                             <property name="group">res1</property>
-                                            <signal name="toggled" handler="on_res2_toggled" swapped="no"/>
+                                            <signal name="toggled" handler="on_res2_toggled" />
                                           </widget>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1599,7 +1599,7 @@ audio-volume-medium</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                             <property name="group">res1</property>
-                                            <signal name="toggled" handler="on_res3_toggled" swapped="no"/>
+                                            <signal name="toggled" handler="on_res3_toggled" />
                                           </widget>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1616,7 +1616,7 @@ audio-volume-medium</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                             <property name="group">res1</property>
-                                            <signal name="toggled" handler="on_res4_toggled" swapped="no"/>
+                                            <signal name="toggled" handler="on_res4_toggled" />
                                           </widget>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1633,7 +1633,7 @@ audio-volume-medium</property>
                                             <property name="use_action_appearance">False</property>
                                             <property name="draw_indicator">True</property>
                                             <property name="group">res1</property>
-                                            <signal name="toggled" handler="on_res5_toggled" swapped="no"/>
+                                            <signal name="toggled" handler="on_res5_toggled" />
                                           </widget>
                                           <packing>
                                             <property name="expand">True</property>
@@ -1696,7 +1696,7 @@ jakdaw
 infinite
 corona
 bumpscope</property>
-                                    <signal name="changed" handler="on_vis_chooser_changed" swapped="no"/>
+                                    <signal name="changed" handler="on_vis_chooser_changed" />
                                     <child internal-child="entry">
                                       <widget class="GtkEntry" id="comboboxentry-entry5">
                                         <property name="can_focus">False</property>
@@ -1747,7 +1747,7 @@ bumpscope</property>
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
-                                    <signal name="toggled" handler="on_downloads_enabled_toggled" swapped="no"/>
+                                    <signal name="toggled" handler="on_downloads_enabled_toggled" />
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1763,7 +1763,7 @@ bumpscope</property>
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
-                                    <signal name="toggled" handler="on_convert_enabled_toggled" swapped="no"/>
+                                    <signal name="toggled" handler="on_convert_enabled_toggled" />
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1779,7 +1779,7 @@ bumpscope</property>
                                     <property name="receives_default">False</property>
                                     <property name="use_action_appearance">False</property>
                                     <property name="draw_indicator">True</property>
-                                    <signal name="toggled" handler="on_systray_enabled_toggled" swapped="no"/>
+                                    <signal name="toggled" handler="on_systray_enabled_toggled" />
                                   </widget>
                                   <packing>
                                     <property name="expand">False</property>
@@ -1797,7 +1797,7 @@ bumpscope</property>
                                         <property name="can_focus">True</property>
                                         <property name="receives_default">True</property>
                                         <property name="use_action_appearance">False</property>
-                                        <signal name="clicked" handler="on_clear_history_btn_clicked" swapped="no"/>
+                                        <signal name="clicked" handler="on_clear_history_btn_clicked" />
                                         <child>
                                           <widget class="GtkHBox" id="hbox15">
                                             <property name="visible">True</property>

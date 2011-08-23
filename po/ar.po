@@ -7,7 +7,7 @@ msgid ""
 msgstr ""
 "Project-Id-Version: gmediafinder\n"
 "Report-Msgid-Bugs-To: \n"
-"POT-Creation-Date: 2011-08-20 13:01+0200\n"
+"POT-Creation-Date: 2011-08-22 22:42+0200\n"
 "PO-Revision-Date: 2011-08-04 19:29+0000\n"
 "Last-Translator: paokouran <s.lagui@free.fr>\n"
 "Language-Team: LANGUAGE <LL@li.org>\n"
@@ -133,91 +133,114 @@ msgstr "تحميل"
 msgid "Downloads manager"
 msgstr "مدير التحميلات"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:984
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:963
 msgid "page 1"
 msgstr "الصفحة 1"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1056
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1035
 msgid "Home"
 msgstr "المنزل"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1086
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1065
 msgid "Download path :     "
 msgstr "مسار التحميل:     "
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1104
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1083
 msgid "Choose a folder"
 msgstr "حدد مجلدا"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1135
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1114
 msgid "<b>Downloads  : </b>"
 msgstr "<b>تحميلات  : </b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1151
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1130
 msgid "page 2"
 msgstr "الصفحة 2"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1193
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1172
 msgid "New Playlist"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1252
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1231
 msgid "Enter a name for the new playlist"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1283
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1262
 msgid "Playlist select"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1346
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1325
 msgid "Select a playlist"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1359
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1338
 msgid "Create new playlist"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1406
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1880
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1385
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1859
 msgid "Options"
 msgstr "خيارات"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1488
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1467
 msgid "Show preview images"
 msgstr "عرض صور الإظهار"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1501
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1480
 msgid "<b>Playlist options : </b>"
 msgstr "<b>خيارات قائمة التشغيل : </b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1534
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1513
 msgid "Max resolution : "
 msgstr "الحد الأقصى للدقة: "
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1561
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1540
 msgid "320x240"
 msgstr "320x240"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1578
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1557
 msgid "640x360"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1595
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1574
 msgid "854x480"
 msgstr "854x480"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1612
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1591
 msgid "1280x720"
 msgstr "1280x720"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1629
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1608
 msgid "1920x1080"
 msgstr "1920x1080"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1659
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1638
 msgid "<b>Youtube video options : </b>"
 msgstr "<b>خيارات فيديوهات Youtube : </b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1689
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1668
 msgid ""
 "disabled\n"
@@ -242,38 +265,47 @@ msgstr ""
 "corona\n"
 "bumpscope"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1719
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1698
 msgid "<b>Visualisations :</b>"
 msgstr "<b>مرئيات :</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1744
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1723
 msgid "Enable downloads"
 msgstr "تفعيل التحميلات"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1760
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1739
 msgid "Enable audio extraction"
 msgstr "تفعيل إستخراج الصوت"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1776
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1755
 msgid "Enable systray"
 msgstr "تفعيل تصغير إلى الشريط"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1821
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1800
 msgid "Clear history"
 msgstr "مسح التاريخ"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1856
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1835
 msgid "<b>Extras options : </b>"
 msgstr "<b>خيارات إضافية : </b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1936
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1915
 msgid "<b>Select your engines : </b>"
 msgstr "<b>حدد الأداتك : </b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1961
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1940
 msgid "Engines"
 msgstr "أدوات"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1993
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1972
 msgid ""
 "Play/pause : Space\n"
@@ -288,14 +320,17 @@ msgstr ""
 "إدخال صندوق البحث: BackSpace\n"
 "عرض التحميلات: d"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2006
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:1985
 msgid "<b>Shortcuts:</b>"
 msgstr "<b>إختصارات:</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2024
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2003
 msgid "Infos"
 msgstr "معلومات"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2067
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2046
 msgid ""
 "You like gmediafinder and want to support\n"
@@ -304,28 +339,34 @@ msgid ""
 "thanks!"
 msgstr ""
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2109
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2088
 #, fuzzy
 msgid "<b>Support : </b>"
 msgstr "<b>إختصارات:</b>"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2127
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2106
 #, fuzzy
 msgid "Support"
 msgstr "رياضة"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2199
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2178
 msgid "I refuse"
 msgstr "أرفض"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2242
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2221
 msgid "I accept"
 msgstr "أوافق"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2289
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2268
 msgid "  Disclaimer, Please read:"
 msgstr "إخلاء ، الرجاء قراءة :"
 
+#: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2320
 #: /home/smo/Documents/gmediafinder/data/glade/mainGui.glade:2299
 msgid ""
 "The following are terms and conditions for use of gmediafinder including all "
@@ -443,6 +484,7 @@ msgstr ""
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:458
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:501
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:546
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:548
 msgid "Download complete"
 msgstr "تم إنهاء التحميل"
 
@@ -459,65 +501,79 @@ msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:461
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:556
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:558
 msgid "Failed..."
 msgstr "فشل..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:480
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:575
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:577
 msgid "Cancel downloading..."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:492
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:586
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:588
 msgid "download paused..."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:500
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:594
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:596
 msgid "Resuming download..."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:256
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:263
 msgid " Results : "
 msgstr " نتائج: "
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:287
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:294
 msgid "Copy file link"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:289
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:296
 msgid "Add to Library"
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:343
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:350
 msgid "All"
 msgstr "الكل"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:344
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:351
 msgid "All audios"
 msgstr "كل الصوتيات"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:345
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:352
 msgid "All videos"
 msgstr "كل الفيديوهات"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:578
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:579
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:586
 msgid "Please select a search engine..."
 msgstr "الرجاء تحديد أداة البحث..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:582
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:583
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:590
 msgid "Please enter an artist/album or song name..."
 msgstr "الرجاء إدخال فنان/ألبوم أو إسم المقطع..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:585
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:586
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:593
 msgid "Please select an engine..."
 msgstr "الرجاء تحديد أداة..."
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:753
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:754
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:761
 msgid "Stopped"
 msgstr "موقف"
 
@@ -525,6 +581,8 @@ msgstr "موقف"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:892
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:794
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:893
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:801
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:911
 msgid "Bitrate:"
 msgstr "معدل البت:"
 
@@ -532,6 +590,8 @@ msgstr "معدل البت:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:891
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:795
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:892
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:802
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:910
 msgid "Encoding:"
 msgstr "ترميز:"
 
@@ -539,11 +599,14 @@ msgstr "ترميز:"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:893
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:796
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:894
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:803
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:912
 msgid "Playing:"
 msgstr "تشغيل:"
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:884
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:885
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:903
 msgid "Buffering :"
 msgstr ""
 
@@ -576,6 +639,8 @@ msgstr "تحويل إلى mp3"
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1729
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1580
 #: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1650
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1612
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1682
 #, python-format
 msgid "Searching for %(query)s with %(engine)s (page: %(page)s)"
 msgstr "البحث عن %(query)s بـ %(engine)s (صفحة: %(page)s)"
@@ -824,9 +889,19 @@ msgid "Sending download request..."
 msgstr ""
 
 #: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:544
+#: /home/smo/Documents/gmediafinder/GmediaFinder/functions.py:546
 #, fuzzy
 msgid "Download error..."
 msgstr "مدير التحميلات"
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:891
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1158
+msgid "enter fullscreen"
+msgstr ""
+
+#: /home/smo/Documents/gmediafinder/GmediaFinder/gmediafinder.py:1174
+msgid "leave fullscreen"
+msgstr ""
 
 #~ msgid "640x320"
 #~ msgstr "640x320"
