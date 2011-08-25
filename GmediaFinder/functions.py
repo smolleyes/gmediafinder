@@ -504,7 +504,7 @@ class FileDownloader(threading.Thread):
                         try:
                             bytes = self.download_response.read(102400)
                         except:
-                            pass
+                            break
                         current_bytes += 102400
                         time_diff = time.time() - read_start
                         if time_diff == 0:
@@ -520,7 +520,10 @@ class FileDownloader(threading.Thread):
                         elif procents == 100:
                             gobject.idle_add(self.pbar.set_text,_("Download complete"))
                             gobject.idle_add(self.pbar.set_fraction,100/100.0)
-                        self.target_opener.write(bytes)
+                        try:
+                            self.target_opener.write(bytes)
+                        except:
+                            break
                     else:
                         sleep(1)
                 except IOError, (errno, strerror):
