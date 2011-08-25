@@ -315,6 +315,8 @@ class GsongFinder(object):
         self.player.set_property("audio-sink", audiosink)
         self.player.set_property('video-sink', self.videosink)
         self.player.set_property('buffer-size', 1024000)
+        #GST_PLAY_FLAG_DOWNLOAD = 1
+        #self.player.set_property('flags',GST_PLAY_FLAG_DOWNLOAD)
         bus = self.player.get_bus()
         bus.add_signal_watch()
         bus.enable_sync_message_emission()
