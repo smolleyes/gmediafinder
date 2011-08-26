@@ -343,6 +343,21 @@ class FileDownloader(threading.Thread):
         self.temp_file = os.path.join(self.gui.down_dir,self.temp_name)
         self.conf_temp_name = '.'+self.decoded_name+'.conf'
         self.conf_temp_file = os.path.join(self.gui.down_dir,self.conf_temp_name)
+        
+        self.createdir = False
+        self.paused = False
+        self.stopped = False
+        self.canceled = False
+        self.failed= False
+        self.download_response = None
+        self.target_opener = None
+        self.localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
+        
+        ## add thread to gui download pool
+        self.gui.download_pool.append(self)
+    
+    def create_download_box(self):
+        self.engine = self.gui.search_engine
         # progress bar and buttons
         box = gtk.HBox(False, 5)
         vbox = gtk.VBox(False, 5)
@@ -389,7 +404,7 @@ class FileDownloader(threading.Thread):
         self.btn.set_tooltip_text(_("Remove"))
         ## convert button
         self.btn_conv = gtk.Button()
-        if self.gui.search_engine.engine_type == "video":
+        if self.engine.engine_type == "video":
             image = gtk.Image()
             image.set_from_stock(gtk.STOCK_CONVERT, gtk.ICON_SIZE_SMALL_TOOLBAR)
             self.btn_conv.add(image)
@@ -403,11 +418,11 @@ class FileDownloader(threading.Thread):
         vbox.pack_start(btnbox, False, False, 0)
         vbox.pack_end(self.pbar, False, False, 5)
         box.pack_start(vbox, False, False, 5)
-
+        
         gobject.idle_add(box.show_all)
         gobject.idle_add(self.btnf.hide)
         self.convert_check = False
-        if self.gui.search_engine.engine_type == "video":
+        if self.engine.engine_type == "video":
             gobject.idle_add(self.btn_conv.hide)
             gobject.idle_add(self.throbber.hide)
             self.convert_check = True
@@ -417,45 +432,31 @@ class FileDownloader(threading.Thread):
         self.btn.connect('clicked', self.remove_download)
         self.btnstop.connect('clicked', self.cancel)
         self.btnpause.connect('clicked', self.pause)
-        gobject.idle_add(self.pbar.set_text,_("Waiting..."))
-        
-        self.createdir = False
-        self.paused = False
-        self.stopped = False
-        self.canceled = False
-        self.failed= False
-        self.localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
-        
-        ## add thread to gui download pool
-        self.gui.download_pool.append(self)
     
     def download(self, url, destination):
+        self.url = url
+        self.target = destination
         gobject.idle_add(self.pbar.set_text,_("Starting download..."))
-        self.canceled = False
-        self.stopped = False
         resume = False
-        self.paused = False
-        self.failed = False
-        self.download_response = None
         if not self.data:
             try:
                 req = urllib2.Request(url, headers = self.localheaders)
                 gobject.idle_add(self.pbar.set_text,_("Sending download request..."))
                 self.download_response = urllib2.urlopen(req, timeout=self.TIMEOUT)
             except :
-                return self.cancel()
+                self.failed = True
+                return self.stop()
         else:
             self.download_response = self.data
         headers = self.download_response.info()
         if not headers.has_key('Content-Length'):
             print "content_length not available in headers..."
-            return self.cancel()
+            self.failed = True
+            return False
         ## response ok, start downloading checks
-        self.increase_down_count()
         if os.path.isfile(self.target) and float(headers['Content-Length']) == float(os.stat(self.target)[6]):
-            #os.unlink(self.target)
-            #self.check_target_file(self.temp_file)
-            gobject.idle_add(self.pbar.set_text,_("File already downloaded on disk..."))
+            self.download_finished()
+            return False
         elif os.path.isfile(self.temp_file):
             gobject.idle_add(self.pbar.set_text,_("File is here but seems to be incomplete!"))
             size_local = float(os.stat(self.temp_file)[6])
@@ -470,9 +471,11 @@ class FileDownloader(threading.Thread):
                 except:	
                     resume = False
                     self.temp_file += '.duplicate'
+                    return False
             else:
                 gobject.idle_add(self.pbar.set_text,_("Range request not supported, redownloading file"))
                 os.unlink(self.temp_file)
+                return False
         try:
             self.target_opener = open(self.temp_file, "ab")
         except IOError, errmsg:
@@ -482,7 +485,7 @@ class FileDownloader(threading.Thread):
                 print "%s" %(errmsg)
                 self.download_response.close()
                 return False
-    
+        self.increase_down_count()
         try:
             if resume:
                 current_bytes = size_local
@@ -531,14 +534,13 @@ class FileDownloader(threading.Thread):
                 except IOError, (errno, strerror):
                     print "I/O error(%s): %s" % (errno, strerror)
                     self.failed = True
+                    break
                 if bytes == "":
                     print "%s Finished" % (self.target)
                     ## clean conf file
-                    try:
-                        os.remove(self.conf_temp_file)
-                    	self.gui.search_engine.download_finished(url, self.target)
-                    except: 
-                        break
+                    os.remove(self.conf_temp_file)
+                    self.download_finished()
+                    break
             sys.stdout.write("\n")
         except KeyboardInterrupt, errmsg:
             print "KeyboardInterrupt Caught: %s" % (errmsg)
@@ -555,6 +557,7 @@ class FileDownloader(threading.Thread):
         gobject.idle_add(ru.parent.remove,ru)    
     
     def run(self):
+        self.create_download_box()
         while not self._stopevent.isSet():
             ## download...
             gobject.idle_add(self.pbar.set_text,_("Starting download..."))
@@ -562,21 +565,13 @@ class FileDownloader(threading.Thread):
                 start_time = time.time()
                 self.check_target_file(self.temp_file)
                 self.download(self.url, self.temp_file)
-                if self.canceled:
-                    gobject.idle_add(self.pbar.set_text,_("Download canceled..."))
-                elif self.failed:
+                if self.failed:
                     gobject.idle_add(self.pbar.set_text,_("Download error..."))
-                elif self.stopped:
-                    gobject.idle_add(self.pbar.set_text,_("Download stopped..."))
+                    os.remove(self.conf_temp_file)
+                elif self.canceled:
+                    gobject.idle_add(self.pbar.set_text,_("Download canceled..."))
                 else:
-                    gobject.idle_add(self.pbar.set_text,_("Download complete"))
-                    if self.convert_check:
-                        gobject.idle_add(self.btn_conv.show)
-                gobject.idle_add(self.btnf.show)
-                gobject.idle_add(self.btn.show)
-                gobject.idle_add(self.btnstop.hide)
-                gobject.idle_add(self.btnpause.hide)
-                gobject.idle_add(self.pbar.set_fraction,100/100.0)
+                    self.download_finished()
                 self.stop()
             except KeyboardInterrupt, errmsg:
                 gobject.idle_add(self.pbar.set_text,_("Failed..."))
@@ -596,16 +591,36 @@ class FileDownloader(threading.Thread):
             self.url = f.read()
             f.close()
             
+    def download_finished(self):
+        os.remove(self.conf_temp_file)
+        gobject.idle_add(self.pbar.set_text,_("Download complete"))
+        if self.convert_check:
+            gobject.idle_add(self.btn_conv.show)
+        gobject.idle_add(self.btnf.show)
+        gobject.idle_add(self.btn.show)
+        gobject.idle_add(self.btnstop.hide)
+        gobject.idle_add(self.btnpause.hide)
+        gobject.idle_add(self.pbar.set_fraction,100/100.0)
+        try:
+            self.engine.download_finished(self.url, self.target)
+        except:
+            pass
+    
     def cancel(self,widget=None):
         self.canceled = True
         gobject.idle_add(self.pbar.set_text,_("Cancelling download..."))
         
     def stop(self,widget=None):
-        self._stopevent.set()
-        self.target_opener.close()
-        self.download_response.close()
-        self.stopped = True
-        gobject.idle_add(self.decrease_down_count)
+        try:
+            self._stopevent.set()
+            self.stopped = True
+            self.target_opener.close()
+            self.download_response.close()
+            gobject.idle_add(self.decrease_down_count)
+        except:
+            self._stopevent.set()
+            self.stopped = True
+            gobject.idle_add(self.decrease_down_count)
     
     def pause(self,widget):
         if not self.paused:
