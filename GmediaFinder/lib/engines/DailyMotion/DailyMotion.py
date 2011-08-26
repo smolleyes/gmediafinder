@@ -63,7 +63,7 @@ class DailyMotion(object):
             if self.thread_stop == True:
                 break
             title = dic['title']
-            link = dic['embed_url']
+            link = dic['embed_url']+'&cache=0'
             img_link = dic['thumbnail_medium_url']
             duration = dic['duration']
             calc = divmod(int(duration),60)

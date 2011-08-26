@@ -1,6 +1,7 @@
 import gobject
 import re
 import urllib
+import os
 
 try:
 	from functions import *
@@ -49,7 +50,8 @@ class Mp3Realm(object):
             ## search title
             elif 'search?q=lyrics:' in line:
                 title = re.search('lyrics:(.*?)\'>',line).group(1)
-                gobject.idle_add(self.gui.add_sound, title, link, None, None, self.name)
+                name, ext = os.path.splitext(titre)
+                gobject.idle_add(self.gui.add_sound, name, link, None, None, self.name)
             ## check for next page
             elif '<li class="currentpage"><b>%s</b>' % self.current_page in line:
                 end_flag=False

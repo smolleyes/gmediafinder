@@ -1,6 +1,7 @@
 import gobject
 import time
 import mechanize
+import os
 
 try:
     from functions import *
@@ -58,6 +59,7 @@ class NuttyMp3(object):
                 l = line.split('"')
                 suff = l[7]
                 titre = l[11].replace('Download','')
+                name, ext = os.path.splitext(titre)
                 url = 'http://www.nuttymp3.com%s' % suff
                 continue
             if not flag and 'class="current last"' in line:
@@ -75,7 +77,7 @@ class NuttyMp3(object):
             if '>Bitrate:' in line:
                 bit = line.split('>')[3].split('<')[0]
                 mark = '\n<small> <b>%s</b> %s   <b>%s</b> %s<b>   %s</b> %s</small>' % (self.duration_label, dur, self.bitrate_label, bit, self.size_label, size)
-                gobject.idle_add(self.gui.add_sound, titre, url, None, None, self.name, mark)               
+                gobject.idle_add(self.gui.add_sound, name, url, None, None, self.name, mark)               
         if not flag_found:
             self.print_info(_("%s: No results for %s...") % (self.name,user_search))
             time.sleep(5)

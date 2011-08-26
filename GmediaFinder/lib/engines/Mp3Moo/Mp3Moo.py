@@ -2,6 +2,7 @@ import gobject
 import urllib2
 import urllib
 import time
+import os
 
 try:
     from functions import *
@@ -39,10 +40,11 @@ class Mp3Moo(object):
                 base_cut = line.split('url=')[1]
                 url = 'http://mp3moo.com/download.php?url=%s' % base_cut.split('"')[0]
                 titre = decode_htmlentities(base_cut.split('>')[1].split('<')[0])
+                name, ext = os.path.splitext(titre)
                 serveur = base_cut.split('>')[-1].rstrip()
                 eng= _('Engine: ')
                 markup = '\n<small><b>%s</b>%s</small>' % (eng,serveur.split('|')[0])
-                gobject.idle_add(self.gui.add_sound, titre, url, None, None, self.name,markup)
+                gobject.idle_add(self.gui.add_sound, name, url, None, None, self.name,markup)
                 flag_found = True
                 continue
             if '>Next<' in line and self.search_url in line:

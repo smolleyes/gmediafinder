@@ -33,6 +33,7 @@ if sys.platform == "win32":
     import win32api
 
 ## custom lib
+from functions import *
 try:
     from config import *
     from engines import Engines
@@ -1260,12 +1261,14 @@ class GsongFinder(object):
 		for media in os.listdir(self.down_dir):
 			try:
 				if '.conf' in media:
-					bname = re.sub('^.','',media).replace('.conf','')
-					codec = '.'+bname.split('.').pop(-1)
-					name = bname.replace('%s' % codec,'')
-					f = open(self.down_dir+'/.'+bname+'.conf')
-					link = f.read()
+					conf = os.path.join(self.down_dir, media)
+					f = open('''%s''' % conf, 'r')
+					data = f.read()
 					f.close()
+					link = data.split(':::')[0]
+					name = data.split(':::')[1]
+					codec = data.split(':::')[2]
+					print link, name, codec
 					self.download_file(None,link, name, codec)
 			except:
 			    continue
