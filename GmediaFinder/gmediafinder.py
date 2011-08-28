@@ -1515,18 +1515,19 @@ class GsongFinder(object):
         c = open(history_file,'r')
         t = c.readlines()
         c.close()
-        if (search in str(t)):
+        inlist = False
+        for i in t:
+            if re.match(search, i.replace('\n','')):
+                inlist = True
+                break
+        if inlist:
             return
+        f = open(history_file,'ab')
         if len(t) >= int(max_history):
-            f = open(history_file,'w')
             del t[1]
             f.writelines(t)
-            f.write("%s\n" % search)
-            f.close()
-        else:
-            f = open(history_file,'a')
-            f.write("%s\n" % search)
-            f.close()
+        f.write("%s\n" % search)
+        f.close()
     
     def __search_history(self, widget):
         search = self.search_entry.get_text()

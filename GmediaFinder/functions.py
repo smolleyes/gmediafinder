@@ -9,6 +9,7 @@ import threading
 import time
 import gobject
 import tempfile
+import pango
 
 import sys
 from time import sleep
@@ -80,7 +81,7 @@ def calc_eta(start, now, total, current):
 		if eta_mins > 99:
 			return '--:--'
 		values = {'min': eta_mins, 'sec': eta_secs}
-		return _('ETA : %(min)02d:%(sec)02d') % values
+		return _('%(min)02d:%(sec)02d') % values
 
 import htmlentitydefs
 
@@ -359,6 +360,7 @@ class FileDownloader(threading.Thread):
         self.download_response = None
         self.target_opener = None
         self.start_time = None
+        size_local = None
         self.localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
         
         ## add thread to gui download pool
@@ -367,19 +369,20 @@ class FileDownloader(threading.Thread):
     def create_download_box(self):
         self.engine = self.gui.search_engine
         # progress bar and buttons
-        box = gtk.HBox(False, 5)
+        box = gtk.HBox(True, 5)
         vbox = gtk.VBox(False, 5)
-        label = gtk.Label(self.decoded_name)
-        label.set_alignment(0, 0.5)
-        label.set_line_wrap(True)
-        vbox.pack_start(label, False, False, 5)
         self.pbar = gtk.ProgressBar()
-        self.pbar.set_size_request(450, 25)
-        try:
-            box.pack_start(gtk.image_new_from_pixbuf(self.media_thumb), False,False, 5)
-        except:
-            pb = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.gui.img_path,'sound.png'), 64,64, 1)
-            box.pack_start(gtk.image_new_from_pixbuf(pb), False,False, 5)
+        
+        box_left = gtk.HBox(False,10)
+        box_left_vbox = gtk.VBox(False, 5)
+        label = gtk.Label(self.decoded_name)
+        box_left.set_size_request(400, 10)
+        label.set_alignment(0, 0.5)
+        label.set_property('ellipsize', pango.ELLIPSIZE_NONE)
+        label.set_size_request(450, -1)
+        label.set_line_wrap(True)
+        box_left_vbox.pack_start(label, False, True, 5)
+        
         btnbox = gtk.HBox(False, 5)
         ## pause download button
         self.btnpause = gtk.Button()
@@ -395,7 +398,6 @@ class FileDownloader(threading.Thread):
         self.btnstop.add(image)
         btnbox.pack_start(self.btnstop, False, False, 5)
         self.btnstop.set_tooltip_text(_("Stop Downloading"))
-        self.gui.down_container.pack_start(box, False ,False, 5)
         ## show folder button
         self.btnf = gtk.Button()
         image = gtk.Image()
@@ -422,14 +424,42 @@ class FileDownloader(threading.Thread):
             self.throbber = gtk.Image()
             self.throbber.set_from_file(self.gui.img_path+'/throbber.png')
             btnbox.pack_start(self.throbber, False, False, 5)
+        box_left_vbox.pack_start(btnbox, False,True, 0)
+        ## load box
+        self.gui.down_container.pack_start(box, False,True, 5)
+        ## img
+        try:
+            box_left.pack_start(gtk.image_new_from_pixbuf(self.media_thumb), False,False, 5)
+        except:
+            pb = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.gui.img_path,'sound.png'), 64,64, 1)
+            box_left.pack_start(gtk.image_new_from_pixbuf(pb), False,False, 5)
+        ## left
+        box_left.pack_start(box_left_vbox, False, False, 5)
+        box.pack_start(box_left,True, True, 5)
         
-        vbox.pack_start(btnbox, False, False, 0)
-        vbox.pack_end(self.pbar, False, False, 5)
-        box.pack_start(vbox, False, False, 5)
+        ## right
+        box_right = gtk.HBox(False,5)
+        box_right.set_size_request(300, -1)
+        box_right_vbox = gtk.VBox(False, 5)
+        self.progress_label = gtk.Label(_('Remaining: '))
+        self.progress_label.set_alignment(0, 0.5)
+        self.progress_label.set_line_wrap(False)
+        box_right_vbox.pack_start(self.pbar, True, True, 5)
+        box_right_vbox.pack_start(self.progress_label, False, True, 5)
+        box_right.pack_start(box_right_vbox, False, False, 5)
+        box.pack_start(box_right, False, False, 5)
+        separator = gtk.HSeparator()
+        
+        ## vbox
+        vbox.pack_start(box,False,True,5)
+        vbox.pack_start(separator, False, True, 5)
         
         gobject.idle_add(box.show_all)
+        gobject.idle_add(vbox.show_all)
         gobject.idle_add(self.btnf.hide)
         self.convert_check = False
+        self.download_box = box
+
         if self.engine.engine_type == "video":
             gobject.idle_add(self.btn_conv.hide)
             gobject.idle_add(self.throbber.hide)
@@ -441,8 +471,10 @@ class FileDownloader(threading.Thread):
         self.btnstop.connect('clicked', self.cancel)
         self.btnpause.connect('clicked', self.pause)
         self.gui.down_container.queue_draw()
+        self.download_box.queue_draw()
     
     def download(self, url, destination):
+        self.increase_down_count()
         self.url = url
         self.target = destination
         gobject.idle_add(self.pbar.set_text,_("Starting download..."))
@@ -458,6 +490,7 @@ class FileDownloader(threading.Thread):
         else:
             self.download_response = self.data
         headers = self.download_response.info()
+        print "_____ Response Headers:\n %s" % headers
         if not headers.has_key('Content-Length'):
             print "content_length not available in headers..."
             self.failed = True
@@ -473,10 +506,13 @@ class FileDownloader(threading.Thread):
             self.completed = True
             return False
         elif os.path.isfile(self.temp_file):
+            print "File is here but seems to be incomplete!"
             gobject.idle_add(self.pbar.set_text,_("File is here but seems to be incomplete!"))
             size_local = float(os.stat(self.temp_file)[6])
             size_on_server = float(headers['Content-Length'])
-            if headers['Accept-Ranges'] == 'bytes':
+            print size_local, size_on_server
+            if headers.has_key('Accept-Ranges') and headers['Accept-Ranges'] == 'bytes':
+                print "Range request supported, trying to resume..."
                 gobject.idle_add(self.pbar.set_text,_("Range request supported, trying to resume..."))
                 try:
                     req = urllib2.Request(url, headers = self.localheaders)
@@ -486,9 +522,12 @@ class FileDownloader(threading.Thread):
                 except:	
                     resume = False
                     self.temp_file += '.duplicate'
+                    return False
             else:
+                print "Range request not supported, redownloading file"
                 gobject.idle_add(self.pbar.set_text,_("Range request not supported, redownloading file"))
                 os.unlink(self.temp_file)
+                return False
         try:
             self.target_opener = open(self.temp_file, "ab")
         except IOError, errmsg:
@@ -496,9 +535,8 @@ class FileDownloader(threading.Thread):
                 self.target_opener = open(self.temp_file, "wb")
             else:
                 print "%s" %(errmsg)
-                self.download_response.close()
-                return False
-        self.increase_down_count()
+                self.failed = True
+                return True ## return true but failed
         try:
             if resume:
                 current_bytes = size_local
@@ -529,9 +567,12 @@ class FileDownloader(threading.Thread):
                         
                         mbs = '%.02f MB of %.02f MB' % (current, length)
                         e = ' at %d Kb/s ' % troughput
-                        e += calc_eta(self.start_time, time.time(), total, current)
+                        eta = calc_eta(self.start_time, time.time(), total, current)
+                        if '-' in eta:
+                            eta = "00:00"
                         if procents < 100 and not self.paused:
-                            gobject.idle_add(self.pbar.set_text,"%s %3d%% %s" % (mbs,procents,e))
+                            gobject.idle_add(self.pbar.set_text,"%3d%%" % (procents))
+                            gobject.idle_add(self.progress_label.set_text,_("%s, Remaining: %s %s") % (mbs, eta, e))
                             gobject.idle_add(self.pbar.set_fraction,procents/100.0)
                         elif procents == 100:
                             gobject.idle_add(self.pbar.set_text,_("Download complete"))
@@ -561,12 +602,13 @@ class FileDownloader(threading.Thread):
     
     def remove_download(self, widget):
         ch = widget.parent
-        ru = ch.parent.parent
+        ru = ch.parent.parent.parent
         gobject.idle_add(ru.parent.remove,ru)    
     
     def run(self):
         self.create_download_box()
         self.gui.down_container.queue_draw()
+        self.download_box.queue_draw()
         while not self._stopevent.isSet():
             ## download...
             gobject.idle_add(self.pbar.set_text,_("Starting download..."))
@@ -576,14 +618,18 @@ class FileDownloader(threading.Thread):
                 self.download(self.url, self.temp_file)
                 if self.failed:
                     gobject.idle_add(self.pbar.set_text,_("Download error..."))
+                    self.download_finished()
                 elif self.canceled:
                     gobject.idle_add(self.pbar.set_text,_("Download canceled..."))
+                    self.download_finished()
                 ## already downloaded
                 elif self.completed:
                     gobject.idle_add(self.pbar.set_text,_("Download complete..."))
                     if self.convert_check:
                         gobject.idle_add(self.btn_conv.show)
-                self.download_finished()
+                    self.download_finished()
+                else:
+                    continue
             except:
                 print "failed"
                 self.failed = True
@@ -629,6 +675,9 @@ class FileDownloader(threading.Thread):
         except:
             self.stop()
         self.print_info('')
+        self.gui.down_container.queue_draw()
+        self.download_box.queue_draw()
+        gobject.idle_add(self.progress_label.set_text,"")
     
     def cancel(self,widget=None):
         self.canceled = True
