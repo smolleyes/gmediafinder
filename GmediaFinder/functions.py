@@ -440,6 +440,7 @@ class FileDownloader(threading.Thread):
         self.btn.connect('clicked', self.remove_download)
         self.btnstop.connect('clicked', self.cancel)
         self.btnpause.connect('clicked', self.pause)
+        self.gui.down_container.queue_draw()
     
     def download(self, url, destination):
         self.url = url
@@ -565,6 +566,7 @@ class FileDownloader(threading.Thread):
     
     def run(self):
         self.create_download_box()
+        self.gui.down_container.queue_draw()
         while not self._stopevent.isSet():
             ## download...
             gobject.idle_add(self.pbar.set_text,_("Starting download..."))

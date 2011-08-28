@@ -33,7 +33,6 @@ if sys.platform == "win32":
     import win32api
 
 ## custom lib
-from functions import *
 try:
     from config import *
     from engines import Engines
