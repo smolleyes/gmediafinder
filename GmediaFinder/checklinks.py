@@ -36,18 +36,39 @@ class CheckLinkIntegrity(object):
                                   '4shared'      : '3dljy11',
                      		    }
         self.serveurs = ['megaupload', 'rapidshare', 'filesonic', 'wupload', 'hotfile',
-                         'megashares', 'depositfiles', '4shared', 'easy-share']
+                         'megashares', 'depositfiles', '4shared', 'easy-share', 'megaporn']
 	# megaupload rapidshare filesonic wupload hotfile megashares depositfiles
 	# 4shared 
-    def check(self, link):
+    def check(self, link, callback=None):
+        '''
+        @link = [url, url, ...]
+        @callback = function to call with link
+        '''
+        self.liste_checked = []
+        print 'in link checker', link
         for server in self.serveurs:
             if server in link[0]:
-                print "Starting validity check for: %s \n" % link
                 server = server.replace('-','_').replace('4','f')
-                getattr(self, server)(link)
+                getattr(self, server)(link, callback)
         return self.liste_checked
 	        
+    def add_link(self, link, callback):
+        '''
+        @link = [link, name, size, server] or [link, 0, 0]
+        @callback = function to call with link
+        '''
+        self.liste_checked.append( link )
+        print '__________add_link', link, callback
+        try:
+            callback(link)
+        except:
+            print 'no callback requested'
+    
     def get_http_data(self, url, data=None):
+        '''
+        @url = url
+        @data = dictionnary of url arguments
+        '''
         if data is not None:
             data = urllib.urlencode(data)
         print url
@@ -58,7 +79,7 @@ class CheckLinkIntegrity(object):
         print response.geturl()
         print response.read()
     
-    def easy_share(self, urls):
+    def easy_share(self, urls, callback):
         self.liste_checked = []
         for link in urls:
             title = 0
@@ -79,9 +100,9 @@ class CheckLinkIntegrity(object):
                             title = base[0]
                             size  = base[1].split('>')[1]
                             break
-            self.liste_checked.append( [ link, title, size ] )
+            self.add_link( [ link, title, size, 'easy-share' ], callback)
        
-    def fshared(self, urls):
+    def fshared(self, urls, callback):
         self.liste_checked = []
         for link in urls:
             resp = self.get_http_data(link)
@@ -99,9 +120,9 @@ class CheckLinkIntegrity(object):
                     elif 'fileNameTextSpan' in line:
                         title = line.split('>')[1].rstrip().replace('&amp;', '&')
                         break
-            self.liste_checked.append( [ link, title, size ] )
+            self.add_link( [ link, title, size, '4shared' ], callback)
     
-    def depositfiles(self, urls):
+    def depositfiles(self, urls, callback):
         self.liste_checked = []
         for link in urls:
             resp = self.get_http_data(link)
@@ -113,9 +134,9 @@ class CheckLinkIntegrity(object):
                 elif 'File size' in line:
                     size = line.split('>')[2].split('<')[0].replace('&nbsp;','')
                     break
-            self.liste_checked.append( [ link, title, size ] )
+            self.add_link( [ link, title, size, 'depositfiles' ], callback)
        
-    def megashares(self, urls):
+    def megashares(self, urls, callback):
         self.liste_checked = []
         for link in urls:
             resp = self.get_http_data(link)
@@ -127,10 +148,10 @@ class CheckLinkIntegrity(object):
                 elif '>Filesize:<' in line:
                     size = line.split('</strong>')[1].split('<')[0]
                     break              
-            self.liste_checked.append( [ link, title, size ] )      	    
+            self.add_link( [ link, title, size, 'megashares' ], callback)      	    
         
     # ------------ WITH API --------------- #
-    def hotfile(self, urls):
+    def hotfile(self, urls, callback):
         self.liste_checked = []
         def get(links):
             files = ''
@@ -154,13 +175,13 @@ class CheckLinkIntegrity(object):
                 if l_args[0] == '1':
                     title = l_args[2]
                     size  = humanreadable( int(l_args[3]) )
-                self.liste_checked.append( [ link, title, size ] )
+                self.add_link( [ link, title, size, 'hotfile' ], callback)
         get(urls)
     
-    def wupload(self, urls):
-        self.filesonic(urls, 'wupload')
+    def wupload(self, urls, callback):
+        self.filesonic(url, callback, 'wupload')
     
-    def filesonic(self, urls, server='filesonic'):
+    def filesonic(self, urls, callback, server='filesonic'):
         self.liste_checked = []
         self.nums = ''
         def get_folder(link):
@@ -208,10 +229,10 @@ class CheckLinkIntegrity(object):
                     title = 0
                     size  = 0
                     link  = fichier['id']
-                self.liste_checked.append( [ link, title, size ] )
+                self.add_link( [ link, title, size, server ], callback)
         get(urls)
-   
-    def megaupload(self, urls):
+    
+    def megaupload(self, urls, callback):
         self.liste_checked = []
         def get(links):
             n    = 0
@@ -233,10 +254,10 @@ class CheckLinkIntegrity(object):
                     link = 'http://www.megaupload.com/?d=%s' % data[idn]
                     title = dic_args['n'][n]
                     size  = humanreadable( int(dic_args['s'][n]) )
-                self.liste_checked.append( [ link, title, size  ] )
+                self.add_link( [ link, title, size, 'megaupload'  ], callback)
         get(urls)
 	    
-    def rapidshare(self, urls):
+    def rapidshare(self, urls, callback):
         self.liste_checked = []
         def get(links):
             files = ''
@@ -262,30 +283,32 @@ class CheckLinkIntegrity(object):
                     link  = 'http://rapidshare.com/files/'+l_args[0]+'/'+l_args[1]+'.html'
                     title = l_args[1]
                     size  = humanreadable( int(l_args[2]) )
-                self.liste_checked.append( [ link, title, size ] )
+                self.add_link( [ link, title, size, 'rapidshare' ], callback)
         get(urls)
-        
 	    
 	    
-#if __name__ == '__main__':
-##link = ['http://www.megaupload.com/?d=W23DXOB9','http://www.megaupload.com/?d=WVGCW6Y9']
-##link = ['http://rapidshare.com/files/136233047/RZA-RZA_As_Bobby_Digital_In_Stereo-1998-TMC.rar.html',
-        ##'http://rapidshare.com/files/402112913/HMVECyper_-_The_RZA_Instrumentals__2010_.rar.html']
-##link = ['http://www.filesonic.com/file/1472564264/VA-Reggaevol.01to37.part01.rar',
-        ##'http://www.filesonic.com/file/1473702024/VA-Reggaevol.01to37.part02.rar']
-##link = ['http://www.filesonic.fr/folder/10359291']
-##link = ['http://www.wupload.com/folder/437369']
-##link = [ 'http://hotfile.com/dl/14839164/3d6e68e/Bob_Marley_-_1970_African_Herbsman.zip.html',
-##'http://hotfile.com/dl/107996922/0ce3a0a/Bob_Marley_Exodus_Documentary_BBC_Two_2007_06_03.avi.html']
-###link = ['http://www.mediafire.com/?wjwnxybymqr']
-##link = ['http://d01.megashares.com/index.php?d01=wmQUKpU',
-        ##'http://d01.megashares.com/index.php?d01=wmQUK']
-##link = ['http://depositfiles.com/files/y7pz4x9xo']
-##link = ['http://www.4shared.com/file/urHfeeq9/bob_marley_-_1978_-_bob_marley.htm?aff=7637829',
-        ##'http://www.4shared.com/audio/CEXBDdh2/Bob_Marley_-_Bad_Boys__Origina.htm?aff=7637829']
-##link = ['http://www.easy-share.com/1911226540/Bob_Marley_vs_Lee_Scratch_Perry_The_Best_of_The_Upsetter_Years_1970_1971_by_eliel.viana.rar',
-        ##'http://www.easy-share.com/1913442150/Bob']
-##link = ['http://rapidshare.com/files/417197962/Rza_-_19-Odyssey.mp3.html']
-#link_checker = CheckLinkIntegrity()
-#print link_checker.check(link)
-
+	    
+if __name__ == '__main__':
+    def my_callback(link):
+        print '____in my callback ___', link
+    
+    link = ['http://www.megaupload.com/?d=W23DXOB9','http://www.megaupload.com/?d=WVGCW6Y9']
+    link = ['http://rapidshare.com/files/136233047/RZA-RZA_As_Bobby_Digital_In_Stereo-1998-TMC.rar.html',
+            'http://rapidshare.com/files/402112913/HMVECyper_-_The_RZA_Instrumentals__2010_.rar.html']
+    link = ['http://www.filesonic.com/file/1472564264/VA-Reggaevol.01to37.part01.rar',
+            'http://www.filesonic.com/file/1473702024/VA-Reggaevol.01to37.part02.rar']
+    link = ['http://www.filesonic.fr/folder/10359291']
+    link = ['http://www.wupload.com/folder/437369']
+    link = [ 'http://hotfile.com/dl/14839164/3d6e68e/Bob_Marley_-_1970_African_Herbsman.zip.html',
+    'http://hotfile.com/dl/107996922/0ce3a0a/Bob_Marley_Exodus_Documentary_BBC_Two_2007_06_03.avi.html']
+    #link = ['http://www.mediafire.com/?wjwnxybymqr']
+    link = ['http://d01.megashares.com/index.php?d01=wmQUKpU',
+            'http://d01.megashares.com/index.php?d01=wmQUK']
+    link = ['http://depositfiles.com/files/y7pz4x9xo']
+    link = ['http://www.4shared.com/file/urHfeeq9/bob_marley_-_1978_-_bob_marley.htm?aff=7637829',
+            'http://www.4shared.com/audio/CEXBDdh2/Bob_Marley_-_Bad_Boys__Origina.htm?aff=7637829']
+    link = ['http://www.easy-share.com/1911226540/Bob_Marley_vs_Lee_Scratch_Perry_The_Best_of_The_Upsetter_Years_1970_1971_by_eliel.viana.rar',
+            'http://www.easy-share.com/1913442150/Bob']
+    link_checker = CheckLinkIntegrity()
+    print link_checker.check(link, my_callback)
+    

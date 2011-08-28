@@ -276,6 +276,53 @@ class GsongFinder(object):
         plugnameColumn = gtk.TreeViewColumn("Name", renderer)
         self.treeview.append_column(plugnameColumn)
 
+        ## download treeview
+        self.download_treestore = gtk.TreeStore(str,int,str,str,str,gtk.gdk.Pixbuf)
+        #name
+        self.download_treeview = gtk.TreeView(self.download_treestore)
+        self.download_tvcolumn = gtk.TreeViewColumn('Name')
+        self.download_tvcolumn.set_max_width(450)
+        self.download_tvcolumn.set_min_width(450)
+        self.download_treeview.append_column(self.download_tvcolumn)
+        cellrenderer_text = gtk.CellRendererText()
+        cellrenderer_text.props.wrap_width = 450
+        cellrenderer_text.props.wrap_mode = pango.WRAP_WORD
+        self.download_tvcolumn.pack_start(cellrenderer_text, False)
+        self.download_tvcolumn.add_attribute(cellrenderer_text, "text", 0)
+        #progress
+        self.download_progresscolumn = gtk.TreeViewColumn("Progress")
+        self.download_progresscolumn.set_min_width(50)
+        self.download_treeview.append_column(self.download_progresscolumn)
+        cellrenderer_progress = gtk.CellRendererProgress()
+        self.download_progresscolumn.pack_start(cellrenderer_progress, True)
+        self.download_progresscolumn.add_attribute(cellrenderer_progress, "value", 1)
+        #size
+        self.download_sizecolumn = gtk.TreeViewColumn('Downloaded')
+        self.download_treeview.append_column(self.download_sizecolumn)
+        cellrenderer_text = gtk.CellRendererText()
+        self.download_sizecolumn.pack_start(cellrenderer_text, False)
+        self.download_sizecolumn.add_attribute(cellrenderer_text, "text", 2)
+        #speed
+        self.download_ratecolumn = gtk.TreeViewColumn('Rate')
+        self.download_treeview.append_column(self.download_ratecolumn)
+        cellrenderer_text = gtk.CellRendererText()
+        self.download_ratecolumn.pack_start(cellrenderer_text, False)
+        self.download_ratecolumn.add_attribute(cellrenderer_text, "text", 3)
+        #eta
+        self.download_etacolumn = gtk.TreeViewColumn('Eta')
+        self.download_treeview.append_column(self.download_etacolumn)
+        cellrenderer_text = gtk.CellRendererText()
+        self.download_etacolumn.pack_start(cellrenderer_text, False)
+        self.download_etacolumn.add_attribute(cellrenderer_text, "text", 4)
+        ## options
+        self.download_cancelcolumn = gtk.TreeViewColumn('')
+        self.download_treeview.append_column(self.download_cancelcolumn)
+        renderer = gtk.CellRendererPixbuf()
+        self.download_cancelcolumn.pack_start(renderer, False)
+        self.download_cancelcolumn.add_attribute(renderer, "pixbuf", 5)
+        self.down_container.add(self.download_treeview)
+        
+        
         ## setup the scrollview
         self.results_scroll = self.gladeGui.get_widget("results_scrollbox")
         self.columns = self.treeview.get_columns()

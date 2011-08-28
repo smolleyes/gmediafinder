@@ -33,7 +33,7 @@ class Crawler(gtk.Window):
         d = urllib.unquote(view.get_html())
         data = re.sub('&quot;','"',d)
         try:
-            link = re.search('url":"(.*?)"',data).group(1)
+            link = re.search('clip":{"url":"(.*?)"',data).group(1)
         except:
             return
         print link
