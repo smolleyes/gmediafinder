@@ -285,42 +285,53 @@ class GsongFinder(object):
                                                 str,object)
         #name
         self.download_treeview = gtk.TreeView(self.download_treestore)
+        self.download_treeview.set_headers_visible(False)
         self.download_tvcolumn = gtk.TreeViewColumn('Name')
         self.download_tvcolumn.set_max_width(450)
         self.download_tvcolumn.set_min_width(450)
         self.download_treeview.append_column(self.download_tvcolumn)
         cellrenderer_text = gtk.CellRendererText()
-        cellrenderer_text.props.wrap_width = 450
-        cellrenderer_text.props.wrap_mode = gtk.WRAP_WORD
+        cellrenderer_text.props.wrap_width = 430
+        cellrenderer_text.props.wrap_mode = pango.WRAP_WORD
         self.download_tvcolumn.pack_start(cellrenderer_text, False)
         self.download_tvcolumn.add_attribute(cellrenderer_text, "text", 0)
         #progress
         self.download_progresscolumn = gtk.TreeViewColumn("Progress")
+        self.download_progresscolumn.set_spacing(10)
         self.download_progresscolumn.set_min_width(50)
+        
         self.download_treeview.append_column(self.download_progresscolumn)
         cellrenderer_progress = gtk.CellRendererProgress()
         self.download_progresscolumn.pack_start(cellrenderer_progress, True)
         self.download_progresscolumn.add_attribute(cellrenderer_progress, "value", 1)
         #size
         self.download_sizecolumn = gtk.TreeViewColumn('Downloaded')
+        self.download_sizecolumn.set_spacing(10)
+        self.download_sizecolumn.set_min_width(150)
         self.download_treeview.append_column(self.download_sizecolumn)
         cellrenderer_text = gtk.CellRendererText()
         self.download_sizecolumn.pack_start(cellrenderer_text, False)
         self.download_sizecolumn.add_attribute(cellrenderer_text, "text", 2)
         #speed
         self.download_ratecolumn = gtk.TreeViewColumn('Rate')
+        self.download_ratecolumn.set_spacing(10)
+        self.download_ratecolumn.set_min_width(70)
         self.download_treeview.append_column(self.download_ratecolumn)
         cellrenderer_text = gtk.CellRendererText()
         self.download_ratecolumn.pack_start(cellrenderer_text, False)
         self.download_ratecolumn.add_attribute(cellrenderer_text, "text", 3)
         #eta
         self.download_etacolumn = gtk.TreeViewColumn('Eta')
+        self.download_etacolumn.set_min_width(70)
+        self.download_etacolumn.set_spacing(20)
         self.download_treeview.append_column(self.download_etacolumn)
         cellrenderer_text = gtk.CellRendererText()
         self.download_etacolumn.pack_start(cellrenderer_text, False)
         self.download_etacolumn.add_attribute(cellrenderer_text, "text", 4)
         ## pausebtn
         self.download_pausecolumn = gtk.TreeViewColumn('Pause/resume')
+        self.download_pausecolumn.set_min_width(20)
+        self.download_pausecolumn.set_spacing(40)
         self.download_treeview.append_column(self.download_pausecolumn)
         self.download_pixrenderer = gtk.CellRendererPixbuf()
         self.download_pausecolumn.pack_start(self.download_pixrenderer, False)
@@ -330,6 +341,7 @@ class GsongFinder(object):
                                                     self.download_pausecolumn)
         ## cancelbtn
         self.download_cancelcolumn = gtk.TreeViewColumn('Cancel')
+        self.download_cancelcolumn.set_min_width(20)
         self.download_treeview.append_column(self.download_cancelcolumn)
         pixrenderer = gtk.CellRendererPixbuf()
         self.download_cancelcolumn.pack_start(pixrenderer, False)
@@ -340,6 +352,7 @@ class GsongFinder(object):
         
         ## removebtn
         self.download_removecolumn = gtk.TreeViewColumn('remove')
+        self.download_removecolumn.set_min_width(20)
         self.download_treeview.append_column(self.download_removecolumn)
         pixrenderer = gtk.CellRendererPixbuf()
         self.download_removecolumn.pack_start(pixrenderer, False)
@@ -350,6 +363,7 @@ class GsongFinder(object):
                                                     
         ## viewbtn
         self.download_viewcolumn = gtk.TreeViewColumn('view')
+        self.download_viewcolumn.set_min_width(20)
         self.download_treeview.append_column(self.download_viewcolumn)
         pixrenderer = gtk.CellRendererPixbuf()
         self.download_viewcolumn.pack_start(pixrenderer, False)
@@ -360,6 +374,7 @@ class GsongFinder(object):
         
         ## convertbtn
         self.download_convertcolumn = gtk.TreeViewColumn('convert')
+        self.download_convertcolumn.set_min_width(20)
         self.download_treeview.append_column(self.download_convertcolumn)
         pixrenderer = gtk.CellRendererPixbuf()
         self.download_convertcolumn.pack_start(pixrenderer, False)
@@ -440,7 +455,7 @@ class GsongFinder(object):
         ## start gui
         self.window.show_all()
         self.throbber.hide()
-
+        self.download_treeview.columns_autosize()
         ## start engines
         self.engines_client = Engines(self)
 
@@ -490,7 +505,6 @@ class GsongFinder(object):
     
     def on_pause_download(self, treeview, column):
         if self.download_treeview.get_cursor()[1] == column:
-            print '__________column pause clicked'
             # ici recup ligne selectionné
             l = self.return_selection(treeview)
             # get download instance
@@ -499,7 +513,6 @@ class GsongFinder(object):
             
     def on_cancel_download(self, treeview, column):
         if self.download_treeview.get_cursor()[1] == column:
-            print '__________column cancel clicked'
             # ici recup ligne selectionné
             l = self.return_selection(treeview)
             # get download instance
@@ -508,16 +521,14 @@ class GsongFinder(object):
             
     def on_convert_download(self, treeview, column):
         if self.download_treeview.get_cursor()[1] == column:
-            print '__________column cancel clicked'
             # ici recup ligne selectionné
             l = self.return_selection(treeview)
             # get download instance
             download = l[-1]
-            download.cancel()
+            download.convert()
             
     def on_remove_download(self, treeview, column):
         if self.download_treeview.get_cursor()[1] == column:
-            print '__________column cancel clicked'
             # ici recup ligne selectionné
             l = self.return_selection(treeview)
             # get download instance
@@ -526,7 +537,6 @@ class GsongFinder(object):
             
     def on_view_download(self, treeview, column):
         if self.download_treeview.get_cursor()[1] == column:
-            print '__________column cancel clicked'
             # ici recup ligne selectionné
             l = self.return_selection(treeview)
             # get download instance
@@ -1395,31 +1405,32 @@ class GsongFinder(object):
         self.player.set_property("volume", float(value))
         return True
 
-    def download_file(self,widget=None, link=None, name=None, codec=None, data=None):
+    def download_file(self,widget=None, link=None, name=None, codec=None, data=None, engine_type=None, engine_name=None):
 		if not link:
 			link = self.active_link
 		if not name:
 			name = self.media_name
 		if not codec:
 			codec = self.media_codec 
-		download = FileDownloader(self, link, name, codec, data)
+		download = FileDownloader(self, link, name, codec, data, engine_name, engine_type)
 		download.start()
         
     def resume_downloads(self):
-		for media in os.listdir(self.down_dir):
-			try:
-				if '.conf' in media:
-					conf = os.path.join(self.down_dir, media)
-					f = open('''%s''' % conf, 'r')
-					data = f.read()
-					f.close()
-					link = data.split(':::')[0]
-					name = data.split(':::')[1]
-					codec = data.split(':::')[2]
-					print link, name, codec
-					self.download_file(None,link, name, codec)
-			except:
-			    continue
+        for media in os.listdir(self.down_dir):
+            try:
+                if '.conf' in media:
+                    conf = os.path.join(self.down_dir, media)
+                    f = open('''%s''' % conf, 'r')
+                    data = f.read()
+                    f.close()
+                    link = data.split(':::')[0]
+                    name = data.split(':::')[1]
+                    codec = data.split(':::')[2]
+                    engine_type = data.split(':::')[3]
+                    engine_name = data.split(':::')[4]
+                    self.download_file(None,link, name, codec, None, engine_type, engine_name)
+            except:
+                continue
     
     def bus_message_tag(self, bus, message):
 		codec = None
@@ -1494,34 +1505,6 @@ class GsongFinder(object):
             os.system('explorer %s' % path)
         else:
             os.system('xdg-open %s' % path)
-
-    def extract_audio(self,widget,src,convbtn,throbber):
-        convbtn.hide()
-        self.animation = gtk.gdk.PixbufAnimation(self.img_path+'/throbber.gif')
-        self.loader_pixbuf = throbber.get_pixbuf() # save the Image contents so we can set it back later
-        throbber.set_from_animation(self.animation)
-        throbber.show()
-        codec = src.split('.')[-1]
-        name = os.path.basename(src).replace('.%s' % codec,'')
-        target = os.path.join(self.down_dir,name+'.mp3')
-        if os.path.exists(target):
-            os.remove(target)
-        if sys.platform != "linux2":
-            ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(exec_path)),'ffmpeg\\ffmpeg.exe').replace("\\","\\\\")
-            target = target.replace("\\","\\\\")
-            src = src.replace("\\","\\\\")
-        else:
-            ffmpeg_path = "/usr/bin/ffmpeg"
-        (pid,t,r,s) = gobject.spawn_async([str(ffmpeg_path), '-i', str(src), '-f', 'mp3', '-ab', '192k', str(target)],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
-        data=(convbtn,throbber)
-        gobject.child_watch_add(pid, self.task_done,data)
-
-    def task_done(self,pid,ret,data):
-        throbber=data[1]
-        convbtn=data[0]
-        throbber.set_from_pixbuf(self.loader_pixbuf)
-        throbber.hide()
-        convbtn.show()
 
     def on_about_btn_pressed(self, widget):
         dlg = self.gladeGui.get_widget("aboutdialog")

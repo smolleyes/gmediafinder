@@ -328,7 +328,7 @@ class FileDownloader(threading.Thread):
     
     localheaders = { 'User-Agent' : 'Mozilla/5.0 (X11; U; Linux i686; en-US; rv:1.9.0.2) Gecko/2008092313 Ubuntu/8.04 (hardy) Firefox/3.1.6' }
     
-    def __init__(self, gui, url, name, codec, data=None):
+    def __init__(self, gui, url, name, codec, data=None, engine_name=None, engine_type=None):
         threading.Thread.__init__(self)
         self.gui = gui
         self._stopevent = threading.Event()
@@ -350,6 +350,14 @@ class FileDownloader(threading.Thread):
         self.temp_file = os.path.join(self.gui.down_dir,self.temp_name)
         self.conf_temp_name = '.'+self.decoded_name+'.conf'
         self.conf_temp_file = os.path.join(self.gui.down_dir,self.conf_temp_name)
+        if not engine_type:
+            self.engine_type = self.gui.search_engine.engine_type
+        else:
+            self.engine_type = engine_type
+        if not engine_name: 
+            self.engine_name = self.gui.search_engine.name
+        else:
+            self.engine_name = engine_name
         
         self.createdir = False
         self.paused = False
@@ -368,7 +376,10 @@ class FileDownloader(threading.Thread):
     
     def create_download_box(self):
         self.treeiter = self.gui.download_treestore.append(None, [self.decoded_name,0,_("Initializing download..."),'','','gtk-media-pause','gtk-cancel','gtk-clear','gtk-find','gtk-convert',self])
-    
+        # hide some icons
+        self.gui.download_treestore.set_value(self.treeiter, 9, '')
+        self.gui.download_treestore.set_value(self.treeiter, 7, '')
+        
     def download(self, url, destination):
         self.increase_down_count()
         self.url = url
@@ -516,13 +527,14 @@ class FileDownloader(threading.Thread):
                 self.download_finished()
             elif self.canceled:
                 self.gui.download_treestore.set_value(self.treeiter, 2, _("Download canceled..."))
+                self.gui.download_treestore.set_value(self.treeiter, 8, '')
                 self.download_finished()
             ## already downloaded
             elif self.completed:
                 self.gui.download_treestore.set_value(self.treeiter, 2, _("Download complete..."))
                 self.gui.download_treestore.set_value(self.treeiter, 1, 100)
-                if self.convert_check:
-                    gobject.idle_add(self.btn_conv.show)
+                if self.engine_type == 'video':
+                    self.gui.download_treestore.set_value(self.treeiter, 9, 'gtk-convert')
                 self.download_finished()
             else:
                 continue
@@ -535,7 +547,7 @@ class FileDownloader(threading.Thread):
     def check_target_file(self,tmp_file):
         if not os.path.exists(self.conf_temp_file):
             f = open(self.conf_temp_file,'w')
-            f.write(self.url+':::'+self.basename+':::'+self.codec)
+            f.write(self.url+':::'+self.basename+':::'+self.codec+':::'+self.engine_type+':::'+self.engine_name)
             f.close()
         else:
             f = open(self.conf_temp_file,'r')
@@ -544,6 +556,8 @@ class FileDownloader(threading.Thread):
             link = data.split(':::')[0]
             name = data.split(':::')[1]
             codec = data.split(':::')[2]
+            engine_type = data.split(':::')[3]
+            engine_name = data.split(':::')[4]
             self.decoded_name = name+"%s" % codec
             self.encoded_name = urllib.quote(self.decoded_name.encode('utf-8'))
             self.target = os.path.join(self.gui.down_dir,self.decoded_name)
@@ -551,6 +565,8 @@ class FileDownloader(threading.Thread):
             self.temp_file = os.path.join(self.gui.down_dir,self.temp_name)
             self.conf_temp_name = '.'+self.decoded_name+'.conf'
             self.conf_temp_file = os.path.join(self.gui.down_dir,self.conf_temp_name)
+            self.engine_type = engine_type
+            self.engine_name = engine_name
             print self.decoded_name
             print self.encoded_name
             print self.target
@@ -560,10 +576,9 @@ class FileDownloader(threading.Thread):
             print self.conf_temp_file
             
     def download_finished(self):
-        gobject.idle_add(self.btnf.show)
-        gobject.idle_add(self.btn.show)
-        gobject.idle_add(self.btnstop.hide)
-        gobject.idle_add(self.btnpause.hide)
+        self.gui.download_treestore.set_value(self.treeiter, 5, '')
+        self.gui.download_treestore.set_value(self.treeiter, 6, '')
+        self.gui.download_treestore.set_value(self.treeiter, 7, 'gtk-clear')
         try:
             self.engine.download_finished(self.url, self.target)
             self.stop()
@@ -572,6 +587,7 @@ class FileDownloader(threading.Thread):
         self.print_info('')
         self.gui.download_treestore.set_value(self.treeiter, 3, '')
         self.gui.download_treestore.set_value(self.treeiter, 4, '')
+        gobject.idle_add(self.decrease_down_count)
     
     def cancel(self,widget=None):
         self.canceled = True
@@ -586,11 +602,13 @@ class FileDownloader(threading.Thread):
         except:
             print "target file do not exist or closed..."
         if self.completed:
-            os.remove(self.conf_temp_file)
+            if os.path.exists(self.conf_temp_file):
+                os.remove(self.conf_temp_file)
         elif self.canceled or self.failed:
-            os.remove(self.temp_file)
-            os.remove(self.conf_temp_file)
-        gobject.idle_add(self.decrease_down_count)
+            if os.path.exists(self.conf_temp_file):
+                os.remove(self.conf_temp_file)
+            if os.path.exists(self.temp_file):
+                os.remove(self.temp_file)
     
     def pause(self):
         if not self.paused:
@@ -603,6 +621,34 @@ class FileDownloader(threading.Thread):
             self.increase_down_count()
             self.gui.download_treestore.set_value(self.treeiter, 2, _("Resuming download..."))
             self.gui.download_treestore.set_value(self.treeiter, 5, 'gtk-media-pause')
+    
+    def convert(self):
+        src = self.target
+        target = src.replace(self.codec,'.mp3')
+        if os.path.exists(target):
+            os.remove(target)
+        if sys.platform != "linux2":
+            ffmpeg_path = os.path.join(os.path.dirname(os.path.dirname(config.exec_path)),'ffmpeg\\ffmpeg.exe').replace("\\","\\\\")
+            target = target.replace("\\","\\\\")
+            src = src.replace("\\","\\\\")
+        else:
+            ffmpeg_path = "/usr/bin/ffmpeg"
+        self.print_info(_('Extracting audio...'))
+        try:
+            self.gui.throbber.show()
+            (pid,t,r,s) = gobject.spawn_async([str(ffmpeg_path), '-i', str(src), '-f', 'mp3', '-ab', '192k', str(target)],flags=gobject.SPAWN_DO_NOT_REAP_CHILD,standard_output = True, standard_error = True)
+            gobject.child_watch_add(pid, self.task_done)
+        except:
+            self.print_info(_('Extraction failed...'))
+            sleep(4)
+            self.print_info('')
+            self.gui.throbber.hide()
+
+    def task_done(self,pid,ret):
+        self.gui.download_treestore.set_value(self.treeiter, 9, '')
+        self.print_info('')
+        self.gui.throbber.hide()
+
     
     def decrease_down_count(self):
         if self.gui.active_downloads > 0:
