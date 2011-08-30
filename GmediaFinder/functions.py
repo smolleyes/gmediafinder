@@ -438,6 +438,7 @@ class FileDownloader(threading.Thread):
         try:
             self.target_opener = open(self.temp_file, "ab")
         except IOError, errmsg:
+            print errmsg
             if not os.path.exists(self.temp_file):
                 self.target_opener = open(self.temp_file, "wb")
             else:
@@ -463,6 +464,8 @@ class FileDownloader(threading.Thread):
                         try:
                             bytes = self.download_response.read(102400)
                         except:
+                            self.failed = True
+                            print "no more data...incomplete stream"
                             break
                         current_bytes += 102400
                         time_diff = time.time() - read_start
@@ -497,6 +500,9 @@ class FileDownloader(threading.Thread):
                         sleep(1)
                 except IOError, (errno, strerror):
                     print "I/O error(%s): %s" % (errno, strerror)
+                    self.failed = True
+                    break
+                except:
                     self.failed = True
                     break
                 if bytes == "":
