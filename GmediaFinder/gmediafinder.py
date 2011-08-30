@@ -34,12 +34,14 @@ if sys.platform == "win32":
 
 ## custom lib
 try:
+    import debrid as debrider
     from config import *
     from engines import Engines
     from functions import *
     from playlist import Playlist
     if sys.platform != "win32":
         from pykey import send_string
+    import checklinks as checkLink
 except:
     from GmediaFinder.config import *
     from GmediaFinder.engines import Engines
@@ -47,6 +49,8 @@ except:
     from GmediaFinder.playlist import Playlist
     if sys.platform != "win32":
         from GmediaFinder.pykey import send_string
+    import GmediaFinder.debrid as debrider
+    import GmediaFinder.checklinks as checkLink
 
 
 class GsongFinder(object):
@@ -87,9 +91,12 @@ class GsongFinder(object):
         self.media_bitrate= None
         self.media_codec= None
         self.playlist_mode = False
+        self.play = False
         self._cbuffering = -1
         self.status = self.STOPPED
         self.target_status = self.STOPPED
+        self.url_checker = checkLink.CheckLinkIntegrity()
+        self.url_debrid = debrider.Debrid(self)
 
         ## gui
         self.gladeGui = gtk.glade.XML(glade_file, None ,APP_NAME)
@@ -219,7 +226,6 @@ class GsongFinder(object):
         dic = {"on_main_window_destroy_event" : self.exit,
         "on_quit_menu_activate" : self.exit,
         "on_pause_btn_clicked" : self.pause_resume,
-        "on_play_btn_clicked" : self.start_stop,
         "on_down_btn_clicked" : self.download_file,
         "on_nextpage_btn_clicked" : self.change_page,
         "on_pageback_btn_clicked" : self.change_page,
@@ -696,45 +702,44 @@ class GsongFinder(object):
         self.notebook.set_current_page(0)
 
     def get_model(self,widget=None,path=None,column=None):
-		#if self.search_playlist_menu_active:
-		#   return
-		self.media_bitrate = ""
-		self.media_codec = ""
-		if not self.playlist_mode or widget:
-			self.playlist_mode = False
-			selected = self.treeview.get_selection()
-			self.selected_iter = selected.get_selected()[1]
-			self.path = self.model.get_path(self.selected_iter)
-			## else extract needed metacity's infos
-			self.media_thumb = self.model.get_value(self.selected_iter, 0)
-			name = self.model.get_value(self.selected_iter, 4)
-			self.media_name = decode_htmlentities(name)
-			self.file_tags = {}
-			self.media_markup = self.model.get_value(self.selected_iter, 1)
-			self.media_plugname = self.model.get_value(self.selected_iter, 5)
-			## for global search
-			if not self.engine_selector.getSelected() == self.media_plugname:
-				self.set_engine(self.media_plugname)
-			## return only theme name and description then extract infos from hash
-			self.media_link = self.model.get_value(self.selected_iter, 2)
-			self.media_img = self.model.get_value(self.selected_iter, 0)
-		else:
-			selected = self.Playlist.treeview.get_selection()
-			self.selected_iter = selected.get_selected()[1]
-			self.path = self.Playlist.treestore.get_path(self.selected_iter)
-			## else extract needed metacity's infos
-			self.media_thumb = self.Playlist.treestore.get_value(self.selected_iter, 0)
-			name = self.Playlist.treestore.get_value(self.selected_iter, 0)
-			self.media_name = decode_htmlentities(name)
-			self.file_tags = {}
-			self.media_markup = self.Playlist.treestore.get_value(self.selected_iter, 0)
-			self.media_plugname = self.Playlist.treestore.get_value(self.selected_iter, 0)
-			return self.Playlist.on_selected(self.Playlist.treeview)
-			## return only theme name and description then extract infos from hash
-		self.stop_play()
-		## play in engine
-		thread.start_new_thread(self.search_engine.play,(self.media_link,))
-		#self.search_engine.play(self.media_link)
+        #if self.search_playlist_menu_active:
+        #   return
+        self.media_bitrate = ""
+        self.media_codec = ""
+        if not self.playlist_mode or widget:
+            self.playlist_mode = False
+            selected = self.treeview.get_selection()
+            self.selected_iter = selected.get_selected()[1]
+            self.path = self.model.get_path(self.selected_iter)
+            ## else extract needed metacity's infos
+            self.media_thumb = self.model.get_value(self.selected_iter, 0)
+            name = self.model.get_value(self.selected_iter, 4)
+            self.media_name = decode_htmlentities(name)
+            self.file_tags = {}
+            self.media_markup = self.model.get_value(self.selected_iter, 1)
+            self.media_plugname = self.model.get_value(self.selected_iter, 5)
+            ## for global search
+            if not self.engine_selector.getSelected() == self.media_plugname:
+                self.set_engine(self.media_plugname)
+            ## return only theme name and description then extract infos from hash
+            self.media_link = self.model.get_value(self.selected_iter, 2)
+            self.media_img = self.model.get_value(self.selected_iter, 0)
+        else:
+            selected = self.Playlist.treeview.get_selection()
+            self.selected_iter = selected.get_selected()[1]
+            self.path = self.Playlist.treestore.get_path(self.selected_iter)
+            ## else extract needed metacity's infos
+            self.media_thumb = self.Playlist.treestore.get_value(self.selected_iter, 0)
+            name = self.Playlist.treestore.get_value(self.selected_iter, 0)
+            self.media_name = decode_htmlentities(name)
+            self.file_tags = {}
+            self.media_markup = self.Playlist.treestore.get_value(self.selected_iter, 0)
+            self.media_plugname = self.Playlist.treestore.get_value(self.selected_iter, 0)
+            return self.Playlist.on_selected(self.Playlist.treeview)
+        ## play in engine
+        self.stop_play()
+        thread.start_new_thread(self.search_engine.play,(self.media_link,))
+        #self.search_engine.play(self.media_link)
         
     def prepare_search(self,widget=None):
         self.user_search = self.search_entry.get_text()
@@ -910,13 +915,17 @@ class GsongFinder(object):
                         )
 
     def start_stop(self,widget=None):
-        url = self.active_link
-        if self.play and url:
+        if widget:
             if not self.is_playing:
-                return self.start_play(url)
+                return self.get_model()
             else:
-                self.statbar.push(1,_("Stopped"))
                 return self.stop_play()
+        else:
+            if self.play and self.active_link:
+                if not self.is_playing:
+                    return self.start_play(self.active_link)
+                else:
+                    return self.stop_play()
 
     def start_play(self,url):
 		self.active_link = url
@@ -952,6 +961,7 @@ class GsongFinder(object):
         self.duration = None
         self.play_thread_id = None
         self.play = False
+        self.active_link = None
         self.update_time_label()
         #self.active_link = None
         self.movie_window.queue_draw()
@@ -1428,9 +1438,23 @@ class GsongFinder(object):
                     codec = data.split(':::')[2]
                     engine_type = data.split(':::')[3]
                     engine_name = data.split(':::')[4]
-                    self.download_file(None,link, name, codec, None, engine_type, engine_name)
+                    print engine_type
+                    if str(engine_type) == 'files':
+                        self.download_debrid(link)
+                    else:
+                        self.download_file(None,link, name, codec, None, engine_type, engine_name)
             except:
                 continue
+                
+    def download_debrid(self, link):
+        check = self.url_checker.check([link])
+        if check != [link]:
+            if check[0][1] == 0:
+                self.info_label.set_text(_("This link has been removed or is expired...!"))
+                return
+            link   = check[0][0]
+        thread = threading.Thread(target=self.url_debrid.debrid ,args=(link,))
+        thread.start()
     
     def bus_message_tag(self, bus, message):
 		codec = None

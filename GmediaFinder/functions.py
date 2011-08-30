@@ -450,6 +450,7 @@ class FileDownloader(threading.Thread):
                 current_bytes = size_local
             else:
                 current_bytes = 0
+                print current_bytes
             while True:
                 try:
                     if self.canceled:
@@ -518,31 +519,31 @@ class FileDownloader(threading.Thread):
         while not self._stopevent.isSet():
             ## download...
             self.gui.download_treestore.set_value(self.treeiter, 2, _("Starting download..."))
-            #try:
-            self.start_time = time.time()
-            self.check_target_file(self.temp_file)
-            self.download(self.url, self.temp_file)
-            if self.failed:
+            try:
+                self.start_time = time.time()
+                self.check_target_file(self.temp_file)
+                self.download(self.url, self.temp_file)
+                if self.failed:
+                    self.gui.download_treestore.set_value(self.treeiter, 2, _("Download error..."))
+                    self.download_finished()
+                elif self.canceled:
+                    self.gui.download_treestore.set_value(self.treeiter, 2, _("Download canceled..."))
+                    self.gui.download_treestore.set_value(self.treeiter, 8, '')
+                    self.download_finished()
+                ## already downloaded
+                elif self.completed:
+                    self.gui.download_treestore.set_value(self.treeiter, 2, _("Download complete..."))
+                    self.gui.download_treestore.set_value(self.treeiter, 1, 100)
+                    if self.engine_type == 'video':
+                        self.gui.download_treestore.set_value(self.treeiter, 9, 'gtk-convert')
+                    self.download_finished()
+                else:
+                    continue
+            except:
+                print "failed"
+                self.failed = True
                 self.gui.download_treestore.set_value(self.treeiter, 2, _("Download error..."))
                 self.download_finished()
-            elif self.canceled:
-                self.gui.download_treestore.set_value(self.treeiter, 2, _("Download canceled..."))
-                self.gui.download_treestore.set_value(self.treeiter, 8, '')
-                self.download_finished()
-            ## already downloaded
-            elif self.completed:
-                self.gui.download_treestore.set_value(self.treeiter, 2, _("Download complete..."))
-                self.gui.download_treestore.set_value(self.treeiter, 1, 100)
-                if self.engine_type == 'video':
-                    self.gui.download_treestore.set_value(self.treeiter, 9, 'gtk-convert')
-                self.download_finished()
-            else:
-                continue
-            #except:
-                #print "failed"
-                #self.failed = True
-                #self.gui.download_treestore.set_value(self.treeiter, 2, _("Download error..."))
-                #self.download_finished()
             
     def check_target_file(self,tmp_file):
         if not os.path.exists(self.conf_temp_file):

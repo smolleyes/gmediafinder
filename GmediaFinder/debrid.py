@@ -94,6 +94,7 @@ class Debrid(object):
             try:
                 self.gui.search_engine.error_http(link)
             except: pass
+	    self.print_info('')
             return
         try:
             filename = resp['Content-Disposition'].split('filename=')[1].replace('"','')
@@ -102,8 +103,9 @@ class Debrid(object):
         except:
             self.filename = os.path.basename(link)
             self.ext = 'unknow'
-            pass      
-        self.gui.download_file(self.gui, link, self.filename, self.ext.replace(';?=',''), response)
+            pass
+	self.print_info('')
+        self.gui.download_file(self.gui, link, self.filename, self.ext.replace(';?=',''), response, 'files')
     
     def print_info(self,msg):
         gobject.idle_add(self.gui.info_label.set_text,msg)
