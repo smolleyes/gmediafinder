@@ -367,70 +367,7 @@ class FileDownloader(threading.Thread):
         self.gui.download_pool.append(self)
     
     def create_download_box(self):
-        self.engine = self.gui.search_engine
-        btnbox = gtk.HBox(False, 5)
-        ## pause download button
-        self.btnpause = gtk.Button()
-        image = gtk.Image()
-        image.set_from_pixbuf(self.gui.pause_icon)
-        self.btnpause.add(image)
-        btnbox.pack_start(self.btnpause, False, False, 5)
-        self.btnpause.set_tooltip_text(_("Pause/Resume download"))
-        ## stop btn
-        self.btnstop = gtk.Button()
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_STOP, gtk.ICON_SIZE_SMALL_TOOLBAR)
-        self.btnstop.add(image)
-        btnbox.pack_start(self.btnstop, False, False, 5)
-        self.btnstop.set_tooltip_text(_("Stop Downloading"))
-        ## show folder button
-        self.btnf = gtk.Button()
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_FIND, gtk.ICON_SIZE_SMALL_TOOLBAR)
-        self.btnf.add(image)
-        btnbox.pack_start(self.btnf, False, False, 5)
-        self.btnf.set_tooltip_text(_("Show in folder"))
-        ## clear button
-        self.btn = gtk.Button()
-        image = gtk.Image()
-        image.set_from_stock(gtk.STOCK_CLEAR, gtk.ICON_SIZE_SMALL_TOOLBAR)
-        self.btn.add(image)
-        btnbox.pack_start(self.btn, False, False, 5)
-        self.btn.set_tooltip_text(_("Remove"))
-        ## convert button
-        self.btn_conv = gtk.Button()
-        if self.engine.engine_type == "video":
-            image = gtk.Image()
-            image.set_from_stock(gtk.STOCK_CONVERT, gtk.ICON_SIZE_SMALL_TOOLBAR)
-            self.btn_conv.add(image)
-            btnbox.pack_start(self.btn_conv, False, False, 5)
-            self.btn_conv.set_tooltip_text(_("Convert to mp3"))
-            ## spinner
-            self.throbber = gtk.Image()
-            self.throbber.set_from_file(self.gui.img_path+'/throbber.png')
-            btnbox.pack_start(self.throbber, False, False, 5)
-        ## img
-        #try:
-            #box_left.pack_start(gtk.image_new_from_pixbuf(self.media_thumb), False,False, 5)
-        #except:
-            #pb = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.gui.img_path,'sound.png'), 64,64, 1)
-            #box_left.pack_start(gtk.image_new_from_pixbuf(pb), False,False, 5)
-        
-        self.treeiter = self.gui.download_treestore.append(None, [self.decoded_name,0,_("Initializing download..."),'','',self.gui.pause_icon])
-        
-        btnbox.show_all()
-        gobject.idle_add(self.btnf.hide)
-        self.convert_check = False
-        if self.engine.engine_type == "video":
-            gobject.idle_add(self.btn_conv.hide)
-            gobject.idle_add(self.throbber.hide)
-            self.convert_check = True
-            self.btn_conv.connect('clicked', self.gui.extract_audio,self.target,self.btn_conv,self.throbber)
-        gobject.idle_add(self.btn.hide)
-        self.btnf.connect('clicked', self.gui.show_folder, self.gui.down_dir)
-        self.btn.connect('clicked', self.remove_download)
-        self.btnstop.connect('clicked', self.cancel)
-        self.btnpause.connect('clicked', self.pause)
+        self.treeiter = self.gui.download_treestore.append(None, [self.decoded_name,0,_("Initializing download..."),'','','gtk-media-pause','gtk-cancel','gtk-clear','gtk-find','gtk-convert',self])
     
     def download(self, url, destination):
         self.increase_down_count()
@@ -562,9 +499,8 @@ class FileDownloader(threading.Thread):
             self.canceled = True
         return True
     
-    def remove_download(self, widget):
-        ru = self.download_box
-        gobject.idle_add(ru.parent.remove,ru)
+    def remove_download(self, widget=None):
+        self.gui.download_treestore.remove(self.treeiter)
     
     def run(self):
         self.create_download_box()
@@ -656,21 +592,17 @@ class FileDownloader(threading.Thread):
             os.remove(self.conf_temp_file)
         gobject.idle_add(self.decrease_down_count)
     
-    def pause(self,widget):
+    def pause(self):
         if not self.paused:
             self.paused = True
             self.gui.download_treestore.set_value(self.treeiter, 2, _("Download paused..."))
             self.decrease_down_count()
-            image = gtk.Image()
-            image.set_from_pixbuf(self.gui.play_icon)
-            self.btnpause.set_image(image)
+            self.gui.download_treestore.set_value(self.treeiter, 5, 'gtk-media-play')
         else:
             self.paused = False
             self.increase_down_count()
             self.gui.download_treestore.set_value(self.treeiter, 2, _("Resuming download..."))
-            image = gtk.Image()
-            image.set_from_pixbuf(self.gui.pause_icon)
-            self.btnpause.set_image(image)
+            self.gui.download_treestore.set_value(self.treeiter, 5, 'gtk-media-pause')
     
     def decrease_down_count(self):
         if self.gui.active_downloads > 0:

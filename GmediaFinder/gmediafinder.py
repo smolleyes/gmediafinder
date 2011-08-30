@@ -277,7 +277,12 @@ class GsongFinder(object):
         self.treeview.append_column(plugnameColumn)
 
         ## download treeview
-        self.download_treestore = gtk.TreeStore(str,int,str,str,str,gtk.gdk.Pixbuf)
+        self.download_treestore = gtk.TreeStore(str,int,str,str,str,
+                                                str,
+                                                str,
+                                                str,
+                                                str,
+                                                str,object)
         #name
         self.download_treeview = gtk.TreeView(self.download_treestore)
         self.download_tvcolumn = gtk.TreeViewColumn('Name')
@@ -286,7 +291,7 @@ class GsongFinder(object):
         self.download_treeview.append_column(self.download_tvcolumn)
         cellrenderer_text = gtk.CellRendererText()
         cellrenderer_text.props.wrap_width = 450
-        cellrenderer_text.props.wrap_mode = pango.WRAP_WORD
+        cellrenderer_text.props.wrap_mode = gtk.WRAP_WORD
         self.download_tvcolumn.pack_start(cellrenderer_text, False)
         self.download_tvcolumn.add_attribute(cellrenderer_text, "text", 0)
         #progress
@@ -314,12 +319,56 @@ class GsongFinder(object):
         cellrenderer_text = gtk.CellRendererText()
         self.download_etacolumn.pack_start(cellrenderer_text, False)
         self.download_etacolumn.add_attribute(cellrenderer_text, "text", 4)
-        ## options
-        self.download_cancelcolumn = gtk.TreeViewColumn('')
+        ## pausebtn
+        self.download_pausecolumn = gtk.TreeViewColumn('Pause/resume')
+        self.download_treeview.append_column(self.download_pausecolumn)
+        self.download_pixrenderer = gtk.CellRendererPixbuf()
+        self.download_pausecolumn.pack_start(self.download_pixrenderer, False)
+        self.download_pausecolumn.add_attribute(self.download_pixrenderer, "stock-id", 5)
+        ## signals
+        self.download_treeview.connect_after('cursor-changed', self.on_pause_download,
+                                                    self.download_pausecolumn)
+        ## cancelbtn
+        self.download_cancelcolumn = gtk.TreeViewColumn('Cancel')
         self.download_treeview.append_column(self.download_cancelcolumn)
-        renderer = gtk.CellRendererPixbuf()
-        self.download_cancelcolumn.pack_start(renderer, False)
-        self.download_cancelcolumn.add_attribute(renderer, "pixbuf", 5)
+        pixrenderer = gtk.CellRendererPixbuf()
+        self.download_cancelcolumn.pack_start(pixrenderer, False)
+        self.download_cancelcolumn.add_attribute(pixrenderer, "stock-id", 6)
+        ## signals
+        self.download_treeview.connect_after('cursor-changed', self.on_cancel_download,
+                                                    self.download_cancelcolumn)
+        
+        ## removebtn
+        self.download_removecolumn = gtk.TreeViewColumn('remove')
+        self.download_treeview.append_column(self.download_removecolumn)
+        pixrenderer = gtk.CellRendererPixbuf()
+        self.download_removecolumn.pack_start(pixrenderer, False)
+        self.download_removecolumn.add_attribute(pixrenderer, "stock-id", 7)
+        ## signals
+        self.download_treeview.connect_after('cursor-changed', self.on_remove_download,
+                                                    self.download_removecolumn)
+                                                    
+        ## viewbtn
+        self.download_viewcolumn = gtk.TreeViewColumn('view')
+        self.download_treeview.append_column(self.download_viewcolumn)
+        pixrenderer = gtk.CellRendererPixbuf()
+        self.download_viewcolumn.pack_start(pixrenderer, False)
+        self.download_viewcolumn.add_attribute(pixrenderer, "stock-id", 8)
+        ## viewbtn
+        self.download_treeview.connect_after('cursor-changed', self.on_view_download,
+                                                    self.download_viewcolumn)
+        
+        ## convertbtn
+        self.download_convertcolumn = gtk.TreeViewColumn('convert')
+        self.download_treeview.append_column(self.download_convertcolumn)
+        pixrenderer = gtk.CellRendererPixbuf()
+        self.download_convertcolumn.pack_start(pixrenderer, False)
+        self.download_convertcolumn.add_attribute(pixrenderer, "stock-id", 9)
+        ## viewbtn
+        self.download_treeview.connect_after('cursor-changed', self.on_convert_download,
+                                                    self.download_convertcolumn)
+        
+        ## finalize
         self.down_container.add(self.download_treeview)
         
         
@@ -438,6 +487,55 @@ class GsongFinder(object):
         self.manager = FooThreadManager(20)
         self.mainloop = gobject.MainLoop(is_running=True)
 
+    
+    def on_pause_download(self, treeview, column):
+        if self.download_treeview.get_cursor()[1] == column:
+            print '__________column pause clicked'
+            # ici recup ligne selectionné
+            l = self.return_selection(treeview)
+            # get download instance
+            download = l[-1]
+            download.pause()
+            
+    def on_cancel_download(self, treeview, column):
+        if self.download_treeview.get_cursor()[1] == column:
+            print '__________column cancel clicked'
+            # ici recup ligne selectionné
+            l = self.return_selection(treeview)
+            # get download instance
+            download = l[-1]
+            download.cancel()
+            
+    def on_convert_download(self, treeview, column):
+        if self.download_treeview.get_cursor()[1] == column:
+            print '__________column cancel clicked'
+            # ici recup ligne selectionné
+            l = self.return_selection(treeview)
+            # get download instance
+            download = l[-1]
+            download.cancel()
+            
+    def on_remove_download(self, treeview, column):
+        if self.download_treeview.get_cursor()[1] == column:
+            print '__________column cancel clicked'
+            # ici recup ligne selectionné
+            l = self.return_selection(treeview)
+            # get download instance
+            download = l[-1]
+            download.remove_download()
+            
+    def on_view_download(self, treeview, column):
+        if self.download_treeview.get_cursor()[1] == column:
+            print '__________column cancel clicked'
+            # ici recup ligne selectionné
+            l = self.return_selection(treeview)
+            # get download instance
+            return self.show_folder(self.down_dir)
+            
+    def return_selection(self, treeview):
+        sel              = self.download_treeview.get_selection()
+        ( model,iter )   = sel.get_selected()
+        return list(model[iter])
     
     def set_window_position(self):
         self.window.set_default_size(int(self.conf['window_state'][0]),int(self.conf['window_state'][1]))
@@ -895,6 +993,10 @@ class GsongFinder(object):
         pagep_icon = default_icon_theme.lookup_icon("previous",24,gtk.ICON_LOOKUP_USE_BUILTIN)
         if pagep_icon:
             self.page_prev_icon = pagep_icon.load_icon()
+            
+        clear_icon = default_icon_theme.lookup_icon("gtk-clear",24,gtk.ICON_LOOKUP_USE_BUILTIN)
+        if clear_icon:
+            self.clear_icon = clear_icon.load_icon()
             
         fullscreen_pix = default_icon_theme.lookup_icon("gtk-fullscreen",24,gtk.ICON_LOOKUP_USE_BUILTIN)
         self.fullscreen_pix = fullscreen_pix.load_icon()
@@ -1387,7 +1489,7 @@ class GsongFinder(object):
 			return
 		
 
-    def show_folder(self,widget,path):
+    def show_folder(self,path):
         if sys.platform == "win32":
             os.system('explorer %s' % path)
         else:

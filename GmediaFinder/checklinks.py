@@ -16,45 +16,35 @@ humanreadable = lambda s:[(s%1024**i and "%.1f"%(s/1024.0**i) or
 class CheckLinkIntegrity(object):
     def __init__(self):
         self.liste_checked = []
-        self.rapid_serveurs   = { 'megaupload'   : '4iidlag11',
-                                  'rapidshare'   : '4iidlag11',
-                                  'megavideo'    : '4iidlag11',
-                                  'megaporn'     : '4iidlag11',
-                                  'megashares'   : '3dljy11', 
-                                  'mediafire'    : '3dljy11',
-                                  'depositfiles' : '3dljy11',
-                                  'easy-share'   : '3dljy11', 
-                                  'fileserve'    : '4iidlag11', 
-                                  'filesonic'    : '3dl098', 
-                                  'filefactory'  : '4iidlag11', 
-                                  'freakshare'   : '3dljy11',
-                     	          'hotfile'      : '4iidlag11', 
-                                  'turbobit'     : '4iidlag11',
-                                  'uploading'    : '4iidlag11', 
-                                  #'uploaded'     : '3dljy11', 
-                                  'wupload'      : '4iidlag11', 
-                                  '4shared'      : '3dljy11',
-                     		    }
         self.serveurs = ['megaupload', 'rapidshare', 'filesonic', 'wupload', 'hotfile',
-                         'megashares', 'depositfiles', '4shared', 'easy-share', 'megaporn']
-	# megaupload rapidshare filesonic wupload hotfile megashares depositfiles
-	# 4shared 
+                         'megashares', 'depositfiles', '4shared', 'easy-share', 'fileserve',
+                         'mediafire', 'filefactory']
+	
     def check(self, link, callback=None):
         '''
         @link = [url, url, ...]
-        @callback = function to call with link
+        @callback = function to call for each link
         '''
         self.liste_checked = []
+        link = [ i for i in link if i ]
+        flag = True
         print 'in link checker', link
         for server in self.serveurs:
             if server in link[0]:
+                flag = False
                 server = server.replace('-','_').replace('4','f')
                 getattr(self, server)(link, callback)
-        return self.liste_checked
+        if flag: # server not supported
+            try:
+                callback( link )
+            except:
+                pass
+            return link # retourne liste d'origine si serveur pas supporté
+        return self.liste_checked # peut retourner une liste vide si aucun lien valide
 	        
     def add_link(self, link, callback):
         '''
-        @link = [link, name, size, server] or [link, 0, 0]
+        @link = [link, name, size, server] or [link, 0, 0, server]
         @callback = function to call with link
         '''
         self.liste_checked.append( link )
@@ -79,6 +69,67 @@ class CheckLinkIntegrity(object):
         print response.geturl()
         print response.read()
     
+    def filefactory(self, urls, callback):
+        # A revoir !!!
+        self.liste_checked = []
+        found = []
+        flag  = False
+        links = '\n'.join(urls)
+        data  = { 'func' : 'links',
+                  'links': links }
+        resp = self.get_http_data('http://www.filefactory.com/tool/links.php', data)
+        for line in resp.readlines():
+            if 'Available Files' in line:
+                flag = True
+            if flag:
+                if 'href' in line:
+                    print line
+                    link  = line.split('"')[1]
+                    linkc = '%s/' % '/'.join(link.split('/')[0:5])
+                    title = line.split('>')[1].split('<')[0]
+                    print link, title
+                    found.append(linkc)
+                elif re.search('<td>([0-9]*.*?)</td>', line):
+                    size = re.search('<td>([0-9]*.*?)</td>', line).group(1)
+                    print '__________size_________',size
+                    self.add_link( [ link, title, size, 'filefactory' ], callback)
+                elif '</table>' in line:
+                    break
+        for no_found in [i for i in urls if i not in found ]:
+                print '____no found', no_found
+                self.add_link( [ no_found, 0, 0, 'filefactory' ], callback)
+    
+    def mediafire(self, urls, callback):
+        self.liste_checked = []
+        for link in urls:
+            title = 0
+            size  = 0
+            resp = self.get_http_data(link)
+            for line in resp.readlines():
+                if 'download_file_title' in line:
+                    gg    = re.search('download_file_title[^>]*>(.*?)<div[^>]*>(.*?)<',line)
+                    title = gg.group(1)
+                    size  = gg.group(2)
+                    break
+            self.add_link( [ link, title, size, 'mediafire' ], callback)
+    
+    def fileserve(self, urls, callback):
+        self.liste_checked = []
+        for link in urls:
+            title = 0
+            size  = 0
+            resp = self.get_http_data(link)
+            for line in resp.readlines():
+                if 'readonly' in line:
+                    try:
+                        base  = line.split('<br/>')
+                        size  = base[1]
+                        title = base[0].split('<b>')[1]
+                        break
+                    except: pass
+            self.add_link( [ link, title, size, 'fileserve' ], callback)           
+            
+            
     def easy_share(self, urls, callback):
         self.liste_checked = []
         for link in urls:
@@ -179,9 +230,10 @@ class CheckLinkIntegrity(object):
         get(urls)
     
     def wupload(self, urls, callback):
-        self.filesonic(url, callback, 'wupload')
+        self.filesonic(urls, callback, 'wupload')
     
     def filesonic(self, urls, callback, server='filesonic'):
+        # a voir histoire de .fr .com pour filesonic
         self.liste_checked = []
         self.nums = ''
         def get_folder(link):
@@ -220,10 +272,11 @@ class CheckLinkIntegrity(object):
             for fichier in dic_json["FSApi_Link"]["getInfo"]["response"]["links"]:
                 print 'fichier_________',fichier
                 try:
-                    link = fichier['url']
+                    link  = fichier['url']
+                    #link  = fichier['url'].replace('.fr/','.com/')
                     title = fichier['filename']
-                    size = fichier['size']
-                    size = humanreadable( int(size) )
+                    size  = fichier['size']
+                    size  = humanreadable( int(size) )
                     print 'lns______',link, title, size
                 except:
                     title = 0
