@@ -1,4 +1,4 @@
-gmediafinder (0.9.9-0ppa2~natty) natty; urgency=high
+gmediafinder (0.9.9-0ppa2~lucid) lucid; urgency=high
 
   * downloads section rewrited/redesigned
   * new mini player for fullscreen
