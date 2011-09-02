@@ -117,7 +117,6 @@ class GsongFinder(object):
         self.search_box = self.gladeGui.get_widget("search_box")
         self.results_box = self.gladeGui.get_widget("results_box")
         self.quality_box = self.gladeGui.get_widget("quality_box")
-        
 
         ## throbber
         self.throbber = self.gladeGui.get_widget("throbber_img")
@@ -178,7 +177,7 @@ class GsongFinder(object):
         self.movie_window.connect('button-press-event', self.on_drawingarea_clicked)
         self.movie_window.add_events(gtk.gdk.BUTTON_PRESS_MASK)
         self.pic_box = self.gladeGui.get_widget("picture_box")
-
+        
         # seekbar and signals
         self.control_box = self.gladeGui.get_widget("control_box")
         self.seekbox = self.gladeGui.get_widget("seekbox")
@@ -449,6 +448,21 @@ class GsongFinder(object):
         ## time
         self.timeFormat = gst.Format(gst.FORMAT_TIME)
 
+        ## mini player
+        self.miniPlayer = self.gladeGui.get_widget("mini-player")
+        self.miniPlayer.set_size_request(width,40)
+        self.miniPlayer.move(0,height-42)
+        self.miniPlayer_init = False
+        self.infobox = self.gladeGui.get_widget("btn_info_box")
+        self.infobox_cont = self.gladeGui.get_widget("btn_infobox_cont")
+        self.mini_infobox_cont = self.gladeGui.get_widget("mini_infobox_cont")
+        ## btn box
+        self.btn_box = self.gladeGui.get_widget("btn_box")
+        self.btn_box_cont = self.gladeGui.get_widget("btn_box_cont")
+        self.mini_btn_box_cont = self.gladeGui.get_widget("mini_btn_box_cont")
+        
+        self.mini_seekbox = self.gladeGui.get_widget("mini_seekbox_cont")
+        
         ## create engines selector combobox
         box = self.gladeGui.get_widget("engine_selector_box")
         self.active_engines = create_comboBox()
@@ -1247,19 +1261,12 @@ class GsongFinder(object):
           self.seeker.set_adjustment(adjustment)
           gobject.idle_add(self.time_label.set_text,"00:00 / 00:00")
           return False
-
+        
         ## update timer for mini_player and hide it if more than 5 sec
         ## without mouse movements
         self.timer += 1
-        if self.fullscreen == True and self.mini_player == True and self.timer > 5 :
-			pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
-			color = gtk.gdk.Color()
-			cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
-			try:
-				self.window.window.set_cursor(cursor)
-			except:
-				return
-			self.show_mini_player()
+        if self.fullscreen and self.mini_player and self.timer > 4:
+            self.show_mini_player()
         
         ## disable screensaver
         if self.fullscreen == True and self.mini_player == False and self.timer > 55:
@@ -1271,14 +1278,14 @@ class GsongFinder(object):
         
         if self.status == self.BUFFERING:
             return
-       
+        
         if self.duration == None:
           try:
             self.length = self.player.query_duration(self.timeFormat, None)[0]
             self.duration = self.convert_ns(self.length)
           except gst.QueryError:
             self.duration = None
-
+        
         if self.duration != None:
             try:
                 self.current_position = self.player.query_position(self.timeFormat, None)[0]
@@ -1286,13 +1293,13 @@ class GsongFinder(object):
                 return 0
             current_position_formated = self.convert_ns(self.current_position)
             gobject.idle_add(self.time_label.set_text,current_position_formated + "/" + self.duration)
-
+        
             # Update the seek bar
             # gtk.Adjustment(value=0, lower=0, upper=0, step_incr=0, page_incr=0, page_size=0)
             percent = (float(self.current_position)/float(self.length))*100.0
             adjustment = gtk.Adjustment(percent, 0.00, 100.0, 0.1, 1.0, 1.0)
             self.seeker.set_adjustment(adjustment)
-
+        
         return True
 
 
@@ -1313,37 +1320,42 @@ class GsongFinder(object):
             return self.set_fullscreen()
 
     def set_fullscreen(self,widget=None):
-		self.timer = 0
-		if self.fullscreen :
-			gobject.idle_add(self.search_box.show)
-			gobject.idle_add(self.results_notebook.show)
-			gobject.idle_add(self.control_box.show)
-			gobject.idle_add(self.options_bar.show)
-			self.window.window.set_cursor(None)
-			gobject.idle_add(self.window.window.unfullscreen)
-			gobject.idle_add(self.window.set_position,gtk.WIN_POS_CENTER)
-			if sys.platform == 'win32':
-				self.window.set_decorated(True)
-			self.fullscreen = False
-			gobject.idle_add(self.fullscreen_btn_pixb.set_from_pixbuf,self.fullscreen_pix)
-			gobject.idle_add(self.fullscreen_btn_pixb.set_tooltip_text,_('enter fullscreen'))
-		else:
-			gobject.idle_add(self.search_box.hide)
-			gobject.idle_add(self.results_notebook.hide)
-			gobject.idle_add(self.options_bar.hide)
-			pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
-			color = gtk.gdk.Color()
-			cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
-			self.window.window.set_cursor(cursor)
-			gobject.idle_add(self.control_box.hide)
-			gobject.idle_add(self.window.window.fullscreen)
-			if sys.platform == 'win32':
-				self.window.set_decorated(False)
-			self.fullscreen = True
-			self.mini_player = False
-			gobject.idle_add(self.fullscreen_btn_pixb.set_from_pixbuf,self.leave_fullscreen_pix)
-			gobject.idle_add(self.fullscreen_btn_pixb.set_tooltip_text,_('leave fullscreen'))
-
+        self.timer = 0
+        if self.fullscreen :
+            self.miniPlayer.hide()
+            self.btn_box.reparent(self.btn_box_cont)
+            self.infobox.reparent(self.infobox_cont)
+            gobject.idle_add(self.search_box.show)
+            gobject.idle_add(self.results_notebook.show)
+            gobject.idle_add(self.control_box.show)
+            gobject.idle_add(self.options_bar.show)
+            self.window.window.set_cursor(None)
+            gobject.idle_add(self.window.window.unfullscreen)
+            gobject.idle_add(self.window.set_position,gtk.WIN_POS_CENTER)
+            if sys.platform == 'win32':
+                self.window.set_decorated(True)
+            self.fullscreen = False
+            gobject.idle_add(self.fullscreen_btn_pixb.set_from_pixbuf,self.fullscreen_pix)
+            gobject.idle_add(self.fullscreen_btn_pixb.set_tooltip_text,_('enter fullscreen'))
+        else:
+            gobject.idle_add(self.search_box.hide)
+            gobject.idle_add(self.results_notebook.hide)
+            gobject.idle_add(self.options_bar.hide)
+            self.btn_box.reparent(self.mini_btn_box_cont)
+            self.infobox.reparent(self.mini_infobox_cont)
+            pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
+            color = gtk.gdk.Color()
+            cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
+            self.window.window.set_cursor(cursor)
+            gobject.idle_add(self.control_box.hide)
+            gobject.idle_add(self.window.window.fullscreen)
+            if sys.platform == 'win32':
+                self.window.set_decorated(False)
+            self.fullscreen = True
+            self.mini_player = False
+            gobject.idle_add(self.fullscreen_btn_pixb.set_from_pixbuf,self.leave_fullscreen_pix)
+            gobject.idle_add(self.fullscreen_btn_pixb.set_tooltip_text,_('leave fullscreen'))
+        
     def on_drawingarea_realized(self, sender):
         if sys.platform == "win32":
             window = self.movie_window.get_window()
@@ -1369,23 +1381,32 @@ class GsongFinder(object):
           return True
 
     def on_motion_notify(self, widget, event):
+        visible =  self.miniPlayer.get_property("visible")
         self.timer = 0
-        if self.fullscreen and not self.mini_player:
+        if self.fullscreen and not self.mini_player and not visible:
             self.show_mini_player()
 
     def show_mini_player(self):
         self.timer = 0
-        if self.mini_player == True:
-            self.control_box.hide()
-            self.options_bar.hide()
+        visible =  self.miniPlayer.get_property("visible")
+        if self.mini_player and visible :
+            gobject.idle_add(self.miniPlayer.hide)
             self.mini_player = False
+            pixmap = gtk.gdk.Pixmap(None, 1, 1, 1)
+            color = gtk.gdk.Color()
+            cursor = gtk.gdk.Cursor(pixmap, pixmap, color, color, 0, 0)
+            try:
+                self.window.window.set_cursor(cursor)
+            except:
+                return
         else:
-			try:
-				self.window.window.set_cursor(None)
-			except:
-				return
-			self.control_box.show()
-			self.mini_player = True
+            if not visible:
+                gobject.idle_add(self.miniPlayer.show)
+            self.mini_player = True
+            try:
+                self.window.window.set_cursor(None)
+            except:
+                return
 
     def onKeyPress(self, widget, event):
         if self.search_entry.is_focus():

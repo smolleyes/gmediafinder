@@ -41,6 +41,7 @@ class Youtube(object):
         self.category_label = _("Category: ")
         ## video quality combobox
         self.youtube_quality_box = self.gui.gladeGui.get_widget("quality_box")
+        
         self.youtube_quality_model = gtk.ListStore(str)
         self.youtube_video_rate = gtk.ComboBox(self.youtube_quality_model)
         cell = gtk.CellRendererText()
