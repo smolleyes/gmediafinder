@@ -721,8 +721,12 @@ class GsongFinder(object):
         #   return
         self.media_bitrate = ""
         self.media_codec = ""
-        if not self.playlist_mode or widget:
+        current_page = self.results_notebook.get_current_page()
+        if int(current_page) == 1:
+            self.playlist_mode = True
+        else:
             self.playlist_mode = False
+        if widget or not self.playlist_mode:
             selected = self.treeview.get_selection()
             self.selected_iter = selected.get_selected()[1]
             self.path = self.model.get_path(self.selected_iter)

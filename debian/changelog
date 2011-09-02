@@ -1,5 +1,7 @@
-gmediafinder (0.9.8.1-0ppa1~lucid) lucid; urgency=high
+gmediafinder (0.9.9-0ppa1~lucid) lucid; urgency=high
 
-  * many small fix
+  * downloads section rewrited/redesigned
+  * new mini player for fullscreen
+  * many many small fixes
 
  -- Laguillaumie sylvain <s.lagui@free.fr>  Sun, 25 Fev 2011 00:19:53 +0100
