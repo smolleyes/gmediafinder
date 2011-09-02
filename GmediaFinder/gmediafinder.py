@@ -453,6 +453,7 @@ class GsongFinder(object):
         self.miniPlayer.set_size_request(width,40)
         self.miniPlayer.move(0,height-42)
         self.miniPlayer_init = False
+        self.miniPlayer.set_keep_above(True)
         self.infobox = self.gladeGui.get_widget("btn_info_box")
         self.infobox_cont = self.gladeGui.get_widget("btn_infobox_cont")
         self.mini_infobox_cont = self.gladeGui.get_widget("mini_infobox_cont")
@@ -751,7 +752,8 @@ class GsongFinder(object):
             self.media_plugname = self.Playlist.treestore.get_value(self.selected_iter, 0)
             return self.Playlist.on_selected(self.Playlist.treeview)
         ## play in engine
-        self.stop_play()
+        if not self.search_engine.engine_type == 'files':
+            self.stop_play()
         thread.start_new_thread(self.search_engine.play,(self.media_link,))
         #self.search_engine.play(self.media_link)
         

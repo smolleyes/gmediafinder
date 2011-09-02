@@ -1247,7 +1247,7 @@ audio-volume-medium</property>
     <property name="resizable">False</property>
     <property name="destroy_with_parent">True</property>
     <property name="decorated">False</property>
-    <property name="opacity">0.79999999977648262</property>
+    <property name="opacity">0.80000000000000004</property>
     <child>
       <widget class="GtkHBox" id="hbox10">
         <property name="visible">True</property>

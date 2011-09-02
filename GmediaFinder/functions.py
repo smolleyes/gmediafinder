@@ -350,12 +350,13 @@ class FileDownloader(threading.Thread):
         self.temp_file = os.path.join(self.gui.down_dir,self.temp_name)
         self.conf_temp_name = '.'+self.decoded_name+'.conf'
         self.conf_temp_file = os.path.join(self.gui.down_dir,self.conf_temp_name)
+        self.engine = self.gui.search_engine
         if not engine_type:
-            self.engine_type = self.gui.search_engine.engine_type
+            self.engine_type = self.engine.engine_type
         else:
             self.engine_type = engine_type
         if not engine_name: 
-            self.engine_name = self.gui.search_engine.name
+            self.engine_name = self.engine.name
         else:
             self.engine_name = engine_name
         
@@ -587,8 +588,8 @@ class FileDownloader(threading.Thread):
         self.gui.download_treestore.set_value(self.treeiter, 6, '')
         self.gui.download_treestore.set_value(self.treeiter, 7, 'gtk-clear')
         try:
-            self.engine.download_finished(self.url, self.target)
             self.stop()
+            self.engine.download_finished(self.url, self.target)
         except:
             self.stop()
         self.print_info('')
