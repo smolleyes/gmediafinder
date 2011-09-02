@@ -1539,7 +1539,7 @@ class GsongFinder(object):
 					self.media_codec = 'mov'
 			elif ('Vorbis' in codec or 'Ogg' in codec):
 					self.media_codec = 'ogg'
-			elif ('Sorenson Spark Video' in codec):
+			elif ('Sorenson Spark Video' in codec or 'On2 VP6/Flash' in codec):
 					self.media_codec = 'flv'
 			elif ('VP8' in codec):
 				self.media_codec = 'webm'

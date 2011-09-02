@@ -335,6 +335,8 @@ class FileDownloader(threading.Thread):
         self.url = url
         self.data = data # urllib request reply
         ## filenames
+        if codec is None:
+            codec = '.mpeg'
         self.codec = codec
         if not '.' in codec:
             self.codec = '.'+self.codec
