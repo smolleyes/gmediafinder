@@ -455,6 +455,7 @@ class GsongFinder(object):
         self.miniPlayer.move(0,height-42)
         self.miniPlayer_init = False
         self.miniPlayer.set_keep_above(True)
+        self.miniPlayer.set_transient_for(self.window)
         self.infobox = self.gladeGui.get_widget("btn_info_box")
         self.infobox_cont = self.gladeGui.get_widget("btn_infobox_cont")
         self.mini_infobox_cont = self.gladeGui.get_widget("mini_infobox_cont")
