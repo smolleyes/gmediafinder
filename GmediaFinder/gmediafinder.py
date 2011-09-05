@@ -28,6 +28,7 @@ import gdata.youtube.service as yt_service
 import gettext
 import time
 import locale
+import Queue
 
 if sys.platform == "win32":
     import win32api
@@ -424,7 +425,7 @@ class GsongFinder(object):
         audiosink.set_property('async-handling', True)
 
         if sys.platform == "win32":
-            self.videosink = gst.element_factory_make('d3dvideosink')
+            self.videosink = gst.element_factory_make('dshowvideosink')
         else:
             self.videosink = gst.element_factory_make('xvimagesink')
         self.videosink.set_property('async', False)
