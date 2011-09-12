@@ -9,7 +9,7 @@ XS-Python-Version: current
 
 Package: gmediafinder
 Architecture: all
-Depends: ${misc:Depends}, python (>= 2.6), python-gtk2, python-gdata, python-gst0.10, gstreamer0.10-ffmpeg, libvisual-0.4-0, libvisual-0.4-plugins, python-configobj, ffmpeg, python-mechanize, gstreamer0.10-plugins-good, gstreamer0.10-plugins-bad, python-xlib, python-glade2
+Depends: ${misc:Depends}, python (>= 2.6), python-gtk2, python-gdata, python-gst0.10, gstreamer0.10-ffmpeg, libvisual-0.4-0, libvisual-0.4-plugins, python-configobj, ffmpeg, python-mechanize, gstreamer0.10-plugins-good, gstreamer0.10-plugins-bad, gstreamer0.10-plugins-ugly, python-xlib, python-glade2
 Recommends: libavformat52 | libavformat-extra-52, libavcodec52 | libavcodec-extra-52, libavutil49 | libavutil-extra-49
 XB-Python-Version: ${python:Versions}
 Provides: ${python:Provides}
