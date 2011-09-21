@@ -48,19 +48,20 @@ def get_url_data(url):
         return data
         
 def download_photo(img_url):
-    filename = os.path.basename(img_url)
-    if sys.platform == "win32":
-        file_path = os.path.join(tempfile.gettempdir(), filename)
-    else:
-        file_path = "/tmp/%s" % filename
-    if os.path.exists(file_path) and not os.path.isdir(file_path):
-        os.remove(file_path)
-    p = urllib.urlretrieve(img_url, file_path)
     try:
-        vid_pic = gtk.gdk.pixbuf_new_from_file_at_scale(p[0],100,100,1)
+        filename = os.path.basename(img_url)
+        if sys.platform == "win32":
+            file_path = os.path.join(tempfile.gettempdir(), filename)
+        else:
+            file_path = "/tmp/%s" % filename
+        if os.path.exists(file_path) and not os.path.isdir(file_path):
+            os.remove(file_path)
+        p = urllib.urlretrieve(img_url, file_path)
+        vid_pic = gtk.gdk.pixbuf_new_from_file(p[0])
         return vid_pic
     except:
         return None
+
 
 def with_lock(func, args):
 		gtk.gdk.threads_enter()

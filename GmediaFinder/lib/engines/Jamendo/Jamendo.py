@@ -35,7 +35,10 @@ class Jamendo(object):
                                             },
                            }
         self.orderby = create_comboBox(self.gui, self.order_list)
-        data = urllib2.urlopen('http://www.jamendo.com/fr/tags')
+        try:
+			data = urllib2.urlopen('http://www.jamendo.com/fr/tags')
+        except:
+			return
         self.order_tag = {self.tag_label: {"":""}, }
         for line in data.readlines():
             if 'g_tag_name' in line:

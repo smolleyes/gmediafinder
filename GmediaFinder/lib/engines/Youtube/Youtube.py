@@ -338,9 +338,9 @@ class Youtube(object):
             self.gui.stop_play()
             try:
                 self.media_codec = self.quality_list[active].split('|')[1]
+                self.gui.start_play(self.media_link[active])
             except:
                 pass
-            self.gui.start_play(self.media_link[active])
 
     
     def get_quality_list(self,vid_id):

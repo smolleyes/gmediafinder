@@ -29,6 +29,8 @@ import gettext
 import time
 import locale
 import Queue
+import cairo
+import pangocairo
 
 if sys.platform == "win32":
     import win32api
@@ -93,6 +95,7 @@ class GsongFinder(object):
         self.media_codec= None
         self.playlist_mode = False
         self.play = False
+        self.draw_text = False
         self._cbuffering = -1
         self.status = self.STOPPED
         self.target_status = self.STOPPED
@@ -252,7 +255,7 @@ class GsongFinder(object):
         self.window.connect('destroy', self.exit)
 
         ## finally setup the list
-        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object,str)
+        self.model = gtk.ListStore(gtk.gdk.Pixbuf,str,object,object,object,str,str,gtk.gdk.Pixbuf)
         self.treeview = gtk.TreeView()
         self.window.realize()
         self.odd = gtk.gdk.color_parse(str(self.window.style.bg[gtk.STATE_NORMAL]))
@@ -418,6 +421,7 @@ class GsongFinder(object):
         ## connect treeview signals
         self.search_playlist_menu_active = False
         self.treeview.connect('row-activated',self.get_model)
+        self.treeview.connect('cursor-changed',self.on_treeview_clicked)
         self.treeview.connect('button-press-event',self._show_search_playlist_menu)
         ## create the players
         self.player = gst.element_factory_make("playbin2", "player")
@@ -565,6 +569,13 @@ class GsongFinder(object):
             # get download instance
             return self.show_folder(self.down_dir)
             
+    def on_treeview_clicked(self,widget):
+        '''prepare media infos from engine if available'''
+        try:
+            self.search_engine.get_media_infos()
+        except:
+            return
+    
     def return_selection(self, treeview):
         sel              = self.download_treeview.get_selection()
         ( model,iter )   = sel.get_selected()
@@ -912,9 +923,14 @@ class GsongFinder(object):
             #thread.start_new_thread(self.search_engine.search,(self.user_search,page))
         self.add_thread(self.search_engine,self.user_search,page)
 
-    def add_sound(self, name, media_link, img=None, quality_list=None, plugname=None,markup_src=None):
+    def add_sound(self, name, media_link, img=None, quality_list=None, plugname=None,markup_src=None, synop=None):
+        orig_pixbuf = img
         if not img:
-            img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'sound.png'), 64,64, 1)
+            img = gtk.gdk.pixbuf_new_from_file_at_scale(os.path.join(self.img_path,'video.png'), 64,64, 1)
+            orig_pixbuf = gtk.gdk.pixbuf_new_from_file(os.path.join(self.img_path,'video.png'))
+        else:
+			if img.get_width() != 100:
+				img = self.update_image(img,100,100)
         if not name or not media_link or not img:
             return
         ## clean markup...
@@ -924,6 +940,7 @@ class GsongFinder(object):
             markup = '<small><b>%s</b></small>' % m
         except:
             return
+            
         if markup_src:
             markup = markup + markup_src
         iter = self.model.append()
@@ -934,6 +951,8 @@ class GsongFinder(object):
                         3, quality_list,
                         4, name,
                         5, plugname,
+                        6, synop,
+                        7, orig_pixbuf,
                         )
 
     def start_stop(self,widget=None):
@@ -1326,6 +1345,8 @@ class GsongFinder(object):
     def on_drawingarea_clicked(self, widget, event):
         if event.type == gtk.gdk._2BUTTON_PRESS:
             return self.set_fullscreen()
+            
+    
 
     def set_fullscreen(self,widget=None):
         self.timer = 0
@@ -1373,20 +1394,38 @@ class GsongFinder(object):
             gobject.idle_add(self.videosink.set_xwindow_id,self.movie_window.window.xid)
 
     def on_expose_event(self, widget, event):
-        x , y, width, height = event.area
+        if self.is_playing:
+            return
+        x , y, self.area_width, self.area_height = event.area
         widget.window.draw_drawable(widget.get_style().fg_gc[gtk.STATE_NORMAL],
-                                      pixmap, x, y, x, y, width, height)
+                                      pixmap, x, y, x, y, self.area_width, self.area_height)
+        if self.draw_text:
+            try:
+                self.search_engine.print_media_infos()
+            except:
+                return False
         return False
-
-    def on_configure_event(self, widget, event):
-          global pixmap
-
-          x, y, width, height = widget.get_allocation()
-          pixmap = gtk.gdk.Pixmap(widget.window, width, height)
-          pixmap.draw_rectangle(widget.get_style().black_gc,
-                                True, 0, 0, width, height)
-
-          return True
+		
+    def update_image(self,img, w, h):
+		# Get the size of the source pixmap
+		src_width, src_height = img.get_width(), img.get_height()
+		
+		# Scale preserving ratio
+		scale = min(float(w)/src_width, float(h)/src_height)
+		new_width = int(scale*src_width)
+		new_height = int(scale*src_height)
+		pixbuf = img.scale_simple(new_width, new_height, gtk.gdk.INTERP_BILINEAR)
+		return pixbuf
+    
+    def on_configure_event(self, widget, event):         
+		global pixmap
+		
+		x, y, width, height = widget.get_allocation()
+		pixmap = gtk.gdk.Pixmap(widget.window, width, height)
+		pixmap.draw_rectangle(widget.get_style().black_gc,
+								True, 0, 0, width, height)
+		
+		return True
 
     def on_motion_notify(self, widget, event):
         visible =  self.miniPlayer.get_property("visible")

@@ -26,7 +26,7 @@ class Playlist(object):
         self.del_playlist_btn.connect('clicked',self.remove_playlist)
         # Creation d'un modele nom/url source/flux/moteur
         self.treestore = gtk.TreeStore(str,str,str,str )
-
+        self.treestore.connect('rows-reordered',self.on_rows_reordered)
         self.treeview = gtk.TreeView(self.treestore)
         self.tvcolumn = gtk.TreeViewColumn('')
         self.treeview.append_column(self.tvcolumn)
@@ -34,22 +34,22 @@ class Playlist(object):
         self.tvcolumn.pack_start(self.cell, True)
         self.tvcolumn.add_attribute(self.cell, 'text', 0)
 
-        self.treeview.set_search_column(0)
+        #self.treeview.set_search_column(0)
         self.tvcolumn.set_sort_column_id(0)
         self.treeview.set_reorderable(True)
-        self.treeview.enable_model_drag_source(0, [("STRING", 0, 0),
-                                                   ('text/plain', 0, 0)
-                                                   ],
-                                               gtk.gdk.ACTION_DEFAULT)
-        self.treeview.enable_model_drag_dest([("STRING", 0, 0),
-                                              ('text/plain', 0, 0),
-                                              ('text/uri-list', 0, 0)
-                                              ],
-                                             gtk.gdk.ACTION_DEFAULT)
+        #self.treeview.enable_model_drag_source(0, [("STRING", 0, 0),
+                                                   #('text/plain', 0, 0)
+                                                   #],
+                                               #gtk.gdk.ACTION_DEFAULT)
+        #self.treeview.enable_model_drag_dest([("STRING", 0, 0),
+                                              #('text/plain', 0, 0),
+                                              #('text/uri-list', 0, 0)
+                                              #],
+                                             #gtk.gdk.ACTION_DEFAULT)
         self.treeview.connect("row-activated", self.on_selected)
-        self.treeview.connect("drag_data_get", self.drag_data_get_data)
-        self.treeview.connect("drag_data_received",
-                              self.drag_data_received_data)
+        #self.treeview.connect("drag_data_get", self.drag_data_get_data)
+        #self.treeview.connect("drag_data_received",
+                              #self.drag_data_received_data)     
         
         ##popup tree
         self.poptreeview = gtk.TreeView(self.treestore)
@@ -66,8 +66,12 @@ class Playlist(object):
         self.load_xml()
         
     
-    def make_pb(self, tvcolumn, cell, model, iter):
-        stock = model.get_value(iter, 1)
+    def on_rows_reordered(self,path,row_iter,order):
+		print 'here'
+		print path,row_iter,order
+    
+    def make_pb(self, tvcolumn, cell, model, riter):
+        stock = model.get_value(riter, 1)
         pb = self.treeview.render_icon(stock, gtk.ICON_SIZE_MENU, None)
         cell.set_property('pixbuf', pb)
         return
