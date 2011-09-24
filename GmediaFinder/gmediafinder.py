@@ -1746,10 +1746,12 @@ class GsongFinder(object):
                 break
         if inlist:
             return
-        f = open(history_file,'ab')
         if len(t) >= int(max_history):
-            del t[1]
-            f.writelines(t)
+            u = open(history_file,'w')
+            del t[0]
+            u.writelines(t)
+            u.close()
+        f = open(history_file,'a')
         f.write("%s\n" % search)
         f.close()
     
