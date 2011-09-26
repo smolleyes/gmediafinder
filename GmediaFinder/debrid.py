@@ -6,6 +6,7 @@ import os
 import sys
 import re
 import gobject
+import time
 import checklinks as checkLink
 
 class Debrid(object):
