@@ -571,6 +571,7 @@ class GsongFinder(object):
             
     def on_treeview_clicked(self,widget):
         '''prepare media infos from engine if available'''
+        self.search_engine.get_media_infos()
         try:
             self.search_engine.get_media_infos()
         except:

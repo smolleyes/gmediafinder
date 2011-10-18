@@ -455,7 +455,6 @@ class FileDownloader(threading.Thread):
                 current_bytes = size_local
             else:
                 current_bytes = 0
-                print current_bytes
             while True:
                 try:
                     if self.canceled:
@@ -578,13 +577,6 @@ class FileDownloader(threading.Thread):
             self.conf_temp_file = os.path.join(self.gui.down_dir,self.conf_temp_name)
             self.engine_type = engine_type
             self.engine_name = engine_name
-            print self.decoded_name
-            print self.encoded_name
-            print self.target
-            print self.temp_name
-            print self.temp_file
-            print self.conf_temp_name
-            print self.conf_temp_file
             
     def download_finished(self):
         self.gui.download_treestore.set_value(self.treeiter, 5, '')
